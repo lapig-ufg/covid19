@@ -1,11 +1,9 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ChangeDetectorRef, Component, HostListener, Inject, Injectable, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, HostListener, Injectable, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from 'ngx-image-video-gallery';
-import { Lightbox } from 'ngx-lightbox';
 import * as OlExtent from 'ol/extent.js';
 import GeoJSON from 'ol/format/GeoJSON';
 import { defaults as defaultInteractions } from 'ol/interaction';
@@ -205,7 +203,10 @@ export class MapComponent implements OnInit {
 
     this.textOnDialog = {};
 
-    this.currentData = '';
+    this.currentData = {
+      text: ''
+    };
+    
     this.valueRegion = '';
 
     this.changeTabSelected = "";
@@ -451,6 +452,15 @@ export class MapComponent implements OnInit {
 
         graphic.options.scales.yAxes = y;
 
+        let x = [{
+          ticks: {
+            autoskip: true,
+            autoSkipPadding: 20
+          }
+      }]
+
+      graphic.options.scales.xAxes = x;
+
         graphic.options.legend.onHover = function (event) {
           event.target.style.cursor = 'pointer';
           graphic.options.legend.labels.fontColor = '#0335fc';
@@ -485,8 +495,13 @@ export class MapComponent implements OnInit {
     
     if (region == this.defaultRegion) {
       this.valueRegion = '';
-      this.currentData = '';
+      this.currentData = {
+        text: ''
+      }
     }
+
+    this.currentData = region.nome;
+    this.valueRegion = region.nome.toString();
 
     this.selectRegion = region;
     
@@ -505,9 +520,7 @@ export class MapComponent implements OnInit {
 
     this.updateExtent();
     this.updateSourceAllLayer();
-    this.valueRegion = region.nome.toString();
 
-    console.log("ValueRegion: ", this.valueRegion);
   }
 
   private getResolutions(projection) {
