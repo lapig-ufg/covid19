@@ -309,7 +309,7 @@ h6 {
  
 
 .titleWindows {
-	color: #271616;
+	color: white;
 	background-color: #dd4646;
 	padding: 10px;
 	font-weight: bold;
@@ -923,4 +923,7 @@ mat-select {
 .radius-bottom {
 	border-bottom-right-radius: 10px;
 	border-bottom-left-radius: 10px;
+}
+.layersConteudo .mat-tab-body-wrapper{
+	padding: 10px;
 }

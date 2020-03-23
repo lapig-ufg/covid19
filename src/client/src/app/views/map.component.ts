@@ -156,7 +156,7 @@ export class MapComponent implements OnInit {
   styleSelected: any;
   styleDefault: any;
 
-  svgLoading = "/assets/img/coronavirus_icon.svg";
+  svgLoading = "/assets/gif/coronavirus_icon.svg";
 
   /** Variables for upload shapdefiles **/
   layerFromUpload: any = {
