@@ -23,7 +23,7 @@ module.exports = function (app) {
     var result = {
       type: "Feature",
       geometry: JSON.parse(queryResult[0].geojson),
-      area_km2: queryResult[0].area_km2
+      area_mun: queryResult[0].area_mun
     };
 
     response.send(result);
@@ -83,8 +83,6 @@ module.exports = function (app) {
               selectedType: "armazens_fip",
               types: [{
                 value: "armazens_fip",
-                Viewvalue: "LAPIG",
-                regionFilter: true,
                 opacity: 0.8,
                 order: 3
               }]
