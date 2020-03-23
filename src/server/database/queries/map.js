@@ -4,16 +4,15 @@ module.exports = function(app) {
 	var Query = {};
 
 	Query.defaultParams = {
-		'type': 'state',
-		'region': 'GO'
+		'nome': 'GO'
 	}
 
 	Query.extent = function() {
-		return "SELECT ST_AsGeoJSON(geom) geojson, (ST_AREA(geom,true)/1000000.0) as area FROM municipios WHERE type=${type} AND value=${region}";
+		return "SELECT ST_AsGeoJSON(geom) geojson, area_mun FROM municipios WHERE unaccent(nome) ILIKE unaccent(${nome}%) ";
 	}
 
 	Query.search = function() {
-		return "SELECT text, value, type, cd_geocmu FROM regions WHERE unaccent(text) ILIKE unaccent(${key}%) AND type in ('state', 'city') LIMIT 10";
+		return "SELECT nome, estado, uf, cd_geocmu FROM municipios WHERE unaccent(nome) ILIKE unaccent(${key}%) LIMIT 10";
 	}
 
 

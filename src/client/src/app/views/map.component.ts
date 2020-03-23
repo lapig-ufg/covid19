@@ -156,7 +156,7 @@ export class MapComponent implements OnInit {
   styleSelected: any;
   styleDefault: any;
 
-  svgLoading = "/assets/img/coronavirus_icon.svg";
+  svgLoading = "/assets/gif/coronavirus_icon.svg";
 
   /** Variables for upload shapdefiles **/
   layerFromUpload: any = {
@@ -193,11 +193,8 @@ export class MapComponent implements OnInit {
     this.chartUsoSolo = [];
 
     this.defaultRegion = {
-      type: 'state',
-      text: 'Goiás - GO',
-      value: 'GO',
-      area_region: 2040047.67930316,
-      regionTypeBr: 'Estado'
+      nome: 'GO',
+      area_mun: 329617.070236032,
     };
     this.selectRegion = this.defaultRegion;
 
@@ -308,10 +305,10 @@ export class MapComponent implements OnInit {
   private getServiceParams() {
     let params = [];
 
-    if (this.selectRegion.type != '') {
-      params.push('type=' + this.selectRegion.type);
-      params.push('region=' + this.selectRegion.value);
-    }
+    // if (this.selectRegion.type != '') {
+    //   params.push('type=' + this.selectRegion.type);
+    //   params.push('region=' + this.selectRegion.value);
+    // }
 
     params.push('lang=' + this.language);
 
@@ -339,7 +336,7 @@ export class MapComponent implements OnInit {
         var extent = features[0].getGeometry().getExtent();
         map.getView().fit(extent, { duration: 1500 });
 
-        this.selectRegion.area_region = extentResult["area_km2"];
+        this.selectRegion.area_region = extentResult["area_mun"];
       });
     }
   }
@@ -416,26 +413,21 @@ export class MapComponent implements OnInit {
     if (region == this.defaultRegion) {
       this.valueRegion = '';
       this.currentData = '';
-      this.desmatInfo = {
-        value: 'year=2019',
-        Viewvalue: '2018/2019',
-        year: 2019
-      };
     }
 
     this.selectRegion = region;
     this.isFilteredByCity = false;
     this.isFilteredByState = false;
 
-    if (this.selectRegion.type == 'city') {
-      this.msFilterRegion = ' cd_geocmu = \'' + this.selectRegion.cd_geocmu + '\'';
-      this.isFilteredByCity = true;
-      this.isFilteredByState = true;
-      this.selectRegion.regionTypeBr = 'Município de ';
-    } else if (this.selectRegion.type == 'state') {
-      this.msFilterRegion = 'uf = \'' + this.selectRegion.value + '\'';
-      this.isFilteredByState = true;
-    } else { this.msFilterRegion = ""; }
+    // if (this.selectRegion.type == 'city') {
+    //   this.msFilterRegion = ' cd_geocmu = \'' + this.selectRegion.cd_geocmu + '\'';
+    //   this.isFilteredByCity = true;
+    //   this.isFilteredByState = true;
+    //   this.selectRegion.regionTypeBr = 'Município de ';
+    // } else if (this.selectRegion.type == 'state') {
+    //   this.msFilterRegion = 'uf = \'' + this.selectRegion.value + '\'';
+    //   this.isFilteredByState = true;
+    // } else { this.msFilterRegion = ""; }
 
     this.updateExtent();
     this.updateSourceAllLayer();
@@ -529,6 +521,7 @@ export class MapComponent implements OnInit {
 
         } else {
           window.document.body.style.cursor = 'auto';
+          this.infodata = null;
         }
 
       }.bind(this)
