@@ -27,20 +27,20 @@
 							<mat-accordion>
 							<div id="layers_desmatamentos">
 
-								<ng-template #rt let-r="result" let-t="term">
-									<ngb-highlight [result]="r.text" [term]="t"></ngb-highlight>
-								</ng-template>
-								<input id="typeahead-http" type="text" class="form-control searchRegion"
-									   [class.is-invalid]="searchFailed" [(ngModel)]="valueRegion"
-									   [ngbTypeahead]="search"
-									   placeholder="{{titlesLayerBox.search_placeholder}}"
-									   (selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
-									   [inputFormatter]="formatter" [value]="currentData" />
-								<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
-									 (click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
-								<span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
-								<div class="invalid-feedback" *ngIf="searchFailed">
-											{{titlesLayerBox.search_failed}}</div>
+<!--								<ng-template #rt let-r="result" let-t="term">-->
+<!--									<ngb-highlight [result]="r.text" [term]="t"></ngb-highlight>-->
+<!--								</ng-template>-->
+<!--								<input id="typeahead-http" type="text" class="form-control searchRegion"-->
+<!--									   [class.is-invalid]="searchFailed" [(ngModel)]="valueRegion"-->
+<!--									   [ngbTypeahead]="search"-->
+<!--									   placeholder="{{titlesLayerBox.search_placeholder}}"-->
+<!--									   (selectItem)="updateRegion($event.item)" [resultTemplate]="rt"-->
+<!--									   [inputFormatter]="formatter" [value]="currentData" />-->
+<!--								<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"-->
+<!--									 (click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />-->
+<!--								<span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>-->
+<!--								<div class="invalid-feedback" *ngIf="searchFailed">-->
+<!--											{{titlesLayerBox.search_failed}}</div>-->
 
 								<div *ngFor="let groups of descriptor.groups">
 
