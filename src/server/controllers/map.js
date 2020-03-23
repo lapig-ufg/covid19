@@ -35,7 +35,7 @@ module.exports = function (app) {
     var language = request.param('lang')
 
     var result = {
-      regionFilterDefault: "",
+      regionFilterDefault: "uf = 'GO'",
       type: "Informações",
       groups: [
         {
@@ -54,8 +54,21 @@ module.exports = function (app) {
                 opacity: 0.8,
                 order: 3
             }]
-
-          }]
+          },
+          {
+            id: "qtd_populacional",
+            label: "Índice Populacional - IBGE",
+            visible: false,
+            selectedType:"covid19_populacao",
+            types:[{
+              value: "covid19_populacao",
+                Viewvalue: "Quantidade",
+                regionFilter: true,
+                opacity: 0.8,
+                order: 3
+            }]
+          }
+        ]
         },
         {
           id: "infraestrutura",
@@ -83,6 +96,7 @@ module.exports = function (app) {
               selectedType: "armazens_fip",
               types: [{
                 value: "armazens_fip",
+                regionFilter: true,
                 opacity: 0.8,
                 order: 3
               }]
@@ -239,7 +253,7 @@ module.exports = function (app) {
           {
             value: "municipios_goias",
             Viewvalue: languageJson["descriptor"]["limits"]["types"]["municipios_cerrado"][language],
-            visible: false,
+            visible: true,
             layer_limits: true,
             opacity: 1
           }

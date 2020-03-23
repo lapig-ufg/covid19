@@ -40,6 +40,13 @@ hr {
 	border-radius: 0px;
 }
 
+.ngb-highlight {
+	font-weight: normal !important;
+  }
+  
+  ngb-highlight .ngb-highlight:first-child {
+	font-weight: bold !important;
+  }
 
 .dpat-ol-div {
 	padding: 0px;

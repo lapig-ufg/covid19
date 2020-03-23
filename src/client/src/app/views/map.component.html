@@ -23,27 +23,26 @@
 
 
 					<mat-tab label="{{titlesLayerBox.label_data}}">
-						<p-scrollPanel [style]="{width: '100%', height: '60vh', padding:'15px'}" >
+						<p-scrollPanel [style]="{width: '100%', height: '60vh'}" >
 							<mat-accordion>
 							<div id="layers_desmatamentos">
 
-<!--								<ng-template #rt let-r="result" let-t="term">-->
-<!--									<ngb-highlight [result]="r.text" [term]="t"></ngb-highlight>-->
-<!--								</ng-template>-->
-<!--								<input id="typeahead-http" type="text" class="form-control searchRegion"-->
-<!--									   [class.is-invalid]="searchFailed" [(ngModel)]="valueRegion"-->
-<!--									   [ngbTypeahead]="search"-->
-<!--									   placeholder="{{titlesLayerBox.search_placeholder}}"-->
-<!--									   (selectItem)="updateRegion($event.item)" [resultTemplate]="rt"-->
-<!--									   [inputFormatter]="formatter" [value]="currentData" />-->
-<!--								<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"-->
-<!--									 (click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />-->
-<!--								<span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>-->
-<!--								<div class="invalid-feedback" *ngIf="searchFailed">-->
-<!--											{{titlesLayerBox.search_failed}}</div>-->
+								<ng-template #rt let-r="result" let-t="term">
+									<ngb-highlight [result]="r.nome" [term]="t"></ngb-highlight>
+								</ng-template>
+								<input id="typeahead-http" type="text" class="form-control searchRegion"
+									   [class.is-invalid]="searchFailed" [(ngModel)]="valueRegion"
+									   [ngbTypeahead]="search"
+									   placeholder="{{titlesLayerBox.search_placeholder}}"
+									   (selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
+									   [inputFormatter]="formatter" [value]="currentData" />
+								<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
+									 (click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
+								<span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
+								<div class="invalid-feedback" *ngIf="searchFailed">
+											{{titlesLayerBox.search_failed}}</div>
 
 								<div *ngFor="let groups of descriptor.groups">
-
 									<mat-expansion-panel [expanded]=groups.group_expanded>
 										<mat-expansion-panel-header [collapsedHeight]="'50px'"
 																	[expandedHeight]="'50px'" class="expansion-header-layer">
@@ -142,9 +141,9 @@
 		</div>
 	</div>
 
-	<!-- <div id="positionCharts">
+	 <div id="positionCharts">
 		<div class="titleWindows">
-			{{dataSeries.title}}
+			Estatísticas
 			<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
 					(click)="collapseCharts = !collapseCharts" [attr.aria-expanded]="!collapseCharts"
 					aria-controls="camadageografica">-</button>
@@ -152,7 +151,7 @@
 		<div [ngbCollapse]="collapseCharts" id="matgroup">
 			<mat-tab-group class="charts" [selectedIndex]="selectedIndex" #matgroup (selectedTabChange)="changeTab($event)">
 
-					<mat-tab label={{dataSeries.label}} *ngIf="true" id="tabGraficoLinhas">
+					<!--<mat-tab label={{dataSeries.label}} *ngIf="true" id="tabGraficoLinhas">
 						<p-scrollPanel [style]="{width: '100%', height: '38vh'}" >
 							<div class="row">
 								<div class="col-md-4">
@@ -261,26 +260,23 @@
 								</ng-template>
 							</p-table>
 							</p-scrollPanel>
-						</mat-tab>
+						</mat-tab>-->
 
-						<mat-tab *ngIf="isFilteredByCity" label="{{chartUsoSolo[0]?.label}}"  >
-							<p-scrollPanel [style]="{width: '100%', height: '38vh'}" >
-							<p-tabView (onChange)="changeSelectedLulcChart($event)">
-								<p-tabPanel [header]="uso.title" *ngFor="let uso of chartUsoSolo; let i = index" [selected]="i == 0" [disabled]="!uso.show" [cache]="true">
+						<mat-tab label="Projeções Temporais" >
+							<p-tabView >
+								<p-tabPanel [header]="dat.title" *ngFor="let dat of dataSeries; let i = index" [selected]="i == 0" [disabled]="!dat.show" [cache]="true">
 									<div>
-										<p style="font-weight: bold">{{ selectRegion.text }}</p>
-										<div>{{uso.text}}</div>
-										<p-chart [ngStyle]="{'overflow-x': hidden}"id="chartUso" *ngIf="uso.type" [type]="uso.type" [data]="uso.data" [options]="uso.options" width="30vw" height="20vh"></p-chart>
+										<p style="font-weight: bold; text-align: center;">{{ dat.text }}</p>
+										<p-chart [ngStyle]="{'overflow-x': hidden}" *ngIf="dat.type" [type]="dat.type" [data]="dat.data" [options]="dat.options"></p-chart>
 									</div>
 								</p-tabPanel>
 							</p-tabView>
-						</p-scrollPanel>
 						</mat-tab>
 
 
 					</mat-tab-group>
 				</div>
-			</div> -->
+			</div> 
 
 	<div id="positionLegend" class="control-layers" cdkDrag>
 		<div [class]="collapseLegends ? 'titleWindows radius-bottom' : 'titleWindows'" >
@@ -320,8 +316,8 @@
 					<td>{{infodata.area_mun}} km²</td>
 				</tr>
 				<tr>
-					<th>{{minireportText.detection_date}} </th>
-					<td>{{infodata.data}}</td>
+					<th>População </th>
+					<td>{{infodata.pop_2019}}</td>
 				</tr>
 				<tr>
 					<th>Quantidade de Confirmados: </th>
