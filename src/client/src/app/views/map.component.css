@@ -863,6 +863,7 @@ mat-select {
 	left: 2%;
 	top: 2%;
 	width: 43vh;
+	min-width: 361px;
 	margin: auto;
 	border-radius: 10px;
 	background-color: #fff;

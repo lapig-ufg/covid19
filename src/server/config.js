@@ -45,7 +45,7 @@ module.exports = function (app) {
 			"debug": true
 		}
 		config["clientDir"] = appRoot + "/../client/dist/lapig-dpat/"
-		config["ows_host"] = "http://ows.lapig.iesa.ufg.br"
+		config["ows_host"] = "https://ows.lapig.iesa.ufg.br"
 		config["fieldDataDir"] = appProducao + "/campo-dpat/"
 		config["uploadDataDir"] = appProducao + "/upload-dpat/"
 
