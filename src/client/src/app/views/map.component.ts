@@ -184,7 +184,7 @@ export class MapComponent implements OnInit {
     private domSanitizer: DomSanitizer
   ) {
     this.projection = OlProj.get('EPSG:900913');
-    this.currentZoom = 6.3;
+    this.currentZoom = 4.3;
     this.layers = [];
 
     this.dataSeries = { timeseries: { label: "" } };
@@ -1161,7 +1161,7 @@ export class MapComponent implements OnInit {
     } else {
       this.collapseLayer = false;
       this.collapseCharts = false;
-      this.currentZoom = 7;
+      this.currentZoom = 9.8;
     }
 
     this.innerWidth = window.innerWidth;
@@ -1225,7 +1225,7 @@ export class MapComponent implements OnInit {
       this.collapseCharts = true;
       this.currentZoom = 6.3;
     } else {
-      this.currentZoom = 6.8;
+      this.currentZoom = 7.8;
     }
 
     // Register of SVG icons

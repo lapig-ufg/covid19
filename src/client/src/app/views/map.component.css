@@ -166,7 +166,7 @@ hr {
 #positionLegend {
 	position: absolute;
 	right: 1%;
-	top: 3%;
+	top: 7%;
 	width: 39vh;
 	background-color: #FFF;
 	color: #666;
@@ -969,11 +969,12 @@ mat-select {
 
 .layer-sidenav {
 	padding: 20px;
-	width: 34vh;
+	width: 47vh;
 	background-color: #e5ecef26;
-	/*margin-left: 150px;*/
+	margin-left: 109px;
 	transition: 0.3s;
 }
+
 
 .controls{
 	position: absolute;
@@ -995,6 +996,9 @@ mat-select {
 }
 
 .btn-layers:hover{
+	background-color: #dd4646;
+}
+.btn-layers-active{
 	background-color: #dd4646;
 }
 
