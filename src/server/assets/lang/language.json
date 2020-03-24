@@ -299,7 +299,7 @@
 				"gyn_locais_vacinacao": {
 					"label": {
 						"pt-br": "Locais de Vacinação em Goiânia",
-						"en-us": "Vaccination Sites in Goiania"
+						"en-us": "Flu Vaccination Sites in Goiania"
 					},
 					"types": {
 						"gyn_locais_vacinacao_gripe": {

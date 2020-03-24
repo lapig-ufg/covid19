@@ -35,7 +35,7 @@ module.exports = function (app) {
     var language = request.param('lang')
 
     var result = {
-      regionFilterDefault: "uf = 'GO'",
+      regionFilterDefault: "",
       type: languageJson["descriptor"]["type_of_information_label"][language],
       groups: [
         {

@@ -704,7 +704,7 @@ export class MapComponent implements OnInit {
       layer: new OlTileLayer({
         source: new OlXYZ({
           url:
-          'https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
+            'https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
         }),
         visible: true
       })
@@ -825,9 +825,11 @@ export class MapComponent implements OnInit {
     if (layer.timeHandler == 'msfilter' && layer.times) {
       filters.push(layer.timeSelected);
     }
+
     if (layer.layerfilter) { filters.push(layer.layerfilter); }
-    if (this.regionFilterDefault) { filters.push(this.regionFilterDefault); }
+    if (this.regionFilterDefault != "") { filters.push(this.regionFilterDefault); }
     if (layer.regionFilter && this.msFilterRegion) {
+      this.msFilterRegion = "uf = 'GO'"
       filters.push(this.msFilterRegion);
     }
 
