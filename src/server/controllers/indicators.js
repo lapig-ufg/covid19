@@ -34,7 +34,7 @@ module.exports = function(app) {
           // +"sendo a classe " + label + " a de maior predominância, com " + numberFormat(parseFloat(value))
           // + " de hectares (" + Math.round(percentual_area_ha) + "% da área total). "
 
-          var text = "Estimativas para o Estado de Goiás";
+          var text = "Estimativas de quantidade de casos para o Estado de Goiás";
 
           return text;
         },
@@ -43,7 +43,9 @@ module.exports = function(app) {
         disabled: false,
         options: {
           title: {
-            display: false
+            display: true,
+            text: 'Estimativas de quantidade de casos para o Estado de Goiás',
+            fontSize: 16
           },
           legend: {
             labels: {
@@ -54,8 +56,9 @@ module.exports = function(app) {
           },
           tooltips: {},
           scales:{
-            yAxes:[]
-        }
+            yAxes:[],
+            xAxes:[]
+          }
 
         }
       },
@@ -63,7 +66,7 @@ module.exports = function(app) {
         id: "timeseries_brasil",
         title: "Brasil",
         getText: function(chart) {
-          var text = "Estimativas para o Estado de Goiás";
+          var text = "Estimativas para o Brasil";
           return text;
         },
         type: "line",
@@ -71,7 +74,8 @@ module.exports = function(app) {
         disabled: true,
         options: {
           title: {
-            display: false
+            display: true,
+            text: 'Estimativas para o Brasil'
           },
           legend: {
             labels: {
@@ -82,7 +86,8 @@ module.exports = function(app) {
           },
           tooltips: {},
           scales:{
-              yAxes:[]
+            yAxes:[],
+            xAxes:[]
           }
 
         }
