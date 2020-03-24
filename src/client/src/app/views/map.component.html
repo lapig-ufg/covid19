@@ -1,12 +1,12 @@
 
 	<mat-drawer-container class="container-layer-sidenav" [style.height]="innerHeigth + 'px'" autosize>
-		<mat-drawer #drawer class="layer-sidenav" mode="over" [disableClose]="true">
+		<mat-drawer #drawer class="layer-sidenav" mode="over" [autoFocus]="false" [disableClose]="true">
 			<div class="container-drawer">
 				<div class="titleWindows">
 					{{titlesLayerBox.title}}
 				</div>
 
-				<div class="collapseLayer" [ngbCollapse]="collapseLayer">
+				<div class="collapseLayer" >
 					<mat-tab-group class="layersConteudo">
 						<mat-tab label="{{titlesLayerBox.label_data}}">
 							<p-scrollPanel [style]="{width: '100%', height: '60vh', padding:'10px'}" >
@@ -28,7 +28,7 @@
 										<div class="invalid-feedback" *ngIf="searchFailed">
 											{{titlesLayerBox.search_failed}}</div>
 
-										<div *ngFor="let groups of descriptor.groups">
+										<div *ngFor="let groups of descriptor.groups" style="margin-bottom: 10px">
 											<mat-expansion-panel [expanded]=groups.group_expanded>
 												<mat-expansion-panel-header [collapsedHeight]="'50px'"
 																			[expandedHeight]="'50px'" class="expansion-header-layer">
@@ -126,8 +126,8 @@
 					</mat-tab-group>
 				</div>
 
-				<div class="close-drawer" align="center" (click)="drawer.toggle()" >
-					<img width="60" height="60"  src="../../assets/gif/close-button.svg" alt="Fechar">
+				<div title="Fechar" class="close-drawer" align="center" (click)="drawer.toggle()" >
+					<img  align="center" width="60" height="60"  src="../../assets/gif/close-button.svg" alt="Fechar">
 				</div>
 			</div>
 
@@ -155,8 +155,8 @@
 					</div>
 				</div>
 
-				<div title="Acessar camada de dados" class="btn-layers" aria-label="Camadas de dados" (click)="drawer.toggle()">
-					<img src="../../assets/gif/btn_layers.svg" alt="Camadas de dados">
+				<div  matTooltip="Acessar camada de dados" class="btn-layers" aria-label="Camadas de dados" (click)="drawer.toggle()">
+					<img width="50" height="50" src="../../assets/gif/btn_layers.svg" alt="Camadas de dados">
 				</div>
 
 				<div id="positionCharts">
