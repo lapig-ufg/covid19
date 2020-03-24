@@ -180,7 +180,7 @@ hr {
 }
 
 .layersConteudo {
-	max-height: 702px;
+	max-height: 828px;
 	overflow: auto;
 }
 
@@ -868,9 +868,9 @@ mat-select {
 	position: absolute;
 	display: flex;
 	justify-content: center;
-	left: 2%;
+	left: 0.8%;
 	top: 2%;
-	width: 43vh;
+	width: 46vh;
 	min-width: 361px;
 	margin: auto;
 	border-radius: 10px;
@@ -965,9 +965,35 @@ mat-select {
 .layer-sidenav {
 	padding: 20px;
 	width: 600px;
-	opacity: 0.5;
+	background-color: #e5ecef26;
 }
 
-.mat-drawer-backdrop.mat-drawer-shown {
-	background-color: rgba(0, 0, 0, 0);
+.btn-layers{
+	position: absolute;
+	left: 48px;
+	top: 36%;
+	z-index: 100000;
+	min-width: 5% !important;
+	min-height: 5% !important;
+	cursor: pointer;
+	padding: 20px;
+	background-color: #823333;
+	border-radius: 100px;
+}
+
+.container-drawer{
+	margin-top: 140px;
+	background-color: white;
+	padding: 20px;
+	border-radius: 10px;
+}
+
+.close-drawer{
+	display: flex;
+	align-content: center;
+	right: 10px;
+	cursor: pointer;
+}
+.mat-drawer-container-has-open .mat-drawer-backdrop.mat-drawer-shown {
+	background-color:#00000000 !important;
 }
