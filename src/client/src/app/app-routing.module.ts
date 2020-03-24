@@ -24,7 +24,6 @@ const routesMobile: Routes = [
 export class AppRoutingModule {
   public constructor(private router: Router) {
 
-    console.log(window.innerWidth)
     if (window.innerWidth < 768) {
       router.resetConfig(routesMobile);
     }

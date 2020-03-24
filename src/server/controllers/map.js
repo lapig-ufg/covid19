@@ -59,10 +59,10 @@ module.exports = function (app) {
             id: "qtd_populacional",
             label: languageJson["descriptor"]["informacoes"]["layers"]["qtd_populacional"]["label"][language],
             visible: false,
-            selectedType:"ibge_populacao",
+            selectedType:"covid19_ibge_populacao",
             types:[{
-              value: "ibge_populacao",
-                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["qtd_populacional"]["types"]["ibge_populacao"]["view_value"][language],
+              value: "covid19_ibge_populacao",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["qtd_populacional"]["types"]["covid19_ibge_populacao"]["view_value"][language],
                 regionFilter: true,
                 opacity: 0.8,
                 order: 3

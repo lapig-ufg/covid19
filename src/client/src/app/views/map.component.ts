@@ -828,7 +828,7 @@ export class MapComponent implements OnInit {
 
     if (layer.layerfilter) { filters.push(layer.layerfilter); }
     if (this.regionFilterDefault != "") { filters.push(this.regionFilterDefault); }
-    if (layer.regionFilter && this.msFilterRegion) {
+    if (layer.regionFilter) {
       this.msFilterRegion = "uf = 'GO'"
       filters.push(this.msFilterRegion);
     }
