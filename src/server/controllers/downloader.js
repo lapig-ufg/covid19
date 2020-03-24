@@ -1,5 +1,5 @@
 var fs = require("fs");
-var languageJson = require('../assets/lang/language.json');
+// var languageJson = require('../assets/lang/language.json');
 var path = require('path');
 
 module.exports = function (app) {

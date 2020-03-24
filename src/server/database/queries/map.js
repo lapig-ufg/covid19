@@ -8,7 +8,7 @@ module.exports = function(app) {
 	}
 
 	Query.extent = function() {
-		return "SELECT ST_AsGeoJSON(geom) geojson, area_mun FROM municipios WHERE cd_geocmu = (${geocodigo}) ";
+		return "SELECT ST_AsGeoJSON(geom) geojson, area_mun FROM municipios WHERE cd_geocmu = (${cd_geocmu}) ";
 	}
 
 	Query.search = function() {
