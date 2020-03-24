@@ -169,10 +169,10 @@
 
 			}
 		},
-		"infraestrutura": {
+		"servicos": {
 			"label": {
-				"pt-br": "Infraestrutura",
-				"en-us": "Infrastructure"
+				"pt-br": "Serviços Gerais",
+				"en-us": "General Services"
 			},
 			"layers": {
 				"osm_rodovias": {
@@ -282,220 +282,35 @@
 						}
 					]
 				},
-				"armazens": {
+				"pharmacy_supermarket_hospital": {
 					"label": {
-						"pt-br": "Armazéns",
-						"en-us": "Warehouses"
+						"pt-br": "Hospitais, Farmácias e Supermercados",
+						"en-us": "Hospitals, Pharmacies and Supermarkets"
 					},
-					"metadata": [{
-							"title": {
-								"pt-br": "Dado",
-								"en-us": "Data"
-							},
-							"description": {
-								"pt-br": "Armazéns",
-								"en-us": "Warehouses"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Descrição",
-								"en-us": "Description"
-							},
-							"description": {
-								"pt-br": "Número de armazéns destinados a armazenamento e controle de produção no Brasil.",
-								"en-us": "Number of warehouses for storage and production control in Brazil."
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Data",
-								"en-us": "Date"
-							},
-							"description": {
-								"pt-br": "2017",
-								"en-us": "2017"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Escala",
-								"en-us": "Scale"
-							},
-							"description": {
-								"pt-br": "Pontual",
-								"en-us": "Point"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
-							},
-							"description": {
-								"pt-br": "SIRGAS 2000",
-								"en-us": "SIRGAS 2000"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Projeção Cartográfica",
-								"en-us": "Cartographic Projection"
-							},
-							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Codificação de caractere",
-								"en-us": "Character encoding"
-							},
-							"description": {
-								"pt-br": "UTF-8.",
-								"en-us": "UTF-8."
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Fonte",
-								"en-us": "Source"
-							},
-							"description": {
-								"pt-br": "Companhia Nacional de Abastecimento (CONAB) (Revisado pelo LAPIG-UFG)",
-								"en-us": "National Supply Company (CONAB) (Reviewed by LAPIG-UFG)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Detalhes",
-								"en-us": "Details"
-							},
-							"description": {
-								"pt-br": "<a target='_blank' class='link-details' href='https://portaldeinformacoes.conab.gov.br/armazem'> https://portaldeinformacoes.conab.gov.br/armazem </a>",
-								"en-us": "<a target='_blank' class='link-details' href='https://portaldeinformacoes.conab.gov.br/armazem'> https://portaldeinformacoes.conab.gov.br/armazem </a>"
+					"types": {
+						"pharmacy_supermarket_hospital_covid": {
+							"view_value": {
+								"pt-br": "Pontos",
+								"en-us": "Points"
 							}
 						}
-					]
+					}
 				},
-				"frigorificos": {
+				"gyn_locais_vacinacao": {
 					"label": {
-						"pt-br": "Matadouros e Frigoríficos",
-						"en-us": "Slaughterhouses & Freezers"
+						"pt-br": "Locais de Vacinação em Goiânia",
+						"en-us": "Vaccination Sites in Goiania"
 					},
-					"metadata": [{
-							"title": {
-								"pt-br": "Dado",
-								"en-us": "Data"
-							},
-							"description": {
-								"pt-br": "Matadouros e Frigoríficos",
-								"en-us": "Slaughterhouses & Freezers"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Descrição",
-								"en-us": "Description"
-							},
-							"description": {
-								"pt-br": "Dado produzido a partir de informações de Matadouros e/ou Frigoríficos Bovinos do Brasil aptos a exportação (SIF-MAPA), com localização revisada pelo LAPIG.",
-								"en-us": "Data produced from information on slaughterhouses and / or Brazilian beef slaughterhouses suitable for export (SIF-MAPA), with location reviewed by LAPIG."
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Data",
-								"en-us": "Date"
-							},
-							"description": {
-								"pt-br": "2017",
-								"en-us": "2017"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Escala",
-								"en-us": "Scale"
-							},
-							"description": {
-								"pt-br": "Pontual",
-								"en-us": "Point"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
-							},
-							"description": {
-								"pt-br": "SIRGAS 2000",
-								"en-us": "SIRGAS 2000"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Projeção Cartográfica",
-								"en-us": "Cartographic Projection"
-							},
-							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Codificação de caractere",
-								"en-us": "Character encoding"
-							},
-							"description": {
-								"pt-br": "UTF-8.",
-								"en-us": "UTF-8."
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Fonte",
-								"en-us": "Source"
-							},
-							"description": {
-								"pt-br": "Ministério da Agricultura, Pecuária e Abastecimento (MAPA) (Revisado por LAPIG-UFG)",
-								"en-us": "Ministry of Agriculture, Livestock and Supply (MAPA) (Revised by LAPIG-UFG)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Detalhes",
-								"en-us": "Details"
-							},
-							"description": {
-								"pt-br": "<a target='_blank' class='link-details' href='http://www.agricultura.gov.br/assuntos/inspecao/produtos-animal/sif'> http://www.agricultura.gov.br/assuntos/inspecao/produtos-animal/sif </a>",
-								"en-us": "<a target='_blank' class='link-details' href='http://www.agricultura.gov.br/assuntos/inspecao/produtos-animal/sif'> http://www.agricultura.gov.br/assuntos/inspecao/produtos-animal/sif </a>"
+					"types": {
+						"gyn_locais_vacinacao_gripe": {
+							"view_value": {
+								"pt-br": "Pontos de Vacinação",
+								"en-us": "Vaccination Sites"
 							}
 						}
-					]
+					}
 				}
+				
 			}
 		},
 		"imagens": {

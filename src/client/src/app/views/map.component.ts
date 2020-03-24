@@ -94,6 +94,7 @@ export class MapComponent implements OnInit {
   landsat: any;
   descriptor: any;
   valueRegion: any;
+  googlemaps: any
   regionFilterDefault: any;
   urls: any;
   dataExtent: any;
@@ -648,7 +649,7 @@ export class MapComponent implements OnInit {
 
   private createBaseLayers() {
     this.mapbox = {
-      visible: true,
+      visible: false,
       layer: new OlTileLayer({
         source: new OlXYZ({
           wrapX: false,
@@ -681,7 +682,7 @@ export class MapComponent implements OnInit {
             'VmCqTus7G3OxlDECYJ7O~G3Wj1uu3KG6y-zycuPHKrg~AhbMxjZ7yyYZ78AjwOVIV-5dcP5ou20yZSEVeXxqR2fTED91m_g4zpCobegW4NPY',
           imagerySet: 'Road'
         }),
-        visible: true
+        visible: false
       })
     };
 
@@ -694,6 +695,17 @@ export class MapComponent implements OnInit {
             'World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}'
         }),
         visible: false
+      })
+    };
+
+    this.googlemaps = {
+      visible: true,
+      layer: new OlTileLayer({
+        source: new OlXYZ({
+          url:
+          'https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
+        }),
+        visible: true
       })
     };
 
