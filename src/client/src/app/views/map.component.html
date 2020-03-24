@@ -1,24 +1,13 @@
 
 	<mat-drawer-container class="container-layer-sidenav" [style.height]="innerHeigth + 'px'" autosize>
-		<mat-drawer #drawer class="layer-sidenav" mode="over">
-			<div  class="dpat-logo">
-				<div class="container-logos">
-					<img width="100" height="100" src="{{svgLoading}}" alt="Covid-19"/>
-					<img width="150" height="60" src="../../assets/logo/lapig.png" alt="LAPIG"/>
-					<img width="90" height="90" src="../../assets/logo/logo-ufg.png" alt="UFG"/>
-				</div>
-			</div>
-			<div id="positionLayers" class="control-layers" cdkDrag>
+		<mat-drawer #drawer class="layer-sidenav" mode="over" [disableClose]="true">
+			<div class="container-drawer">
 				<div class="titleWindows">
 					{{titlesLayerBox.title}}
-					<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
-							(click)="collapseLayer = !collapseLayer" [attr.aria-expanded]="!collapseLayer"
-							aria-controls="camadageografica">-</button>
 				</div>
+
 				<div class="collapseLayer" [ngbCollapse]="collapseLayer">
 					<mat-tab-group class="layersConteudo">
-
-
 						<mat-tab label="{{titlesLayerBox.label_data}}">
 							<p-scrollPanel [style]="{width: '100%', height: '60vh', padding:'10px'}" >
 								<mat-accordion>
@@ -70,18 +59,18 @@
 														</mat-form-field>
 														<span class="" *ngFor="let type of layer.types"
 															  [hidden]="type.value != layer.selectedType">
-																<mat-form-field *ngIf="type.times">
-																	<mat-label>{{type.timeLabel}}</mat-label>
-																	<mat-select
-																			(selectionChange)="updateSourceLayer(type)"
-																			[(value)]="type.timeSelected">
-																		<mat-option *ngFor="let times of type.times"
-																					[value]="times.value">
-																			{{times.Viewvalue}}
-																		</mat-option>
-																	</mat-select>
-																</mat-form-field>
-															</span>
+																	<mat-form-field *ngIf="type.times">
+																		<mat-label>{{type.timeLabel}}</mat-label>
+																		<mat-select
+																				(selectionChange)="updateSourceLayer(type)"
+																				[(value)]="type.timeSelected">
+																			<mat-option *ngFor="let times of type.times"
+																						[value]="times.value">
+																				{{times.Viewvalue}}
+																			</mat-option>
+																		</mat-select>
+																	</mat-form-field>
+																</span>
 													</div>
 
 													<!-- <section *ngIf="layer.visible" class="btn-actions">
@@ -136,13 +125,39 @@
 
 					</mat-tab-group>
 				</div>
+
+				<div class="close-drawer" align="center" (click)="drawer.toggle()" >
+					<img width="60" height="60"  src="../../assets/gif/close-button.svg" alt="Fechar">
+				</div>
 			</div>
+
+<!--			<div id="positionLayers" class="control-layers" cdkDrag>-->
+<!--				<div class="titleWindows">-->
+<!--					{{titlesLayerBox.title}}-->
+<!--					<button type="button" class="collapse-btn btn btn-light btn-sm float-right"-->
+<!--							(click)="collapseLayer = !collapseLayer" [attr.aria-expanded]="!collapseLayer"-->
+<!--							aria-controls="camadageografica">-</button>-->
+<!--				</div>-->
+<!--				-->
+<!--			</div>-->
 
 		</mat-drawer>
 
-		<div class="layer-sidenav-content" (click)="drawer.toggle()">
+		<div class="layer-sidenav-content" >
 
 			<div id="map" class="dpat-ol-map" [style.height]="innerHeigth + 'px'" >
+
+				<div  class="dpat-logo">
+					<div class="container-logos">
+						<img width="100" height="100" src="{{svgLoading}}" alt="Covid-19"/>
+						<img width="150" height="60" src="../../assets/logo/lapig.png" alt="LAPIG"/>
+						<img width="90" height="90" src="../../assets/logo/logo-ufg.png" alt="UFG"/>
+					</div>
+				</div>
+
+				<div title="Acessar camada de dados" class="btn-layers" aria-label="Camadas de dados" (click)="drawer.toggle()">
+					<img src="../../assets/gif/btn_layers.svg" alt="Camadas de dados">
+				</div>
 
 				<div id="positionCharts">
 					<div class="titleWindows">
@@ -389,6 +404,7 @@
 
 			</div>
 		</div>
+
 	</mat-drawer-container>
 
 <!--	<div id="map" class="dpat-ol-map" [style.height]="innerHeigth + 'px'" >-->
