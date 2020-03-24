@@ -40,6 +40,13 @@ hr {
 	border-radius: 0px;
 }
 
+.ngb-highlight {
+	font-weight: normal !important;
+  }
+  
+  ngb-highlight .ngb-highlight:first-child {
+	font-weight: bold !important;
+  }
 
 .dpat-ol-div {
 	padding: 0px;
@@ -58,6 +65,7 @@ hr {
     /* position: fixed !important; */
     width: 100%;
     min-width: 80px;
+
     /* min-height: 800px; */
 }
 
@@ -158,7 +166,7 @@ hr {
 #positionLegend {
 	position: absolute;
 	right: 1%;
-	top: 9%;
+	top: 3%;
 	width: 39vh;
 	background-color: #FFF;
 	color: #666;
@@ -938,4 +946,28 @@ mat-select {
 }
 .layersConteudo .mat-tab-body-wrapper{
 	padding: 10px;
+}
+
+.container-layer-sidenav {
+	position: absolute;
+	float: left;
+
+	width: 100%;
+}
+
+.layer-sidenav-content {
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+	z-index: 10000;
+}
+
+.layer-sidenav {
+	padding: 20px;
+	width: 600px;
+	opacity: 0.5;
+}
+
+.mat-drawer-backdrop.mat-drawer-shown {
+	background-color: rgba(0, 0, 0, 0);
 }

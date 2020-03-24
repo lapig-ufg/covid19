@@ -60,6 +60,7 @@ export class SearchService {
   templateUrl: './map.component.html',
   providers: [SearchService],
   styleUrls: ['./map.component.css']
+  
 })
 export class MapComponent implements OnInit {
   map: OlMap;
@@ -68,7 +69,7 @@ export class MapComponent implements OnInit {
   projection: OlProj;
   currentZoom: Number;
   regionsLimits: any;
-  dataSeries: any;
+  dataSeries = [] as any
   dataStates: any;
   dataCities: any;
   chartResultCities: any;
@@ -170,6 +171,7 @@ export class MapComponent implements OnInit {
   };
 
   innerHeigth: any;
+  innerWidth:any;
 
   constructor(
     private http: HttpClient,
@@ -182,7 +184,7 @@ export class MapComponent implements OnInit {
     this.currentZoom = 6.3;
     this.layers = [];
 
-    this.dataSeries = {};
+    this.dataSeries = [];
     this.dataStates = {};
 
     this.chartResultCities = {
@@ -194,16 +196,17 @@ export class MapComponent implements OnInit {
 
     this.defaultRegion = {
       nome: 'GO',
-      area_mun: 329617.070236032,
+      area_mun: 1547.26991096032,
+      estado: 'GOIÁS',
+      uf: 'GO',
+      cd_geocmu: '52'
     };
     this.selectRegion = this.defaultRegion;
 
     this.textOnDialog = {};
 
     this.currentData = '';
-    this.valueRegion = {
-      text: ''
-    };
+    this.valueRegion = '';
 
     this.changeTabSelected = "";
 
@@ -305,10 +308,9 @@ export class MapComponent implements OnInit {
   private getServiceParams() {
     let params = [];
 
-    // if (this.selectRegion.type != '') {
-    //   params.push('type=' + this.selectRegion.type);
-    //   params.push('region=' + this.selectRegion.value);
-    // }
+    if (this.selectRegion.type != '') {
+      params.push('geocodigo=' + this.selectRegion.cd_geocmu);
+    }
 
     params.push('lang=' + this.language);
 
@@ -336,7 +338,7 @@ export class MapComponent implements OnInit {
         var extent = features[0].getGeometry().getExtent();
         map.getView().fit(extent, { duration: 1500 });
 
-        this.selectRegion.area_region = extentResult["area_mun"];
+        this.selectRegion.area_mun = extentResult["area_mun"];
       });
     }
   }
@@ -366,7 +368,6 @@ export class MapComponent implements OnInit {
 
     if (this.language != (lang)) {
       this.language = lang;
-
 
       this.setStylesLangButton();
       this.updateTexts();
@@ -404,18 +405,91 @@ export class MapComponent implements OnInit {
 
   }
 
+  private transformDate(myDate){
+    return this.datePipe.transform(myDate, 'dd/MM/yyyy'); 
+  }
+
+  
   private updateCharts() {
 
+    let timeseriesUrl = '/service/indicators/timeseries' + this.getServiceParams();
+
+    this.http.get(timeseriesUrl).subscribe(result => {
+
+      this.dataSeries = result;
+
+      for (let graphic of this.dataSeries) {
+
+        graphic.data = {
+          labels: graphic.indicators.map(element => this.transformDate(element.data)),
+          datasets: [
+            {
+              label: graphic.label_confirmados,
+              data: graphic.indicators.map(element => element.confirmados),
+              fill:false,
+              backgroundColor: '#e83225',
+              borderColor: '#e83225',
+            },
+            {
+              label: graphic.label_recuperados,
+              data: graphic.indicators.map(element => element.recuperados),
+              fill:false,
+              backgroundColor: '#289628',
+              borderColor: '#289628',
+            }
+          ]
+        };
+
+        let y = [{
+          ticks: {
+            beginAtZero: true,
+              callback: function(value) {
+                  return value.toLocaleString('de-DE');
+              }
+          }
+      }]
+
+        graphic.options.scales.yAxes = y;
+
+        graphic.options.legend.onHover = function (event) {
+          event.target.style.cursor = 'pointer';
+          graphic.options.legend.labels.fontColor = '#0335fc';
+        };
+
+        graphic.options.legend.onLeave = function (event) {
+          event.target.style.cursor = 'default';
+          graphic.options.legend.labels.fontColor = '#fa1d00';
+        };
+
+        // graphic.options.tooltips.callbacks = {
+        //   title(tooltipItem, data) {
+        //     return data.labels[tooltipItem[0].index];
+        //   },
+        //   label(tooltipItem, data) {
+        //     console.log(tooltipItem, data)
+        //     return data.toLocaleString('de-DE');
+        //   },
+        //   // afterLabel: function (tooltipItem, data) {
+        //   //   return "a calcular";
+        //   // }
+        // };
+
+      }
+
+    }
+    );
   }
 
   updateRegion(region) {
 
+    
     if (region == this.defaultRegion) {
       this.valueRegion = '';
       this.currentData = '';
     }
 
     this.selectRegion = region;
+    
     this.isFilteredByCity = false;
     this.isFilteredByState = false;
 
@@ -431,6 +505,9 @@ export class MapComponent implements OnInit {
 
     this.updateExtent();
     this.updateSourceAllLayer();
+    this.valueRegion = region.nome.toString();
+
+    console.log("ValueRegion: ", this.valueRegion);
   }
 
   private getResolutions(projection) {
@@ -514,6 +591,8 @@ export class MapComponent implements OnInit {
           if(this.infodata.confirmados == ""){
             this.infodata.confirmados = 0;
           }
+
+          this.infodata.pop_2019 = this.infodata.pop_2019.toLocaleString('de-DE')
 
           this.infodata.area_mun = Math.round(this.infodata.area_mun * 1000) / 1000       
 
@@ -1056,6 +1135,8 @@ export class MapComponent implements OnInit {
       this.collapseCharts = false;
       this.currentZoom = 7;
     }
+
+    this.innerWidth = window.innerWidth;
   }
 
   ngOnInit() {
