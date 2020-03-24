@@ -47,7 +47,8 @@ import { SpinnerImgComponent } from './views/spinner-img/spinner-img.component';
 import { FileUploadComponent } from './views/file-upload/file-upload.component';
 import { MetadataComponent } from './views/metadata/metadata.component';
 
-import { APP_BASE_HREF } from '@angular/common'; 
+import { APP_BASE_HREF } from '@angular/common';
+import { MapMobileComponent } from './views/map-mobile/map-mobile.component'; 
 
 registerLocaleData(localePt);
 
@@ -58,6 +59,7 @@ registerLocaleData(localePt);
     SpinnerImgComponent,
     FileUploadComponent,
     MetadataComponent,
+    MapMobileComponent,
   ],
   imports: [
     TabViewModule,
