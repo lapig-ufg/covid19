@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, HostListener, Injectable, OnInit } from '@angular/core';
+import { Component, HostListener, Injectable, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -173,6 +173,11 @@ export class MapComponent implements OnInit {
   innerHeigth: any;
   innerWidth: any;
 
+  showStatistics:boolean;
+  showDrawer:boolean;
+
+  @ViewChild("drawer",  {static: false}) drawer: ElementRef;
+
   constructor(
     private http: HttpClient,
     private _service: SearchService,
@@ -181,7 +186,7 @@ export class MapComponent implements OnInit {
     private domSanitizer: DomSanitizer
   ) {
     this.projection = OlProj.get('EPSG:900913');
-    this.currentZoom = 6.3;
+    this.currentZoom = 4.3;
     this.layers = [];
 
     this.dataSeries = { timeseries: { label: "" } };
@@ -263,6 +268,9 @@ export class MapComponent implements OnInit {
     this.minireportText = {};
 
     this.updateTexts();
+
+    this.showStatistics =  false;
+    this.showDrawer     =  false;
   }
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -1168,10 +1176,14 @@ export class MapComponent implements OnInit {
     } else {
       this.collapseLayer = false;
       this.collapseCharts = false;
-      this.currentZoom = 7;
+      this.currentZoom = 9.8;
     }
 
     this.innerWidth = window.innerWidth;
+  }
+
+  handleDrawer(){
+    this.showDrawer = !this.showDrawer;
   }
 
   ngOnInit() {
@@ -1228,7 +1240,7 @@ export class MapComponent implements OnInit {
       this.collapseCharts = true;
       this.currentZoom = 6.3;
     } else {
-      this.currentZoom = 6.8;
+      this.currentZoom = 7.8;
     }
 
     // Register of SVG icons
