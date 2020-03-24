@@ -140,8 +140,8 @@ body .ui-tabview .ui-tabview-panels {
 	/* left: 2%; */
 	/*bottom: 2%;*/
 	/*height: 90%;*/
-	max-width: 350px;
-	width: 35vh;
+	max-width: 300px;
+	/* width: 40vh; */
 	background-color: #FFF;
 	color: #d6d2ce;
 	text-align: left;
