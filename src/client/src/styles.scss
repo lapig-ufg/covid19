@@ -284,3 +284,6 @@ body {
 	background-color:#00000000 !important;
 	visibility: hidden !important;
 }
+.mat-drawer:not(.mat-drawer-side) {
+	box-shadow:none;
+}

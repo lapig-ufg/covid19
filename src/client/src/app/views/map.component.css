@@ -166,7 +166,7 @@ hr {
 #positionLegend {
 	position: absolute;
 	right: 1%;
-	top: 3%;
+	top: 7%;
 	width: 39vh;
 	background-color: #FFF;
 	color: #666;
@@ -605,13 +605,18 @@ h5.expansion-layer  {
 	}
 }
 
+
+@media (min-width: 1000px) and (max-width: 1300px) {
+
+}
+
 .iconInfo {
 	font-size: 20px;
 }
 
 @media (min-width: 1400px) and (max-width: 1700px) {
 	.layersConteudo {
-		max-height: 720px;
+		max-height: 800px;
 	}
 }
 
@@ -870,7 +875,7 @@ mat-select {
 	justify-content: center;
 	left: 0.8%;
 	top: 2%;
-	width: 46vh;
+	width: 31vh;
 	min-width: 361px;
 	margin: auto;
 	border-radius: 10px;
@@ -951,7 +956,6 @@ mat-select {
 .container-layer-sidenav {
 	position: absolute;
 	float: left;
-
 	width: 100%;
 }
 
@@ -960,34 +964,50 @@ mat-select {
 	align-items: center;
 	justify-content: center;
 	z-index: 10000;
+	transition: 0.3s;
 }
 
 .layer-sidenav {
 	padding: 20px;
-	width: 49vh;
+	width: 47vh;
 	background-color: #e5ecef26;
+	margin-left: 109px;
+	transition: 0.3s;
+}
+
+
+.controls{
+	position: absolute;
+	left: 21px;
+	top: 44%;
+	z-index: 100000;
+	padding: 14px;
+	border-radius: 10px;
+	background-color: #584e4f8c;
 }
 
 .btn-layers{
-	position: absolute;
-	left: 48px;
-	top: 36%;
-	z-index: 100000;
 	cursor: pointer;
-	padding: 20px;
+	padding: 15px;
+	margin-bottom: 10px;
 	background-color: #823333;
 	border-radius: 100px;
 	transition: 0.3s;
 }
+
 .btn-layers:hover{
+	background-color: #dd4646;
+}
+.btn-layers-active{
 	background-color: #dd4646;
 }
 
 .container-drawer{
-	margin-top: 140px;
+	margin-top: 166px;
 	background-color: white;
 	padding: 20px;
 	border-radius: 10px;
+	transition: 0.3s;
 }
 
 .close-drawer{
