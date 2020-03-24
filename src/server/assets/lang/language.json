@@ -158,7 +158,7 @@
 						}
 					}],
 					"types": {
-						"ibge_populacao": {
+						"covid19_ibge_populacao": {
 							"view_value": {
 								"pt-br": "Quantidade",
 								"en-us": "Quantity"
