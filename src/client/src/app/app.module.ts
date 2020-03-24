@@ -21,6 +21,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+
 
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
@@ -83,6 +85,7 @@ registerLocaleData(localePt);
     MatButtonModule,
     MatIconModule,
     MatRadioModule,
+    MatSidenavModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,

@@ -171,6 +171,7 @@ export class MapComponent implements OnInit {
   };
 
   innerHeigth: any;
+  innerWidth:any;
 
   constructor(
     private http: HttpClient,
@@ -486,7 +487,7 @@ export class MapComponent implements OnInit {
       this.valueRegion = '';
       this.currentData = '';
     }
-    
+
     this.selectRegion = region;
     
     this.isFilteredByCity = false;
@@ -504,6 +505,9 @@ export class MapComponent implements OnInit {
 
     this.updateExtent();
     this.updateSourceAllLayer();
+    this.valueRegion = region.nome.toString();
+
+    console.log("ValueRegion: ", this.valueRegion);
   }
 
   private getResolutions(projection) {
@@ -1131,6 +1135,8 @@ export class MapComponent implements OnInit {
       this.collapseCharts = false;
       this.currentZoom = 7;
     }
+
+    this.innerWidth = window.innerWidth;
   }
 
   ngOnInit() {
