@@ -119,6 +119,7 @@ export class MapComponent implements OnInit {
   limitsTMS = {};
 
   collapseCharts = false;
+  collapseChartsMobile: boolean;
   collapseLayer = false;
 
   isFilteredByCity = false;
