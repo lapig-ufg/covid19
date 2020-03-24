@@ -97,7 +97,6 @@ module.exports = function (app) {
                 types: [{
                   value: "gyn_locais_vacinacao_gripe",
                   Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["gyn_locais_vacinacao"]["types"]["gyn_locais_vacinacao_gripe"]["view_value"][language],
-                  regionFilter: true,
                   opacity: 0.8,
                   order: 3
                 }]
