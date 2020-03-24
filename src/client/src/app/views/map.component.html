@@ -6,6 +6,7 @@
 					{{titlesLayerBox.title}}
 				</div>
 
+
 				<div class="collapseLayer" >
 					<mat-tab-group class="layersConteudo">
 						<mat-tab label="{{titlesLayerBox.label_data}}">
@@ -41,6 +42,10 @@
 																	  [checked]=layer.visible>
 															{{layer.label}}
 														</mat-checkbox>
+														<!-- <div class="space"></div>
+														<button *ngIf="layer.visible"  (click)="openDialogMetadata(layer)" classs="btn-info" mat-icon-button>
+															<mat-icon>info</mat-icon>
+														</button> -->
 													</div>
 													<div *ngIf="layer.visible" style="padding-left: 8%; padding-right: 8%">
 														<mat-form-field  style="width: 130px">
@@ -126,9 +131,18 @@
 					</div>
 				</div>
 
+				<div class="btn-languages">
+					<button  (click)="changeLanguage('pt-br')" class="color-buttons" mat-raised-button color="accent" [ngStyle]="bntStylePOR">&nbsp;POR</button>
+					<button  (click)="changeLanguage('en-us')" class="color-buttons" mat-raised-button color="warn" [ngStyle]="bntStyleENG">&nbsp;ENG</button>
+				</div>
+
+				<div  matTooltip="Acessar camada de dados" class="btn-layers" aria-label="Camadas de dados" (click)="drawer.toggle()">
+					<img width="50" height="50" src="../../assets/gif/btn_layers.svg" alt="Camadas de dados">
+				</div>
+
 				<div *ngIf="showStatistics" id="positionCharts">
 					<div class="titleWindows">
-						Estatísticas
+						{{dataSeries.title}}
 						<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
 								(click)="collapseCharts = !collapseCharts" [attr.aria-expanded]="!collapseCharts"
 								aria-controls="camadageografica">-</button>
@@ -138,16 +152,19 @@
 
 
 							<mat-tab label="Projeções Temporais" >
+
+							<mat-tab label="{{dataSeries.timeseries.label}}" >
+								<ng-template matTabContent>
 								<p-tabView >
-									<p-tabPanel [header]="dat.title" *ngFor="let dat of dataSeries; let i = index" [selected]="i == 0" [disabled]="!dat.show" [cache]="true">
+									<p-tabPanel [header]="dat.title" *ngFor="let dat of dataSeries.timeseries.chartResult; let i = index" [selected]="i == 0" [disabled]="!dat.show" [cache]="true">
 										<div>
 											<!-- <p style="font-weight: bold; text-align: center;">{{ dat.text }}</p> -->
 											<p-chart [ngStyle]="{'overflow-x': hidden}" *ngIf="dat.type" [type]="dat.type" [data]="dat.data" [options]="dat.options"></p-chart>
 										</div>
 									</p-tabPanel>
 								</p-tabView>
+							</ng-template>
 							</mat-tab>
-
 
 						</mat-tab-group>
 					</div>

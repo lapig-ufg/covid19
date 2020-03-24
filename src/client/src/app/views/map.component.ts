@@ -58,7 +58,7 @@ export class SearchService {
   templateUrl: './map.component.html',
   providers: [SearchService],
   styleUrls: ['./map.component.css']
-  
+
 })
 export class MapComponent implements OnInit {
   map: OlMap;
@@ -67,7 +67,7 @@ export class MapComponent implements OnInit {
   projection: OlProj;
   currentZoom: Number;
   regionsLimits: any;
-  dataSeries = [] as any
+  dataSeries: any;
   dataStates: any;
   dataCities: any;
   chartResultCities: any;
@@ -169,7 +169,7 @@ export class MapComponent implements OnInit {
   };
 
   innerHeigth: any;
-  innerWidth:any;
+  innerWidth: any;
 
   showStatistics:boolean;
   showDrawer:boolean;
@@ -187,8 +187,9 @@ export class MapComponent implements OnInit {
     this.currentZoom = 6.3;
     this.layers = [];
 
-    this.dataSeries = [];
+    this.dataSeries = { timeseries: { label: "" } };
     this.dataStates = {};
+
 
     this.chartResultCities = {
       split: []
@@ -211,7 +212,7 @@ export class MapComponent implements OnInit {
     this.currentData = {
       text: ''
     };
-    
+
     this.valueRegion = '';
 
     this.changeTabSelected = "";
@@ -318,7 +319,7 @@ export class MapComponent implements OnInit {
     let params = [];
 
     if (this.selectRegion.type != '') {
-      params.push('geocodigo=' + this.selectRegion.cd_geocmu);
+      params.push('cd_geocmu=' + this.selectRegion.cd_geocmu);
     }
 
     params.push('lang=' + this.language);
@@ -414,11 +415,15 @@ export class MapComponent implements OnInit {
 
   }
 
-  private transformDate(myDate){
-    return this.datePipe.transform(myDate, 'dd/MM/yyyy'); 
+  private transformDate(myDate) {
+    if (this.language == 'pt-br') {
+      return this.datePipe.transform(myDate, 'dd/MM/yyyy');
+    } else {
+      return this.datePipe.transform(myDate, 'MM/dd/yyyy');
+    }
   }
 
-  
+
   private updateCharts() {
 
     let timeseriesUrl = '/service/indicators/timeseries' + this.getServiceParams();
@@ -427,7 +432,9 @@ export class MapComponent implements OnInit {
 
       this.dataSeries = result;
 
-      for (let graphic of this.dataSeries) {
+      // console.log(this.dataSeries)
+
+      for (let graphic of this.dataSeries.timeseries.chartResult) {
 
         graphic.data = {
           labels: graphic.indicators.map(element => this.transformDate(element.data)),
@@ -435,14 +442,14 @@ export class MapComponent implements OnInit {
             {
               label: graphic.label_confirmados,
               data: graphic.indicators.map(element => element.confirmados),
-              fill:false,
+              fill: false,
               backgroundColor: '#e83225',
               borderColor: '#e83225',
             },
             {
               label: graphic.label_recuperados,
               data: graphic.indicators.map(element => element.recuperados),
-              fill:false,
+              fill: false,
               backgroundColor: '#289628',
               borderColor: '#289628',
             }
@@ -452,11 +459,11 @@ export class MapComponent implements OnInit {
         let y = [{
           ticks: {
             beginAtZero: true,
-              callback: function(value) {
-                  return value.toLocaleString('de-DE');
-              }
+            callback: function (value) {
+              return value.toLocaleString('de-DE');
+            }
           }
-      }]
+        }]
 
         graphic.options.scales.yAxes = y;
 
@@ -465,9 +472,9 @@ export class MapComponent implements OnInit {
             autoskip: true,
             autoSkipPadding: 20
           }
-      }]
+        }]
 
-      graphic.options.scales.xAxes = x;
+        graphic.options.scales.xAxes = x;
 
         graphic.options.legend.onHover = function (event) {
           event.target.style.cursor = 'pointer';
@@ -500,7 +507,7 @@ export class MapComponent implements OnInit {
 
   updateRegion(region) {
 
-    
+
     if (region == this.defaultRegion) {
       this.valueRegion = '';
       this.currentData = {
@@ -512,7 +519,7 @@ export class MapComponent implements OnInit {
     this.valueRegion = region.nome.toString();
 
     this.selectRegion = region;
-    
+
     this.isFilteredByCity = false;
     this.isFilteredByState = false;
 
@@ -570,23 +577,23 @@ export class MapComponent implements OnInit {
 
 
 
-      this.infoOverlay = new Overlay({
-        element: document.getElementById('map-info'),
-        offset: [15, 15],
-        stopEvent: false
-      });
+    this.infoOverlay = new Overlay({
+      element: document.getElementById('map-info'),
+      offset: [15, 15],
+      stopEvent: false
+    });
 
-      this.keyForPointer = this.map.on(
-        'pointermove',
-        this.callbackPointerMoveMap.bind(this)
-      );
+    this.keyForPointer = this.map.on(
+      'pointermove',
+      this.callbackPointerMoveMap.bind(this)
+    );
 
-      this.keyForClick = this.map.on(
-        'singleclick',
-        this.callbackClickMap.bind(this)
-      );
+    this.keyForClick = this.map.on(
+      'singleclick',
+      this.callbackClickMap.bind(this)
+    );
 
-      this.map.addOverlay(this.infoOverlay);
+    this.map.addOverlay(this.infoOverlay);
 
 
   }
@@ -602,20 +609,20 @@ export class MapComponent implements OnInit {
     let coordinate = this.map.getEventCoordinate(evt.originalEvent);
     let viewResolution = this.map.getView().getResolution();
 
-    
+
     if (this.utfgridsource) {
       this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
         if (data) {
 
           this.infodata = data;
 
-          if(this.infodata.confirmados == ""){
+          if (this.infodata.confirmados == "") {
             this.infodata.confirmados = 0;
           }
 
           this.infodata.pop_2019 = this.infodata.pop_2019.toLocaleString('de-DE')
 
-          this.infodata.area_mun = Math.round(this.infodata.area_mun * 1000) / 1000       
+          this.infodata.area_mun = Math.round(this.infodata.area_mun * 1000) / 1000
 
           this.infoOverlay.setPosition(this.infodata ? coordinate : undefined);
 

@@ -1,5 +1,6 @@
 var fs = require('fs');
 const req = require('request');
+var languageJson = require('../assets/lang/language.json');
 
 module.exports = function(app) {
 
@@ -16,12 +17,13 @@ module.exports = function(app) {
   }
 
   Controller.timeseries = function(request, response) {
+    var language = request.param('lang')
     var chartResult = [
       {
         id: "timeseries_go",
         title: "Goiás",
-        label_confirmados: "Confirmados",
-        label_recuperados: "Recuperados",
+        label_confirmados: languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go"]["label_confirmados"][language],
+        label_recuperados:  languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go"]["label_recuperados"][language],
         getText: function(chart) {
           // var label = chart['indicators'][0]["label"]
           // var value = chart['indicators'][0]["value"]
@@ -34,7 +36,7 @@ module.exports = function(app) {
           // +"sendo a classe " + label + " a de maior predominância, com " + numberFormat(parseFloat(value))
           // + " de hectares (" + Math.round(percentual_area_ha) + "% da área total). "
 
-          var text = "Estimativas de quantidade de casos para o Estado de Goiás";
+          var text = languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go"]["title"][language];
 
           return text;
         },
@@ -44,7 +46,7 @@ module.exports = function(app) {
         options: {
           title: {
             display: true,
-            text: 'Estimativas de quantidade de casos para o Estado de Goiás',
+            text: languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go"]["title"][language],
             fontSize: 16
           },
           legend: {
@@ -104,7 +106,15 @@ module.exports = function(app) {
 			}
     }
 
-    response.send(chartResult);
+    let finalResult = {
+      title : languageJson["charts_box"]["charts_box_title"][language],
+      timeseries: {
+        label: languageJson["charts_box"]["charts_box_timeseries"]["label"][language],
+        chartResult : chartResult
+      }
+    };
+
+    response.send(finalResult);
     response.end();
   };
 
