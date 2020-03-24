@@ -836,7 +836,7 @@ export class MapComponent implements OnInit {
 
     if (layer.layerfilter) { filters.push(layer.layerfilter); }
     if (this.regionFilterDefault != "") { filters.push(this.regionFilterDefault); }
-    if (layer.regionFilter && this.msFilterRegion) {
+    if (layer.regionFilter) {
       this.msFilterRegion = "uf = 'GO'"
       filters.push(this.msFilterRegion);
     }
@@ -1176,7 +1176,7 @@ export class MapComponent implements OnInit {
     } else {
       this.collapseLayer = false;
       this.collapseCharts = false;
-      this.currentZoom = 9.8;
+      this.currentZoom = 8.8;
     }
 
     this.innerWidth = window.innerWidth;
