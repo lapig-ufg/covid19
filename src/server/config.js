@@ -23,8 +23,8 @@ module.exports = function (app) {
 			// "password": 'postgres',
 			"password": 'covid19123',
 			// "port": 5432,
-			// "port": 5433,
-			"port": 5434,
+			"port": 5433,
+			// "port": 5434,
 			"debug": true
 		},
 		"port": 3000,

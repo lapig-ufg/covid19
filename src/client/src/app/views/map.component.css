@@ -157,7 +157,7 @@ hr {
 	border-radius:10px;
 	/*border: 1px solid #808080;*/
 	opacity: .93;
-	max-height: 460px;
+	max-height: 499px;
 	overflow:hidden;
 	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
 	box-shadow: -1px 1px 10px 0px #7a2525;
@@ -964,7 +964,7 @@ mat-select {
 
 .layer-sidenav {
 	padding: 20px;
-	width: 600px;
+	width: 49vh;
 	background-color: #e5ecef26;
 }
 
@@ -973,12 +973,14 @@ mat-select {
 	left: 48px;
 	top: 36%;
 	z-index: 100000;
-	min-width: 5% !important;
-	min-height: 5% !important;
 	cursor: pointer;
 	padding: 20px;
 	background-color: #823333;
 	border-radius: 100px;
+	transition: 0.3s;
+}
+.btn-layers:hover{
+	background-color: #dd4646;
 }
 
 .container-drawer{
@@ -994,6 +996,10 @@ mat-select {
 	right: 10px;
 	cursor: pointer;
 }
+.close-drawer img{
+	margin-left: 85%;
+}
+
 .mat-drawer-container-has-open .mat-drawer-backdrop.mat-drawer-shown {
 	background-color:#00000000 !important;
 }
