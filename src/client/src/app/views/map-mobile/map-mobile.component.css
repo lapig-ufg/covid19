@@ -68,7 +68,7 @@ body .ui-tabview .ui-tabview-panels {
 	/* 100% of the viewport height - navbar height */
 	background-color: rgba(0, 0, 0, 0.5) !important;
     overflow: hidden;
-    height: calc(97vh - 55px);
+    height: calc(100vh - 146px);
 }
 
 .dpat-ol-map .ol-viewport canvas {
