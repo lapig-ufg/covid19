@@ -14,10 +14,32 @@
 				"pt-br": "Projeção Temporal",
 				"en-us": "Temporal Projection"
 			},
-			"timeseries_go":{
+			"timeseries_go_projecao":{
 				"title": {
 					"pt-br": "Estimativas da quantidade de casos para o Estado de Goiás",
 					"en-us": "Estimates on the number of cases for the State of Goiás"
+				},
+				"label_confirmados":{
+					"pt-br": "Projeção Confirmados",
+					"en-us": "Projected Confirmed"
+				},
+				"label_recuperados":{
+					"pt-br": "Projeção Recuperados",
+					"en-us": "ProjectedRecovered"
+				}
+			},
+			"timeseries_go_total":{
+				"title": {
+					"pt-br": "Dados gerais para os casos registrados no Estado de Goiás",
+					"en-us": "Estimates on the number of cases for the State of Goiás"
+				},
+				"label_confirmados_projecao":{
+					"pt-br": "Estimativa para casos Confirmados",
+					"en-us": "Projected Confirmed"
+				},
+				"label_recuperados_projecao":{
+					"pt-br": "Estimativa para casos Recuperados",
+					"en-us": "Projected Recovered"
 				},
 				"label_confirmados":{
 					"pt-br": "Confirmados",
@@ -26,6 +48,18 @@
 				"label_recuperados":{
 					"pt-br": "Recuperados",
 					"en-us": "Recovered"
+				},
+				"label_suspeitos":{
+					"pt-br": "Suspeitos",
+					"en-us": "Suspects"
+				},
+				"label_descartados":{
+					"pt-br": "Descartados",
+					"en-us": "Discarded"
+				},
+				"label_obitos":{
+					"pt-br": "Óbitos",
+					"en-us": "Deaths"
 				}
 			}
 		}

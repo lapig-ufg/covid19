@@ -14,16 +14,109 @@ module.exports = function(app) {
     numero = numero.toFixed(2).split(".");
     numero[0] = numero[0].split(/(?=(?:...)*$)/).join(".");
     return numero.join(",");
+  };
+
+
+  function formatDate(date, language) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+        let formated = ''
+        if(language == 'pt-br'){
+          formated = [day, month, year].join('-');
+        }
+        else{
+          formated = [month, day, year].join('-');
+        }
+
+    return formated;
+}
+
+  function createDataSetTimeSeriesTotal(labels, graphic, language) {
+    
+    let data = {
+      labels: graphic.map(element => formatDate(element.data,language)),
+      datasets: [
+        {
+          label: labels.label_confirmados_projecao,
+          data: graphic.map(element => parseInt(element.projecao_confirmados)),
+          fill: false,
+          backgroundColor: '#e85662',
+          borderColor: '#e85662',
+          borderDash:  labels.borderDashRef,
+          spanGaps: true,
+        },
+        {
+          label: labels.label_recuperados_projecao,
+          data: graphic.map(element => parseInt(element.projecao_recuperados)),
+          fill: false,
+          backgroundColor: '#53c274',
+          borderColor: '#53c274',
+          borderDash: labels.borderDashRef,
+          spanGaps: true,
+        },
+        {
+          label: labels.label_confirmados,
+          data: graphic.map(element => parseInt(element.confirmados_real)),
+          fill: false,
+          backgroundColor: '#e83225',
+          borderColor: '#e83225',
+          spanGaps: true,
+        },
+        {
+          label: labels.label_suspeitos,
+          data: graphic.map(element => parseInt(element.suspeitos_real)),
+          fill: false,
+          backgroundColor: '#982da6',
+          borderColor: '#982da6',
+          spanGaps: true,
+          hidden: true,
+        },
+        {
+          label: labels.label_descartados,
+          data: graphic.map(element => parseInt(element.descartados_real)),
+          fill: false,
+          backgroundColor: '#1e24c9',
+          borderColor: '#1e24c9',
+          spanGaps: true,
+          hidden: true,
+        },
+        // {
+        //   label: labels.label_obitos,
+        //   data: graphic.map(element => parseInt(element.obitos_real)),
+        //   fill: false,
+        //   backgroundColor: '#000000',
+        //   borderColor: '#000000',
+        //   spanGaps: true,
+        // }
+      ]
+    };
+    
+        
+    return data;
   }
+
 
   Controller.timeseries = function(request, response) {
     var language = request.param('lang')
     var chartResult = [
       {
-        id: "timeseries_go",
+        id: "timeseries_go_total",
         title: "Goiás",
-        label_confirmados: languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go"]["label_confirmados"][language],
-        label_recuperados:  languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go"]["label_recuperados"][language],
+        label_confirmados_projecao: languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go_total"]["label_confirmados_projecao"][language],
+        label_recuperados_projecao:  languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go_total"]["label_recuperados_projecao"][language],
+        label_confirmados:  languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go_total"]["label_confirmados"][language],
+        label_suspeitos:  languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go_total"]["label_suspeitos"][language],
+        label_descartados:  languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go_total"]["label_descartados"][language],
+        label_obitos:  languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go_total"]["label_obitos"][language],
+        borderDashRef: [5,5],
         getText: function(chart) {
           // var label = chart['indicators'][0]["label"]
           // var value = chart['indicators'][0]["value"]
@@ -36,7 +129,7 @@ module.exports = function(app) {
           // +"sendo a classe " + label + " a de maior predominância, com " + numberFormat(parseFloat(value))
           // + " de hectares (" + Math.round(percentual_area_ha) + "% da área total). "
 
-          var text = languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go"]["title"][language];
+          var text = languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go_total"]["title"][language];
 
           return text;
         },
@@ -46,7 +139,7 @@ module.exports = function(app) {
         options: {
           title: {
             display: true,
-            text: languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go"]["title"][language],
+            text: languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go_total"]["title"][language],
             fontSize: 16
           },
           legend: {
@@ -64,47 +157,20 @@ module.exports = function(app) {
 
         }
       },
-      {
-        id: "timeseries_brasil",
-        title: "Brasil",
-        getText: function(chart) {
-          var text = "Estimativas para o Brasil";
-          return text;
-        },
-        type: "line",
-        pointStyle: "rect",
-        disabled: true,
-        options: {
-          title: {
-            display: true,
-            text: 'Estimativas para o Brasil'
-          },
-          legend: {
-            labels: {
-              usePointStyle: true,
-              fontColor: "#85560c"
-            },
-            position: "bottom"
-          },
-          tooltips: {},
-          scales:{
-            yAxes:[],
-            xAxes:[]
-          }
-
-        }
-      }
     ];
 
     for (let chart of chartResult) {
 
-      chart["indicators"] = request.queryResult[chart.id];
+      if(chart.id == 'timeseries_go_total'){
+         chart["dataResult"] = createDataSetTimeSeriesTotal(chart, request.queryResult[chart.id],language);
+      }
       chart['show'] = false
-			if (chart['indicators'].length > 0){
+			if (chart['dataResult'].labels.length > 0){
 				chart['show'] = true
 				chart['text'] = chart.getText(chart)
 			}
     }
+
 
     let finalResult = {
       title : languageJson["charts_box"]["charts_box_title"][language],
@@ -113,6 +179,7 @@ module.exports = function(app) {
         chartResult : chartResult
       }
     };
+
 
     response.send(finalResult);
     response.end();

@@ -153,7 +153,7 @@
 										<p-tabPanel [header]="dat.title" *ngFor="let dat of dataSeries.timeseries.chartResult; let i = index" [selected]="i == 0" [disabled]="!dat.show" [cache]="true">
 											<div>
 												<!-- <p style="font-weight: bold; text-align: center;">{{ dat.text }}</p> -->
-												<p-chart [ngStyle]="{'overflow-x': hidden}" *ngIf="dat.type" [type]="dat.type" [data]="dat.data" [options]="dat.options"></p-chart>
+												<p-chart [ngStyle]="{'overflow-x': hidden}" *ngIf="dat.type" [type]="dat.type" [data]="dat.dataResult" [options]="dat.options"></p-chart>
 											</div>
 										</p-tabPanel>
 									</p-tabView>

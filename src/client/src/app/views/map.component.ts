@@ -434,33 +434,14 @@ export class MapComponent implements OnInit {
 
       this.dataSeries = result;
 
-      // console.log(this.dataSeries)
 
       for (let graphic of this.dataSeries.timeseries.chartResult) {
-
-        graphic.data = {
-          labels: graphic.indicators.map(element => this.transformDate(element.data)),
-          datasets: [
-            {
-              label: graphic.label_confirmados,
-              data: graphic.indicators.map(element => element.confirmados),
-              fill: false,
-              backgroundColor: '#e83225',
-              borderColor: '#e83225',
-            },
-            {
-              label: graphic.label_recuperados,
-              data: graphic.indicators.map(element => element.recuperados),
-              fill: false,
-              backgroundColor: '#289628',
-              borderColor: '#289628',
-            }
-          ]
-        };
 
         let y = [{
           ticks: {
             beginAtZero: true,
+            autoskip: true,
+            autoSkipPadding: 20,
             callback: function (value) {
               return value.toLocaleString('de-DE');
             }
