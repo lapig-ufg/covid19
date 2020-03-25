@@ -965,6 +965,7 @@ mat-select {
 	justify-content: center;
 	z-index: 10000;
 	transition: 0.3s;
+	overflow: hidden;
 }
 
 .layer-sidenav {
@@ -973,6 +974,8 @@ mat-select {
 	background-color: #e5ecef26;
 	margin-left: 109px;
 	transition: 0.3s;
+	overflow: hidden;
+	min-width: 461px;
 }
 
 

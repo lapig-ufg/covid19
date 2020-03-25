@@ -1188,7 +1188,7 @@ export class MapComponent implements OnInit {
     } else {
       this.collapseLayer = false;
       this.collapseCharts = false;
-      this.currentZoom = 9.8;
+      this.currentZoom = 8.8;
     }
 
     this.innerWidth = window.innerWidth;
