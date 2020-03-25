@@ -1,11 +1,9 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ChangeDetectorRef, Component, HostListener, Inject, Injectable, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, HostListener, Injectable, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from 'ngx-image-video-gallery';
-import { Lightbox } from 'ngx-lightbox';
 import * as OlExtent from 'ol/extent.js';
 import GeoJSON from 'ol/format/GeoJSON';
 import { defaults as defaultInteractions } from 'ol/interaction';
@@ -60,6 +58,7 @@ export class SearchService {
   templateUrl: './map.component.html',
   providers: [SearchService],
   styleUrls: ['./map.component.css']
+
 })
 export class MapComponent implements OnInit {
   map: OlMap;
@@ -95,6 +94,7 @@ export class MapComponent implements OnInit {
   landsat: any;
   descriptor: any;
   valueRegion: any;
+  googlemaps: any
   regionFilterDefault: any;
   urls: any;
   dataExtent: any;
@@ -120,6 +120,7 @@ export class MapComponent implements OnInit {
   limitsTMS = {};
 
   collapseCharts = false;
+  collapseChartsMobile: boolean;
   collapseLayer = false;
 
   isFilteredByCity = false;
@@ -170,6 +171,12 @@ export class MapComponent implements OnInit {
   };
 
   innerHeigth: any;
+  innerWidth: any;
+
+  showStatistics: boolean;
+  showDrawer: boolean;
+
+  @ViewChild("drawer", { static: false }) drawer: ElementRef;
 
   constructor(
     private http: HttpClient,
@@ -179,11 +186,12 @@ export class MapComponent implements OnInit {
     private domSanitizer: DomSanitizer
   ) {
     this.projection = OlProj.get('EPSG:900913');
-    this.currentZoom = 6.3;
+    this.currentZoom = 4.3;
     this.layers = [];
 
-    this.dataSeries = {};
+    this.dataSeries = { timeseries: { label: "" } };
     this.dataStates = {};
+
 
     this.chartResultCities = {
       split: []
@@ -194,24 +202,28 @@ export class MapComponent implements OnInit {
 
     this.defaultRegion = {
       nome: 'GO',
-      area_mun: 329617.070236032,
+      area_mun: 1547.26991096032,
+      estado: 'GOIÁS',
+      uf: 'GO',
+      cd_geocmu: '52'
     };
     this.selectRegion = this.defaultRegion;
 
     this.textOnDialog = {};
 
-    this.currentData = '';
-    this.valueRegion = {
+    this.currentData = {
       text: ''
     };
+
+    this.valueRegion = '';
 
     this.changeTabSelected = "";
 
     this.urls = [
-      'http://o1.lapig.iesa.ufg.br/ows',
-      'http://o2.lapig.iesa.ufg.br/ows',
-      'http://o3.lapig.iesa.ufg.br/ows',
-      'http://o4.lapig.iesa.ufg.br/ows'
+      'https://o1.lapig.iesa.ufg.br/ows',
+      'https://o2.lapig.iesa.ufg.br/ows',
+      'https://o3.lapig.iesa.ufg.br/ows',
+      'https://o4.lapig.iesa.ufg.br/ows'
       // "http://localhost:5501/ows"
     ];
 
@@ -256,6 +268,9 @@ export class MapComponent implements OnInit {
     this.minireportText = {};
 
     this.updateTexts();
+
+    this.showStatistics = false;
+    this.showDrawer = false;
   }
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -305,10 +320,9 @@ export class MapComponent implements OnInit {
   private getServiceParams() {
     let params = [];
 
-    // if (this.selectRegion.type != '') {
-    //   params.push('type=' + this.selectRegion.type);
-    //   params.push('region=' + this.selectRegion.value);
-    // }
+    if (this.selectRegion.type != '') {
+      params.push('cd_geocmu=' + this.selectRegion.cd_geocmu);
+    }
 
     params.push('lang=' + this.language);
 
@@ -336,7 +350,7 @@ export class MapComponent implements OnInit {
         var extent = features[0].getGeometry().getExtent();
         map.getView().fit(extent, { duration: 1500 });
 
-        this.selectRegion.area_region = extentResult["area_mun"];
+        this.selectRegion.area_mun = extentResult["area_mun"];
       });
     }
   }
@@ -366,7 +380,6 @@ export class MapComponent implements OnInit {
 
     if (this.language != (lang)) {
       this.language = lang;
-
 
       this.setStylesLangButton();
       this.updateTexts();
@@ -404,18 +417,92 @@ export class MapComponent implements OnInit {
 
   }
 
+  private transformDate(myDate) {
+    if (this.language == 'pt-br') {
+      return this.datePipe.transform(myDate, 'dd/MM/yyyy');
+    } else {
+      return this.datePipe.transform(myDate, 'MM/dd/yyyy');
+    }
+  }
+
+
   private updateCharts() {
 
+    let timeseriesUrl = '/service/indicators/timeseries' + this.getServiceParams();
+
+    this.http.get(timeseriesUrl).subscribe(result => {
+
+      this.dataSeries = result;
+
+
+      for (let graphic of this.dataSeries.timeseries.chartResult) {
+
+        let y = [{
+          ticks: {
+            beginAtZero: true,
+            autoskip: true,
+            autoSkipPadding: 20,
+            callback: function (value) {
+              return value.toLocaleString('de-DE');
+            }
+          }
+        }]
+
+        graphic.options.scales.yAxes = y;
+
+        let x = [{
+          ticks: {
+            autoskip: true,
+            autoSkipPadding: 20
+          }
+        }]
+
+        graphic.options.scales.xAxes = x;
+
+        graphic.options.legend.onHover = function (event) {
+          event.target.style.cursor = 'pointer';
+          graphic.options.legend.labels.fontColor = '#0335fc';
+        };
+
+        graphic.options.legend.onLeave = function (event) {
+          event.target.style.cursor = 'default';
+          graphic.options.legend.labels.fontColor = '#fa1d00';
+        };
+
+        // graphic.options.tooltips.callbacks = {
+        //   title(tooltipItem, data) {
+        //     return data.labels[tooltipItem[0].index];
+        //   },
+        //   label(tooltipItem, data) {
+        //     console.log(tooltipItem, data)
+        //     return data.toLocaleString('de-DE');
+        //   },
+        //   // afterLabel: function (tooltipItem, data) {
+        //   //   return "a calcular";
+        //   // }
+        // };
+
+      }
+
+    }
+    );
   }
 
   updateRegion(region) {
 
+
     if (region == this.defaultRegion) {
       this.valueRegion = '';
-      this.currentData = '';
+      this.currentData = {
+        text: ''
+      }
     }
 
+    this.currentData = region.nome;
+    this.valueRegion = region.nome.toString();
+
     this.selectRegion = region;
+
     this.isFilteredByCity = false;
     this.isFilteredByState = false;
 
@@ -431,6 +518,7 @@ export class MapComponent implements OnInit {
 
     this.updateExtent();
     this.updateSourceAllLayer();
+
   }
 
   private getResolutions(projection) {
@@ -472,23 +560,23 @@ export class MapComponent implements OnInit {
 
 
 
-      this.infoOverlay = new Overlay({
-        element: document.getElementById('map-info'),
-        offset: [15, 15],
-        stopEvent: false
-      });
+    this.infoOverlay = new Overlay({
+      element: document.getElementById('map-info'),
+      offset: [15, 15],
+      stopEvent: false
+    });
 
-      this.keyForPointer = this.map.on(
-        'pointermove',
-        this.callbackPointerMoveMap.bind(this)
-      );
+    this.keyForPointer = this.map.on(
+      'pointermove',
+      this.callbackPointerMoveMap.bind(this)
+    );
 
-      this.keyForClick = this.map.on(
-        'singleclick',
-        this.callbackClickMap.bind(this)
-      );
+    this.keyForClick = this.map.on(
+      'singleclick',
+      this.callbackClickMap.bind(this)
+    );
 
-      this.map.addOverlay(this.infoOverlay);
+    this.map.addOverlay(this.infoOverlay);
 
 
   }
@@ -504,28 +592,40 @@ export class MapComponent implements OnInit {
     let coordinate = this.map.getEventCoordinate(evt.originalEvent);
     let viewResolution = this.map.getView().getResolution();
 
-    
-    if (this.utfgridsource) {
-      this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
-        if (data) {
 
-          this.infodata = data;
+    let info = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
 
-          if(this.infodata.confirmados == ""){
-            this.infodata.confirmados = 0;
-          }
 
-          this.infodata.area_mun = Math.round(this.infodata.area_mun * 1000) / 1000       
+    if (info.visible) {
 
-          this.infoOverlay.setPosition(this.infodata ? coordinate : undefined);
+      if (info.selectedType == "covid19_municipios_casos") {
 
-        } else {
-          window.document.body.style.cursor = 'auto';
-          this.infodata = null;
+        if (this.utfgridsource) {
+          this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+            if (data) {
+
+              this.infodata = data;
+
+              if (this.infodata.confirmados == "") {
+                this.infodata.confirmados = 0;
+              }
+
+              this.infodata.pop_2019 = this.infodata.pop_2019.toLocaleString('de-DE')
+              this.infodata.area_mun = Math.round(this.infodata.area_mun * 1000) / 1000
+              this.infoOverlay.setPosition(this.infodata ? coordinate : undefined);
+
+            } else {
+              window.document.body.style.cursor = 'auto';
+              this.infodata = null;
+            }
+
+          }.bind(this)
+          );
         }
-
-      }.bind(this)
-      );
+      }
+      else {
+        this.infodata = null;
+      }
     }
   }
 
@@ -549,7 +649,7 @@ export class MapComponent implements OnInit {
 
   private createBaseLayers() {
     this.mapbox = {
-      visible: true,
+      visible: false,
       layer: new OlTileLayer({
         source: new OlXYZ({
           wrapX: false,
@@ -582,7 +682,7 @@ export class MapComponent implements OnInit {
             'VmCqTus7G3OxlDECYJ7O~G3Wj1uu3KG6y-zycuPHKrg~AhbMxjZ7yyYZ78AjwOVIV-5dcP5ou20yZSEVeXxqR2fTED91m_g4zpCobegW4NPY',
           imagerySet: 'Road'
         }),
-        visible: true
+        visible: false
       })
     };
 
@@ -595,6 +695,17 @@ export class MapComponent implements OnInit {
             'World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}'
         }),
         visible: false
+      })
+    };
+
+    this.googlemaps = {
+      visible: true,
+      layer: new OlTileLayer({
+        source: new OlXYZ({
+          url:
+            'https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
+        }),
+        visible: true
       })
     };
 
@@ -713,9 +824,11 @@ export class MapComponent implements OnInit {
     if (layer.timeHandler == 'msfilter' && layer.times) {
       filters.push(layer.timeSelected);
     }
+
     if (layer.layerfilter) { filters.push(layer.layerfilter); }
-    if (this.regionFilterDefault) { filters.push(this.regionFilterDefault); }
-    if (layer.regionFilter && this.msFilterRegion) {
+    if (this.regionFilterDefault != "") { filters.push(this.regionFilterDefault); }
+    if (layer.regionFilter) {
+      this.msFilterRegion = "uf = 'GO'"
       filters.push(this.msFilterRegion);
     }
 
@@ -1054,8 +1167,14 @@ export class MapComponent implements OnInit {
     } else {
       this.collapseLayer = false;
       this.collapseCharts = false;
-      this.currentZoom = 7;
+      this.currentZoom = 8.8;
     }
+
+    this.innerWidth = window.innerWidth;
+  }
+
+  handleDrawer() {
+    this.showDrawer = !this.showDrawer;
   }
 
   ngOnInit() {
@@ -1112,7 +1231,7 @@ export class MapComponent implements OnInit {
       this.collapseCharts = true;
       this.currentZoom = 6.3;
     } else {
-      this.currentZoom = 6.8;
+      this.currentZoom = 7.8;
     }
 
     // Register of SVG icons

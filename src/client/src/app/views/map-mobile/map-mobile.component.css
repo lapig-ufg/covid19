@@ -2,7 +2,8 @@ html,
 body {
 	margin: 0;
 	height: 100%;
-	font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    overflow: hidden !important;
 }
 
 .bckgdisabled {
@@ -10,12 +11,17 @@ body {
 }
 
 .container-fluid {
-	margin-top: auto;
+	padding-right: 0px;
+	padding-left: 0px;
 }
 
 hr {
 	margin-top: 5px;
 	margin-bottom: 5px;
+}
+
+.button-menu {
+    align-self: center;
 }
 
 .card {
@@ -40,32 +46,36 @@ hr {
 	border-radius: 0px;
 }
 
-.ngb-highlight {
-	font-weight: normal !important;
-  }
-  
-  ngb-highlight .ngb-highlight:first-child {
-	font-weight: bold !important;
-  }
 
 .dpat-ol-div {
-	padding: 0px;
-    width: 100%;
-    height: 100%;
+    padding: 0px;
+}
+
+.mat-drawer-content {
+    overflow: hidden;
+}
+
+.mat-expansion-panel-body {
+	padding: 0 4px 10px;
+}
+
+body .ui-tabview .ui-tabview-panels {
+    padding: 0.3em;
 }
 
 .dpat-ol-map {
 	/*height: calc(100vh - 55px);*/
 	/* 100% of the viewport height - navbar height */
 	background-color: rgba(0, 0, 0, 0.5) !important;
-	overflow: hidden;
+    overflow: hidden;
+    height: calc(100vh - 146px);
 }
 
 .dpat-ol-map .ol-viewport canvas {
     /* position: fixed !important; */
     width: 100%;
     min-width: 80px;
-
+    
     /* min-height: 800px; */
 }
 
@@ -104,7 +114,7 @@ hr {
 
 .control-layers {
 	z-index: 99999999;
-	top: 10vh;
+	top: 1vh;
 	background-color: #FFF;
 	border-radius: 10px !important;
 }
@@ -125,18 +135,18 @@ hr {
 }
 
 #positionLayers {
-	position: absolute;
-	left: 2%;
+    position: relative;
+    margin-top: 10px;
+	/* left: 2%; */
 	/*bottom: 2%;*/
 	/*height: 90%;*/
-	min-width: 320px;
-	top: 21.5%;
-	width: 43vh;
+	max-width: 300px;
+	/* width: 40vh; */
 	background-color: #FFF;
 	color: #d6d2ce;
 	text-align: left;
 	z-index: 1000;
-	max-height: 690px;
+	/* max-height: 690px; */
 	border-radius:10px;
 	overflow:hidden;
 	/*border: 1px solid #808080;*/
@@ -145,7 +155,7 @@ hr {
 	box-shadow: -1px 1px 10px 0px #7a2525;
 }
 
-#positionCharts {
+/* #positionCharts {
 	position: absolute;
 	right: 1%;
 	bottom: 2%;
@@ -155,18 +165,33 @@ hr {
 	text-align: left;
 	z-index: 1000;
 	border-radius:10px;
-	/*border: 1px solid #808080;*/
 	opacity: .93;
-	max-height: 499px;
+	max-height: 460px;
 	overflow:hidden;
 	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
 	box-shadow: -1px 1px 10px 0px #7a2525;
+} */
+
+#positionCharts {
+	max-height: 530px;
+	padding-left: 14px;
+	padding-right: 14px;
+	overflow: auto;
+  position: absolute; 
+  bottom: 0%;
+  width: 100%;
+  background-color: #FFF;
+  color: #666;
+  text-align: left;
+  z-index: 1000;
+  border-top: 1px solid #808080;
+  opacity: .93;
 }
 
 #positionLegend {
 	position: absolute;
 	right: 1%;
-	top: 7%;
+	top: 9%;
 	width: 39vh;
 	background-color: #FFF;
 	color: #666;
@@ -175,12 +200,12 @@ hr {
 	border-radius:10px !important;
 	/*border: 1px solid #808080;*/
 	opacity: .93;
-	-webkit-box-shadow: -1px 1px 10px 0px #7a25253;
-	box-shadow: -1px 1px 10px 0px #7a25253;
+	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
+	box-shadow: -1px 1px 10px 0px #7a2525;
 }
 
 .layersConteudo {
-	max-height: 828px;
+	max-height: 702px;
 	overflow: auto;
 }
 
@@ -253,9 +278,14 @@ hr {
 }
 
 .mat-icon-button {
-	width: 20px;
-	height: 20px;
+	width: 50px;
+    height: 50px;
+    border-radius: initial;
+    background-color: #dd4c4f;
 	line-height: 0px;
+}
+#buttonMenu {
+    color: white
 }
 
 .mat-form-field-infix {
@@ -319,9 +349,9 @@ h6 {
 .titleWindows {
 	color: white;
 	background-color: #dd4646;
-	padding: 10px;
+	padding: 5px;
 	font-weight: bold;
-	font-size: 1.9vh;
+	font-size: 2.9vh;
 }
 
 .title-atlas {
@@ -359,25 +389,21 @@ h6 {
 }
 
 
-.logo-lapig {
-	height: 40px;
-	margin-left: 8px;
-	width:80%; 
-	object-fit: scale-down;
-}
-
 .logo-ufg {
 	height: 60px;
-	margin-left: 8px;
-	margin-top: 5px;
 	margin-right: 8px;
-	object-fit: scale-down;
+	margin-top: 5px;
+}
+
+.logo-lapig {
+	height: 30px;
+	margin-left: 0px;
 }
 
 .clear-region-btn {
 	height: 18px;
 	position: absolute;
-	left: 88%;
+	left: 85%;
 	top: 10px;
 	cursor: pointer;
 	opacity: 0.8;
@@ -458,173 +484,12 @@ h5.expansion-layer  {
 	padding-left: 22%;
 }*/
 
-@media (max-width: 600px) {
-	.title-atlas {
-		font-size: 1em;
-	}
 
-	.value-indicators {
-		font-size: 0.8em;
-	}
-
-	.logo-lapig {
-		height: 20px;
-		margin-left: 0px;
-	}
-
-	.logo-cepf {
-		height: 20px;
-	}
-
-	.barra-titulo {
-		padding-top: 10px;
-		padding-bottom: 0px;
-		background-color: #cccccc;
-	}
-
-	.buttons-download,
-	.buttonsDisplay {
-		display: none
-	}
-
-	#dropdowYearRebanho,
-	.button-csv {
-		padding-left: 33%
-	}
-
-	.layers-indicator {
-		padding-bottom: 5px;
-	}
-
-	#positionCharts {
-		width: 350vm;
-		max-height: 287vm;
-	}
-
-	h6 {
-		font-size: 0.8rem;
-	}
-
-	.titleWindows {
-		font-size: 0.95em;
-		color: #b35959;
-	}
-
-	.table-municipios {
-		font-size: 0.6em;
-	}
-
-	.mat-tab-label-container {
-		height: 40px !important;
-	}
-
-	.graficoEstados {
-		max-width: 78%;
-		max-height: 177px;
-	}
-
-	#positionLegend {
-		width: 220px;
-	}
-
-	.legendasConteudo {
-		max-height: 150px;
-	}
-
-	.paddingLayerLegend {
-		padding-top: 0px;
-	}
-
-}
-
-@media (min-width: 1000px) and (max-width: 1400px) {
-
-	.legendasConteudo {
-		max-height: 200px;
-	}
-
-	.titleWindows {
-		font-size: 0.95em
-	}
-
-	h6 {
-		font-size: 0.8rem;
-	}
-
-	.table-municipios {
-		font-size: 0.6em;
-	}
-
-	.logo-cepf {
-		height: 20px;
-	}
-
-	.title-atlas {
-		font-size: 1em;
-	}
-
-	.logo-lapig {
-		height: 20px;
-		margin-left: 0px;
-	}
-
-	.container-fluid {
-		margin-top: auto;
-	}
-
-	.dpat-ol-map {
-		height: calc(100vh - 40px);
-		/* 100% of the viewport height - navbar height */
-	}
-
-	.layersConteudo {
-		max-height: 510px;
-	}
-
-	.nameLayers {
-		font-size: 0.92rem;
-		padding-left: 5px;
-		padding-bottom: 5px;
-	}
-
-	.value-indicators {
-		font-size: 0.8em;
-	}
-
-	.layers-indicator {
-		font-size: 0.85rem;
-	}
-
-	.font-size-geral {
-		font-size: 0.85rem;
-	}
-
-	#dropdowYearRebanho,
-	#dropdownPoints {
-		font-size: 0.9rem;
-	}
-}
-
-
-@media (min-width: 1000px) and (max-width: 1300px) {
-
-}
 
 .iconInfo {
 	font-size: 20px;
 }
 
-@media (min-width: 1400px) and (max-width: 1700px) {
-	.layersConteudo {
-		max-height: 800px;
-	}
-}
-
-@media (height: 1280px) and (width: 1240px) {
-	.layersConteudo {
-		max-height: 800px;
-	}
-}
 
 .stylePercentual {
 	/*padding-left: 5px;*/
@@ -652,8 +517,8 @@ h5.expansion-layer  {
 }
 
 .layersContent {
-	padding: 15px;
-	margin: 8px;
+	padding: 5px;
+	margin: 4px;
 	box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 	border-radius: 5px;
 }
@@ -873,10 +738,9 @@ mat-select {
 	position: absolute;
 	display: flex;
 	justify-content: center;
-	left: 0.8%;
+	left: 2%;
 	top: 2%;
-	width: 31vh;
-	min-width: 361px;
+	width: 43vh;
 	margin: auto;
 	border-radius: 10px;
 	background-color: #fff;
@@ -951,78 +815,4 @@ mat-select {
 }
 .layersConteudo .mat-tab-body-wrapper{
 	padding: 10px;
-}
-
-.container-layer-sidenav {
-	position: absolute;
-	float: left;
-	width: 100%;
-}
-
-.layer-sidenav-content {
-	height: 100%;
-	align-items: center;
-	justify-content: center;
-	z-index: 10000;
-	transition: 0.3s;
-	overflow: hidden;
-}
-
-.layer-sidenav {
-	padding: 20px;
-	width: 47vh;
-	background-color: #e5ecef26;
-	margin-left: 109px;
-	transition: 0.3s;
-	overflow: hidden;
-	min-width: 461px;
-}
-
-
-.controls{
-	position: absolute;
-	left: 21px;
-	top: 44%;
-	z-index: 100000;
-	padding: 14px;
-	border-radius: 10px;
-	background-color: #584e4f8c;
-}
-
-.btn-layers{
-	cursor: pointer;
-	padding: 15px;
-	margin-bottom: 10px;
-	background-color: #823333;
-	border-radius: 100px;
-	transition: 0.3s;
-}
-
-.btn-layers:hover{
-	background-color: #dd4646;
-}
-.btn-layers-active{
-	background-color: #dd4646;
-}
-
-.container-drawer{
-	margin-top: 166px;
-	background-color: white;
-	padding: 20px;
-	border-radius: 10px;
-	transition: 0.3s;
-}
-
-.close-drawer{
-	display: flex;
-	align-content: center;
-	right: 10px;
-	cursor: pointer;
-}
-.close-drawer img{
-	margin-left: 85%;
-}
-
-.mat-drawer-container-has-open .mat-drawer-backdrop.mat-drawer-shown {
-	background-color:#00000000 !important;
 }

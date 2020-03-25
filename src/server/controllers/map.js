@@ -36,36 +36,76 @@ module.exports = function (app) {
 
     var result = {
       regionFilterDefault: "",
-      type: "Informações",
+      type: languageJson["descriptor"]["type_of_information_label"][language],
       groups: [
         {
-          id: "casos",
-          label: "Informações",
+          id: "informacoes",
+          label: languageJson["descriptor"]["informacoes"]["label"][language],
           group_expanded: true,
           layers:[{
-            id: "casos-covid",
-            label: "Incidência de Casos",
+            id: "casos_covid_confirmados",
+            label: languageJson["descriptor"]["informacoes"]["layers"]["casos_covid_confirmados"]["label"][language],
             visible: true,
             selectedType:"covid19_municipios_casos",
             types:[{
               value: "covid19_municipios_casos",
-                Viewvalue: "Confirmados",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_covid_confirmados"]["types"]["covid19_municipios_casos"]["view_value"][language],
                 regionFilter: true,
                 opacity: 0.8,
                 order: 3
             }]
-
-          }]
+          },
+          {
+            id: "qtd_populacional",
+            label: languageJson["descriptor"]["informacoes"]["layers"]["qtd_populacional"]["label"][language],
+            visible: false,
+            selectedType:"covid19_ibge_populacao",
+            types:[{
+              value: "covid19_ibge_populacao",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["qtd_populacional"]["types"]["covid19_ibge_populacao"]["view_value"][language],
+                regionFilter: true,
+                opacity: 0.8,
+                order: 3
+            }]
+          }
+        ]
         },
         {
-          id: "infraestrutura",
-          label: languageJson["descriptor"]["infraestrutura"]["label"][language],
+          id: "servicos",
+          label: languageJson["descriptor"]["servicos"]["label"][language],
           group_expanded: false,
-          layers: [{
+          layers: [
+            
+              {
+                id: "pharmacy_supermarket_hospital",
+                label: languageJson["descriptor"]["servicos"]["layers"]["pharmacy_supermarket_hospital"]["label"][language],
+                visible: false,
+                selectedType: "pharmacy_supermarket_hospital_covid",
+                types: [{
+                  value: "pharmacy_supermarket_hospital_covid",
+                  Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["pharmacy_supermarket_hospital"]["types"]["pharmacy_supermarket_hospital_covid"]["view_value"][language],
+                  regionFilter: true,
+                  opacity: 0.8,
+                  order: 3
+                }]
+              },
+              {
+                id: "gyn_locais_vacinacao",
+                label: languageJson["descriptor"]["servicos"]["layers"]["gyn_locais_vacinacao"]["label"][language],
+                visible: false,
+                selectedType: "gyn_locais_vacinacao_gripe",
+                types: [{
+                  value: "gyn_locais_vacinacao_gripe",
+                  Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["gyn_locais_vacinacao"]["types"]["gyn_locais_vacinacao_gripe"]["view_value"][language],
+                  opacity: 0.8,
+                  order: 3
+                }]
+              },
+              {
               id: "osm_rodovias",
-              label: languageJson["descriptor"]["infraestrutura"]["layers"]["osm_rodovias"]["label"][language],
+              label: languageJson["descriptor"]["servicos"]["layers"]["osm_rodovias"]["label"][language],
               visible: false,
-              metadata: languageJson["descriptor"]["infraestrutura"]["layers"]['osm_rodovias']['metadata'],
+              metadata: languageJson["descriptor"]["servicos"]["layers"]['osm_rodovias']['metadata'],
               selectedType: "osm_rodovias",
               types: [{
                 value: "osm_rodovias",
@@ -75,146 +115,23 @@ module.exports = function (app) {
                 order: 3
               }]
             },
-            {
-              id: "armazens",
-              label: languageJson["descriptor"]["infraestrutura"]["layers"]["armazens"]["label"][language],
-              visible: false,
-              metadata: languageJson["descriptor"]["infraestrutura"]["layers"]['armazens']['metadata'],
-              selectedType: "armazens_fip",
-              types: [{
-                value: "armazens_fip",
-                opacity: 0.8,
-                order: 3
-              }]
-            },
-            {
-              id: "frigorificos",
-              label: languageJson["descriptor"]["infraestrutura"]["layers"]["frigorificos"]["label"][language],
-              visible: false,
-              metadata: languageJson["descriptor"]["infraestrutura"]["layers"]['frigorificos']['metadata'],
-              selectedType: "armazens_fip",
-              selectedType: "matadouros_e_frigorificos",
-              types: [{
-                value: "matadouros_e_frigorificos",
-                Viewvalue: "LAPIG",
-                regionFilter: true,
-                opacity: 0.8,
-                order: 3
-              }]
-            }
+            
           ]
         },
-        {
-          id: "imagens",
-          label: languageJson["descriptor"]["imagens"]["label"][language],
-          group_expanded: false,
-          layers: [{
-            id: "satelite",
-            label: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["label"][language],
-            visible: false,
-            selectedType: "landsat",
-            types: [{
-                value: "landsat",
-                Viewvalue: "Landsat",
-                order: 10,
-                opacity: 1,
-                metadata: languageJson["descriptor"]["imagens"]["layers"]['satelite']['landsat']['metadata'],
-                timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],
-                timeSelected: "bi_ce_mosaico_landsat_completo_30_2019_fip",
-                timeHandler: "layername",
-                times: [{
-                    value: "bi_ce_mosaico_landsat_completo_30_2000_fip",
-                    Viewvalue: "2000"
-                  },
-                  {
-                    value: "bi_ce_mosaico_landsat_completo_30_2002_fip",
-                    Viewvalue: "2002"
-                  },
-                  {
-                    value: "bi_ce_mosaico_landsat_completo_30_2004_fip",
-                    Viewvalue: "2004"
-                  },
-                  {
-                    value: "bi_ce_mosaico_landsat_completo_30_2006_fip",
-                    Viewvalue: "2006"
-                  },
-                  {
-                    value: "bi_ce_mosaico_landsat_completo_30_2008_fip",
-                    Viewvalue: "2008"
-                  },
-                  {
-                    value: "bi_ce_mosaico_landsat_completo_30_2010_fip",
-                    Viewvalue: "2010"
-                  },
-                  {
-                    value: "bi_ce_mosaico_landsat_completo_30_2012_fip",
-                    Viewvalue: "2012"
-                  },
-                  {
-                    value: "bi_ce_mosaico_landsat_completo_30_2013_fip",
-                    Viewvalue: "2013"
-                  },
-                  {
-                    value: "bi_ce_mosaico_landsat_completo_30_2014_fip",
-                    Viewvalue: "2014"
-                  },
-                  {
-                    value: "bi_ce_mosaico_landsat_completo_30_2015_fip",
-                    Viewvalue: "2015"
-                  },
-                  {
-                    value: "bi_ce_mosaico_landsat_completo_30_2016_fip",
-                    Viewvalue: "2016"
-                  },
-                  {
-                    value: "bi_ce_mosaico_landsat_completo_30_2017_fip",
-                    Viewvalue: "2017"
-                  },
-                  {
-                    value: "bi_ce_mosaico_landsat_completo_30_2018_fip",
-                    Viewvalue: "2018"
-                  },
-                  {
-                    value: "bi_ce_mosaico_landsat_completo_30_2019_fip",
-                    Viewvalue: "2019"
-                  }
-                ]
-              },
-              {
-                value: "sentinel",
-                Viewvalue: "Sentinel",
-                order: 10,
-                opacity: 1,
-                metadata: languageJson["descriptor"]["imagens"]["layers"]['satelite']['sentinel']['metadata'],
-                timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],
-                timeSelected: "bi_ce_mosaico_sentinel_10_2018_lapig",
-                timeHandler: "layername",
-                times: [{
-                    value: "bi_ce_mosaico_sentinel_10_2016_lapig",
-                    Viewvalue: "2016"
-                  },
-                  {
-                    value: "bi_ce_mosaico_sentinel_10_2017_lapig",
-                    Viewvalue: "2017"
-                  },
-                  {
-                    value: "bi_ce_mosaico_sentinel_10_2018_lapig",
-                    Viewvalue: "2018"
-                  }
-                ]
-              }
-            ]
-          }]
-        }
       ],
       basemaps: [{
         id: "basemaps",
         defaultBaseMap: "mapbox",
         types: [
           {
+            value: "googlemaps",
+            viewValue: "Google Maps",
+            visible: true
+          },
+          {
             value: "estradas",
             viewValue: languageJson["descriptor"]["basemaps"]["types"]["estradas"][language],
-            visible: true
+            visible: false
           },
           {
             value: "mapbox",
@@ -230,7 +147,8 @@ module.exports = function (app) {
             value: "relevo",
             viewValue: languageJson["descriptor"]["basemaps"]["types"]["relevo"][language],
             visible: false
-          }
+          },
+          
         ]
       }],
       limits: [{
@@ -238,8 +156,8 @@ module.exports = function (app) {
         types: [
           {
             value: "municipios_goias",
-            Viewvalue: languageJson["descriptor"]["limits"]["types"]["municipios_cerrado"][language],
-            visible: false,
+            Viewvalue: languageJson["descriptor"]["limits"]["types"]["municipios_goias"][language],
+            visible: true,
             layer_limits: true,
             opacity: 1
           }
@@ -257,31 +175,44 @@ module.exports = function (app) {
 
     var language = request.param('lang')
 
+    var jsonPath = path.join(__dirname, '..', 'assets', 'lang', 'language.json');
+    var languageFile = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+
+    var dialogJsonMiniReport = languageFile["mini_report_utfgrid"];
+    var keysUTF = {};
+
+    Object.keys(dialogJsonMiniReport).forEach(function (key, index) {
+      keysUTF[key] = key[language]
+    });
+
+    var resultUTF = {};
+    Object.keys(keysUTF).forEach(function (key, index) {
+
+      if (dialogJsonMiniReport[key].hasOwnProperty("pt-br")) {
+        resultUTF[key] = dialogJsonMiniReport[key][language]
+      }
+    });
+
+    var jsonLayerBox = languageFile["layer_box"]
+    var keysLayerBox = {};
+
+    Object.keys(jsonLayerBox).forEach(function (key, index) {
+      keysLayerBox[key] = key[language]
+    });
+
+    var resultLayerBox = {};
+    Object.keys(keysLayerBox).forEach(function (key, index) {
+
+      if (jsonLayerBox[key].hasOwnProperty("pt-br")) {
+        resultLayerBox[key] = jsonLayerBox[key][language]
+      }
+    });
+
     var result = {
-      legendTitle: languageJson["legends_box_title"][language],
-      utfgrid: {
-        area: languageJson["mini_report_utfgrid"]["area"][language],
-        city: languageJson["mini_report_utfgrid"]["city"][language],
-        not_computed_message: languageJson["mini_report_utfgrid"]["not_computed_message"][language],
-        undisclosed_message: languageJson["mini_report_utfgrid"]["undisclosed_message"][language],
-        click_more_text: languageJson["mini_report_utfgrid"]["click_more_text"][language],
-        click_more_municipio: languageJson["mini_report_utfgrid"]["click_more_municipio"][language],
-        label_year: languageJson["mini_report_utfgrid"]["label_year"][language],
-      },
-      layer_box: {
-        title: languageJson["layer_box"]["title"][language],
-        label_data: languageJson["layer_box"]["label_data"][language],
-        label_mapabase: languageJson["layer_box"]["label_mapabase"][language],
-        label_limits: languageJson["layer_box"]["label_limits"][language],
-        label_upload: languageJson["layer_box"]["label_upload"][language],
-        label_upload_msg: languageJson["layer_box"]["label_upload_msg"][language],
-        label_upload_title_file: languageJson["layer_box"]["label_upload_title_file"][language],
-        label_upload_max_size_msg: languageJson["layer_box"]["label_upload_max_size_msg"][language],
-        search_placeholder: languageJson["layer_box"]["search_placeholder"][language],
-        search_loading: languageJson["layer_box"]["search_loading"][language],
-        search_failed: languageJson["layer_box"]["search_failed"][language]
-      },
-      descriptor: languageJson["descriptor"]
+      legendTitle: languageFile["legends_box_title"][language],
+      utfgrid: resultUTF,
+      layer_box: resultLayerBox,
+      descriptor: languageFile["descriptor"]
 
     };
 

@@ -23,13 +23,14 @@ module.exports = function (app) {
 			// "password": 'postgres',
 			"password": 'covid19123',
 			// "port": 5432,
-			"port": 5433,
+			// "port": 5433,
+			"port": 5434,
 			"debug": true
 		},
 		"port": 3000,
 		// "ows_host" : 'http://localhost:5001',
-		"ows_host": 'http://ows.lapig.iesa.ufg.br',
-		"ows": "http://ows.lapig.iesa.ufg.br",
+		"ows_host": 'https://ows.lapig.iesa.ufg.br',
+		"ows": "https://ows.lapig.iesa.ufg.br",
 		"lapig-maps": 'http://maps.lapig.iesa.ufg.br/time-series/MOD13Q1_NDVI/values?'
 
 	};
@@ -45,7 +46,7 @@ module.exports = function (app) {
 			"debug": true
 		}
 		config["clientDir"] = appRoot + "/../client/dist/lapig-dpat/"
-		config["ows_host"] = "http://ows.lapig.iesa.ufg.br"
+		config["ows_host"] = "https://ows.lapig.iesa.ufg.br"
 		config["fieldDataDir"] = appProducao + "/campo-dpat/"
 		config["uploadDataDir"] = appProducao + "/upload-dpat/"
 

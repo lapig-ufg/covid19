@@ -21,6 +21,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import  {MatTooltipModule } from '@angular/material/tooltip';
 
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
@@ -45,7 +47,8 @@ import { SpinnerImgComponent } from './views/spinner-img/spinner-img.component';
 import { FileUploadComponent } from './views/file-upload/file-upload.component';
 import { MetadataComponent } from './views/metadata/metadata.component';
 
-import { APP_BASE_HREF } from '@angular/common'; 
+import { APP_BASE_HREF } from '@angular/common';
+import { MapMobileComponent } from './views/map-mobile/map-mobile.component'; 
 
 registerLocaleData(localePt);
 
@@ -56,6 +59,7 @@ registerLocaleData(localePt);
     SpinnerImgComponent,
     FileUploadComponent,
     MetadataComponent,
+    MapMobileComponent,
   ],
   imports: [
     TabViewModule,
@@ -83,6 +87,8 @@ registerLocaleData(localePt);
     MatButtonModule,
     MatIconModule,
     MatRadioModule,
+    MatSidenavModule,
+    MatTooltipModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
