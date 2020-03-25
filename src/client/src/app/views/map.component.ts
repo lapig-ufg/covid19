@@ -630,9 +630,7 @@ export class MapComponent implements OnInit {
               }
 
               this.infodata.pop_2019 = this.infodata.pop_2019.toLocaleString('de-DE')
-
               this.infodata.area_mun = Math.round(this.infodata.area_mun * 1000) / 1000
-
               this.infoOverlay.setPosition(this.infodata ? coordinate : undefined);
 
             } else {
