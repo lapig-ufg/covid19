@@ -173,10 +173,10 @@ export class MapComponent implements OnInit {
   innerHeigth: any;
   innerWidth: any;
 
-  showStatistics:boolean;
-  showDrawer:boolean;
+  showStatistics: boolean;
+  showDrawer: boolean;
 
-  @ViewChild("drawer",  {static: false}) drawer: ElementRef;
+  @ViewChild("drawer", { static: false }) drawer: ElementRef;
 
   constructor(
     private http: HttpClient,
@@ -269,8 +269,8 @@ export class MapComponent implements OnInit {
 
     this.updateTexts();
 
-    this.showStatistics =  false;
-    this.showDrawer     =  false;
+    this.showStatistics = false;
+    this.showDrawer = false;
   }
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -612,29 +612,41 @@ export class MapComponent implements OnInit {
     let viewResolution = this.map.getView().getResolution();
 
 
-    if (this.utfgridsource) {
-      this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
-        if (data) {
+    let info = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
 
-          this.infodata = data;
 
-          if (this.infodata.confirmados == "") {
-            this.infodata.confirmados = 0;
-          }
+    if (info.visible) {
 
-          this.infodata.pop_2019 = this.infodata.pop_2019.toLocaleString('de-DE')
+      if (info.selectedType == "covid19_municipios_casos") {
 
-          this.infodata.area_mun = Math.round(this.infodata.area_mun * 1000) / 1000
+        if (this.utfgridsource) {
+          this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+            if (data) {
 
-          this.infoOverlay.setPosition(this.infodata ? coordinate : undefined);
+              this.infodata = data;
 
-        } else {
-          window.document.body.style.cursor = 'auto';
-          this.infodata = null;
+              if (this.infodata.confirmados == "") {
+                this.infodata.confirmados = 0;
+              }
+
+              this.infodata.pop_2019 = this.infodata.pop_2019.toLocaleString('de-DE')
+
+              this.infodata.area_mun = Math.round(this.infodata.area_mun * 1000) / 1000
+
+              this.infoOverlay.setPosition(this.infodata ? coordinate : undefined);
+
+            } else {
+              window.document.body.style.cursor = 'auto';
+              this.infodata = null;
+            }
+
+          }.bind(this)
+          );
         }
-
-      }.bind(this)
-      );
+      }
+      else {
+        this.infodata = null;
+      }
     }
   }
 
@@ -1182,7 +1194,7 @@ export class MapComponent implements OnInit {
     this.innerWidth = window.innerWidth;
   }
 
-  handleDrawer(){
+  handleDrawer() {
     this.showDrawer = !this.showDrawer;
   }
 
