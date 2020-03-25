@@ -10,8 +10,10 @@ var csvFilepath = 'casos.csv'
 
 const lastDateQuery = 'SELECT max(data) AS last_date FROM casos'
 const insertRow = 'INSERT INTO casos(cd_geocmu, data, confirmados) VALUES($1,$2,$3) RETURNING id'
-var replaceView = "CREATE OR REPLACE VIEW municipios_casos AS SELECT m.*,c.confirmados,c.data \
+const dropView = 'DROP VIEW municipios_casos'
+var newView = "CREATE OR REPLACE VIEW municipios_casos AS SELECT m*, p.estp_2019 AS pop_2019, c.confirmados, c.data, c.suspeitos, c.descartados, c.obitos \
 FROM municipios m \
+  INNER populacao p ON m.cd_geocmu = p.cd_geocmu \
   LEFT JOIN casos c ON m.cd_geocmu = c.cd_geocmu \
 WHERE m.cd_geocmu <> '52' AND c.data IS NULL OR c.data = "
 
@@ -54,6 +56,7 @@ fs.createReadStream(csvFilepath)
 
 		    console.log((newLastDate != undefined), newLastDate)
 		    if (newLastDate != undefined) {
+		    	await client.query(dropView)
 		    	await client.query(replaceView + "'" + newLastDate + "'")
 		    	console.log('View municipios_casos updated')
 		    }
