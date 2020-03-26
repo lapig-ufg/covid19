@@ -10,8 +10,8 @@ module.exports = function (app) {
   var queries = app.database.queries.map;
 
   Internal.filterLanguage = function filterItems(query, array) {
-    return array.filter(function(el) {
-      if(el[0] === query){
+    return array.filter(function (el) {
+      if (el[0] === query) {
         return el[1];
       }
     })
@@ -42,80 +42,65 @@ module.exports = function (app) {
           id: "informacoes",
           label: languageJson["descriptor"]["informacoes"]["label"][language],
           group_expanded: true,
-          layers:[{
+          layers: [{
             id: "casos_covid_confirmados",
             label: languageJson["descriptor"]["informacoes"]["layers"]["casos_covid_confirmados"]["label"][language],
             visible: true,
-            selectedType:"covid19_municipios_casos",
-            types:[{
+            selectedType: "covid19_municipios_casos",
+            types: [{
               value: "covid19_municipios_casos",
-                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_covid_confirmados"]["types"]["covid19_municipios_casos"]["view_value"][language],
-                regionFilter: true,
-                opacity: 0.8,
-                order: 3
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_covid_confirmados"]["types"]["covid19_municipios_casos"]["view_value"][language],
+              regionFilter: true,
+              opacity: 0.8,
+              order: 3
             }]
           },
           {
             id: "qtd_populacional",
             label: languageJson["descriptor"]["informacoes"]["layers"]["qtd_populacional"]["label"][language],
             visible: false,
-            selectedType:"covid19_ibge_populacao",
-            types:[{
+            selectedType: "covid19_ibge_populacao",
+            types: [{
               value: "covid19_ibge_populacao",
-                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["qtd_populacional"]["types"]["covid19_ibge_populacao"]["view_value"][language],
-                regionFilter: true,
-                opacity: 0.8,
-                order: 3
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["qtd_populacional"]["types"]["covid19_ibge_populacao"]["view_value"][language],
+              regionFilter: true,
+              opacity: 0.8,
+              order: 3
             }]
           }
-        ]
+          ]
         },
         {
           id: "servicos",
           label: languageJson["descriptor"]["servicos"]["label"][language],
           group_expanded: false,
           layers: [
-            
-              {
-                id: "pharmacy_supermarket_hospital",
-                label: languageJson["descriptor"]["servicos"]["layers"]["pharmacy_supermarket_hospital"]["label"][language],
-                visible: false,
-                selectedType: "pharmacy_supermarket_hospital_covid",
-                types: [{
-                  value: "pharmacy_supermarket_hospital_covid",
-                  Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["pharmacy_supermarket_hospital"]["types"]["pharmacy_supermarket_hospital_covid"]["view_value"][language],
-                  regionFilter: true,
-                  opacity: 0.8,
-                  order: 3
-                }]
-              },
-              {
-                id: "gyn_locais_vacinacao",
-                label: languageJson["descriptor"]["servicos"]["layers"]["gyn_locais_vacinacao"]["label"][language],
-                visible: false,
-                selectedType: "gyn_locais_vacinacao_gripe",
-                types: [{
-                  value: "gyn_locais_vacinacao_gripe",
-                  Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["gyn_locais_vacinacao"]["types"]["gyn_locais_vacinacao_gripe"]["view_value"][language],
-                  opacity: 0.8,
-                  order: 3
-                }]
-              },
-              {
-              id: "osm_rodovias",
-              label: languageJson["descriptor"]["servicos"]["layers"]["osm_rodovias"]["label"][language],
+            {
+              id: "gyn_locais_vacinacao",
+              label: languageJson["descriptor"]["servicos"]["layers"]["gyn_locais_vacinacao"]["label"][language],
               visible: false,
-              metadata: languageJson["descriptor"]["servicos"]["layers"]['osm_rodovias']['metadata'],
-              selectedType: "osm_rodovias",
+              selectedType: "gyn_locais_vacinacao_gripe",
               types: [{
-                value: "osm_rodovias",
-                Viewvalue: "Open Street Map",
-                regionFilter: true,
+                value: "gyn_locais_vacinacao_gripe",
+                Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["gyn_locais_vacinacao"]["types"]["gyn_locais_vacinacao_gripe"]["view_value"][language],
                 opacity: 0.8,
                 order: 3
               }]
             },
-            
+            {
+              id: "pharmacy_supermarket_hospital",
+              label: languageJson["descriptor"]["servicos"]["layers"]["pharmacy_supermarket_hospital"]["label"][language],
+              visible: false,
+              selectedType: "pharmacy_supermarket_hospital_covid",
+              types: [{
+                value: "pharmacy_supermarket_hospital_covid",
+                Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["pharmacy_supermarket_hospital"]["types"]["pharmacy_supermarket_hospital_covid"]["view_value"][language],
+                regionFilter: true,
+                opacity: 0.8,
+                order: 3
+              }]
+            }
+
           ]
         },
       ],
@@ -148,7 +133,7 @@ module.exports = function (app) {
             viewValue: languageJson["descriptor"]["basemaps"]["types"]["relevo"][language],
             visible: false
           },
-          
+
         ]
       }],
       limits: [{
