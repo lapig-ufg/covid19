@@ -269,7 +269,7 @@ export class MapComponent implements OnInit {
 
     this.updateTexts();
 
-    this.showStatistics = false;
+    this.showStatistics = true;
     this.showDrawer = false;
   }
   search = (text$: Observable<string>) =>
@@ -428,12 +428,13 @@ export class MapComponent implements OnInit {
 
   private updateCharts() {
 
-    let timeseriesUrl = '/service/indicators/timeseries' + this.getServiceParams();
+    let timeseriesUrl = '/service/indicators/dadosoficiais' + this.getServiceParams();
 
     this.http.get(timeseriesUrl).subscribe(result => {
 
       this.dataSeries = result;
 
+      console.log(this.dataSeries)
 
       for (let graphic of this.dataSeries.timeseries.chartResult) {
 
@@ -486,6 +487,13 @@ export class MapComponent implements OnInit {
 
     }
     );
+
+
+
+    // let timeseriesgeral = '/service/indicators/timeseries' + this.getServiceParams();
+
+
+
   }
 
   updateRegion(region) {
@@ -612,6 +620,7 @@ export class MapComponent implements OnInit {
 
               this.infodata.pop_2019 = this.infodata.pop_2019.toLocaleString('de-DE')
               this.infodata.area_mun = Math.round(this.infodata.area_mun * 1000) / 1000
+
               this.infoOverlay.setPosition(this.infodata ? coordinate : undefined);
 
             } else {
@@ -1163,11 +1172,11 @@ export class MapComponent implements OnInit {
       this.collapseLegends = false;
       this.collapseLayer = true;
       this.collapseCharts = true;
-      this.currentZoom = 5;
+      this.currentZoom = 4;
     } else {
       this.collapseLayer = false;
       this.collapseCharts = false;
-      this.currentZoom = 8;
+      this.currentZoom = 7.8;
     }
 
     this.innerWidth = window.innerWidth;
@@ -1229,9 +1238,9 @@ export class MapComponent implements OnInit {
       this.collapseLegends = false;
       this.collapseLayer = true;
       this.collapseCharts = true;
-      this.currentZoom = 6.3;
+      this.currentZoom = 5.3;
     } else {
-      this.currentZoom = 7.4;
+      this.currentZoom = 6.8;
     }
 
     // Register of SVG icons
