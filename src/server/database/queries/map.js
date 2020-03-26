@@ -15,6 +15,9 @@ module.exports = function(app) {
 		return "SELECT nome, estado, uf, cd_geocmu FROM municipios WHERE cd_geocmu <> '52' and unaccent(nome) ILIKE unaccent(${key}%) LIMIT 10";
 	}
 
+	Query.marker = function() {
+		return "SELECT gid, ST_AsGeoJSON(geom) AS geojson FROM $[layer]";
+	}
 
 	return Query;
 

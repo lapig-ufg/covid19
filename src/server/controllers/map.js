@@ -205,7 +205,32 @@ module.exports = function (app) {
     response.end();
   };
 
+  Controller.marker = function (request, response) {
+    var queryResult = request.queryResult;
 
+    features = []
+
+    for(var i=0; i < queryResult.length; i++) {
+      
+      geometry = JSON.parse(queryResult[i].geojson)
+      delete queryResult[i].geojson
+
+      features.push({
+        "type": "Feature",
+         "geometry": geometry,
+         "properties": queryResult[i]
+
+      })
+      
+    }
+
+    response.send({
+      "type": "FeatureCollection",
+      "features": features
+    })
+
+    response.end();
+  };
 
   Controller.textreport = function (request, response) {
     var language = request.param('lang')
