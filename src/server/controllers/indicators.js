@@ -60,23 +60,24 @@ module.exports = function (app) {
           spanGaps: true,
           hidden: true,
         },
-        {
-          label: labels.label_descartados,
-          data: graphic.map(element => parseInt(element.descartados)),
-          fill: false,
-          backgroundColor: '#1e24c9',
-          borderColor: '#1e24c9',
-          spanGaps: true,
-          hidden: true,
-        },
-        {
-          label: labels.label_obitos,
-          data: graphic.map(element => parseInt(element.obitos)),
-          fill: false,
-          backgroundColor: '#000000',
-          borderColor: '#000000',
-          spanGaps: true,
-        }
+        // {
+        //   label: labels.label_descartados,
+        //   data: graphic.map(element => parseInt(element.descartados)),
+        //   fill: false,
+        //   backgroundColor: '#1e24c9',
+        //   borderColor: '#1e24c9',
+        //   spanGaps: true,
+        //   hidden: true,
+        // },
+        // {
+        //   label: labels.label_obitos,
+        //   data: graphic.map(element => parseInt(element.obitos)),
+        //   fill: false,
+        //   backgroundColor: '#000000',
+        //   borderColor: '#000000',
+        //   spanGaps: true,
+        //   hidden: true,
+        // }
       ]
     };
 
@@ -154,12 +155,12 @@ module.exports = function (app) {
       {
         id: "timeseries_go",
         title: "Goiás",
-        label_confirmados_projecao: languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go"]["label_confirmados_projecao"][language],
-        label_recuperados_projecao: languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go"]["label_recuperados_projecao"][language],
-        label_confirmados: languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go"]["label_confirmados"][language],
-        label_suspeitos: languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go"]["label_suspeitos"][language],
-        label_descartados: languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go"]["label_descartados"][language],
-        label_obitos: languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go"]["label_obitos"][language],
+        label_confirmados_projecao: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["label_confirmados_projecao"][language],
+        label_recuperados_projecao: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["label_recuperados_projecao"][language],
+        label_confirmados: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["label_confirmados"][language],
+        label_suspeitos: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["label_suspeitos"][language],
+        label_descartados: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["label_descartados"][language],
+        label_obitos: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["label_obitos"][language],
         borderDashRef: [5, 5],
         getText: function (chart) {
           // var label = chart['indicators'][0]["label"]
@@ -173,7 +174,7 @@ module.exports = function (app) {
           // +"sendo a classe " + label + " a de maior predominância, com " + numberFormat(parseFloat(value))
           // + " de hectares (" + Math.round(percentual_area_ha) + "% da área total). "
 
-          var text = languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go"]["title"][language];
+          var text = languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["title"][language];
 
           return text;
         },
@@ -183,8 +184,9 @@ module.exports = function (app) {
         options: {
           title: {
             display: true,
-            text: languageJson["charts_box"]["charts_box_timeseries"]["timeseries_go"]["title"][language],
-            fontSize: 16
+            text: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["text"][language],
+            fontSize: 10,
+            position: "bottom"
           },
           legend: {
             labels: {
@@ -200,7 +202,7 @@ module.exports = function (app) {
           }
 
         }
-      },
+      }
       
     ];
 
@@ -214,22 +216,18 @@ module.exports = function (app) {
         chart["dataResult"] = request.queryResult[chart.id]
       }
 
-      if (chart['dataResult'].length > 0) {
+      if (chart['dataResult'].labels.length > 0) {
         chart['show'] = true
         chart['text'] = chart.getText(chart)
       }
 
     }
 
-    
-
-
-
 
     let finalResult = {
       title: languageJson["charts_box"]["charts_box_title"][language],
       timeseries: {
-        label: languageJson["charts_box"]["charts_box_timeseries"]["label"][language],
+        label: languageJson["charts_box"]["charts_box_dados_oficiais"]["label"][language],
         chartResult: chartResult
       }
     };

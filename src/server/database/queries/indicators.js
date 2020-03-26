@@ -27,7 +27,7 @@ module.exports = function (app) {
     return [
       {
         id: 'timeseries_go',
-        sql: "select data, sum(confirmados) as confirmados, sum(suspeitos) as suspeitos, sum(obitos) as obitos from casos where cd_geocmu <> '52' AND cd_geocmu <> '5300108' group by data order by data;"
+        sql: "select data, sum(confirmados) as confirmados, sum(suspeitos) as suspeitos, sum(obitos) as obitos , sum(descartados) as descartados from casos where cd_geocmu <> '52' AND cd_geocmu <> '5300108' group by data order by data;"
       },
       {
         id: 'timeseries_states',

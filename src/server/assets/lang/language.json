@@ -9,10 +9,10 @@
 			"pt-br": "Estatísticas sobre o avanço do COVID-19",
 			"en-us": "Statistics on the progress of COVID-19"
 		},
-		"charts_box_timeseries": {
+		"charts_box_dados_oficiais": {
 			"label": {
-				"pt-br": "Projeção Temporal",
-				"en-us": "Temporal Projection"
+				"pt-br": "Dados Oficiais",
+				"en-us": "Official Data"
 			},
 			"timeseries_go_projecao":{
 				"title": {
@@ -30,8 +30,12 @@
 			},
 			"timeseries_go":{
 				"title": {
-					"pt-br": "Dados gerais para os casos registrados no Estado de Goiás",
-					"en-us": "Estimates on the number of cases for the State of Goiás"
+					"pt-br": "Dados da Secretaria de Saúde do Estado de Goiás",
+					"en-us": "Data from the Health Department of the State of Goiás"
+				},
+				"text":{
+					"pt-br": "Clique nos botões para atualizar o gráfico.",
+					"en-us": "Click on the buttons here to update the statistics."
 				},
 				"label_confirmados_projecao":{
 					"pt-br": "Estimativa para casos Confirmados",
