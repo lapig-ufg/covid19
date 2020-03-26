@@ -117,7 +117,7 @@ module.exports = function (app) {
             },
             
           ]
-        },
+        }
       ],
       basemaps: [{
         id: "basemaps",
