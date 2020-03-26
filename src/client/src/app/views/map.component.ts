@@ -1167,7 +1167,7 @@ export class MapComponent implements OnInit {
     } else {
       this.collapseLayer = false;
       this.collapseCharts = false;
-      this.currentZoom = 8.8;
+      this.currentZoom = 8;
     }
 
     this.innerWidth = window.innerWidth;
@@ -1231,7 +1231,7 @@ export class MapComponent implements OnInit {
       this.collapseCharts = true;
       this.currentZoom = 6.3;
     } else {
-      this.currentZoom = 7.8;
+      this.currentZoom = 7.4;
     }
 
     // Register of SVG icons

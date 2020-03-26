@@ -157,7 +157,7 @@ hr {
 	border-radius:10px;
 	/*border: 1px solid #808080;*/
 	opacity: .93;
-	max-height: 499px;
+	max-height: 541px;
 	overflow:hidden;
 	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
 	box-shadow: -1px 1px 10px 0px #7a2525;
@@ -1001,6 +1001,7 @@ mat-select {
 .btn-layers:hover{
 	background-color: #dd4646;
 }
+
 .btn-layers-active{
 	background-color: #dd4646;
 }
@@ -1025,4 +1026,25 @@ mat-select {
 
 .mat-drawer-container-has-open .mat-drawer-backdrop.mat-drawer-shown {
 	background-color:#00000000 !important;
+}
+
+.container-ft{
+	text-align: center;
+}
+
+.container-ft img{
+	margin-left: auto;
+	margin-right: auto;
+	max-width:80%;
+}
+
+.container-ft h5{
+	font-weight: bold;
+}
+
+.container-ft p{
+	padding: 19px;
+	font-size: 1rem;;
+	text-align: justify;
+	text-indent: 4em;
 }
