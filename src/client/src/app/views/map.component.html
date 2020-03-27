@@ -1,4 +1,4 @@
-<mat-drawer-container class="container-layer-sidenav" [style.height]="innerHeigth + 'px'" autosize>
+<mat-drawer-container class="container-layer-sidenav" autosize>
 
 	<mat-drawer #drawer [style.z-index]="showDrawer? '4' : '-1'" class="layer-sidenav" mode="over" [autoFocus]="false"
 		[opened]="showDrawer">
@@ -6,7 +6,6 @@
 			<div class="titleWindows">
 				{{titlesLayerBox.title}}
 			</div>
-
 
 			<div class="collapseLayer">
 				<mat-tab-group class="layersConteudo">
@@ -101,15 +100,11 @@
 				</mat-tab-group>
 			</div>
 
-			<!--				<div title="Fechar" class="close-drawer" align="center" (click)="handleDrawer()" >-->
-			<!--					<img  align="center" width="60" height="60"  src="../../assets/gif/close-button.svg" alt="Fechar">-->
-			<!--				</div>-->
 		</div>
 
 	</mat-drawer>
 
 	<div class="layer-sidenav-content">
-
 		<div id="map" class="dpat-ol-map" [style.height]="innerHeigth + 'px'">
 
 			<div class="dpat-logo">
@@ -150,41 +145,45 @@
 					<mat-tab-group class="charts" [selectedIndex]="selectedIndex" #matgroup
 						(selectedTabChange)="changeTab($event)">
 
-
 						<mat-tab label="{{dataSeries.timeseries.label}}">
-								<p-tabView>
-									<p-tabPanel [header]="dataSeries.timeseries.chartResult[0]?.title"
-										[disabled]="!dataSeries.timeseries.chartResult[0]?.show">
-										<div>
-											<p style="font-weight: bold; text-align: center;">{{ dataSeries.timeseries.chartResult[0]?.text }}</p>
-											<p-chart [ngStyle]="{'overflow-x': hidden}" *ngIf="dataSeries.timeseries.chartResult[0]?.type"
-												[type]="dataSeries.timeseries.chartResult[0]?.type" [data]="dataSeries.timeseries.chartResult[0]?.dataResult" [options]="dataSeries.timeseries.chartResult[0]?.options">
-											</p-chart>
-										</div>
-									</p-tabPanel>
-									<p-tabPanel [header]="chartResultCities.label" [cache]="true">
-										<p-scrollPanel [style]="{width: '100%', height: '38vh'}" >
-											<p style="font-weight: bold; text-align: center;">{{chartResultCities.description}} </p>
-											
-											<p-table [value]="chartResultCities.series" >
-												<ng-template pTemplate="header">
-													<tr align="center">
-														<th *ngFor="let header of chartResultCities.split">
-															{{header}}
-														</th>
-													</tr>
-												</ng-template>
-												<ng-template pTemplate="body" let-city>
-													<tr>
-														<td align="center">{{city.rank}}</td>
-														<td align="center">{{city.nome}}</td>
-														<td align="center">{{city.confirmados}}</td>
-													</tr>
-												</ng-template>
-											</p-table>
-										</p-scrollPanel>
-									</p-tabPanel>
-								</p-tabView>
+							<p-tabView>
+								<p-tabPanel [header]="dataSeries.timeseries.chartResult[0]?.title"
+									[disabled]="!dataSeries.timeseries.chartResult[0]?.show">
+									<div>
+										<p style="font-weight: bold; text-align: center;">
+											{{ dataSeries.timeseries.chartResult[0]?.text }}</p>
+										<p-chart [ngStyle]="{'overflow-x': hidden}"
+											*ngIf="dataSeries.timeseries.chartResult[0]?.type"
+											[type]="dataSeries.timeseries.chartResult[0]?.type"
+											[data]="dataSeries.timeseries.chartResult[0]?.dataResult"
+											[options]="dataSeries.timeseries.chartResult[0]?.options">
+										</p-chart>
+									</div>
+								</p-tabPanel>
+								<p-tabPanel [header]="chartResultCities.label" [cache]="true">
+									<p-scrollPanel [style]="{width: '100%', height: '38vh'}">
+										<p style="font-weight: bold; text-align: center;">
+											{{chartResultCities.description}} </p>
+
+										<p-table [value]="chartResultCities.series">
+											<ng-template pTemplate="header">
+												<tr align="center">
+													<th *ngFor="let header of chartResultCities.split">
+														{{header}}
+													</th>
+												</tr>
+											</ng-template>
+											<ng-template pTemplate="body" let-city>
+												<tr>
+													<td align="center">{{city.rank}}</td>
+													<td align="center">{{city.nome}}</td>
+													<td align="center">{{city.confirmados}}</td>
+												</tr>
+											</ng-template>
+										</p-table>
+									</p-scrollPanel>
+								</p-tabPanel>
+							</p-tabView>
 						</mat-tab>
 
 						<mat-tab label="{{dataProjSeries.timeseries.label}}" >
@@ -200,6 +199,23 @@
 								</p-tabView>
 							</ng-template>
 							</p-scrollPanel>s
+						</mat-tab>
+
+						<mat-tab label="Fontes">
+							<p-scrollPanel [style]="{width: '100%', height: '72vh'}">
+								<div class="container-ft">
+									<img src="../../assets/gif/fontes.png" alt="Fontes" />
+									<h5> NOTA TÉCNICA - PROJEÇÕES COVID-19</h5>
+									<p>As projeções da plataforma tem objetivo de contribuir com a melhor condução das
+										ações da população goiana e dos gestores institucionais em relação a propagação
+										da epidemia do vírus Sars COVID 19 em Goiás.
+										Os modelos epidêmicos utilizados são amplamente difundidos no meio científico,
+										dentre eles o modelo SEIR e exponencial.
+										Todas as projeções são baseadas no histórico de ocorrências diárias do Sars
+										COVID-19 e podem sofrer alterações a cada nova ocorrência.
+									</p>
+								</div>
+							</p-scrollPanel>
 						</mat-tab>
 
 					</mat-tab-group>
@@ -221,7 +237,8 @@
 								{{layer.label}}
 							</mat-expansion-panel-header>
 							<div *ngFor="let type of layer.types">
-								<img *ngIf="layer.selectedType === type.value" [src]="type.urlLegend">
+								<img *ngIf="layer.selectedType === type.value" style="margin-top: 10px;"
+									[src]="type.urlLegend">
 							</div>
 
 						</mat-expansion-panel>
@@ -229,8 +246,8 @@
 				</div>
 			</div>
 
-			<div id="map-info" class="card" [ngStyle]="{'visibility': infodata  ? 'visible' : 'hidden'}">
-				<div *ngIf="infodata" class="card-body">
+			<div id="map-info" class="card" [ngStyle]="{'visibility': infodata || clickable  ? 'visible' : 'hidden'}">
+				<div *ngIf="infodata && !clickable" class="card-body">
 					<p class="card-text">{{infodata.nome}} - {{infodata.uf}}</p>
 					<table>
 						<tbody>
@@ -253,8 +270,12 @@
 						</tbody>
 					</table>
 				</div>
+				<div *ngIf="clickable" class="card-body">
+					<p class="card-text">{{clickableTitle}}</p>
+					<img src='assets/markers/google_maps.png'>
+					<b>Abrir no Google Maps</b>
+				</div>
 			</div>
-
 		</div>
 	</div>
 
