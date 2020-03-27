@@ -15,6 +15,7 @@ import * as OlProj from 'ol/proj';
 import BingMaps from 'ol/source/BingMaps';
 import TileWMS from 'ol/source/TileWMS';
 import UTFGrid from 'ol/source/UTFGrid.js';
+import Icon from 'ol/style/Icon.js';
 import VectorSource from 'ol/source/Vector';
 import OlXYZ from 'ol/source/XYZ';
 import Circle from 'ol/style/Circle.js';
@@ -434,8 +435,6 @@ export class MapComponent implements OnInit {
 
       this.dataSeries = result;
 
-      console.log(this.dataSeries)
-
       for (let graphic of this.dataSeries.timeseries.chartResult) {
 
         let y = [{
@@ -645,7 +644,17 @@ export class MapComponent implements OnInit {
     let coordinate = this.map.getEventCoordinate(evt.originalEvent);
     let viewResolution = this.map.getView().getResolution();
 
-    if (this.utfgridsource) {
+    var feature = this.map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+      return feature;
+    });
+
+    if (feature) {
+      var properties = feature.getProperties();
+      if(properties.lon != undefined && properties.lat != undefined) {
+        var redirectUrl = "https://www.google.com/maps/search/?api=1&query="+properties.lat+","+properties.lon
+        window.open(redirectUrl, "_blank");
+      }
+    } else if (this.utfgridsource) {
       this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
         if (data) {
 
@@ -745,13 +754,41 @@ export class MapComponent implements OnInit {
     }
   }
 
+  private createMarkerLayer(layer) {
+    var markerStyle = {
+      'Point': new Style({
+                image: new Icon({
+                  src: layer.iconUrl
+                })
+        })
+    };
+
+    return new VectorLayer({
+      source: new VectorSource({
+        url: layer.geoJsonUrl,
+        format: new GeoJSON()
+      }),
+      style: function(feature) {
+        return markerStyle[feature.getGeometry().getType()]
+      }
+    });
+
+  }
+
   private createLayers() {
     let olLayers: OlTileLayer[] = new Array();
 
     // layers
     for (let layer of this.layersTypes) {
-      this.LayersTMS[layer.value] = this.createTMSLayer(layer);
+      
+      if (layer.source == 'geojson') {
+        this.LayersTMS[layer.value] = this.createMarkerLayer(layer);
+      } else {
+        this.LayersTMS[layer.value] = this.createTMSLayer(layer);
+      }
+
       this.layers.push(this.LayersTMS[layer.value]);
+
     }
 
     // limits
@@ -1197,9 +1234,14 @@ export class MapComponent implements OnInit {
 
       for (let group of this.descriptor.groups) {
         for (let layer of group.layers) {
+          
           if (layer.id != 'satelite') {
             for (let type of layer.types) {
-              type.urlLegend = this.urls[0] + '?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=' + type.value + '&format=image/png';
+              if (type.source == 'geojson') {
+                type.urlLegend = type.iconUrl
+              } else {
+                type.urlLegend = this.urls[0] + '?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=' + type.value + '&format=image/png';
+              }
             }
             this.layersNames.push(layer);
           }

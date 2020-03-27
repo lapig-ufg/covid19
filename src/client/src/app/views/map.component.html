@@ -188,7 +188,7 @@
 									{{layer.label}}
 								</mat-expansion-panel-header>
 								<div *ngFor="let type of layer.types">
-									<img *ngIf="layer.selectedType === type.value" [src]="type.urlLegend">
+									<img *ngIf="layer.selectedType === type.value" style="margin-top: 10px;" [src]="type.urlLegend">
 								</div>
 
 							</mat-expansion-panel>

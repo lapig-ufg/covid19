@@ -16,7 +16,7 @@ module.exports = function(app) {
 	}
 
 	Query.marker = function() {
-		return "SELECT gid, ST_AsGeoJSON(geom) AS geojson FROM $[layer]";
+		return "SELECT gid, ST_X(geom) lon, ST_Y(geom) lat, ST_AsGeoJSON(geom) AS geojson FROM $[layer]";
 	}
 
 	return Query;
