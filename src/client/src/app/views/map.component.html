@@ -177,7 +177,7 @@
 					</div>
 				</div>
 
-				
+
 
 <!--				<div id="positionLegend" class="control-layers" cdkDrag>-->
 <!--					<div [class]="collapseLegends ? 'titleWindows radius-bottom' : 'titleWindows'" >-->
@@ -208,8 +208,8 @@
 <!--				</div>-->
 
 				<div id="map-info" class="card"
-					 [ngStyle]="{'visibility': infodata  ? 'visible' : 'hidden'}">
-					<div *ngIf="infodata" class="card-body">
+					 [ngStyle]="{'visibility': infodata || clickable  ? 'visible' : 'hidden'}">
+					<div *ngIf="infodata && !clickable" class="card-body">
 						<p class="card-text">{{infodata.nome}} - {{infodata.uf}}</p>
 						<table>
 							<tbody>
@@ -231,6 +231,11 @@
 							</tr>
 							</tbody>
 						</table>
+					</div>
+					<div *ngIf="clickable" class="card-body">
+						<p class="card-text">{{clickableTitle}}</p>
+						<img src='assets/markers/google_maps.png'>
+						<b>Abrir no Google Maps</b>
 					</div>
 				</div>
 			</div>

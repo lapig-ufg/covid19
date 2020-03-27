@@ -6,6 +6,7 @@ module.exports = function (app) {
 	app.get('/service/map/descriptor', map.descriptor);
 	app.get('/service/map/search', dataInjector);
 	app.get('/service/map/extent', dataInjector, map.extent);
+	app.get('/service/map/marker', dataInjector, map.marker);
 	app.get('/service/map/titles', map.titles);
 
 }

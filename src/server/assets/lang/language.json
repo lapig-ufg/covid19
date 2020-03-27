@@ -243,8 +243,8 @@
 				},
 				"gyn_locais_vacinacao": {
 					"label": {
-						"pt-br": "Locais de Vacinação H1N1 em Goiânia",
-						"en-us": "H1N1 Flu Vaccination Sites in Goiania"
+						"pt-br": "Locais de Vacinação H1N1 (Goiânia)",
+						"en-us": "H1N1 Flu Vaccination Sites (Goiania)"
 					},
 					"types": {
 						"gyn_locais_vacinacao_gripe": {

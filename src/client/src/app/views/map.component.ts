@@ -15,6 +15,7 @@ import * as OlProj from 'ol/proj';
 import BingMaps from 'ol/source/BingMaps';
 import TileWMS from 'ol/source/TileWMS';
 import UTFGrid from 'ol/source/UTFGrid.js';
+import Icon from 'ol/style/Icon.js';
 import VectorSource from 'ol/source/Vector';
 import OlXYZ from 'ol/source/XYZ';
 import Circle from 'ol/style/Circle.js';
@@ -128,7 +129,10 @@ export class MapComponent implements OnInit {
   isFilteredByState = false;
   selectedIndex: any;
   collapseLegends = false;
-
+  
+  clickable = true;
+  clickableTitle:any;
+  
   infodata: any;
   infodataCampo: any;
   infodataMunicipio: any;
@@ -193,6 +197,7 @@ export class MapComponent implements OnInit {
     this.dataSeries = { timeseries: { label: "" } };
     this.dataStates = {};
 
+    this.clickableTitle = 'Informações';
 
     this.chartResultCities = {
       split: []
@@ -445,8 +450,6 @@ export class MapComponent implements OnInit {
 
       this.dataSeries = result;
 
-      console.log(this.dataSeries)
-
       for (let graphic of this.dataSeries.timeseries.chartResult) {
 
         let y = [{
@@ -577,8 +580,6 @@ export class MapComponent implements OnInit {
       })
     });
 
-
-
     this.infoOverlay = new Overlay({
       element: document.getElementById('map-info'),
       offset: [15, 15],
@@ -602,7 +603,6 @@ export class MapComponent implements OnInit {
 
   private callbackPointerMoveMap(evt) {
 
-
     let utfgridlayerVisible = this.utfgridlayer.getVisible();
     if (!utfgridlayerVisible || evt.dragging) {
       return;
@@ -612,41 +612,61 @@ export class MapComponent implements OnInit {
     let viewResolution = this.map.getView().getResolution();
 
 
-    let info = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+    var feature = this.map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+      return feature;
+    });
 
+    this.infoOverlay.setPosition(coordinate);
 
-    if (info.visible) {
+    if (feature) {
+      this.clickable = true
+      var properties = feature.getProperties();
+      window.document.body.style.cursor = 'pointer';
+      
+      if(properties['label'] != undefined) {
+        this.clickableTitle = properties['label']
+      }
 
-      if (info.selectedType == "covid19_municipios_casos") {
+    } else {
+      this.clickableTitle = 'Informações'
+      this.clickable = false
+      window.document.body.style.cursor = 'auto';
+      
+      let info = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
 
-        if (this.utfgridsource) {
-          this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
-            if (data) {
+      if (info.visible) {
 
-              this.infodata = data;
+        if (info.selectedType == "covid19_municipios_casos") {
 
-              if (this.infodata.confirmados == "") {
-                this.infodata.confirmados = 0;
+          if (this.utfgridsource) {
+            this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+              if (data) {
+
+                this.infodata = data;
+
+                if (this.infodata.confirmados == "") {
+                  this.infodata.confirmados = 0;
+                }
+
+                this.infodata.pop_2019 = this.infodata.pop_2019.toLocaleString('de-DE')
+                this.infodata.area_mun = Math.round(this.infodata.area_mun * 1000) / 1000
+
+              } else {
+                window.document.body.style.cursor = 'auto';
+                this.infodata = null;
               }
 
-              this.infodata.pop_2019 = this.infodata.pop_2019.toLocaleString('de-DE')
-              this.infodata.area_mun = Math.round(this.infodata.area_mun * 1000) / 1000
-
-              this.infoOverlay.setPosition(this.infodata ? coordinate : undefined);
-
-            } else {
-              window.document.body.style.cursor = 'auto';
-              this.infodata = null;
-            }
-
-          }.bind(this)
-          );
+            }.bind(this)
+            );
+          }
+        }
+        else {
+          this.infodata = null;
         }
       }
-      else {
-        this.infodata = null;
-      }
+
     }
+
   }
 
   private callbackClickMap(evt) {
@@ -656,7 +676,17 @@ export class MapComponent implements OnInit {
     let coordinate = this.map.getEventCoordinate(evt.originalEvent);
     let viewResolution = this.map.getView().getResolution();
 
-    if (this.utfgridsource) {
+    var feature = this.map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+      return feature;
+    });
+
+    if (feature) {
+      var properties = feature.getProperties();
+      if(properties.lon != undefined && properties.lat != undefined) {
+        var redirectUrl = "https://www.google.com/maps/search/?api=1&query="+properties.lat+","+properties.lon
+        window.open(redirectUrl, "_blank");
+      }
+    } else if (this.utfgridsource) {
       this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
         if (data) {
 
@@ -756,13 +786,41 @@ export class MapComponent implements OnInit {
     }
   }
 
+  private createMarkerLayer(layer) {
+    var markerStyle = {
+      'Point': new Style({
+                image: new Icon({
+                  src: layer.iconUrl
+                })
+        })
+    };
+
+    return new VectorLayer({
+      source: new VectorSource({
+        url: layer.geoJsonUrl,
+        format: new GeoJSON()
+      }),
+      style: function(feature) {
+        return markerStyle[feature.getGeometry().getType()]
+      }
+    });
+
+  }
+
   private createLayers() {
     let olLayers: OlTileLayer[] = new Array();
 
     // layers
     for (let layer of this.layersTypes) {
-      this.LayersTMS[layer.value] = this.createTMSLayer(layer);
+      
+      if (layer.source == 'geojson') {
+        this.LayersTMS[layer.value] = this.createMarkerLayer(layer);
+      } else {
+        this.LayersTMS[layer.value] = this.createTMSLayer(layer);
+      }
+
       this.layers.push(this.LayersTMS[layer.value]);
+
     }
 
     // limits
@@ -1208,9 +1266,14 @@ export class MapComponent implements OnInit {
 
       for (let group of this.descriptor.groups) {
         for (let layer of group.layers) {
+          
           if (layer.id != 'satelite') {
             for (let type of layer.types) {
-              type.urlLegend = this.urls[0] + '?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=' + type.value + '&format=image/png';
+              if (type.source == 'geojson') {
+                type.urlLegend = type.iconUrl
+              } else {
+                type.urlLegend = this.urls[0] + '?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=' + type.value + '&format=image/png';
+              }
             }
             this.layersNames.push(layer);
           }
