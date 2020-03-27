@@ -10,7 +10,7 @@
 				<div class="collapseLayer" >
 					<mat-tab-group class="layersConteudo">
 						<mat-tab label="{{titlesLayerBox.label_data}}">
-							<p-scrollPanel [style]="{width: '100%', height: '60vh', padding:'10px'}" >
+							<p-scrollPanel [style]="{width: '100%', height: '40vh', padding:'10px'}" >
 								<mat-accordion>
 									<div id="layers_desmatamentos">
 
@@ -20,7 +20,7 @@
 										<input id="typeahead-http" type="text" class="form-control searchRegion"
 											   [class.is-invalid]="searchFailed" [(ngModel)]="valueRegion"
 											   [ngbTypeahead]="search"
-											   placeholder="{{titlesLayerBox.search_placeholder}}"
+											   [placeholder]="titlesLayerBox.search_placeholder"
 											   (selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
 											   [inputFormatter]="formatter" [value]="currentData" />
 										<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
@@ -72,6 +72,9 @@
 																		</mat-select>
 																	</mat-form-field>
 																</span>
+														<div *ngFor="let type of layer.types">
+															<img *ngIf="layer.selectedType === type.value" [src]="type.urlLegend">
+														</div>
 													</div>
 												</div>
 											</mat-expansion-panel>
@@ -111,8 +114,8 @@
 
 				<div  class="dpat-logo">
 					<div class="container-logos">
-						<img width="130" height="130" src="../../assets/logo/logo-ufg.png" alt="UFG"/>
-						<img width="130" height="130" src="{{svgLoading}}" alt="Covid-19"/>
+						<img src="../../assets/logo/logos.png" alt="Logos"/>
+<!--						<img width="130" height="130" src="{{svgLoading}}" alt="Covid-19"/>-->
 					</div>
 				</div>
 
@@ -130,41 +133,41 @@
 					</div>
 				</div>
 
-				<div *ngIf="showStatistics" id="positionCharts">
+				<div *ngIf="showStatistics" id="positionCharts" >
 					<div class="titleWindows">
-						{{dataSeries.title}}
-						<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
-								(click)="collapseCharts = !collapseCharts" [attr.aria-expanded]="!collapseCharts"
-								aria-controls="camadageografica">-</button>
-					</div>
-					<div [ngbCollapse]="collapseCharts" id="matgroup">
-						<mat-tab-group class="charts" [selectedIndex]="selectedIndex" #matgroup (selectedTabChange)="changeTab($event)">
+						<div>{{dataSeries.title}}</div>
 
+						<div class="space"></div>
+
+						<button class="btn-colapse" mat-mini-fab (click)="collapseCharts = !collapseCharts" [attr.aria-expanded]="!collapseCharts"  >
+							<mat-icon> {{collapseCharts ? 'expand_less' : 'expand_more'}}</mat-icon>
+						</button>
+					</div>
+					<div [ngbCollapse]="collapseCharts" id="matgroup" >
+						<mat-tab-group class="charts" [selectedIndex]="selectedIndex" #matgroup (selectedTabChange)="changeTab($event)" >
 
 							<mat-tab label="{{dataSeries.timeseries.label}}" >
-								<p-scrollPanel [style]="{width: '100%', height: '72vh'}" >
-								<ng-template matTabContent>
-									<p-tabView >
-										<p-tabPanel [header]="dat.title" *ngFor="let dat of dataSeries.timeseries.chartResult; let i = index" [selected]="i == 0" [disabled]="!dat.show" [cache]="true">
-											<div>
-												<p style="font-weight: bold; text-align: center;">{{ dat.text }}</p>
-												<p-chart [ngStyle]="{'overflow-x': hidden}" *ngIf="dat.type" [type]="dat.type" [data]="dat.dataResult" [options]="dat.options"></p-chart>
-											</div>
-										</p-tabPanel>
-									</p-tabView>
-								</ng-template>
-								</p-scrollPanel>s
+								<p-scrollPanel [ngStyle]="{width: '100%', height: '60vh'}">
+									<ng-template matTabContent>
+										<p-tabView >
+											<p-tabPanel [header]="dat.title" *ngFor="let dat of dataSeries.timeseries.chartResult; let i = index" [selected]="i == 0" [disabled]="!dat.show" [cache]="true">
+												<div>
+													<p style="font-weight: bold; text-align: center;">{{ dat.text }}</p>
+													<p-chart *ngIf="dat.type" [type]="dat.type" [data]="dat.dataResult" [options]="dat.options"></p-chart>
+												</div>
+											</p-tabPanel>
+										</p-tabView>
+									</ng-template>
+								</p-scrollPanel>
 							</mat-tab>
 
-							<mat-tab label="Fontes" >
-								<p-scrollPanel [style]="{width: '100%', height: '72vh'}" >
+							<mat-tab label="{{dataSource.title}}" >
+								<p-scrollPanel [style]="{width: '100%', height: '60vh'}" >
 									<div  class="container-ft">
 										<img src="../../assets/gif/fontes.png" alt="Fontes"/>
-										<h5> NOTA TÉCNICA - PROJEÇÕES COVID-19</h5>
+										<h5>{{dataSource.technical_note_title}}</h5>
 										<p>
-											As projeções da plataforma tem objetivo de contribuir com a melhor condução das ações da população goiana e dos gestores institucionais em relação a propagação da epidemia do vírus Sars COVID 19 em Goiás.
-											Os modelos epidêmicos utilizados são amplamente difundidos no meio científico, dentre eles o modelo SEIR e exponencial, todas as projeções são baseadas no histórico de ocorrências diárias do Sars COVID-19,
-											e portanto podem sofrer alterações a cada nova ocorrência, sempre com o objetivo de produzir estimativas mais assertivas.
+											{{dataSource.technical_note}}
 										</p>
 									</div>
 								</p-scrollPanel>
@@ -174,28 +177,35 @@
 					</div>
 				</div>
 
-				<div id="positionLegend" class="control-layers" cdkDrag>
-					<div [class]="collapseLegends ? 'titleWindows radius-bottom' : 'titleWindows'" >
-						{{titlesLayerBox.legendTitle}}
-						<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
-								(click)="collapseLegends = !collapseLegends" [attr.aria-expanded]="!collapseLegends"
-								aria-controls="camadageografica">-</button>
-					</div>
-					<div [ngbCollapse]="collapseLegends" class="legendasConteudo">
-						<div class="legends"  *ngFor="let layer of layersNames">
-							<mat-expansion-panel [expanded]="layer.visible" >
-								<mat-expansion-panel-header  [collapsedHeight]="'40px'" [expandedHeight]="'40px'"
-															 class="expansion-header-layer" *ngIf="layer.visible">
-									{{layer.label}}
-								</mat-expansion-panel-header>
-								<div *ngFor="let type of layer.types">
-									<img *ngIf="layer.selectedType === type.value" [src]="type.urlLegend">
-								</div>
+				
 
-							</mat-expansion-panel>
-						</div>
-					</div>
-				</div>
+<!--				<div id="positionLegend" class="control-layers" cdkDrag>-->
+<!--					<div [class]="collapseLegends ? 'titleWindows radius-bottom' : 'titleWindows'" >-->
+
+<!--						<div>{{titlesLayerBox.legendTitle}}</div>-->
+
+<!--						<div class="space"></div>-->
+
+<!--						<button class="btn-colapse" mat-mini-fab (click)="collapseLegends = !collapseLegends" [attr.aria-expanded]="!collapseLegends" >-->
+<!--							<mat-icon> {{collapseLegends ? 'expand_less' : 'expand_more'}}</mat-icon>-->
+<!--						</button>-->
+<!--					</div>-->
+
+<!--					<div [ngbCollapse]="collapseLegends" class="legendasConteudo">-->
+<!--						<div class="legends"  *ngFor="let layer of layersNames">-->
+<!--							<mat-expansion-panel [expanded]="layer.visible" >-->
+<!--								<mat-expansion-panel-header  [collapsedHeight]="'40px'" [expandedHeight]="'40px'"-->
+<!--															 class="expansion-header-layer" *ngIf="layer.visible">-->
+<!--									{{layer.label}}-->
+<!--								</mat-expansion-panel-header>-->
+<!--								<div *ngFor="let type of layer.types">-->
+<!--									<img *ngIf="layer.selectedType === type.value" [src]="type.urlLegend">-->
+<!--								</div>-->
+
+<!--							</mat-expansion-panel>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
 
 				<div id="map-info" class="card"
 					 [ngStyle]="{'visibility': infodata  ? 'visible' : 'hidden'}">

@@ -287,3 +287,15 @@ body {
 .mat-drawer:not(.mat-drawer-side) {
 	box-shadow:none;
 }
+
+.mat-drawer-inner-container {
+	overflow: hidden!important;
+}
+
+.mat-tab-body-content{
+	overflow-x: hidden!important;
+}
+
+#positionCharts .mat-tab-body-content{
+	overflow: hidden!important;
+}

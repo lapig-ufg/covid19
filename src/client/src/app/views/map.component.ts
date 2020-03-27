@@ -70,6 +70,7 @@ export class MapComponent implements OnInit {
   dataSeries: any;
   dataStates: any;
   dataCities: any;
+  dataSource:any;
   chartResultCities: any;
   chartResultCitiesIllegalAPP: any;
   chartResultCitiesIllegalRL: any;
@@ -266,6 +267,7 @@ export class MapComponent implements OnInit {
     this.chartRegionScale = true;
     this.titlesLayerBox = {};
     this.minireportText = {};
+    this.updateSource();
 
     this.updateTexts();
 
@@ -425,6 +427,15 @@ export class MapComponent implements OnInit {
     }
   }
 
+  private updateSource(){
+    let sourceUrl = '/service/indicators/source' + this.getServiceParams();
+
+    this.http.get(sourceUrl).subscribe(result => {
+      this.dataSource = result;
+    });
+
+  }
+
 
   private updateCharts() {
 
@@ -492,7 +503,7 @@ export class MapComponent implements OnInit {
 
     // let timeseriesgeral = '/service/indicators/timeseries' + this.getServiceParams();
 
-
+    this.updateSource();
 
   }
 

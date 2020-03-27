@@ -203,7 +203,6 @@ module.exports = function (app) {
 
         }
       }
-      
     ];
 
     for (let chart of chartResult) {
@@ -237,5 +236,22 @@ module.exports = function (app) {
     response.end();
   };
 
+  Controller.sourceText = function (request, response) {
+    var language = request.param('lang')
+    var sourceResult = {
+      id:"source",
+      title: languageJson["charts_box"]["source"]["label"][language],
+      technical_note_title: languageJson["charts_box"]["source"]["technical_note_title"][language],
+      technical_note: languageJson["charts_box"]["source"]["technical_note"][language],
+    };
+    response.send(sourceResult);
+    response.end();
+  };
+
   return Controller;
 };
+
+
+
+
+

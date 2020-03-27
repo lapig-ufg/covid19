@@ -149,7 +149,7 @@ hr {
 	position: absolute;
 	right: 1%;
 	bottom: 2%;
-	width: 60vh;
+	width: 65vh;
 	background-color: #FFF;
 	color: #666;
 	text-align: left;
@@ -157,7 +157,7 @@ hr {
 	border-radius:10px;
 	/*border: 1px solid #808080;*/
 	opacity: .93;
-	max-height: 541px;
+	max-height: 572px;
 	overflow:hidden;
 	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
 	box-shadow: -1px 1px 10px 0px #7a2525;
@@ -180,7 +180,7 @@ hr {
 }
 
 .layersConteudo {
-	max-height: 828px;
+	max-height: 500px;
 	overflow: auto;
 }
 
@@ -322,6 +322,8 @@ h6 {
 	padding: 10px;
 	font-weight: bold;
 	font-size: 1.9vh;
+	display: flex;
+	align-items: center;
 }
 
 .title-atlas {
@@ -616,13 +618,13 @@ h5.expansion-layer  {
 
 @media (min-width: 1400px) and (max-width: 1700px) {
 	.layersConteudo {
-		max-height: 800px;
+		max-height: 500px;
 	}
 }
 
 @media (height: 1280px) and (width: 1240px) {
 	.layersConteudo {
-		max-height: 800px;
+		max-height: 450px;
 	}
 }
 
@@ -891,6 +893,7 @@ mat-select {
 .container-logos img{
 	vertical-align: middle !important;
 	padding: 10px;
+	max-width: 100%;
 }
 
 .btn-languages{
@@ -957,6 +960,7 @@ mat-select {
 	position: absolute;
 	float: left;
 	width: 100%;
+	overflow: hidden;
 }
 
 .layer-sidenav-content {
@@ -975,7 +979,9 @@ mat-select {
 	margin-left: 109px;
 	transition: 0.3s;
 	overflow: hidden;
+	top: 10%;
 	min-width: 461px;
+	overflow: hidden;
 }
 
 
@@ -1040,11 +1046,23 @@ mat-select {
 
 .container-ft h5{
 	font-weight: bold;
+	font-size: 1.4em;
 }
 
 .container-ft p{
 	padding: 19px;
-	font-size: 1rem;;
+	font-size: 1.1em;;
 	text-align: justify;
 	text-indent: 4em;
+}
+
+.btn-colapse{
+	color: white !important;
+	background-color:black !important;
+	border-radius: 50px !important;
+}
+
+.btn-colapse:hover{
+	background-color: white !important;
+	color: black !important;
 }

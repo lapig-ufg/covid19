@@ -66,6 +66,20 @@
 					"en-us": "Deaths"
 				}
 			}
+		},
+		"source":{
+			"label": {
+				"pt-br": "Fontes",
+				"en-us": "Source"
+			},
+			"technical_note_title":{
+				"pt-br": "NOTA TÉCNICA - PROJEÇÕES COVID-19",
+				"en-us": "TECHNICAL NOTE - PROJECTIONS COVID-19"
+			},
+			"technical_note":{
+				"pt-br": "As projeções da plataforma tem objetivo de contribuir com a melhor condução das ações da população goiana e dos gestores institucionais em relação a propagação da epidemia do vírus Sars COVID 19 em Goiás. Os modelos epidêmicos utilizados são amplamente difundidos no meio científico, dentre eles o modelo SEIR e exponencial, todas as projeções são baseadas no histórico de ocorrências diárias do Sars COVID-19, e portanto podem sofrer alterações a cada nova ocorrência, sempre com o objetivo de produzir estimativas mais assertivas.",
+				"en-us": "The platform's projections aim to contribute to better conducting the actions of the population of Goiás and institutional managers in relation to the spread of the Sars COVID 19 virus epidemic in Goiás. The epidemic models used are widely disseminated in the scientific community, among them the SEIR and exponential model, all projections are based on the history of daily occurrences of Sars COVID-19, and therefore they can change with each new occurrence, always with the objective of producing more assertive estimates."
+			}
 		}
 	},
 	"mini_report_utfgrid": {
