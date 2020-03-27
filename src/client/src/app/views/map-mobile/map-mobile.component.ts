@@ -1,6 +1,6 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import {Component, Injectable, OnInit, Inject} from '@angular/core';
 import { SearchService, MapComponent } from '../map.component';
-
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import {map} from 'rxjs/operators';
 import {HttpClient, HttpParams} from '@angular/common/http';
@@ -14,5 +14,30 @@ import { of } from 'rxjs/observable/of';
 })
 
 export class MapMobileComponent extends MapComponent {
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogMobile, {
+      width: '90%'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+}
+
+@Component({
+  selector: 'dialog-fontes',
+  templateUrl: 'dialog-fontes.html',
+})
+export class DialogMobile {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogMobile>,
+    @Inject(MAT_DIALOG_DATA) public data) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
 }

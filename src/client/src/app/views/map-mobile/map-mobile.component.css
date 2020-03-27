@@ -1,7 +1,7 @@
 html,
 body {
 	margin: 0;
-	height: 100%;
+	height: auto;
     font-family: 'Roboto', sans-serif;
     overflow: hidden !important;
 }
@@ -68,7 +68,7 @@ body .ui-tabview .ui-tabview-panels {
 	/* 100% of the viewport height - navbar height */
 	background-color: rgba(0, 0, 0, 0.5) !important;
     overflow: hidden;
-    height: calc(100vh - 146px);
+    height: calc(50vh);
 }
 
 .dpat-ol-map .ol-viewport canvas {
@@ -77,6 +77,15 @@ body .ui-tabview .ui-tabview-panels {
     min-width: 80px;
     
     /* min-height: 800px; */
+}
+
+.box_mobile {
+	margin: 10px;
+	font-size: 2rem;
+	font-weight: bold;
+	border-radius: 4px;
+	text-align: center;
+	box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 }
 
 .ol-overlay-container #map-info .card {
@@ -231,6 +240,10 @@ body .ui-tabview .ui-tabview-panels {
 	border-bottom: 5px solid #bb6666;
 	background-color: #FFF;
 	padding: 13px 0;
+}
+
+.barra-titulo {
+	border: 1px solid !important;
 }
 
 .nav-title-laudo {

@@ -23,6 +23,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import  {MatTooltipModule } from '@angular/material/tooltip';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
@@ -48,7 +49,7 @@ import { FileUploadComponent } from './views/file-upload/file-upload.component';
 import { MetadataComponent } from './views/metadata/metadata.component';
 
 import { APP_BASE_HREF } from '@angular/common';
-import { MapMobileComponent } from './views/map-mobile/map-mobile.component'; 
+import { MapMobileComponent, DialogMobile } from './views/map-mobile/map-mobile.component'; 
 
 registerLocaleData(localePt);
 
@@ -60,6 +61,7 @@ registerLocaleData(localePt);
     FileUploadComponent,
     MetadataComponent,
     MapMobileComponent,
+    DialogMobile
   ],
   imports: [
     TabViewModule,
@@ -89,6 +91,7 @@ registerLocaleData(localePt);
     MatRadioModule,
     MatSidenavModule,
     MatTooltipModule,
+    MatButtonToggleModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
@@ -96,7 +99,7 @@ registerLocaleData(localePt);
     RouterModule,
     NgbModule
   ],
-  entryComponents:[MetadataComponent, MapComponent],
+  entryComponents:[MetadataComponent, MapComponent, DialogMobile],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     DatePipe
