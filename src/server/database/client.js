@@ -43,8 +43,8 @@ module.exports = function(app) {
 
 			query = Internal.prepareQuery(sqlQuery, params)
 
-			console.log(sqlQuery, params)
-			console.log(query)
+			// console.log(sqlQuery, params)
+			// console.log(query)
 
 			return Internal['client'].query(query, (err, result) => {
 
