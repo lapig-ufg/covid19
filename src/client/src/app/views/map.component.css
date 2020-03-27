@@ -877,8 +877,7 @@ mat-select {
 	justify-content: center;
 	left: 0.8%;
 	top: 2%;
-	width: 31vh;
-	min-width: 361px;
+	width: 40vh;
 	margin: auto;
 	border-radius: 10px;
 	background-color: #fff;
@@ -1065,4 +1064,65 @@ mat-select {
 .btn-colapse:hover{
 	background-color: white !important;
 	color: black !important;
+}
+
+.container-resumo{
+	position: absolute;
+	top: 7%;
+	right: 1%;
+	z-index: 100000;
+	width: 24%;
+}
+
+.resumo{
+	display: flex;
+}
+.card-resumo{
+	position: relative;
+	margin: 8px;
+	background-color: rgba(198, 200, 202, 0.45);
+	text-align: center;
+	width:100%;
+	overflow: hidden;
+	border-radius: 8px;
+	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
+	box-shadow: -1px 1px 10px 0px #7a2525;
+
+}
+.resumo-subtitle{
+	display: block;
+	position: relative;
+	top: 0;
+	text-align: center;
+	font-size: 1.5em;
+	border-radius: 8px;
+	color: white;
+	background-color: #70707099;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-right: 7px;
+	margin-left: 6px;
+	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
+	box-shadow: -1px 1px 10px 0px #7a2525;
+}
+.card-resumo-title{
+	font-size: 1em;
+	padding: 5px;
+	color: white;
+}
+
+.recuperado{
+	background-color:#f14310ba;
+}
+.confirmado{
+	background-color: rgba(126, 53, 60, 0.93);
+}
+.obitos{
+	background-color: rgba(0, 0, 0, 0.91);
+}
+
+.card-resumo h2{
+	margin: 4px;
+	padding-top: 5px;
+	font-size: 4em;
 }
