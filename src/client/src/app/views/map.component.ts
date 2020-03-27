@@ -184,6 +184,7 @@ export class MapComponent implements OnInit {
   showDrawer: boolean;
 
   summary:any;
+  lastUpdate:any;
 
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
 
@@ -286,7 +287,9 @@ export class MapComponent implements OnInit {
     this.showDrawer = false;
     this.dataSource = {};
     this.summary = {};
+    this.lastUpdate = {};
     this.updateSummary();
+    this.ultimaAtualizacao()
 
   }
   search = (text$: Observable<string>) =>
@@ -1098,6 +1101,7 @@ export class MapComponent implements OnInit {
     }
     this.LayersTMS[layer.selectedType].setVisible(layer.visible);
     this.updateSummary();
+    this.ultimaAtualizacao();
 
   }
 
@@ -1317,10 +1321,21 @@ export class MapComponent implements OnInit {
     let sourceUrl = '/service/summary/data' + this.getServiceParams();
 
     this.http.get(sourceUrl).subscribe(result => {
-      // result.obitos = result.obitos == null ? 0 : result.obitos;
+      result.obitos = result.obitos == null ? 0 : result.obitos;
       this.summary = result;
     });
   }
+
+  private ultimaAtualizacao(){
+    let sourceUrl = '/service/summary/last-update' + this.getServiceParams();
+
+    this.http.get(sourceUrl).subscribe(result => {
+      this.lastUpdate = result;
+    });
+
+    console.log("ULTIMA", this.lastUpdate);
+  }
+
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {

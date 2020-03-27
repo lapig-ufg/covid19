@@ -4,4 +4,5 @@ module.exports = function (app) {
     var summary = app.controllers.summaryData;
 
     app.get('/service/summary/data', dataInjector, summary.getData);
+    app.get('/service/summary/last-update', dataInjector, summary.lastUpdate);
 }

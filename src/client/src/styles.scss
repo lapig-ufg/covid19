@@ -16,6 +16,12 @@ body {
 	padding: 10px 10px !important;
 }
 
+#tab-mobile .mat-tab-label-active {
+	background-color: #7e1116;
+	color: white;
+	opacity: unset;
+}
+
 .mat-mini-fab {
 	width: 35px !important;
 	height: 35px !important;
