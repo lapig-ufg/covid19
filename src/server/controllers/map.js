@@ -89,19 +89,6 @@ module.exports = function (app) {
                 opacity: 0.8,
                 order: 1
               }]
-            },
-            {
-              id: "pharmacy_supermarket_hospital",
-              label: languageJson["descriptor"]["servicos"]["layers"]["pharmacy_supermarket_hospital"]["label"][language],
-              visible: false,
-              selectedType: "pharmacy_supermarket_hospital_covid",
-              types: [{
-                value: "pharmacy_supermarket_hospital_covid",
-                Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["pharmacy_supermarket_hospital"]["types"]["pharmacy_supermarket_hospital_covid"]["view_value"][language],
-                regionFilter: true,
-                opacity: 0.8,
-                order: 3
-              }]
             }
           ]
         }
