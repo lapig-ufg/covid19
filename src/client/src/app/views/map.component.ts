@@ -128,7 +128,10 @@ export class MapComponent implements OnInit {
   isFilteredByState = false;
   selectedIndex: any;
   collapseLegends = false;
-
+  
+  clickable = true;
+  clickableTitle:any;
+  
   infodata: any;
   infodataCampo: any;
   infodataMunicipio: any;
@@ -193,6 +196,7 @@ export class MapComponent implements OnInit {
     this.dataSeries = { timeseries: { label: "" } };
     this.dataStates = {};
 
+    this.clickableTitle = 'Informações';
 
     this.chartResultCities = {
       split: []
@@ -565,8 +569,6 @@ export class MapComponent implements OnInit {
       })
     });
 
-
-
     this.infoOverlay = new Overlay({
       element: document.getElementById('map-info'),
       offset: [15, 15],
@@ -590,7 +592,6 @@ export class MapComponent implements OnInit {
 
   private callbackPointerMoveMap(evt) {
 
-
     let utfgridlayerVisible = this.utfgridlayer.getVisible();
     if (!utfgridlayerVisible || evt.dragging) {
       return;
@@ -600,41 +601,61 @@ export class MapComponent implements OnInit {
     let viewResolution = this.map.getView().getResolution();
 
 
-    let info = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+    var feature = this.map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+      return feature;
+    });
 
+    this.infoOverlay.setPosition(coordinate);
 
-    if (info.visible) {
+    if (feature) {
+      this.clickable = true
+      var properties = feature.getProperties();
+      window.document.body.style.cursor = 'pointer';
+      
+      if(properties['label'] != undefined) {
+        this.clickableTitle = properties['label']
+      }
 
-      if (info.selectedType == "covid19_municipios_casos") {
+    } else {
+      this.clickableTitle = 'Informações'
+      this.clickable = false
+      window.document.body.style.cursor = 'auto';
+      
+      let info = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
 
-        if (this.utfgridsource) {
-          this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
-            if (data) {
+      if (info.visible) {
 
-              this.infodata = data;
+        if (info.selectedType == "covid19_municipios_casos") {
 
-              if (this.infodata.confirmados == "") {
-                this.infodata.confirmados = 0;
+          if (this.utfgridsource) {
+            this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+              if (data) {
+
+                this.infodata = data;
+
+                if (this.infodata.confirmados == "") {
+                  this.infodata.confirmados = 0;
+                }
+
+                this.infodata.pop_2019 = this.infodata.pop_2019.toLocaleString('de-DE')
+                this.infodata.area_mun = Math.round(this.infodata.area_mun * 1000) / 1000
+
+              } else {
+                window.document.body.style.cursor = 'auto';
+                this.infodata = null;
               }
 
-              this.infodata.pop_2019 = this.infodata.pop_2019.toLocaleString('de-DE')
-              this.infodata.area_mun = Math.round(this.infodata.area_mun * 1000) / 1000
-
-              this.infoOverlay.setPosition(this.infodata ? coordinate : undefined);
-
-            } else {
-              window.document.body.style.cursor = 'auto';
-              this.infodata = null;
-            }
-
-          }.bind(this)
-          );
+            }.bind(this)
+            );
+          }
+        }
+        else {
+          this.infodata = null;
         }
       }
-      else {
-        this.infodata = null;
-      }
+
     }
+
   }
 
   private callbackClickMap(evt) {

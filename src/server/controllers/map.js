@@ -83,7 +83,7 @@ module.exports = function (app) {
               types: [{
                 value: "gyn_locais_vacinacao_gripe",
                 Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["gyn_locais_vacinacao"]["types"]["gyn_locais_vacinacao_gripe"]["view_value"][language],
-                geoJsonUrl: 'service/map/marker?layer=gyn_locais_vacinacao_gripe',
+                geoJsonUrl: 'service/map/marker?layer=vacinacao_gripe',
                 iconUrl: 'assets/markers/icon.png',
                 source: 'geojson',
                 opacity: 0.8,
