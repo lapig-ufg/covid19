@@ -3,6 +3,7 @@
 	<mat-drawer #drawer [style.z-index]="showDrawer? '4' : '-1'" class="layer-sidenav" mode="over" [autoFocus]="false"
 		[opened]="showDrawer">
 		<div class="container-drawer">
+
 			<div class="titleWindows">
 				{{titlesLayerBox.title}}
 			</div>
@@ -103,7 +104,6 @@
 					</mat-tab>
 				</mat-tab-group>
 			</div>
-
 		</div>
 
 	</mat-drawer>
@@ -114,14 +114,14 @@
 			<div  class="dpat-logo">
 				<div class="container-logos">
 					<img src="../../assets/logo/logos.png" alt="Logos"/>
-<!--						<img width="130" height="130" src="{{svgLoading}}" alt="Covid-19"/>-->
 				</div>
 			</div>
 
 			<div class="container-resumo">
 				<div class="resumo-subtitle-card">
 					<h1 class="resumo-subtitle">Casos no estado de Goiás</h1>
-					<p>Última atualização em 25/06/2019</p>
+					<p>Última atualização em {{lastUpdate.data}}</p>
+					<p>Fonte: Secretária de Saúde do Estado de Goiás</p>
 				</div>
 				<div class="resumo">
 					<div class="card-resumo">
@@ -314,7 +314,7 @@
 			</div>
 
 				</div>
-	</div>
+			</div>
 
 		</div>
 	</div>

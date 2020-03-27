@@ -21,5 +21,10 @@ module.exports = function (app) {
         cliente.query(summary.query(), self.handleSummary);
     };
 
+    Controller.lastUpdate = function (request, response) {
+        self.response =  response;
+        cliente.query(summary.queryLastUpdate(), self.handleSummary);
+    };
+
     return Controller;
 };
