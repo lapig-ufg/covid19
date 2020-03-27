@@ -38,6 +38,7 @@ module.exports = function (app) {
       regionFilterDefault: "",
       type: languageJson["descriptor"]["type_of_information_label"][language],
       maskUrl: "assets/geojson/mask.geojson",
+      maskOption: 'mask',
       groups: [
         {
           id: "informacoes",

@@ -31,6 +31,7 @@ import { of } from 'rxjs/observable/of';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { MetadataComponent } from './metadata/metadata.component';
 import CropFilter from 'ol-ext/filter/Crop';
+import MaskFilter from 'ol-ext/filter/Mask';
 import MultiPolygon from 'ol/geom/MultiPolygon';
 
 
@@ -348,7 +349,14 @@ export class MapComponent implements OnInit {
           dataProjection: 'EPSG:4326',
           featureProjection: 'EPSG:3857'
         });
-        this.map.addFilter(new CropFilter({ feature: features[0], inner:false }))
+
+        var filter = new MaskFilter({ feature: features[0], inner:false, fill: new Fill({ color:[0,0,0,0.55] }) })
+        if (this.descriptor.maskOption == 'crop') {
+          filter = new CropFilter({ feature: features[0], inner:false })
+        }
+
+        this.map.addFilter(filter)
+        
       });
     } 
 
