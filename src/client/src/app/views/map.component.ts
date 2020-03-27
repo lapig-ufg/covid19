@@ -184,6 +184,8 @@ export class MapComponent implements OnInit {
   showStatistics: boolean;
   showDrawer: boolean;
 
+  summary:any;
+
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
 
   constructor(
@@ -280,6 +282,10 @@ export class MapComponent implements OnInit {
 
     this.showStatistics = true;
     this.showDrawer = false;
+    this.dataSource = {};
+    this.summary = {};
+    this.updateSummary();
+
   }
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -296,7 +302,7 @@ export class MapComponent implements OnInit {
         )
       ),
       tap(() => (this.searching = false))
-    )
+    );
 
   formatter = (x: { text: string }) => x.text;
 
@@ -418,7 +424,6 @@ export class MapComponent implements OnInit {
     }
   }
 
-
   private setStylesLangButton() {
 
     if (this.language == 'pt-br') {
@@ -444,7 +449,6 @@ export class MapComponent implements OnInit {
 
     });
 
-
   }
 
   private transformDate(myDate) {
@@ -463,7 +467,6 @@ export class MapComponent implements OnInit {
     });
 
   }
-
 
   private updateCharts() {
 
@@ -1040,7 +1043,7 @@ export class MapComponent implements OnInit {
       }
     }
     this.LayersTMS[layer.selectedType].setVisible(layer.visible);
-
+    this.updateSummary();
 
   }
 
@@ -1248,13 +1251,21 @@ export class MapComponent implements OnInit {
     // });
   }
 
-
   buttonDownload(tipo, layer, e) {
     if (tipo == 'csv') {
       this.downloadCSV(layer);
     } else {
       this.downloadSHP(layer);
     }
+  }
+
+  private updateSummary(){
+    let sourceUrl = '/service/summary/data' + this.getServiceParams();
+
+    this.http.get(sourceUrl).subscribe(result => {
+      result.obitos = result.obitos == null ? 0 : result.obitos;
+      this.summary = result;
+    });
   }
 
   @HostListener('window:resize', ['$event'])

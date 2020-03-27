@@ -975,12 +975,14 @@ mat-select {
 	padding: 20px;
 	width: 47vh;
 	background-color: #e5ecef26;
-	margin-left: 109px;
+	margin-left: 117px;
 	transition: 0.3s;
 	overflow: hidden;
-	top: 10%;
+	top: 29%;
 	min-width: 461px;
 	overflow: hidden;
+	height: 54vh;
+	border-radius: 20px;
 }
 
 
@@ -1012,7 +1014,7 @@ mat-select {
 }
 
 .container-drawer{
-	margin-top: 166px;
+	/*margin-top: 166px;*/
 	background-color: white;
 	padding: 20px;
 	border-radius: 10px;
@@ -1089,12 +1091,11 @@ mat-select {
 	box-shadow: -1px 1px 10px 0px #7a2525;
 
 }
-.resumo-subtitle{
+.resumo-subtitle-card{
 	display: block;
 	position: relative;
 	top: 0;
 	text-align: center;
-	font-size: 1.5em;
 	border-radius: 8px;
 	color: white;
 	background-color: #dd4646;
@@ -1104,6 +1105,15 @@ mat-select {
 	margin-left: 6px;
 	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
 	box-shadow: -1px 1px 10px 0px #7a2525;
+}
+.resumo-subtitle-card p{
+	text-align: center;
+	font-size: 1em;
+}
+
+.resumo-subtitle{
+	font-size: 1.5em;
+	color: white;
 }
 .card-resumo-title{
 	font-size: 1em;

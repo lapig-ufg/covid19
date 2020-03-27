@@ -120,21 +120,22 @@
 				</div>
 
 				<div class="container-resumo">
-					<h1 class="resumo-subtitle">
-						Casos no estado de Goiás
-					</h1>
+					<div class="resumo-subtitle-card">
+						<h1 class="resumo-subtitle">Casos no estado de Goiás</h1>
+						<p>Última atualização em 25/06/2019</p>
+					</div>
 					<div class="resumo">
 						<div class="card-resumo">
 							<div class="card-resumo-title confirmado" title="Titulo">Confirmados</div>
-							<h2>42</h2>
+							<h2>{{summary.confirmados}}</h2>
 						</div>
 						<div class="card-resumo">
 							<div class="card-resumo-title recuperado" title="Titulo">Suspeitos</div>
-							<h2 >0</h2>
+							<h2 >{{summary.suspeitos}}</h2>
 						</div>
 						<div class="card-resumo">
 							<div class="card-resumo-title obitos" title="Titulo">Óbitos</div>
-							<h2 >1</h2>
+							<h2 >{{summary.obitos}}</h2>
 						</div>
 					</div>
 				</div>
