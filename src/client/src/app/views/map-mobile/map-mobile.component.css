@@ -246,6 +246,68 @@ body .ui-tabview .ui-tabview-panels {
 	border: 1px solid !important;
 }
 
+.container-resumo{
+	text-align: center;
+	padding:15px;
+/* position: absolute;
+top: 7%;
+right: 1%;
+z-index: 2200000;
+width: 24%; */
+}
+
+.resumo{
+	display: list-item;
+}
+.card-resumo{
+	position: relative;
+	margin: 8px;
+	background-color: rgba(255, 255, 255, 0.93);
+	text-align: center;
+	width:96%;
+	overflow: hidden;
+	border-radius: 8px;
+	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
+	box-shadow: -1px 1px 10px 0px #7a2525;
+}
+.resumo-subtitle{
+	display: block;
+	position: relative;
+	top: 0;
+	text-align: center;
+	font-size: 1.5em;
+	border-radius: 8px;
+	color: white;
+	background-color: #dd4646;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-right: 7px;
+	margin-left: 6px;
+	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
+	box-shadow: -1px 1px 10px 0px #7a2525;
+}
+.card-resumo-title{
+	font-size: 1em;
+	padding: 5px;
+	color: white;
+}
+
+.recuperado{
+	background-color:#f14310ba;
+}
+.confirmado{
+	background-color: rgba(126, 53, 60, 0.93);
+}
+.obitos{
+	background-color: rgba(0, 0, 0, 0.91);
+}
+
+.card-resumo h2{
+margin: 4px;
+padding-top: 5px;
+font-size: 4em;
+}
+
 .nav-title-laudo {
 	border-bottom: 5px solid #bb6666;
 	position: sticky

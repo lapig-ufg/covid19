@@ -12,7 +12,39 @@
 <mat-tab-group id="tab-mobile" [backgroundColor]="accent"> 
 		<mat-tab  label = "Mapa" > 
 				<div style="padding: 10px;">
-					<div id="map" class="dpat-ol-map"></div>
+					<div id="map" class="dpat-ol-map">
+							<div id="map-info" class="card"
+							[ngStyle]="{'visibility': infodata || clickable  ? 'visible' : 'hidden'}">
+						 <div *ngIf="infodata && !clickable" class="card-body">
+							 <p class="card-text">{{infodata.nome}} - {{infodata.uf}}</p>
+							 <table>
+								 <tbody>
+								 <tr>
+									 <th>Código do Município: </th>
+									 <td>{{infodata.cd_geocmu }}</td>
+								 </tr>
+								 <tr>
+									 <th>Área: </th>
+									 <td>{{infodata.area_mun}} km²</td>
+								 </tr>
+								 <tr>
+									 <th>População </th>
+									 <td>{{infodata.pop_2019}}</td>
+								 </tr>
+								 <tr>
+									 <th>Quantidade de Confirmados: </th>
+									 <td>{{infodata.confirmados}}</td>
+								 </tr>
+								 </tbody>
+							 </table>
+						 </div>
+						 <div *ngIf="clickable" class="card-body">
+							 <p class="card-text">{{clickableTitle}}</p>
+							 <img src='assets/markers/google_maps.png'>
+							 <b>Abrir no Google Maps</b>
+						 </div>
+					 </div>
+					</div>
 					<div class="legendasConteudo">
 							<div class="legends"  *ngFor="let layer of layersNames">
 								<mat-expansion-panel [expanded]="layer.visible" >
@@ -30,7 +62,26 @@
 				</div>
 		</mat-tab> 
 		<mat-tab  label = "Total"  style="overflow-x: hidden"> 
-				<mat-card class='box_mobile'>
+			<div class="container-resumo">
+				<!-- <h1 class="resumo-subtitle">
+				Casos no estado de Goiás
+				</h1> -->
+				<div class="resumo">
+					<div class="card-resumo">
+						<div class="card-resumo-title confirmado" title="Titulo">Confirmados</div>
+						<h2>42</h2>
+					</div>
+					<div class="card-resumo">
+						<div class="card-resumo-title recuperado" title="Titulo">Suspeitos</div>
+						<h2 >0</h2>
+					</div>
+					<div class="card-resumo">
+						<div class="card-resumo-title obitos" title="Titulo">Óbitos</div>
+						<h2 >1</h2>
+					</div>
+				</div>
+			</div>
+				<!-- <mat-card class='box_mobile'>
 						<div style="color: #002580">Confirmados</div>
 						<div style="color: #002580">39</div>
 				</mat-card>
@@ -41,18 +92,18 @@
 				<mat-card class='box_mobile'>
 					<div style="color: #7e1116">Óbitos</div>
 					<div style="color: #7e1116">1</div>
-				</mat-card>
+				</mat-card> -->
 				<!-- <mat-card class='box_mobile'>
 						<div style="color: #00994c">Recuperados</div>
 						<div style="color: #00994c">10</div>
 				</mat-card> -->
 				<div class="row" style="margin: 0px">
-							<div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-								Atualizado em 27/03/2020
-							</div>
-							<div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-									<button mat-raised-button style="background-color: #7e1116" (click)="openDialog()">Fontes</button>
-							</div>
+						<div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+								<button mat-raised-button style="background-color: #7e1116" (click)="openDialog()">Fontes</button>
+						</div>
+						<div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8" style="text-align: right">
+							Atualizado em 27/03/2020
+						</div>
 				</div>
 		</mat-tab> 
 		<mat-tab  label = "Municípios" > 
