@@ -82,6 +82,8 @@ export class MapComponent implements OnInit {
   periodSelected: any;
   desmatInfo: any;
 
+  optionsStates: any
+
   changeTabSelected = "";
   viewWidth = 600;
   viewWidthMobile = 350;
@@ -221,6 +223,8 @@ export class MapComponent implements OnInit {
     this.currentData = {
       text: ''
     };
+
+    this.optionsStates = {};
 
     this.valueRegion = '';
 
@@ -516,22 +520,17 @@ export class MapComponent implements OnInit {
 
     let citiesUrl = '/service/indicators/cities' + this.getServiceParams();
 
-
     this.http.get(citiesUrl).subscribe(citiesResult => {
       this.chartResultCities = citiesResult;
       this.chartResultCities.split = this.chartResultCities.title.split('?');
-
-      console.log(this.chartResultCities)
 
     });
 
     let projectionURL = '/service/indicators/projections' + this.getServiceParams();
 
-  this.http.get(projectionURL).subscribe(result => {
+    this.http.get(projectionURL).subscribe(result => {
 
     this.dataProjSeries = result;
-
-      console.log(this.dataProjSeries)
 
       for (let graphic of this.dataProjSeries.timeseries.chartResult) {
 
@@ -568,17 +567,18 @@ export class MapComponent implements OnInit {
         };
 
       }
-
     }
     );
 
-   
-
+    let statesURL = '/service/indicators/states' + this.getServiceParams();
+    this.http.get(statesURL).subscribe(statesResult => {
+        this.dataStates = statesResult
+        this.optionsStates = statesResult['optionsStates'];
+    });
 
   }
 
   updateRegion(region) {
-
 
     if (region == this.defaultRegion) {
       this.valueRegion = '';

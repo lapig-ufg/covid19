@@ -69,6 +69,24 @@
 					"pt-br": "Clique para visualizar no mapa",
 					"en-us": "Click to view on map"
 				}
+			},
+			"charts_box_states": {
+				"label": {
+					"pt-br": "Estados",
+					"en-us": "States"
+				},
+				"name": {
+					"pt-br": "Área Desmatada",
+					"en-us": "Deforested Area"
+				},
+				"description": {
+					"pt-br": "Comparação do número de casos em diferentes Estados",
+					"en-us": "Comparison of the number of cases in different States"
+				},
+				"label_confirmados":{
+					"pt-br": "Confirmados",
+					"en-us": "Confirmed"
+				}
 			}
 		},
 		"charts_box_projecoes": {

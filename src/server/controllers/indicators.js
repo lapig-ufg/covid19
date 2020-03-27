@@ -39,7 +39,14 @@ module.exports = function (app) {
     return formated;
   }
 
-  function createDataSetTimeSeriesGO(labels, graphic, language){
+  function createDataSetStates (labels, graphic,language)
+  {
+
+  }
+
+
+
+  function createDataSetTimeSeriesGO(labels, graphic, language) {
     let data = {
       labels: graphic.map(element => formatDate(element.data, language)),
       datasets: [
@@ -84,7 +91,7 @@ module.exports = function (app) {
     return data;
   }
 
-  function createProjectionsGO(labels, graphic, language){
+  function createProjectionsGO(labels, graphic, language) {
 
     let data = {
       labels: graphic.map(element => formatDate(element.data, language)),
@@ -168,11 +175,11 @@ module.exports = function (app) {
 
         }
       }
-      
+
     ];
 
     for (let chart of chartResult) {
-      
+
       chart['show'] = false
       if (chart.id == 'timeseries_go') {
         chart["dataResult"] = createDataSetTimeSeriesGO(chart, request.queryResult[chart.id], language);
@@ -201,29 +208,27 @@ module.exports = function (app) {
     response.end();
   };
 
-  Controller.cities = function (request, response)
-  {
+  Controller.cities = function (request, response) {
 
     var language = request.param('lang')
 
     var queryResult = request.queryResult['ranking_municipios']
-    
-		var result = {
-			label: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["label"][language],
-			description: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["description"][language],
-			title: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["title"][language],
-			tooltip: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["tooltip_text"][language],
-			series: queryResult
-		}
 
-		response.send(result)
-		response.end()
+    var result = {
+      label: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["label"][language],
+      description: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["description"][language],
+      title: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["title"][language],
+      tooltip: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["tooltip_text"][language],
+      series: queryResult
+    }
+
+    response.send(result)
+    response.end()
 
   }
 
-  Controller.projections = function (request, response)
-  {
-    
+  Controller.projections = function (request, response) {
+
     var language = request.param('lang')
     var chartResult = [
       {
@@ -264,11 +269,11 @@ module.exports = function (app) {
 
         }
       }
-      
+
     ];
 
     for (let chart of chartResult) {
-      
+
       chart['show'] = false
       if (chart.id == 'confirmados_recuperados') {
         chart["dataResult"] = createProjectionsGO(chart, request.queryResult[chart.id], language);
@@ -294,6 +299,83 @@ module.exports = function (app) {
 
     response.send(finalResult);
     response.end();
+  }
+
+  Controller.states = function (request, response) {
+
+
+    var language = request.param('lang')
+
+    var queryResult = request.queryResult
+
+    var qResult = [];
+
+    queryResult.forEach(function (row) {
+
+      qResult.push({
+        uf: row['uf'],
+        total_casos: row['total_casos']
+      })
+
+    })
+
+    var regionResult = [];
+    qResult.filter(item => item.uf =='GO')
+    .forEach(item => regionResult.push(item))
+
+    
+    for (var i = 0; i < qResult.length; i++) {
+      if (qResult[i].uf == 'GO') {
+      }
+      else {
+        regionResult.push(qResult[i])
+      }
+      
+      if (regionResult.length == 10) {
+        break;
+      }
+    }
+
+    let dataStates = {
+      labels: regionResult.map(element => element.uf),
+      datasets: [
+        {
+          label: languageJson["charts_box"]["charts_box_dados_oficiais"]["charts_box_states"]["label_confirmados"][language],
+          data: regionResult.map(element => element.total_casos),
+          fill: true,
+          backgroundColor: '#b52016'
+        }
+      ],
+      description:  languageJson["charts_box"]["charts_box_dados_oficiais"]["charts_box_states"]["description"][language],
+      pointStyle: 'rect',
+      label: languageJson["charts_box"]["charts_box_dados_oficiais"]["charts_box_states"]["label"][language],
+    optionsStates : {
+      tooltips: {
+      },
+      scales: {
+        xAxes: [
+          {
+            ticks: {
+            }
+          }
+        ]
+      },
+      legend: {
+        position: 'bottom',
+        labels: {
+          usePointStyle: true,
+          fontSize: 12
+        }
+      }
+    }
+  };
+
+
+
+    
+    response.send(dataStates)
+		response.end()
+
   }
 
   return Controller;

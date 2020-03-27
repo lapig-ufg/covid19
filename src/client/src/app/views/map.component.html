@@ -162,9 +162,6 @@
 								</p-tabPanel>
 								<p-tabPanel [header]="chartResultCities.label" [cache]="true">
 									<p-scrollPanel [style]="{width: '100%', height: '38vh'}">
-										<p style="font-weight: bold; text-align: center;">
-											{{chartResultCities.description}} </p>
-
 										<p-table [value]="chartResultCities.series">
 											<ng-template pTemplate="header">
 												<tr align="center">
@@ -183,23 +180,39 @@
 										</p-table>
 									</p-scrollPanel>
 								</p-tabPanel>
+
+								<p-tabPanel [header]="dataStates.label" id="tabGraficoLinhas">
+										<h6 style="text-align: center;">
+											<b>{{dataStates.description}}</b>
+										</h6>
+										<p-chart type="horizontalBar" [data]="dataStates" [options]="optionsStates">
+										</p-chart>
+								</p-tabPanel>
+
+
 							</p-tabView>
 						</mat-tab>
 
-						<mat-tab label="{{dataProjSeries.timeseries.label}}" >
-							<p-scrollPanel [style]="{width: '100%', height: '72vh'}" >
-							<ng-template matTabContent>
-								<p-tabView >
-									<p-tabPanel [header]="dat.title" *ngFor="let dat of dataProjSeries.timeseries.chartResult; let i = index" [selected]="i == 0" [disabled]="!dat.show" [cache]="true">
-										<div>
-											<p style="font-weight: bold; text-align: center;">{{ dat.text }}</p>
-											<p-chart [ngStyle]="{'overflow-x': hidden}" *ngIf="dat.type" [type]="dat.type" [data]="dat.dataResult" [options]="dat.options"></p-chart>
-										</div>
-									</p-tabPanel>
-								</p-tabView>
-							</ng-template>
-							</p-scrollPanel>s
-						</mat-tab>
+
+
+						<!-- <mat-tab label="{{dataProjSeries.timeseries.label}}">
+							<p-scrollPanel [style]="{width: '100%', height: '72vh'}">
+								<ng-template matTabContent>
+									<p-tabView>
+										<p-tabPanel [header]="dat.title"
+											*ngFor="let dat of dataProjSeries.timeseries.chartResult; let i = index"
+											[selected]="i == 0" [disabled]="!dat.show" [cache]="true">
+											<div>
+												<p style="font-weight: bold; text-align: center;">{{ dat.text }}</p>
+												<p-chart [ngStyle]="{'overflow-x': hidden}" *ngIf="dat.type"
+													[type]="dat.type" [data]="dat.dataResult" [options]="dat.options">
+												</p-chart>
+											</div>
+										</p-tabPanel>
+									</p-tabView>
+								</ng-template>
+							</p-scrollPanel>
+						</mat-tab> -->
 
 						<mat-tab label="Fontes">
 							<p-scrollPanel [style]="{width: '100%', height: '72vh'}">

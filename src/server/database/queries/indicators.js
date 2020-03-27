@@ -21,6 +21,12 @@ module.exports = function (app) {
 
     ];
   }
+
+  Query.states = function (params) {
+  
+    return  "select uf , max(total_casos) as total_casos from casos_estados where cd_geouf <> '1058'  group by uf order by 2 desc"           
+    
+  }
   
   Query.cities = function (params) {
 
