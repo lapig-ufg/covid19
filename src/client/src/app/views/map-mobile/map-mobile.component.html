@@ -38,11 +38,6 @@
 								 </tbody>
 							 </table>
 						 </div>
-						 <div *ngIf="clickable" class="card-body">
-							 <p class="card-text">{{clickableTitle}}</p>
-							 <img src='assets/markers/google_maps.png'>
-							 <b>Abrir no Google Maps</b>
-						 </div>
 					 </div>
 					</div>
 					<div class="legendasConteudo">
@@ -69,114 +64,79 @@
 				<div class="resumo">
 					<div class="card-resumo">
 						<div class="card-resumo-title confirmado" title="Titulo">Confirmados</div>
-						<h2>42</h2>
+						<h2>{{summary.confirmados}}</h2>
 					</div>
 					<div class="card-resumo">
 						<div class="card-resumo-title recuperado" title="Titulo">Suspeitos</div>
-						<h2 >0</h2>
+						<h2>{{summary.suspeitos}}</h2>
 					</div>
 					<div class="card-resumo">
 						<div class="card-resumo-title obitos" title="Titulo">Óbitos</div>
-						<h2 >1</h2>
+						<h2>{{summary.obitos}}</h2>
 					</div>
 				</div>
 			</div>
-				<!-- <mat-card class='box_mobile'>
-						<div style="color: #002580">Confirmados</div>
-						<div style="color: #002580">39</div>
-				</mat-card>
-				<mat-card class='box_mobile'>
-					<div style="color: #f3e718">Suspeitos</div>
-					<div style="color: #f3e718">1300</div>
-				</mat-card>
-				<mat-card class='box_mobile'>
-					<div style="color: #7e1116">Óbitos</div>
-					<div style="color: #7e1116">1</div>
-				</mat-card> -->
-				<!-- <mat-card class='box_mobile'>
-						<div style="color: #00994c">Recuperados</div>
-						<div style="color: #00994c">10</div>
-				</mat-card> -->
-				<div class="row" style="margin: 0px">
-						<div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-								<button mat-raised-button style="background-color: #7e1116" (click)="openDialog()">Fontes</button>
-						</div>
-						<div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8" style="text-align: right">
-							Atualizado em 27/03/2020
-						</div>
-				</div>
+			<div class="row" style="margin: 0px">
+					<div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+							<button mat-raised-button style="background-color: #7e1116" (click)="openDialog()">Fontes</button>
+					</div>
+					<div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8" style="text-align: right">
+							{{summary.ultima_atualizacao}}
+					</div>
+			</div>
 		</mat-tab> 
 		<mat-tab  label = "Municípios" > 
-				<h6 style="text-align: center"><b>Lista de Municípios</b> </h6>
-				<table class="table table-sm table-municipios">
-					<thead>
-						<tr style="text-align: center">
-								<th scope="col">#</th>
-							<th scope="col">Município</th>
-							<th scope="col">Confirmados</th>
-							<th class="text-right" scope="col">Óbitos</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr style="text-align: center">
-							<th scope="row">1</th>
-							<td>Goiânia</td>
-							<td>39</td>
-							<td>1</td>
-						</tr>
-					</tbody>
-				</table>
+				<p-scrollPanel [style]="{width: '100%', height: '80vh'}">
+						<p-table [value]="chartResultCities.series">
+							<ng-template pTemplate="header">
+								<tr align="center">
+									<th *ngFor="let header of chartResultCities.split">
+										{{header}}
+									</th>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="body" let-city>
+								<tr>
+									<td align="center">{{city.rank}}</td>
+									<td align="center">{{city.nome}}</td>
+									<td align="center">{{city.confirmados}}</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</p-scrollPanel>
 		</mat-tab> 
 		<mat-tab  label = "Gráficos" > 
 				<mat-tab label="{{dataSeries.timeseries.label}}" >
 						<p-scrollPanel [style]="{width: '100%', height: '72vh'}" >
 						<ng-template matTabContent>
 							<p-tabView >
-								<p-tabPanel [header]="dat.title" *ngFor="let dat of dataSeries.timeseries.chartResult; let i = index" [selected]="i == 0" [disabled]="!dat.show" [cache]="true">
+									<p-tabPanel [header]="dataSeries.timeseries.chartResult[0]?.title"
+									[disabled]="!dataSeries.timeseries.chartResult[0]?.show">
 									<div>
-										<p style="font-weight: bold; text-align: center;">{{ dat.text }}</p>
-										<p-chart [ngStyle]="{'overflow-x': hidden}" *ngIf="dat.type" [type]="dat.type" [data]="dat.dataResult" [options]="dat.options"></p-chart>
+										<p style="font-weight: bold; text-align: center;">
+											{{ dataSeries.timeseries.chartResult[0]?.text }}</p>
+										<p-chart [ngStyle]="{'overflow-x': hidden}"
+											*ngIf="dataSeries.timeseries.chartResult[0]?.type"
+											[type]="dataSeries.timeseries.chartResult[0]?.type"
+											[data]="dataSeries.timeseries.chartResult[0]?.dataResult"
+											[options]="dataSeries.timeseries.chartResult[0]?.options">
+										</p-chart>
 									</div>
+								</p-tabPanel>
+								<p-tabPanel [header]="dataStates.label" id="tabGraficoLinhas">
+										<h6 style="text-align: center;">
+											<b>{{dataStates.description}}</b>
+										</h6>
+										<p-chart type="horizontalBar" [data]="dataStates" [options]="optionsStates">
+										</p-chart>
 								</p-tabPanel>
 							</p-tabView>
 						</ng-template>
 						</p-scrollPanel>s
 					</mat-tab>
 		</mat-tab> 
-		<mat-tab  label = "Ajuda" > 
+		<!-- <mat-tab  label = "Ajuda" > 
 			Conteúdo 3 
-		</mat-tab> 
+		</mat-tab>  -->
 </mat-tab-group >
-	<!-- <p-tabView>
-			<p-tabPanel header="Mapa">
-				 <div class="row">
-					<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 dpat-ol-div">
-						<div id="map" class="dpat-ol-map" ></div>
-					</div>
-				 </div>
-			</p-tabPanel>
-			<p-tabPanel header="Total">
-			</p-tabPanel>
-			<p-tabPanel header="Municípios">
-
-			</p-tabPanel>
-			<p-tabPanel header="Gráficos">
-							<p-scrollPanel [style]="{width: '100%', height: '72vh'}" >
-							<ng-template matTabContent>
-								<p-tabView >
-									<p-tabPanel [header]="dat.title" *ngFor="let dat of dataSeries.timeseries.chartResult; let i = index" [selected]="i == 0" [disabled]="!dat.show" [cache]="true">
-										<div>
-											<p style="font-weight: bold; text-align: center;">{{ dat.text }}</p>
-											<p-chart [ngStyle]="{'overflow-x': hidden}" *ngIf="dat.type" [type]="dat.type" [data]="dat.dataResult" [options]="dat.options"></p-chart>
-										</div>
-									</p-tabPanel>
-								</p-tabView>
-							</ng-template>
-							</p-scrollPanel>
-			</p-tabPanel>
-			<p-tabPanel header="Ajuda">
-
-				</p-tabPanel>
-	</p-tabView> -->
-
 </div>
