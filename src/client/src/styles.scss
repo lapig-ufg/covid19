@@ -281,7 +281,7 @@ body {
 }
 
 .mat-drawer-backdrop.mat-drawer-shown {
-	background-color:#00000000 !important;
+	background-color:transparent !important;
 	visibility: hidden !important;
 }
 .mat-drawer:not(.mat-drawer-side) {

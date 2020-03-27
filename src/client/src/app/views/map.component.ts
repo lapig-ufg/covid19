@@ -221,9 +221,7 @@ export class MapComponent implements OnInit {
 
     this.textOnDialog = {};
 
-    this.currentData = {
-      text: ''
-    };
+    this.currentData = "";
 
     this.valueRegion = '';
 
