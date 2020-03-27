@@ -1,48 +1,47 @@
+<mat-drawer-container class="container-layer-sidenav" autosize>
 
-	<mat-drawer-container class="container-layer-sidenav" autosize>
+	<mat-drawer #drawer [style.z-index]="showDrawer? '4' : '-1'" class="layer-sidenav" mode="over" [autoFocus]="false"
+		[opened]="showDrawer">
+		<div class="container-drawer">
+			<div class="titleWindows">
+				{{titlesLayerBox.title}}
+			</div>
 
-		<mat-drawer #drawer [style.z-index]="showDrawer? '4' : '-1'" class="layer-sidenav"  mode="over" [autoFocus]="false" [opened]="showDrawer">
-			<div class="container-drawer">
-				<div class="titleWindows">
-					{{titlesLayerBox.title}}
-				</div>
+			<div class="collapseLayer">
+				<mat-tab-group class="layersConteudo">
+					<mat-tab label="{{titlesLayerBox.label_data}}">
+						<p-scrollPanel [style]="{width: '100%', height: '60vh', padding:'10px'}">
+							<mat-accordion>
+								<div id="layers_desmatamentos">
 
-				<div class="collapseLayer" >
-					<mat-tab-group class="layersConteudo">
-						<mat-tab label="{{titlesLayerBox.label_data}}">
-							<p-scrollPanel [style]="{width: '100%', height: '60vh', padding:'10px'}" >
-								<mat-accordion>
-									<div id="layers_desmatamentos">
+									<ng-template #rt let-r="result" let-t="term">
+										<ngb-highlight [result]="r.nome" [term]="t"></ngb-highlight>
+									</ng-template>
+									<input id="typeahead-http" type="text" class="form-control searchRegion"
+										[class.is-invalid]="searchFailed" [(ngModel)]="valueRegion"
+										[ngbTypeahead]="search" placeholder="{{titlesLayerBox.search_placeholder}}"
+										(selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
+										[inputFormatter]="formatter" [value]="currentData" />
+									<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
+										(click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
+									<span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
+									<div class="invalid-feedback" *ngIf="searchFailed">
+										{{titlesLayerBox.search_failed}}</div>
 
-										<ng-template #rt let-r="result" let-t="term">
-											<ngb-highlight [result]="r.nome" [term]="t"></ngb-highlight>
-										</ng-template>
-										<input id="typeahead-http" type="text" class="form-control searchRegion"
-											   [class.is-invalid]="searchFailed" [(ngModel)]="valueRegion"
-											   [ngbTypeahead]="search"
-											   placeholder="{{titlesLayerBox.search_placeholder}}"
-											   (selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
-											   [inputFormatter]="formatter" [value]="currentData" />
-										<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
-											 (click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
-										<span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
-										<div class="invalid-feedback" *ngIf="searchFailed">
-											{{titlesLayerBox.search_failed}}</div>
-
-										<div *ngFor="let groups of descriptor.groups" style="margin-bottom: 10px">
-											<mat-expansion-panel [expanded]=groups.group_expanded>
-												<mat-expansion-panel-header [collapsedHeight]="'50px'"
-																			[expandedHeight]="'50px'" class="expansion-header-layer">
-													<h5 class="expansion-layer"><b>{{groups.label}}</b></h5>
-												</mat-expansion-panel-header>
-												<div class="layersContent" *ngFor="let layer of groups.layers">
-													<div style="display: flex">
-														<mat-checkbox class="example-margin"
-																	  (change)="changeVisibility(layer, $event)"
-																	  [checked]=layer.visible>
-															{{layer.label}}
-														</mat-checkbox>
-														<!-- <div class="space"></div>
+									<div *ngFor="let groups of descriptor.groups" style="margin-bottom: 10px">
+										<mat-expansion-panel [expanded]=groups.group_expanded>
+											<mat-expansion-panel-header [collapsedHeight]="'50px'"
+												[expandedHeight]="'50px'" class="expansion-header-layer">
+												<h5 class="expansion-layer"><b>{{groups.label}}</b></h5>
+											</mat-expansion-panel-header>
+											<div class="layersContent" *ngFor="let layer of groups.layers">
+												<div style="display: flex">
+													<mat-checkbox class="example-margin"
+														(change)="changeVisibility(layer, $event)"
+														[checked]=layer.visible>
+														{{layer.label}}
+													</mat-checkbox>
+													<!-- <div class="space"></div>
 														<button *ngIf="layer.visible"  (click)="openDialogMetadata(layer)" classs="btn-info" mat-icon-button>
 															<mat-icon>info</mat-icon>
 														</button> -->
@@ -72,165 +71,253 @@
 																		</mat-select>
 																	</mat-form-field>
 																</span>
+														<div *ngFor="let type of layer.types">
+															<img *ngIf="layer.selectedType === type.value" [src]="type.urlLegend">
+														</div>
 													</div>
 												</div>
 											</mat-expansion-panel>
 
-										</div>
 									</div>
-								</mat-accordion>
-							</p-scrollPanel>
-						</mat-tab>
-						<mat-tab label="{{titlesLayerBox.label_mapabase}}">
-							<div class="form-group baseMap" *ngFor="let basemap of basemapsNames">
-								<mat-slide-toggle (change)="baseLayerChecked(basemap, $event)"
-												  [(ngModel)]="basemap.visible">
-									{{basemap.viewValue}}
+								</div>
+							</mat-accordion>
+						</p-scrollPanel>
+					</mat-tab>
+					<mat-tab label="{{titlesLayerBox.label_mapabase}}">
+						<div class="form-group baseMap" *ngFor="let basemap of basemapsNames">
+							<mat-slide-toggle (change)="baseLayerChecked(basemap, $event)"
+								[(ngModel)]="basemap.visible">
+								{{basemap.viewValue}}
+							</mat-slide-toggle>
+						</div>
+					</mat-tab>
+					<mat-tab label="{{titlesLayerBox.label_limits}}">
+						<div *ngFor="let limits of descriptor.limits">
+							<div class="form-group baseMap" *ngFor="let name_limits of limits.types">
+								<mat-slide-toggle (change)="limitsLayersChecked(name_limits, $event)"
+									[(ngModel)]="name_limits.visible" class="slideEstados">
+									{{name_limits.Viewvalue}}
 								</mat-slide-toggle>
 							</div>
-						</mat-tab>
-						<mat-tab label="{{titlesLayerBox.label_limits}}">
-							<div *ngFor="let limits of descriptor.limits">
-								<div class="form-group baseMap" *ngFor="let name_limits of limits.types">
-									<mat-slide-toggle (change)="limitsLayersChecked(name_limits, $event)"
-													  [(ngModel)]="name_limits.visible" class="slideEstados">
-										{{name_limits.Viewvalue}}
-									</mat-slide-toggle>
-								</div>
-							</div>
-						</mat-tab>
-					</mat-tab-group>
-				</div>
-
+						</div>
+					</mat-tab>
+				</mat-tab-group>
 			</div>
 
-		</mat-drawer>
+		</div>
 
-		<div class="layer-sidenav-content" >
-			<div id="map" class="dpat-ol-map" [style.height]="innerHeigth + 'px'" >
+	</mat-drawer>
 
-				<div  class="dpat-logo">
-					<div class="container-logos">
-						<img width="130" height="130" src="../../assets/logo/logo-ufg.png" alt="UFG"/>
-						<img width="130" height="130" src="{{svgLoading}}" alt="Covid-19"/>
+	<div class="layer-sidenav-content">
+		<div id="map" class="dpat-ol-map" [style.height]="innerHeigth + 'px'">
+
+			<div  class="dpat-logo">
+				<div class="container-logos">
+					<img src="../../assets/logo/logos.png" alt="Logos"/>
+<!--						<img width="130" height="130" src="{{svgLoading}}" alt="Covid-19"/>-->
+				</div>
+			</div>
+
+			<div class="container-resumo">
+				<div class="resumo-subtitle-card">
+					<h1 class="resumo-subtitle">Casos no estado de Goiás</h1>
+					<p>Última atualização em 25/06/2019</p>
+				</div>
+				<div class="resumo">
+					<div class="card-resumo">
+						<div class="card-resumo-title confirmado" title="Titulo">Confirmados</div>
+						<h2>{{summary.confirmados}}</h2>
+					</div>
+					<div class="card-resumo">
+						<div class="card-resumo-title recuperado" title="Titulo">Suspeitos</div>
+						<h2 >{{summary.suspeitos}}</h2>
+					</div>
+					<div class="card-resumo">
+						<div class="card-resumo-title obitos" title="Titulo">Óbitos</div>
+						<h2 >{{summary.obitos}}</h2>
 					</div>
 				</div>
+			</div>
 
-				<div class="btn-languages">
-					<button  (click)="changeLanguage('pt-br')" class="color-buttons" mat-raised-button color="accent" [ngStyle]="bntStylePOR">&nbsp;POR</button>
-					<button  (click)="changeLanguage('en-us')" class="color-buttons" mat-raised-button color="warn" [ngStyle]="bntStyleENG">&nbsp;ENG</button>
+			<div class="btn-languages">
+				<button (click)="changeLanguage('pt-br')" class="color-buttons" mat-raised-button color="accent"
+					[ngStyle]="bntStylePOR">&nbsp;POR</button>
+				<button (click)="changeLanguage('en-us')" class="color-buttons" mat-raised-button color="warn"
+					[ngStyle]="bntStyleENG">&nbsp;ENG</button>
+			</div>
+
+			<div class="controls">
+				<div matTooltip="Acessar camada de dados"
+					[class]="showDrawer ? 'btn-layers btn-layers-active' : 'btn-layers'" aria-label="Camadas de dados"
+					(click)="handleDrawer()">
+					<img width="30" height="30" src="../../assets/gif/btn_layers.svg" alt="Camadas de dados">
 				</div>
-
-				<div class="controls">
-					<div  matTooltip="Acessar camada de dados" [class]="showDrawer ? 'btn-layers btn-layers-active' : 'btn-layers'" aria-label="Camadas de dados" (click)="handleDrawer()">
-						<img width="30" height="30" src="../../assets/gif/btn_layers.svg" alt="Camadas de dados">
-					</div>
-					<div  matTooltip="Visualizar estatísticas" [class]="showStatistics ? 'btn-layers btn-layers-active' : 'btn-layers'" aria-label="Estatísticas" (click)="showStatistics = !showStatistics">
-						<img width="30" height="30" src="../../assets/gif/charts.svg" alt="Camadas de dados">
-					</div>
+				<div matTooltip="Visualizar estatísticas"
+					[class]="showStatistics ? 'btn-layers btn-layers-active' : 'btn-layers'" aria-label="Estatísticas"
+					(click)="showStatistics = !showStatistics">
+					<img width="30" height="30" src="../../assets/gif/charts.svg" alt="Camadas de dados">
 				</div>
+			</div>
 
-				<div *ngIf="showStatistics" id="positionCharts">
-					<div class="titleWindows">
-						{{dataSeries.title}}
-						<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
-								(click)="collapseCharts = !collapseCharts" [attr.aria-expanded]="!collapseCharts"
-								aria-controls="camadageografica">-</button>
-					</div>
-					<div [ngbCollapse]="collapseCharts" id="matgroup">
-						<mat-tab-group class="charts" [selectedIndex]="selectedIndex" #matgroup (selectedTabChange)="changeTab($event)">
+			<div *ngIf="showStatistics" id="positionCharts">
+				<div class="titleWindows">
+					<div>{{dataSeries.title}}</div>
+
+					<div class="space"></div>
+
+					<button class="btn-colapse" mat-mini-fab (click)="collapseCharts = !collapseCharts" [attr.aria-expanded]="!collapseCharts"  >
+						<mat-icon> {{collapseCharts ? 'expand_less' : 'expand_more'}}</mat-icon>
+					</button>
+				</div>
+				<div [ngbCollapse]="collapseCharts" id="matgroup">
+					<mat-tab-group class="charts" [selectedIndex]="selectedIndex" #matgroup
+						(selectedTabChange)="changeTab($event)">
+
+						<mat-tab label="{{dataSeries.timeseries.label}}">
+							<p-tabView>
+								<p-tabPanel [header]="dataSeries.timeseries.chartResult[0]?.title"
+									[disabled]="!dataSeries.timeseries.chartResult[0]?.show">
+									<div>
+										<p style="font-weight: bold; text-align: center;">
+											{{ dataSeries.timeseries.chartResult[0]?.text }}</p>
+										<p-chart [ngStyle]="{'overflow-x': hidden}"
+											*ngIf="dataSeries.timeseries.chartResult[0]?.type"
+											[type]="dataSeries.timeseries.chartResult[0]?.type"
+											[data]="dataSeries.timeseries.chartResult[0]?.dataResult"
+											[options]="dataSeries.timeseries.chartResult[0]?.options">
+										</p-chart>
+									</div>
+								</p-tabPanel>
+								<p-tabPanel [header]="chartResultCities.label" [cache]="true">
+									<p-scrollPanel [style]="{width: '100%', height: '38vh'}">
+										<p-table [value]="chartResultCities.series">
+											<ng-template pTemplate="header">
+												<tr align="center">
+													<th *ngFor="let header of chartResultCities.split">
+														{{header}}
+													</th>
+												</tr>
+											</ng-template>
+											<ng-template pTemplate="body" let-city>
+												<tr>
+													<td align="center">{{city.rank}}</td>
+													<td align="center">{{city.nome}}</td>
+													<td align="center">{{city.confirmados}}</td>
+												</tr>
+											</ng-template>
+										</p-table>
+									</p-scrollPanel>
+								</p-tabPanel>
+
+								<p-tabPanel [header]="dataStates.label" id="tabGraficoLinhas">
+										<h6 style="text-align: center;">
+											<b>{{dataStates.description}}</b>
+										</h6>
+										<p-chart type="horizontalBar" [data]="dataStates" [options]="optionsStates">
+										</p-chart>
+								</p-tabPanel>
 
 
-							<mat-tab label="{{dataSeries.timeseries.label}}" >
-								<p-scrollPanel [style]="{width: '100%', height: '72vh'}" >
+							</p-tabView>
+						</mat-tab>
+						<mat-tab label="{{dataSource.title}}" >
+							<p-scrollPanel [style]="{width: '100%', height: '60vh'}" >
+								<div  class="container-ft">
+									<img src="../../assets/gif/fontes.png" alt="Fontes"/>
+									<h5>{{dataSource.technical_note_title}}</h5>
+									<p>
+										{{dataSource.technical_note}}
+									</p>
+								</div>
+							</p-scrollPanel>
+						</mat-tab>
+					</mat-tab-group>
+
+
+
+						<!-- <mat-tab label="{{dataProjSeries.timeseries.label}}">
+							<p-scrollPanel [style]="{width: '100%', height: '72vh'}">
 								<ng-template matTabContent>
-									<p-tabView >
-										<p-tabPanel [header]="dat.title" *ngFor="let dat of dataSeries.timeseries.chartResult; let i = index" [selected]="i == 0" [disabled]="!dat.show" [cache]="true">
+									<p-tabView>
+										<p-tabPanel [header]="dat.title"
+											*ngFor="let dat of dataProjSeries.timeseries.chartResult; let i = index"
+											[selected]="i == 0" [disabled]="!dat.show" [cache]="true">
 											<div>
 												<p style="font-weight: bold; text-align: center;">{{ dat.text }}</p>
-												<p-chart [ngStyle]="{'overflow-x': hidden}" *ngIf="dat.type" [type]="dat.type" [data]="dat.dataResult" [options]="dat.options"></p-chart>
+												<p-chart [ngStyle]="{'overflow-x': hidden}" *ngIf="dat.type"
+													[type]="dat.type" [data]="dat.dataResult" [options]="dat.options">
+												</p-chart>
 											</div>
 										</p-tabPanel>
 									</p-tabView>
 								</ng-template>
-								</p-scrollPanel>s
-							</mat-tab>
+							</p-scrollPanel>
+						</mat-tab> -->
 
-							<mat-tab label="Fontes" >
-								<p-scrollPanel [style]="{width: '100%', height: '72vh'}" >
-									<div  class="container-ft">
-										<img src="../../assets/gif/fontes.png" alt="Fontes"/>
-										<h5> NOTA TÉCNICA - PROJEÇÕES COVID-19</h5>
-										<p>As projeções da plataforma tem objetivo de contribuir com a melhor condução das ações da população goiana e dos gestores institucionais em relação a propagação da epidemia do vírus Sars COVID 19 em Goiás.
-											Os modelos epidêmicos utilizados são amplamente difundidos no meio científico, dentre eles o modelo SEIR e exponencial.
-											Todas as projeções são baseadas no histórico de ocorrências diárias do Sars COVID-19 e podem sofrer alterações a cada nova ocorrência.
-										</p>
-									</div>
-								</p-scrollPanel>
-							</mat-tab>
+<!--				<div id="positionLegend" class="control-layers" cdkDrag>-->
+<!--					<div [class]="collapseLegends ? 'titleWindows radius-bottom' : 'titleWindows'" >-->
 
-						</mat-tab-group>
-					</div>
-				</div>
+<!--						<div>{{titlesLayerBox.legendTitle}}</div>-->
 
-				<div id="positionLegend" class="control-layers" cdkDrag>
-					<div [class]="collapseLegends ? 'titleWindows radius-bottom' : 'titleWindows'" >
-						{{titlesLayerBox.legendTitle}}
-						<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
-								(click)="collapseLegends = !collapseLegends" [attr.aria-expanded]="!collapseLegends"
-								aria-controls="camadageografica">-</button>
-					</div>
-					<div [ngbCollapse]="collapseLegends" class="legendasConteudo">
-						<div class="legends"  *ngFor="let layer of layersNames">
-							<mat-expansion-panel [expanded]="layer.visible" >
-								<mat-expansion-panel-header  [collapsedHeight]="'40px'" [expandedHeight]="'40px'"
-															 class="expansion-header-layer" *ngIf="layer.visible">
-									{{layer.label}}
-								</mat-expansion-panel-header>
-								<div *ngFor="let type of layer.types">
-									<img *ngIf="layer.selectedType === type.value" style="margin-top: 10px;" [src]="type.urlLegend">
-								</div>
+<!--						<div class="space"></div>-->
 
-							</mat-expansion-panel>
-						</div>
-					</div>
-				</div>
+<!--						<button class="btn-colapse" mat-mini-fab (click)="collapseLegends = !collapseLegends" [attr.aria-expanded]="!collapseLegends" >-->
+<!--							<mat-icon> {{collapseLegends ? 'expand_less' : 'expand_more'}}</mat-icon>-->
+<!--						</button>-->
+<!--					</div>-->
 
-				<div id="map-info" class="card"
-					 [ngStyle]="{'visibility': infodata || clickable  ? 'visible' : 'hidden'}">
-					<div *ngIf="infodata && !clickable" class="card-body">
-						<p class="card-text">{{infodata.nome}} - {{infodata.uf}}</p>
-						<table>
-							<tbody>
+<!--					<div [ngbCollapse]="collapseLegends" class="legendasConteudo">-->
+<!--						<div class="legends"  *ngFor="let layer of layersNames">-->
+<!--							<mat-expansion-panel [expanded]="layer.visible" >-->
+<!--								<mat-expansion-panel-header  [collapsedHeight]="'40px'" [expandedHeight]="'40px'"-->
+<!--															 class="expansion-header-layer" *ngIf="layer.visible">-->
+<!--									{{layer.label}}-->
+<!--								</mat-expansion-panel-header>-->
+<!--								<div *ngFor="let type of layer.types">-->
+<!--									<img *ngIf="layer.selectedType === type.value" [src]="type.urlLegend">-->
+<!--								</div>-->
+
+<!--							</mat-expansion-panel>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
+
+			<div id="map-info" class="card" [ngStyle]="{'visibility': infodata || clickable  ? 'visible' : 'hidden'}">
+				<div *ngIf="infodata && !clickable" class="card-body">
+					<p class="card-text">{{infodata.nome}} - {{infodata.uf}}</p>
+					<table>
+						<tbody>
 							<tr>
-								<th>Código do Município: </th>
+								<th>{{minireportText.ibge_code}} </th>
 								<td>{{infodata.cd_geocmu }}</td>
 							</tr>
 							<tr>
-								<th>Área: </th>
-								<td>{{infodata.area_mun}} km²</td>
+								<th>{{minireportText.area}}</th>
+								<td>{{infodata.area_mun | number:'1.2-2'  }} km²</td>
 							</tr>
 							<tr>
-								<th>População </th>
-								<td>{{infodata.pop_2019}}</td>
+								<th>{{minireportText.qtd_population}} </th>
+								<td>{{infodata.pop_2019 | number:'1.0-0' }} </td>
 							</tr>
 							<tr>
-								<th>Quantidade de Confirmados: </th>
+								<th>{{minireportText.confirmed_cases}} </th>
 								<td>{{infodata.confirmados}}</td>
 							</tr>
-							</tbody>
-						</table>
-					</div>
-					<div *ngIf="clickable" class="card-body">
-						<p class="card-text">{{clickableTitle}}</p>
-						<img src='assets/markers/google_maps.png'>
-						<b>Abrir no Google Maps</b>
-					</div>
+						</tbody>
+					</table>
+				</div>
+				<div *ngIf="clickable" class="card-body">
+					<p class="card-text">{{clickableTitle}}</p>
+					<img src='assets/markers/google_maps.png'>
+					<b>Abrir no Google Maps</b>
 				</div>
 			</div>
+
+				</div>
+	</div>
+
 		</div>
-
-	</mat-drawer-container>
-
+	</div>
 
 
+</mat-drawer-container>

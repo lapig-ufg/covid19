@@ -6,27 +6,13 @@
 
 	"charts_box": {
 		"charts_box_title": {
-			"pt-br": "Estatísticas sobre o avanço do COVID-19",
-			"en-us": "Statistics on the progress of COVID-19"
+			"pt-br": "Informações sobre o COVID-19",
+			"en-us": "Informations about the COVID-19"
 		},
 		"charts_box_dados_oficiais": {
 			"label": {
 				"pt-br": "Dados Oficiais",
 				"en-us": "Official Data"
-			},
-			"timeseries_go_projecao":{
-				"title": {
-					"pt-br": "Estimativas da quantidade de casos para o Estado de Goiás",
-					"en-us": "Estimates on the number of cases for the State of Goiás"
-				},
-				"label_confirmados":{
-					"pt-br": "Projeção Confirmados",
-					"en-us": "Projected Confirmed"
-				},
-				"label_recuperados":{
-					"pt-br": "Projeção Recuperados",
-					"en-us": "ProjectedRecovered"
-				}
 			},
 			"timeseries_go":{
 				"title": {
@@ -65,6 +51,84 @@
 					"pt-br": "Óbitos",
 					"en-us": "Deaths"
 				}
+			},
+			"ranking_municipios": {
+				"label": {
+					"pt-br": "Municípios",
+					"en-us": "Municipalities"
+				},
+				"description": {
+					"pt-br": "Municípios com maiores número de casos de COVID-19: ",
+					"en-us": "Ranking of Municipalities with the highest cases of COVID-19:"
+				},
+				"title": {
+					"pt-br": "#?Município?Casos Confirmados",
+					"en-us": "#?Municipality?Confirmed Cases"
+				},
+				"tooltip_text": {
+					"pt-br": "Clique para visualizar no mapa",
+					"en-us": "Click to view on map"
+				}
+			},
+			"charts_box_states": {
+				"label": {
+					"pt-br": "Estados",
+					"en-us": "States"
+				},
+				"name": {
+					"pt-br": "Área Desmatada",
+					"en-us": "Deforested Area"
+				},
+				"description": {
+					"pt-br": "Comparação do número de casos em diferentes Estados",
+					"en-us": "Comparison of the number of cases in different States"
+				},
+				"label_confirmados":{
+					"pt-br": "Confirmados",
+					"en-us": "Confirmed"
+				}
+			}
+		},
+		"charts_box_projecoes": {
+			"label": {
+				"pt-br": "Projeções",
+				"en-us": "Projections"
+			},
+			"confirmados_recuperados":{
+				"title": {
+					"pt-br": "Estimativas da quantidade de casos para o Estado de Goiás",
+					"en-us": "Estimates on the number of cases for the State of Goiás"
+				},
+				"label_confirmados":{
+					"pt-br": "Confirmados",
+					"en-us": "Confirmed"
+				},
+				"label_recuperados":{
+					"pt-br": "Recuperados",
+					"en-us": "Recovered"
+				},
+				"label_obitos":{
+					"pt-br": "Óbitos",
+					"en-us": "Deaths"
+				},
+				"text":{
+					"pt-br": "Clique nos botões para atualizar o gráfico.",
+					"en-us": "Click on the buttons here to update the statistics."
+				}
+			}
+		},
+		"source":{
+			"label": {
+				"pt-br": "Fontes",
+				"en-us": "Source"
+			},
+			"technical_note_title":{
+				"pt-br": "NOTA TÉCNICA - PROJEÇÕES COVID-19",
+				"en-us": "TECHNICAL NOTE - PROJECTIONS COVID-19"
+			},
+			"technical_note":{
+				"pt-br": "As projeções da plataforma tem objetivo de contribuir com a melhor condução das ações da população goiana e dos gestores institucionais em relação a propagação da epidemia do vírus Sars COVID 19 em Goiás. Os modelos epidêmicos utilizados são amplamente difundidos no meio científico, dentre eles o modelo SEIR e exponencial, todas as projeções são baseadas no histórico de ocorrências diárias do Sars COVID-19, e portanto podem sofrer alterações a cada nova ocorrência, sempre com o objetivo de produzir estimativas mais assertivas.",
+				"en-us": "The platform's projections aim to contribute to better conducting the actions of the population of Goiás and institutional managers in relation to the spread of the Sars COVID 19 virus epidemic in Goiás. The epidemic models used are widely disseminated in the scientific community, among them the SEIR and exponential model, all projections are based on the history of daily occurrences of Sars COVID-19, and therefore they can change with each new occurrence, always with the objective of producing more assertive estimates."
 			}
 		}
 	},
@@ -86,8 +150,8 @@
 			"en-us": "Detection Date:"
 		},
 		"qtd_population": {
-			"pt-br": "Tamanho da População:",
-			"en-us": "Population Size:"
+			"pt-br": "Nº de Habitantes:",
+			"en-us": "Population:"
 		},
 		"confirmed_cases": {
 			"pt-br": "Quantidade de Casos Confirmados:",
@@ -182,8 +246,8 @@
 				},
 				"qtd_populacional": {
 					"label": {
-						"pt-br": "Índice Populacional - IBGE",
-						"en-us": "Population Index - IBGE"
+						"pt-br": "População- IBGE",
+						"en-us": "Population - IBGE"
 					},
 					"metadata": [{
 						"title": {
@@ -198,8 +262,8 @@
 					"types": {
 						"covid19_ibge_populacao": {
 							"view_value": {
-								"pt-br": "Quantidade",
-								"en-us": "Quantity"
+								"pt-br": "Habitantes",
+								"en-us": "Population"
 							}
 						}
 					}

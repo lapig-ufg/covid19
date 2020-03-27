@@ -72,8 +72,10 @@ export class MapComponent implements OnInit {
   currentZoom: Number;
   regionsLimits: any;
   dataSeries: any;
+  dataProjSeries: any;
   dataStates: any;
   dataCities: any;
+  dataSource:any;
   chartResultCities: any;
   chartResultCitiesIllegalAPP: any;
   chartResultCitiesIllegalRL: any;
@@ -81,9 +83,7 @@ export class MapComponent implements OnInit {
   periodSelected: any;
   desmatInfo: any;
 
-  optionsTimeSeries: any;
-  optionsStates: any;
-  optionsCities: any;
+  optionsStates: any
 
   changeTabSelected = "";
   viewWidth = 600;
@@ -183,6 +183,8 @@ export class MapComponent implements OnInit {
   showStatistics: boolean;
   showDrawer: boolean;
 
+  summary:any;
+
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
 
   constructor(
@@ -197,7 +199,8 @@ export class MapComponent implements OnInit {
     this.currentZoom = 8;
     this.layers = [];
 
-    this.dataSeries = { timeseries: { label: "" } };
+    this.dataSeries = { timeseries: { label: "", chartResult: [] } };
+    this.dataProjSeries = { timeseries: { label: "", chartResult: [] } };
     this.dataStates = {};
 
     this.clickableTitle = 'Informações';
@@ -220,9 +223,9 @@ export class MapComponent implements OnInit {
 
     this.textOnDialog = {};
 
-    this.currentData = {
-      text: ''
-    };
+    this.currentData = "";
+
+    this.optionsStates = {};
 
     this.valueRegion = '';
 
@@ -275,11 +278,16 @@ export class MapComponent implements OnInit {
     this.chartRegionScale = true;
     this.titlesLayerBox = {};
     this.minireportText = {};
+    this.updateSource();
 
     this.updateTexts();
 
     this.showStatistics = true;
     this.showDrawer = false;
+    this.dataSource = {};
+    this.summary = {};
+    this.updateSummary();
+
   }
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -296,7 +304,7 @@ export class MapComponent implements OnInit {
         )
       ),
       tap(() => (this.searching = false))
-    )
+    );
 
   formatter = (x: { text: string }) => x.text;
 
@@ -418,7 +426,6 @@ export class MapComponent implements OnInit {
     }
   }
 
-
   private setStylesLangButton() {
 
     if (this.language == 'pt-br') {
@@ -444,7 +451,6 @@ export class MapComponent implements OnInit {
 
     });
 
-
   }
 
   private transformDate(myDate) {
@@ -455,10 +461,18 @@ export class MapComponent implements OnInit {
     }
   }
 
+  private updateSource(){
+    let sourceUrl = '/service/indicators/source' + this.getServiceParams();
+
+    this.http.get(sourceUrl).subscribe(result => {
+      this.dataSource = result;
+    });
+
+  }
 
   private updateCharts() {
 
-    let timeseriesUrl = '/service/indicators/dadosoficiais' + this.getServiceParams();
+    let timeseriesUrl = '/service/indicators/timeseries' + this.getServiceParams();
 
     this.http.get(timeseriesUrl).subscribe(result => {
 
@@ -516,16 +530,68 @@ export class MapComponent implements OnInit {
     }
     );
 
+    let citiesUrl = '/service/indicators/cities' + this.getServiceParams();
 
+    this.http.get(citiesUrl).subscribe(citiesResult => {
+      this.chartResultCities = citiesResult;
+      this.chartResultCities.split = this.chartResultCities.title.split('?');
 
-    // let timeseriesgeral = '/service/indicators/timeseries' + this.getServiceParams();
+    });
 
+    let projectionURL = '/service/indicators/projections' + this.getServiceParams();
 
+    this.http.get(projectionURL).subscribe(result => {
+
+    this.dataProjSeries = result;
+
+      for (let graphic of this.dataProjSeries.timeseries.chartResult) {
+
+        let y = [{
+          ticks: {
+            beginAtZero: true,
+            autoskip: true,
+            autoSkipPadding: 20,
+            callback: function (value) {
+              return value.toLocaleString('de-DE');
+            }
+          }
+        }]
+
+        graphic.options.scales.yAxes = y;
+
+    this.updateSource();
+        let x = [{
+          ticks: {
+            autoskip: true,
+            autoSkipPadding: 20
+          }
+        }]
+
+        graphic.options.scales.xAxes = x;
+
+        graphic.options.legend.onHover = function (event) {
+          event.target.style.cursor = 'pointer';
+          graphic.options.legend.labels.fontColor = '#0335fc';
+        };
+
+        graphic.options.legend.onLeave = function (event) {
+          event.target.style.cursor = 'default';
+          graphic.options.legend.labels.fontColor = '#fa1d00';
+        };
+
+      }
+    }
+    );
+
+    let statesURL = '/service/indicators/states' + this.getServiceParams();
+    this.http.get(statesURL).subscribe(statesResult => {
+        this.dataStates = statesResult
+        this.optionsStates = statesResult['optionsStates'];
+    });
 
   }
 
   updateRegion(region) {
-
 
     if (region == this.defaultRegion) {
       this.valueRegion = '';
@@ -1031,7 +1097,7 @@ export class MapComponent implements OnInit {
       }
     }
     this.LayersTMS[layer.selectedType].setVisible(layer.visible);
-
+    this.updateSummary();
 
   }
 
@@ -1239,13 +1305,21 @@ export class MapComponent implements OnInit {
     // });
   }
 
-
   buttonDownload(tipo, layer, e) {
     if (tipo == 'csv') {
       this.downloadCSV(layer);
     } else {
       this.downloadSHP(layer);
     }
+  }
+
+  private updateSummary(){
+    let sourceUrl = '/service/summary/data' + this.getServiceParams();
+
+    this.http.get(sourceUrl).subscribe(result => {
+      // result.obitos = result.obitos == null ? 0 : result.obitos;
+      this.summary = result;
+    });
   }
 
   @HostListener('window:resize', ['$event'])
