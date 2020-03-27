@@ -57,6 +57,11 @@
 				</div>
 		</mat-tab> 
 		<mat-tab  label = "Total"  style="overflow-x: hidden"> 
+				<div class="resumo-subtitle-card">
+						<h1 class="resumo-subtitle">Casos no estado de Goiás</h1>
+						<p style="font-size: 0.8rem">Última atualização em  {{lastUpdate.data}}</p>
+						<p style="font-size: 0.8rem">Fonte: Secretária de Saúde do Estado de Goiás</p>
+				</div>
 			<div class="container-resumo">
 				<!-- <h1 class="resumo-subtitle">
 				Casos no estado de Goiás
@@ -78,10 +83,10 @@
 			</div>
 			<div class="row" style="margin: 0px">
 					<div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-							<button mat-raised-button style="background-color: #7e1116" (click)="openDialog()">Fontes</button>
+							<button mat-raised-button style="background-color: #7e1116; margin-bottom: 10px;" (click)="openDialog()">Fontes</button>
 					</div>
 					<div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8" style="text-align: right">
-							{{summary.ultima_atualizacao}}
+							<!-- {{lastUpdate.data}} -->
 					</div>
 			</div>
 		</mat-tab> 

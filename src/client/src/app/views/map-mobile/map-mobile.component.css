@@ -271,21 +271,28 @@ width: 24%; */
 	box-shadow: -1px 1px 10px 0px #7a2525;
 }
 .resumo-subtitle{
-	display: block;
-	position: relative;
-	top: 0;
-	text-align: center;
-	font-size: 1.5em;
-	border-radius: 8px;
+	font-size: 1.4em;
 	color: white;
-	background-color: #dd4646;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	margin-right: 7px;
-	margin-left: 6px;
-	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
-	box-shadow: -1px 1px 10px 0px #7a2525;
 }
+
+.resumo-subtitle-card {
+    display: block;
+    position: relative;
+    top: 0;
+    text-align: center;
+    border-radius: 8px;
+    color: white;
+    background-color: #dd4646;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right: 7px;
+	margin-left: 6px;
+	margin-top: 10px;
+    box-shadow: -1px 1px 10px 0px #7a2525;
+}
+
+
+
 .card-resumo-title{
 	font-size: 1em;
 	padding: 5px;
