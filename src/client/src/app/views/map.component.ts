@@ -68,6 +68,7 @@ export class MapComponent implements OnInit {
   currentZoom: Number;
   regionsLimits: any;
   dataSeries: any;
+  dataProjSeries: any;
   dataStates: any;
   dataCities: any;
   chartResultCities: any;
@@ -76,10 +77,6 @@ export class MapComponent implements OnInit {
   chartUsoSolo = [] as any;
   periodSelected: any;
   desmatInfo: any;
-
-  optionsTimeSeries: any;
-  optionsStates: any;
-  optionsCities: any;
 
   changeTabSelected = "";
   viewWidth = 600;
@@ -189,7 +186,8 @@ export class MapComponent implements OnInit {
     this.currentZoom = 4.3;
     this.layers = [];
 
-    this.dataSeries = { timeseries: { label: "" } };
+    this.dataSeries = { timeseries: { label: "", chartResult: [] } };
+    this.dataProjSeries = { timeseries: { label: "", chartResult: [] } };
     this.dataStates = {};
 
 
@@ -428,7 +426,7 @@ export class MapComponent implements OnInit {
 
   private updateCharts() {
 
-    let timeseriesUrl = '/service/indicators/dadosoficiais' + this.getServiceParams();
+    let timeseriesUrl = '/service/indicators/timeseries' + this.getServiceParams();
 
     this.http.get(timeseriesUrl).subscribe(result => {
 
@@ -488,10 +486,65 @@ export class MapComponent implements OnInit {
     }
     );
 
+    let citiesUrl = '/service/indicators/cities' + this.getServiceParams();
 
 
-    // let timeseriesgeral = '/service/indicators/timeseries' + this.getServiceParams();
+    this.http.get(citiesUrl).subscribe(citiesResult => {
+      this.chartResultCities = citiesResult;
+      this.chartResultCities.split = this.chartResultCities.title.split('?');
 
+      console.log(this.chartResultCities)
+
+    });
+
+    let projectionURL = '/service/indicators/projections' + this.getServiceParams();
+
+  this.http.get(projectionURL).subscribe(result => {
+
+    this.dataProjSeries = result;
+
+      console.log(this.dataProjSeries)
+
+      for (let graphic of this.dataProjSeries.timeseries.chartResult) {
+
+        let y = [{
+          ticks: {
+            beginAtZero: true,
+            autoskip: true,
+            autoSkipPadding: 20,
+            callback: function (value) {
+              return value.toLocaleString('de-DE');
+            }
+          }
+        }]
+
+        graphic.options.scales.yAxes = y;
+
+        let x = [{
+          ticks: {
+            autoskip: true,
+            autoSkipPadding: 20
+          }
+        }]
+
+        graphic.options.scales.xAxes = x;
+
+        graphic.options.legend.onHover = function (event) {
+          event.target.style.cursor = 'pointer';
+          graphic.options.legend.labels.fontColor = '#0335fc';
+        };
+
+        graphic.options.legend.onLeave = function (event) {
+          event.target.style.cursor = 'default';
+          graphic.options.legend.labels.fontColor = '#fa1d00';
+        };
+
+      }
+
+    }
+    );
+
+   
 
 
   }
@@ -618,8 +671,6 @@ export class MapComponent implements OnInit {
                 this.infodata.confirmados = 0;
               }
 
-              this.infodata.pop_2019 = this.infodata.pop_2019.toLocaleString('de-DE')
-              this.infodata.area_mun = Math.round(this.infodata.area_mun * 1000) / 1000
 
               this.infoOverlay.setPosition(this.infodata ? coordinate : undefined);
 
