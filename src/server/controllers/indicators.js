@@ -39,14 +39,7 @@ module.exports = function (app) {
     return formated;
   }
 
-  function createDataSetStates (labels, graphic,language)
-  {
-
-  }
-
-
-
-  function createDataSetTimeSeriesGO(labels, graphic, language) {
+  function createDataSetTimeSeriesGO(labels, graphic, language){
     let data = {
       labels: graphic.map(element => formatDate(element.data, language)),
       datasets: [
@@ -323,14 +316,14 @@ module.exports = function (app) {
     qResult.filter(item => item.uf =='GO')
     .forEach(item => regionResult.push(item))
 
-    
+
     for (var i = 0; i < qResult.length; i++) {
       if (qResult[i].uf == 'GO') {
       }
       else {
         regionResult.push(qResult[i])
       }
-      
+
       if (regionResult.length == 10) {
         break;
       }
@@ -372,11 +365,28 @@ module.exports = function (app) {
 
 
 
-    
+
     response.send(dataStates)
 		response.end()
 
   }
 
+  Controller.sourceText = function (request, response) {
+    var language = request.param('lang')
+    var sourceResult = {
+      id:"source",
+      title: languageJson["charts_box"]["source"]["label"][language],
+      technical_note_title: languageJson["charts_box"]["source"]["technical_note_title"][language],
+      technical_note: languageJson["charts_box"]["source"]["technical_note"][language],
+    };
+    response.send(sourceResult);
+    response.end();
+  };
+
   return Controller;
 };
+
+
+
+
+
