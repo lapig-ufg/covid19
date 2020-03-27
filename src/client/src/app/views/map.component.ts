@@ -1317,7 +1317,7 @@ export class MapComponent implements OnInit {
     let sourceUrl = '/service/summary/data' + this.getServiceParams();
 
     this.http.get(sourceUrl).subscribe(result => {
-      result.obitos = result.obitos == null ? 0 : result.obitos;
+      // result.obitos = result.obitos == null ? 0 : result.obitos;
       this.summary = result;
     });
   }

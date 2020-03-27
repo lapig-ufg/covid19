@@ -7,6 +7,5 @@ module.exports = function (app) {
 	app.get('/service/indicators/cities', dataInjector, indicators.cities);
 	app.get('/service/indicators/states', dataInjector, indicators.states);
 	app.get('/service/indicators/projections', dataInjector, indicators.projections);
-	app.get('/service/indicators/dadosoficiais', dataInjector, indicators.dadosoficiais);
 	app.get('/service/indicators/source', dataInjector, indicators.sourceText);
 }
