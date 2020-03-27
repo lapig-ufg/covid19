@@ -37,6 +37,8 @@ module.exports = function (app) {
     var result = {
       regionFilterDefault: "",
       type: languageJson["descriptor"]["type_of_information_label"][language],
+      maskUrl: "assets/geojson/mask.geojson",
+      maskOption: 'mask',
       groups: [
         {
           id: "informacoes",
@@ -78,29 +80,18 @@ module.exports = function (app) {
             {
               id: "gyn_locais_vacinacao",
               label: languageJson["descriptor"]["servicos"]["layers"]["gyn_locais_vacinacao"]["label"][language],
-              visible: false,
+              visible: true,
               selectedType: "gyn_locais_vacinacao_gripe",
               types: [{
                 value: "gyn_locais_vacinacao_gripe",
                 Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["gyn_locais_vacinacao"]["types"]["gyn_locais_vacinacao_gripe"]["view_value"][language],
+                geoJsonUrl: 'service/map/marker?layer=vacinacao_gripe',
+                iconUrl: 'assets/markers/icon.png',
+                source: 'geojson',
                 opacity: 0.8,
-                order: 3
-              }]
-            },
-            {
-              id: "pharmacy_supermarket_hospital",
-              label: languageJson["descriptor"]["servicos"]["layers"]["pharmacy_supermarket_hospital"]["label"][language],
-              visible: false,
-              selectedType: "pharmacy_supermarket_hospital_covid",
-              types: [{
-                value: "pharmacy_supermarket_hospital_covid",
-                Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["pharmacy_supermarket_hospital"]["types"]["pharmacy_supermarket_hospital_covid"]["view_value"][language],
-                regionFilter: true,
-                opacity: 0.8,
-                order: 3
+                order: 1
               }]
             }
-
           ]
         }
       ],
@@ -205,7 +196,33 @@ module.exports = function (app) {
     response.end();
   };
 
+  Controller.marker = function (request, response) {
+    var queryResult = request.queryResult;
 
+    features = []
+
+    for(var i=0; i < queryResult.length; i++) {
+      
+      geometry = JSON.parse(queryResult[i].geojson)
+      delete queryResult[i].geojson
+      delete queryResult[i].geom
+
+      features.push({
+        "type": "Feature",
+         "geometry": geometry,
+         "properties": queryResult[i]
+
+      })
+      
+    }
+
+    response.send({
+      "type": "FeatureCollection",
+      "features": features
+    })
+
+    response.end();
+  };
 
   Controller.textreport = function (request, response) {
     var language = request.param('lang')

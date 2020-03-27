@@ -1422,3 +1422,8 @@ textarea {
 .social-icon .google:hover {
   background: #CE332A;
 }
+
+.card-text {
+  padding-left: 5px;
+  padding-right: 5px;
+}

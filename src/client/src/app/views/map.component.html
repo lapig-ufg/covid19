@@ -188,7 +188,7 @@
 									{{layer.label}}
 								</mat-expansion-panel-header>
 								<div *ngFor="let type of layer.types">
-									<img *ngIf="layer.selectedType === type.value" [src]="type.urlLegend">
+									<img *ngIf="layer.selectedType === type.value" style="margin-top: 10px;" [src]="type.urlLegend">
 								</div>
 
 							</mat-expansion-panel>
@@ -197,8 +197,8 @@
 				</div>
 
 				<div id="map-info" class="card"
-					 [ngStyle]="{'visibility': infodata  ? 'visible' : 'hidden'}">
-					<div *ngIf="infodata" class="card-body">
+					 [ngStyle]="{'visibility': infodata || clickable  ? 'visible' : 'hidden'}">
+					<div *ngIf="infodata && !clickable" class="card-body">
 						<p class="card-text">{{infodata.nome}} - {{infodata.uf}}</p>
 						<table>
 							<tbody>
@@ -220,6 +220,11 @@
 							</tr>
 							</tbody>
 						</table>
+					</div>
+					<div *ngIf="clickable" class="card-body">
+						<p class="card-text">{{clickableTitle}}</p>
+						<img src='assets/markers/google_maps.png'>
+						<b>Abrir no Google Maps</b>
 					</div>
 				</div>
 			</div>

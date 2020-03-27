@@ -14,6 +14,7 @@ module.exports = function(app) {
 				sqlQuery = sqlQuery.replace("${"+name+"}%", "'" + params[name] + "%'")
 				sqlQuery = sqlQuery.replace("$%{"+name+"}", "'%" + params[name] + "'")
 				sqlQuery = sqlQuery.replace("${"+name+"}", "'" + params[name] + "'")
+				sqlQuery = sqlQuery.replace("$["+name+"]", params[name])
 			})
 			
 			return sqlQuery
@@ -41,6 +42,9 @@ module.exports = function(app) {
 			}
 
 			query = Internal.prepareQuery(sqlQuery, params)
+
+			console.log(sqlQuery, params)
+			console.log(query)
 
 			return Internal['client'].query(query, (err, result) => {
 
