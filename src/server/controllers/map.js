@@ -37,6 +37,8 @@ module.exports = function (app) {
     var result = {
       regionFilterDefault: "",
       type: languageJson["descriptor"]["type_of_information_label"][language],
+      maskUrl: "assets/geojson/mask.geojson",
+      maskOption: 'mask',
       groups: [
         {
           id: "informacoes",
@@ -203,6 +205,7 @@ module.exports = function (app) {
       
       geometry = JSON.parse(queryResult[i].geojson)
       delete queryResult[i].geojson
+      delete queryResult[i].geom
 
       features.push({
         "type": "Feature",

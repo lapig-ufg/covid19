@@ -9,6 +9,7 @@ import GeoJSON from 'ol/format/GeoJSON';
 import { defaults as defaultInteractions } from 'ol/interaction';
 import OlTileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
+import Feature from 'ol/Feature';
 import OlMap from 'ol/Map';
 import Overlay from 'ol/Overlay.js';
 import * as OlProj from 'ol/proj';
@@ -29,7 +30,9 @@ import { Observable } from 'rxjs';
 import { of } from 'rxjs/observable/of';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { MetadataComponent } from './metadata/metadata.component';
-
+import CropFilter from 'ol-ext/filter/Crop';
+import MaskFilter from 'ol-ext/filter/Mask';
+import MultiPolygon from 'ol/geom/MultiPolygon';
 
 
 let SEARCH_URL = '/service/map/search';
@@ -190,8 +193,9 @@ export class MapComponent implements OnInit {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer
   ) {
+
     this.projection = OlProj.get('EPSG:900913');
-    this.currentZoom = 4.3;
+    this.currentZoom = 8;
     this.layers = [];
 
     this.dataSeries = { timeseries: { label: "" } };
@@ -337,6 +341,27 @@ export class MapComponent implements OnInit {
 
 
     return urlParams;
+  }
+
+  private createCropFilter() {
+
+    if (this.descriptor.maskUrl) {
+      this.http.get(this.descriptor.maskUrl).subscribe(maskGeoJson => {
+        var features = new GeoJSON().readFeatures(maskGeoJson,{
+          dataProjection: 'EPSG:4326',
+          featureProjection: 'EPSG:3857'
+        });
+
+        var filter = new MaskFilter({ feature: features[0], inner:false, fill: new Fill({ color:[0,0,0,0.55] }) })
+        if (this.descriptor.maskOption == 'crop') {
+          filter = new CropFilter({ feature: features[0], inner:false })
+        }
+
+        this.map.addFilter(filter)
+        
+      });
+    } 
+
   }
 
   private updateExtent() {
@@ -597,7 +622,7 @@ export class MapComponent implements OnInit {
     );
 
     this.map.addOverlay(this.infoOverlay);
-
+    this.createCropFilter()
 
   }
 
