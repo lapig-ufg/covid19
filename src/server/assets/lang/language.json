@@ -176,6 +176,40 @@
 		"label_year": {
 			"pt-br": "Ano: ",
 			"en-us": "Year: "
+		},
+		"open_googlemaps": {
+			"pt-br": "Abrir no Google Maps",
+			"en-us": "View on Google Maps "
+		},
+		"label_clickable": {
+			"pt-br": "Informações",
+			"en-us": "Informations"
+		}
+	},
+	"summary_box":{
+		"title":{
+			"pt-br": "Casos no estado de Goiás",
+			"en-us": "Cases in the state of Goiás"
+		},
+		"last_update_label":{
+			"pt-br": "Última atualização em: ",
+			"en-us": "Last updated on: "
+		},
+		"source_text":{
+			"pt-br": "Fonte: Secretaria de Saúde do Estado de Goiás",
+			"en-us": "Source: Secretary of Health in the State of Goiás "
+		},
+		"confirmed_label":{
+			"pt-br": "Confirmados",
+			"en-us": "Confirmed"
+		},
+		"suspects_label":{
+			"pt-br": "Suspeitos",
+			"en-us": "Suspects"
+		},
+		"deaths_label":{
+			"pt-br": "Óbitos",
+			"en-us": "Deaths"
 		}
 	},
 	"layer_box": {
@@ -325,6 +359,10 @@
 				"relevo": {
 					"pt-br": "Relevo",
 					"en-us": "Geographical Relief"
+				},
+				"googlemaps": {
+					"pt-br": "Google Maps",
+					"en-us": "Google Maps"
 				}
 			}
 		},

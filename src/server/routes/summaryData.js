@@ -5,4 +5,5 @@ module.exports = function (app) {
 
     app.get('/service/summary/data', dataInjector, summary.getData);
     app.get('/service/summary/last-update', dataInjector, summary.lastUpdate);
+    app.get('/service/summary/texts', summary.texts);
 }

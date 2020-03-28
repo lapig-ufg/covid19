@@ -80,7 +80,7 @@ module.exports = function (app) {
             {
               id: "gyn_locais_vacinacao",
               label: languageJson["descriptor"]["servicos"]["layers"]["gyn_locais_vacinacao"]["label"][language],
-              visible: true,
+              visible: false,
               selectedType: "gyn_locais_vacinacao_gripe",
               types: [{
                 value: "gyn_locais_vacinacao_gripe",
@@ -101,7 +101,7 @@ module.exports = function (app) {
         types: [
           {
             value: "googlemaps",
-            viewValue: "Google Maps",
+            viewValue: languageJson["descriptor"]["basemaps"]["types"]["googlemaps"][language],
             visible: true
           },
           {

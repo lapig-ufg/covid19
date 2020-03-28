@@ -33,7 +33,8 @@ import { MetadataComponent } from './metadata/metadata.component';
 import CropFilter from 'ol-ext/filter/Crop';
 import MaskFilter from 'ol-ext/filter/Mask';
 import MultiPolygon from 'ol/geom/MultiPolygon';
-
+import {defaults as defaultControls, Control} from 'ol/control';
+import OlZoom from 'ol/control/Zoom';
 
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
@@ -84,6 +85,7 @@ export class MapComponent implements OnInit {
   desmatInfo: any;
 
   optionsStates: any
+  textSummary: any
 
   changeTabSelected = "";
   viewWidth = 600;
@@ -212,6 +214,8 @@ export class MapComponent implements OnInit {
     this.chartResultCitiesIllegalAPP = {};
     this.chartResultCitiesIllegalRL = {};
     this.chartUsoSolo = [];
+
+    this.textSummary = {};
 
     this.defaultRegion = {
       nome: 'GO',
@@ -454,6 +458,13 @@ export class MapComponent implements OnInit {
 
     });
 
+    let sumBoxURL = '/service/summary/texts' + this.getServiceParams();
+
+    this.http.get(sumBoxURL).subscribe(result => {
+      this.textSummary = result;
+    });
+
+
   }
 
   private transformDate(myDate) {
@@ -642,6 +653,7 @@ export class MapComponent implements OnInit {
 
     this.map = new OlMap({
       target: 'map',
+      controls: [new OlZoom()],
       layers: this.layers,
       view: new OlView({
         center: OlProj.fromLonLat([-49, -15.9]),
@@ -682,6 +694,7 @@ export class MapComponent implements OnInit {
     this.map.addOverlay(this.infoOverlay);
     this.createCropFilter()
 
+
   }
 
   private callbackPointerMoveMap(evt) {
@@ -711,7 +724,7 @@ export class MapComponent implements OnInit {
       }
 
     } else {
-      this.clickableTitle = 'Informações'
+      this.clickableTitle = this.minireportText.label_clickable
       this.clickable = false
       window.document.body.style.cursor = 'auto';
       
@@ -885,7 +898,8 @@ export class MapComponent implements OnInit {
       }),
       style: function(feature) {
         return markerStyle[feature.getGeometry().getType()]
-      }
+      },
+      visible: layer.visible
     });
 
   }
@@ -1332,7 +1346,6 @@ export class MapComponent implements OnInit {
       this.lastUpdate = result;
     });
 
-    console.log("ULTIMA", this.lastUpdate);
   }
 
 

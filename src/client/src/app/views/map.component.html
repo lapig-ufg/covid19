@@ -119,21 +119,21 @@
 
 			<div class="container-resumo">
 				<div class="resumo-subtitle-card">
-					<h1 class="resumo-subtitle">Casos no estado de Goiás</h1>
-					<p>Última atualização em {{lastUpdate.data}}</p>
-					<p>Fonte: Secretaria de Saúde do Estado de Goiás</p>
+					<h1 class="resumo-subtitle"> {{textSummary.title}} </h1>
+					<p> {{textSummary.last_update_label}} {{lastUpdate.data}}</p>
+					<p> {{textSummary.source_text}}</p>
 				</div>
 				<div class="resumo">
 					<div class="card-resumo">
-						<div class="card-resumo-title confirmado" title="Titulo">Confirmados</div>
+						<div class="card-resumo-title confirmado" title="Titulo">{{textSummary.confirmed_label}}</div>
 						<h2>{{summary.confirmados}}</h2>
 					</div>
 					<div class="card-resumo">
-						<div class="card-resumo-title recuperado" title="Titulo">Suspeitos</div>
+						<div class="card-resumo-title recuperado" title="Titulo">{{textSummary.suspects_label}}</div>
 						<h2 >{{summary.suspeitos}}</h2>
 					</div>
 					<div class="card-resumo">
-						<div class="card-resumo-title obitos" title="Titulo">Óbitos</div>
+						<div class="card-resumo-title obitos" title="Titulo">{{textSummary.deaths_label}}</div>
 						<h2 >{{summary.obitos}}</h2>
 					</div>
 				</div>
@@ -309,7 +309,7 @@
 				<div *ngIf="clickable" class="card-body">
 					<p class="card-text">{{clickableTitle}}</p>
 					<img src='assets/markers/google_maps.png'>
-					<b>Abrir no Google Maps</b>
+					<b> {{minireportText.open_googlemaps}} </b>
 				</div>
 			</div>
 

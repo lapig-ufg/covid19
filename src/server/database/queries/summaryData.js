@@ -12,7 +12,7 @@ module.exports = function(app) {
     };
 
     Query.queryLastUpdate = function() {
-        return " select to_char(max(data), 'DD/MM/YYYY')  as data from casos ";
+        return "select to_char(max(data), 'DD/MM/YYYY') as data from casos;";
     };
 
     return Query;
