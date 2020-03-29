@@ -6,16 +6,10 @@ var config = require('../config.js')()
 var pool = new Pool(config['pg'])
 
 var csvRows = []
-var csvFilepath = 'casos.csv'
+var csvFilepath = 'estados_casos.csv'
 
-const lastDateQuery = 'SELECT max(data) AS last_date FROM casos'
-const insertRow = 'INSERT INTO casos(cd_geocmu, data, confirmados) VALUES($1,$2,$3) RETURNING id'
-const dropView = 'DROP VIEW municipios_casos'
-var newView = "CREATE OR REPLACE VIEW municipios_casos AS SELECT m*, p.estp_2019 AS pop_2019, c.confirmados, c.data, c.suspeitos, c.descartados, c.obitos \
-FROM municipios m \
-  INNER populacao p ON m.cd_geocmu = p.cd_geocmu \
-  LEFT JOIN casos c ON m.cd_geocmu = c.cd_geocmu \
-WHERE m.cd_geocmu <> '52' AND c.data IS NULL OR c.data = "
+const lastDateQuery = 'SELECT max(data) AS last_date FROM casos_estados'
+const insertRow = 'INSERT INTO casos_estados(ordem_dia, data, cd_geouf,	uf,	obitos,	novos_casos, total_casos, prop_total_casos,	total_casos_por1mh) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING gid'
 
 fs.createReadStream(csvFilepath)
 	.pipe(csv())
@@ -28,7 +22,8 @@ fs.createReadStream(csvFilepath)
   
 		  const client = await pool.connect()
 		  try {
-		    await client.query('BEGIN')
+            await client.query('BEGIN')
+            await client.query('SET datestyle = dmy')
 		    
 		    const lastDateResul = await client.query(lastDateQuery)
 		    const lastDate = lastDateResul.rows[0]['last_date']
@@ -37,7 +32,11 @@ fs.createReadStream(csvFilepath)
 
 		    for(i in csvRows) {
 		    	var row = csvRows[i]
-				var rowDate = new Date(row.data)
+                var rowDate = new Date(row.data)
+                
+                /* for initial population*/ 
+                // var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.uf, row.obitos, row.novos_casos, row.total_casos, row.prop_total_casos, row.total_casos_por1mh] 
+		  		// 	const res = await client.query(insertRow, rowValues)
 
 		    	if (rowDate > lastDate) {
 			    	
@@ -46,7 +45,7 @@ fs.createReadStream(csvFilepath)
 					}
 					
 					
-			    	var rowValues = [row.cd_geocmu, row.data, row.confirmados, row.suspeitos, row.descartados, row.obitos] 
+			    	var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.uf, row.obitos, row.novos_casos, row.total_casos, row.prop_total_casos, row.total_casos_por1mh] 
 		  			const res = await client.query(insertRow, rowValues)
 		  			console.log(res.rowCount + ' inserted.')
 		    	} else {
@@ -56,11 +55,6 @@ fs.createReadStream(csvFilepath)
 		    }
 
 		    console.log((newLastDate != undefined), newLastDate)
-		    if (newLastDate != undefined) {
-		    	await client.query(dropView)
-		    	await client.query(newView + "'" + newLastDate + "'")
-		    	console.log('View municipios_casos updated')
-		    }
 
 		    console.log("Doing commit")
 		    await client.query('COMMIT')

@@ -268,7 +268,7 @@ export class MapComponent implements OnInit {
     this.language = 'pt-br';
 
     this.styleSelected = {
-      'background-color': '#e60e0e'
+      'background-color': '#ec7a18'
     };
 
     this.styleDefault = {
@@ -508,7 +508,7 @@ export class MapComponent implements OnInit {
 
         let x = [{
           ticks: {
-            autoskip: true,
+            autoskip: false,
             autoSkipPadding: 20
           }
         }]
