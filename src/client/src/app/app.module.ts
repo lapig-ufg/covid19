@@ -22,8 +22,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import  {MatTooltipModule } from '@angular/material/tooltip';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
@@ -47,6 +47,7 @@ import { DatePipe } from '@angular/common';
 import { SpinnerImgComponent } from './views/spinner-img/spinner-img.component';
 import { FileUploadComponent } from './views/file-upload/file-upload.component';
 import { MetadataComponent } from './views/metadata/metadata.component';
+import { GoogleAnalyticsService } from  './services/google-analytics.service'
 
 import { APP_BASE_HREF } from '@angular/common';
 import { MapMobileComponent, DialogMobile } from './views/map-mobile/map-mobile.component'; 
@@ -102,7 +103,8 @@ registerLocaleData(localePt);
   entryComponents:[MetadataComponent, MapComponent, DialogMobile],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
-    DatePipe
+    DatePipe,
+    GoogleAnalyticsService
   ],
   bootstrap: [AppComponent],
 
