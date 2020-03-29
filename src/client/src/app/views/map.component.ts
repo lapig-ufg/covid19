@@ -34,7 +34,6 @@ import CropFilter from 'ol-ext/filter/Crop';
 import MaskFilter from 'ol-ext/filter/Mask';
 import MultiPolygon from 'ol/geom/MultiPolygon';
 import {defaults as defaultControls, Control} from 'ol/control';
-import OlZoom from 'ol/control/Zoom';
 
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
@@ -166,7 +165,7 @@ export class MapComponent implements OnInit {
   styleSelected: any;
   styleDefault: any;
 
-  svgLoading = "/assets/gif/coronavirus_icon.svg";
+  svgLoading = "/assets/img/coronavirus_icon.svg";
 
   /** Variables for upload shapdefiles **/
   layerFromUpload: any = {
@@ -199,7 +198,7 @@ export class MapComponent implements OnInit {
   ) {
 
     this.projection = OlProj.get('EPSG:900913');
-    this.currentZoom = 8;
+    this.currentZoom = 7.75;
     this.layers = [];
 
     this.dataSeries = { timeseries: { label: "", chartResult: [] } };
@@ -653,7 +652,7 @@ export class MapComponent implements OnInit {
 
     this.map = new OlMap({
       target: 'map',
-      controls: [new OlZoom()],
+      controls: [],
       layers: this.layers,
       view: new OlView({
         center: OlProj.fromLonLat([-49, -15.9]),
@@ -1352,15 +1351,10 @@ export class MapComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerHeigth = window.innerHeight;
-    if (window.innerWidth < 1600) {
-      this.collapseLegends = false;
-      this.collapseLayer = true;
-      this.collapseCharts = true;
-      this.currentZoom = 4;
+    if (window.innerWidth < 1480) {
+      this.currentZoom = 3;
     } else {
-      this.collapseLayer = false;
-      this.collapseCharts = false;
-      this.currentZoom = 7.8;
+      this.currentZoom = 7.75;
     }
 
     this.innerWidth = window.innerWidth;
@@ -1368,6 +1362,14 @@ export class MapComponent implements OnInit {
 
   handleDrawer() {
     this.showDrawer = !this.showDrawer;
+  }
+
+  zoomIn(){
+    this.map.getView().setZoom(this.map.getView().getZoom() + 0.7)
+  }
+
+  zoomOut(){
+    this.map.getView().setZoom(this.map.getView().getZoom() - 0.7)
   }
 
   ngOnInit() {
@@ -1423,13 +1425,10 @@ export class MapComponent implements OnInit {
     // keep height of window
     this.innerHeigth = window.innerHeight;
 
-    if (window.innerWidth < 1600) {
-      this.collapseLegends = false;
-      this.collapseLayer = true;
-      this.collapseCharts = true;
-      this.currentZoom = 5.3;
+    if (window.innerWidth < 1480) {
+      this.currentZoom = 3;
     } else {
-      this.currentZoom = 6.8;
+      this.currentZoom = 7.75;
     }
 
     // Register of SVG icons

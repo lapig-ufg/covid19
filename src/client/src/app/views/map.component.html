@@ -5,8 +5,17 @@
 		<div class="container-drawer">
 
 			<div class="titleWindows">
-				{{titlesLayerBox.title}}
+				<div>{{titlesLayerBox.title}}</div>
+				<div class="space"></div>
+				<div class="btn-languages">
+					<button (click)="changeLanguage('pt-br')" class="color-buttons" mat-raised-button color="accent"
+							[ngStyle]="bntStylePOR">&nbsp;POR</button>
+					<button (click)="changeLanguage('en-us')" class="color-buttons" mat-raised-button color="warn"
+							[ngStyle]="bntStyleENG">&nbsp;ENG</button>
+				</div>
 			</div>
+
+
 
 			<div class="collapseLayer">
 				<mat-tab-group class="layersConteudo">
@@ -139,23 +148,24 @@
 				</div>
 			</div>
 
-			<div class="btn-languages">
-				<button (click)="changeLanguage('pt-br')" class="color-buttons" mat-raised-button color="accent"
-					[ngStyle]="bntStylePOR">&nbsp;POR</button>
-				<button (click)="changeLanguage('en-us')" class="color-buttons" mat-raised-button color="warn"
-					[ngStyle]="bntStyleENG">&nbsp;ENG</button>
-			</div>
-
 			<div class="controls">
 				<div matTooltip="Acessar camada de dados"
 					[class]="showDrawer ? 'btn-layers btn-layers-active' : 'btn-layers'" aria-label="Camadas de dados"
 					(click)="handleDrawer()">
-					<img width="30" height="30" src="../../assets/gif/btn_layers.svg" alt="Camadas de dados">
+					<img width="30" height="30" src="../../assets/img/btn_layers.svg" alt="">
 				</div>
 				<div matTooltip="Visualizar estatísticas"
 					[class]="showStatistics ? 'btn-layers btn-layers-active' : 'btn-layers'" aria-label="Estatísticas"
 					(click)="showStatistics = !showStatistics">
-					<img width="30" height="30" src="../../assets/gif/charts.svg" alt="Camadas de dados">
+					<img width="30" height="30" src="../../assets/img/charts.svg" alt="Estatísticas">
+				</div>
+				<div matTooltip="Mais Zoom"
+					 [class]="'btn-layers'" aria-label="Mais Zoom" (click)="zoomIn()">
+					<img width="30" height="30" src="../../assets/img/mais.svg" alt="Mais Zoom">
+				</div>
+				<div matTooltip="Menos Zoom"
+					 [class]="'btn-layers'" aria-label="Menos Zoom" (click)="zoomOut()">
+					<img width="30" height="30" src="../../assets/img/menos.svg" alt="Menos Zoom">
 				</div>
 			</div>
 
@@ -223,7 +233,7 @@
 						<mat-tab label="{{dataSource.title}}" >
 							<p-scrollPanel [style]="{width: '100%', height: '60vh'}" >
 								<div  class="container-ft">
-									<img src="../../assets/gif/fontes.png" alt="Fontes"/>
+									<img src="../../assets/img/fontes.png" alt="Fontes"/>
 									<h5>{{dataSource.technical_note_title}}</h5>
 									<p>
 										{{dataSource.technical_note}}

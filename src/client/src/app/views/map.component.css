@@ -96,10 +96,10 @@ ngb-highlight .ngb-highlight:first-child {
 	height: 24px;
 }
 
-.ol-zoom-in,
-.ol-zoom-out {
-	background-color: rgba(0, 0, 0, 0.5) !important;
-}
+/*.ol-zoom-in,*/
+/*.ol-zoom-out {*/
+/*	background-color: rgba(0, 0, 0, 0.5) !important;*/
+/*}*/
 
 .card-header {
 	padding: 10px;
@@ -924,9 +924,6 @@ mat-select {
 }
 
 .btn-languages {
-	position: absolute;
-	right: 2%;
-	top: 2%;
 	border-radius: 10px;
 	z-index: 1000;
 }
@@ -1103,8 +1100,8 @@ mat-select {
 
 .container-resumo {
 	position: absolute;
-	top: 7%;
-	right: 1%;
+	top: 2%;
+	right: 0.7%;
 	z-index: 2200000;
 	width: 24%;
 }
