@@ -16,11 +16,13 @@ module.exports = function (app) {
     };
 
     Controller.getData = function (request, response) {
+        self.response = null;
         self.response = response;
         cliente.query(summary.query(), self.handleSummary);
     };
 
     Controller.lastUpdate = function (request, response) {
+        self.response = null;
         self.response = response;
         cliente.query(summary.queryLastUpdate(), self.handleSummary);
     };
