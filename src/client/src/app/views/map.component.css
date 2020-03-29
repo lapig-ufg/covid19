@@ -75,13 +75,26 @@ ngb-highlight .ngb-highlight:first-child {
 
 }
 
-#map-info .card table {
-	margin: 10px;
+#map-info{
+	border-radius: 10px;
+	width: 100%;
+}
+
+#map-info .card-text{
+	padding-bottom: 5px;
+	padding-top: 5px;
+	border-top-left-radius: 10px!important;
+	border-top-right-radius: 10px!important;
+}
+
+#map-info .card table  {
+	margin: 20px;
 }
 
 #map-info table tr th,
 #map-info table tr td {
-	padding-left: 10px !important;
+	padding-left: 15px !important;
+	padding-right:15px !important;
 }
 
 
@@ -93,7 +106,7 @@ ngb-highlight .ngb-highlight:first-child {
 #map-info .card-body p.card-text {
 	background: #4e1010e7 !important;
 	color: #fff !important;
-	height: 24px;
+	height: 36px;
 }
 
 /*.ol-zoom-in,*/
@@ -182,8 +195,8 @@ ngb-highlight .ngb-highlight:first-child {
 }
 
 .layersConteudo {
-	max-height: 500px;
-	overflow: auto;
+	max-height: 520px;
+	overflow: hidden !important;
 }
 
 

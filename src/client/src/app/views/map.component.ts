@@ -198,7 +198,7 @@ export class MapComponent implements OnInit {
   ) {
 
     this.projection = OlProj.get('EPSG:900913');
-    this.currentZoom = 7.75;
+    this.currentZoom = 7.6;
     this.layers = [];
 
     this.dataSeries = { timeseries: { label: "", chartResult: [] } };
@@ -1352,9 +1352,9 @@ export class MapComponent implements OnInit {
   onResize(event) {
     this.innerHeigth = window.innerHeight;
     if (window.innerWidth < 1480) {
-      this.currentZoom = 3;
+      this.currentZoom = 5.7;
     } else {
-      this.currentZoom = 7.75;
+      this.currentZoom = 7.6;
     }
 
     this.innerWidth = window.innerWidth;
@@ -1426,9 +1426,9 @@ export class MapComponent implements OnInit {
     this.innerHeigth = window.innerHeight;
 
     if (window.innerWidth < 1480) {
-      this.currentZoom = 3;
+      this.currentZoom = 5.7;
     } else {
-      this.currentZoom = 7.75;
+      this.currentZoom = 7.6;
     }
 
     // Register of SVG icons
