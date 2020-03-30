@@ -19,7 +19,7 @@
 							 <p class="card-text">{{infodata.nome}} - {{infodata.uf}}</p>
 							 <table>
 								 <tbody>
-								 <tr>
+								 <!-- <tr>
 									 <th>Código do Município: </th>
 									 <td>{{infodata.cd_geocmu }}</td>
 								 </tr>
@@ -30,9 +30,9 @@
 								 <tr>
 									 <th>População </th>
 									 <td>{{infodata.pop_2019}}</td>
-								 </tr>
+								 </tr> -->
 								 <tr>
-									 <th>Quantidade de Confirmados: </th>
+									 <th>Confirmados: </th>
 									 <td>{{infodata.confirmados}}</td>
 								 </tr>
 								 </tbody>
@@ -207,8 +207,8 @@
 					</p-scrollPanel>
 				</mat-tab>
 		</mat-tab> 
-		<!-- <mat-tab  label = "Ajuda" > 
-			Conteúdo 3 
-		</mat-tab>  -->
+		<mat-tab  label = "Ajuda" > 
+			<img width="100%" src="../../../assets/img/ajuda_covid_mobile.png" />
+		</mat-tab> 
 </mat-tab-group >
 </div>
