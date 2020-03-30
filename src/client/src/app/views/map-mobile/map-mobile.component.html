@@ -1,6 +1,6 @@
 <div style="height: 100%">
 <nav class="barra-titulo" >
-	<div class="row">
+	<div class="row" style="margin-left: 0.8%; margin-right: 0.8%">
 		<div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6" style="text-align: left; align-self: center">
 				<img width="70%" src="../../../assets/logo/logo_covidgo_mobile.png" alt="Covid-19"/>
 		</div>
@@ -19,7 +19,7 @@
 							 <p class="card-text">{{infodata.nome}} - {{infodata.uf}}</p>
 							 <table>
 								 <tbody>
-								 <tr>
+								 <!-- <tr>
 									 <th>Código do Município: </th>
 									 <td>{{infodata.cd_geocmu }}</td>
 								 </tr>
@@ -30,9 +30,9 @@
 								 <tr>
 									 <th>População </th>
 									 <td>{{infodata.pop_2019}}</td>
-								 </tr>
+								 </tr> -->
 								 <tr>
-									 <th>Quantidade de Confirmados: </th>
+									 <th>Confirmados: </th>
 									 <td>{{infodata.confirmados}}</td>
 								 </tr>
 								 </tbody>
@@ -130,7 +130,7 @@
 		</mat-tab> 
 		<mat-tab  label = "Total"  style="overflow-x: hidden"> 
 				<div class="resumo-subtitle-card">
-						<h1 class="resumo-subtitle">Casos no estado de Goiás</h1>
+						<h1 class="resumo-subtitle">Casos no Estado de Goiás</h1>
 						<p style="font-size: 0.8rem">Última atualização em  {{lastUpdate.data}}</p>
 						<p style="font-size: 0.8rem">Fonte: Secretaria de Saúde do Estado de Goiás</p>
 				</div>
@@ -154,7 +154,7 @@
 				</div>
 			</div>
 		</mat-tab> 
-		<mat-tab  label = "Municípios" > 
+		<mat-tab  (click)="handleAnalytics('charts', 'dados_oficiais', 'Municípios')" label = "Municípios" >
 				<p-scrollPanel [style]="{width: '100%', height: '80vh'}">
 						<p-table [value]="chartResultCities.series">
 							<ng-template pTemplate="header">
@@ -207,8 +207,8 @@
 					</p-scrollPanel>
 				</mat-tab>
 		</mat-tab> 
-		<!-- <mat-tab  label = "Ajuda" > 
-			Conteúdo 3 
-		</mat-tab>  -->
+		<mat-tab  label = "Ajuda" > 
+			<img width="100%" src="../../../assets/img/ajuda_covid_mobile.png" />
+		</mat-tab> 
 </mat-tab-group >
 </div>

@@ -35,6 +35,8 @@ import MaskFilter from 'ol-ext/filter/Mask';
 import MultiPolygon from 'ol/geom/MultiPolygon';
 import {defaults as defaultControls, Control} from 'ol/control';
 
+import{GoogleAnalyticsService} from '../services/google-analytics.service';
+
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
   fromObject: {
@@ -194,11 +196,12 @@ export class MapComponent implements OnInit {
     private _service: SearchService,
     public dialog: MatDialog,
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    public googleAnalyticsService: GoogleAnalyticsService
   ) {
 
     this.projection = OlProj.get('EPSG:900913');
-    this.currentZoom = 7.75;
+    this.currentZoom = 7.6;
     this.layers = [];
 
     this.dataSeries = { timeseries: { label: "", chartResult: [] } };
@@ -268,7 +271,7 @@ export class MapComponent implements OnInit {
     this.language = 'pt-br';
 
     this.styleSelected = {
-      'background-color': '#e60e0e'
+      'background-color': '#ec7a18'
     };
 
     this.styleDefault = {
@@ -415,6 +418,7 @@ export class MapComponent implements OnInit {
       this.viewWidth = this.viewWidth + 1;
       this.viewWidthMobile = this.viewWidthMobile + 1;
     }
+    this.googleAnalyticsService.eventEmitter("changeTab", "charts", this.changeTabSelected);
 
   }
 
@@ -430,6 +434,9 @@ export class MapComponent implements OnInit {
       this.updateCharts();
       this.updateDescriptor();
     }
+
+    this.googleAnalyticsService.eventEmitter("changeLanguage", "lang", lang);
+
   }
 
   private setStylesLangButton() {
@@ -508,7 +515,7 @@ export class MapComponent implements OnInit {
 
         let x = [{
           ticks: {
-            autoskip: true,
+            autoskip: false,
             autoSkipPadding: 20
           }
         }]
@@ -633,7 +640,7 @@ export class MapComponent implements OnInit {
 
     this.updateExtent();
     this.updateSourceAllLayer();
-
+    this.googleAnalyticsService.eventEmitter("updateRegion", "search_box", this.valueRegion);
   }
 
   private getResolutions(projection) {
@@ -1036,6 +1043,7 @@ export class MapComponent implements OnInit {
     let source_layers = this.LayersTMS[layer.value].getSource();
     source_layers.setUrls(this.parseUrls(layer));
     source_layers.refresh();
+
   }
 
   baseLayerChecked(base, e) {
@@ -1094,6 +1102,7 @@ export class MapComponent implements OnInit {
     } else if (this.utfgridsource) {
       this.utfgridlayer.setVisible(false);
     }
+    this.googleAnalyticsService.eventEmitter("handleInteraction", "geojson", 'casos-covid');
 
   }
 
@@ -1115,6 +1124,8 @@ export class MapComponent implements OnInit {
     this.LayersTMS[layer.selectedType].setVisible(layer.visible);
     this.updateSummary();
     this.ultimaAtualizacao();
+    this.googleAnalyticsService.eventEmitter("changeVisibility", "camadaDado", layer.label);
+
 
   }
 
@@ -1352,9 +1363,9 @@ export class MapComponent implements OnInit {
   onResize(event) {
     this.innerHeigth = window.innerHeight;
     if (window.innerWidth < 1480) {
-      this.currentZoom = 3;
+      this.currentZoom = 5.7;
     } else {
-      this.currentZoom = 7.75;
+      this.currentZoom = 7.6;
     }
 
     this.innerWidth = window.innerWidth;
@@ -1366,10 +1377,17 @@ export class MapComponent implements OnInit {
 
   zoomIn(){
     this.map.getView().setZoom(this.map.getView().getZoom() + 0.7)
+    this.googleAnalyticsService.eventEmitter("controll", "zomm", "zoomin");
   }
 
   zoomOut(){
     this.map.getView().setZoom(this.map.getView().getZoom() - 0.7)
+    this.googleAnalyticsService.eventEmitter("controll", "zomm", "zoomout");
+  }
+
+  handleAnalytics(eventName, eventCategory, eventAction){
+    this.googleAnalyticsService.eventEmitter(eventName, eventCategory, eventAction);
+
   }
 
   ngOnInit() {
@@ -1426,9 +1444,9 @@ export class MapComponent implements OnInit {
     this.innerHeigth = window.innerHeight;
 
     if (window.innerWidth < 1480) {
-      this.currentZoom = 3;
+      this.currentZoom = 5.7;
     } else {
-      this.currentZoom = 7.75;
+      this.currentZoom = 7.6;
     }
 
     // Register of SVG icons

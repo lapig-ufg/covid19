@@ -1,6 +1,7 @@
 import {Component, Injectable, OnInit, Inject} from '@angular/core';
 import { SearchService, MapComponent } from '../map.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import{GoogleAnalyticsService} from '../../services/google-analytics.service';
 
 import {map} from 'rxjs/operators';
 import {HttpClient, HttpParams} from '@angular/common/http';
@@ -34,10 +35,15 @@ export class DialogMobile {
 
   constructor(
     public dialogRef: MatDialogRef<DialogMobile>,
+    public googleAnalyticsService: GoogleAnalyticsService,
     @Inject(MAT_DIALOG_DATA) public data) {}
 
   onNoClick(): void {
     this.dialogRef.close();
   }
+  handleAnalytics(eventName, eventCategory, eventAction){
+    this.googleAnalyticsService.eventEmitter(eventName, eventCategory, eventAction);
+  }
+
 
 }
