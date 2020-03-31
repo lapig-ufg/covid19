@@ -9,7 +9,7 @@ var csvRows = []
 var csvFilepath = 'estados_casos.csv'
 
 const lastDateQuery = 'SELECT max(data) AS last_date FROM casos_estados'
-const insertRow = 'INSERT INTO casos_estados(ordem_dia, data, cd_geouf,	uf,	obitos,	novos_casos, total_casos, prop_total_casos,	total_casos_por1mh) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING gid'
+const insertRow = 'INSERT INTO casos_estados(ordem_dia, data, cd_geouf,	uf,	obitos,	novos_casos, total_casos) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING gid'
 
 fs.createReadStream(csvFilepath)
 	.pipe(csv())
@@ -35,7 +35,7 @@ fs.createReadStream(csvFilepath)
                 var rowDate = new Date(row.data)
                 
                 /* for initial population*/ 
-                // var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.uf, row.obitos, row.novos_casos, row.total_casos, row.prop_total_casos, row.total_casos_por1mh] 
+                // var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.uf, row.obitos, row.novos_casos, row.total_casos] 
 		  		// 	const res = await client.query(insertRow, rowValues)
 
 		    	if (rowDate > lastDate) {
@@ -45,7 +45,7 @@ fs.createReadStream(csvFilepath)
 					}
 					
 					
-			    	var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.uf, row.obitos, row.novos_casos, row.total_casos, row.prop_total_casos, row.total_casos_por1mh] 
+			    	var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.uf, row.obitos, row.novos_casos, row.total_casos] 
 		  			const res = await client.query(insertRow, rowValues)
 		  			console.log(res.rowCount + ' inserted.')
 		    	} else {
