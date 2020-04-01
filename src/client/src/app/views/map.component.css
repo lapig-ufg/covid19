@@ -145,7 +145,7 @@ ngb-highlight .ngb-highlight:first-child {
 	position: absolute;
 	left: 2%;
 	/*bottom: 2%;*/
-	/*height: 90%;*/
+	height: 90%;
 	min-width: 320px;
 	top: 21.5%;
 	width: 43vh;
@@ -153,7 +153,7 @@ ngb-highlight .ngb-highlight:first-child {
 	color: #d6d2ce;
 	text-align: left;
 	z-index: 1000;
-	max-height: 690px;
+	max-height: 800px;
 	border-radius: 10px;
 	overflow: hidden;
 	/*border: 1px solid #808080;*/
@@ -195,7 +195,7 @@ ngb-highlight .ngb-highlight:first-child {
 }
 
 .layersConteudo {
-	max-height: 520px;
+	max-height: 800px;
 	overflow: hidden !important;
 }
 
@@ -365,6 +365,8 @@ h6 {
 	font-size: 1.9vh;
 	display: flex;
 	align-items: center;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
 }
 
 .title-atlas {
@@ -805,22 +807,19 @@ mat-select {
 	color: #ffff !important;
 }
 
-.custombar2 .ui-scrollpanel-wrapper {
-	border-right: 9px solid #757575;
-	border-bottom: 9px solid #757575;
+::ng-deep .custom .ui-scrollpanel-wrapper {
+    border-right: 9px solid #f4f4f4; 
 }
 
-.custombar2 .ui-scrollpanel-bar {
-	background-color: rgb(199, 104, 104);
-	border-radius: 0;
-	opacity: 1;
-	transition: background-color .3s;
+::ng-deep .custom .ui-scrollpanel-bar {
+    background-color: #d21919; 
+    opacity: 1; 
+    transition: background-color .3s; 
 }
 
-.custombar2:hover .ui-scrollpanel-bar {
-	background-color: rgb(165, 70, 70);
+::ng-deep .custom .ui-scrollpanel-bar:hover {
+    background-color: #a11313;
 }
-
 :host /deep/ .ui-accordion .ui-accordion-header:not(.ui-state-disabled).ui-state-active a {
 	text-decoration: none;
 	background-color: #4e0b0b !important;
@@ -1019,10 +1018,9 @@ mat-select {
 	margin-left: 117px;
 	transition: 0.3s;
 	overflow: hidden;
-	top: 29%;
+	top: 18%;
 	min-width: 461px;
-	overflow: hidden;
-	height: 54vh;
+	height: 78%;
 	border-radius: 20px;
 }
 
@@ -1030,7 +1028,7 @@ mat-select {
 .controls {
 	position: absolute;
 	left: 21px;
-	top: 44%;
+	top: 39%;
 	z-index: 100000;
 	padding: 14px;
 	border-radius: 10px;
@@ -1060,6 +1058,7 @@ mat-select {
 	padding: 20px;
 	border-radius: 10px;
 	transition: 0.3s;
+	height: 100%;
 }
 
 .close-drawer {
@@ -1184,4 +1183,90 @@ mat-select {
 	margin: 4px;
 	padding-top: 5px;
 	font-size: 2em;
+}
+
+img[usemap], map area{
+	outline: none;
+}
+
+.panel-layers{
+	max-height: 100%;
+}
+
+.layer_dados{
+	margin-bottom: 10%;
+}
+
+@media screen and (max-width: 1080px) {
+
+}
+
+@media screen and (max-width: 1050px) {
+
+}
+
+@media screen and (max-width: 1024px) {
+
+}
+
+@media screen and (max-width: 1024px) {
+	.controls{
+		tep:20%;
+	}
+	.layer-sidenav {
+		width: 47vh;
+		top: 20%;
+		min-width: 200px;
+		height: 50vh;
+	}
+
+}
+
+@media screen and (max-width: 991px) {
+
+
+}
+
+@media screen and (max-width: 900px) {
+
+
+}
+
+@media screen and (max-width: 800px) {
+
+}
+@media screen and (max-width: 736px) {
+
+}
+
+@media screen and (max-width: 667px) {
+
+}
+
+@media screen and (max-width: 640px) {
+
+}
+
+@media screen and (max-width: 600px) {
+
+}
+
+@media screen and (max-width: 568px) {
+
+}
+
+@media screen and (max-width: 480px) {
+
+}
+
+@media screen and (max-width: 414px) {
+
+}
+
+@media screen and (max-width: 384px) {
+
+
+}
+@media screen and (max-width: 320px) {
+
 }

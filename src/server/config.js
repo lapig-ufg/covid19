@@ -23,7 +23,6 @@ module.exports = function (app) {
 			// "password": 'postgres',
 			"password": 'covid19123',
 			// "port": 5432,
-			// "port": 5433,
 			"port": 5434,
 			"debug": true
 		},
@@ -34,6 +33,8 @@ module.exports = function (app) {
 		"lapig-maps": 'http://maps.lapig.iesa.ufg.br/time-series/MOD13Q1_NDVI/values?'
 
 	};
+
+	
 
 	if (process.env.NODE_ENV == 'prod') {
 		config['dbpath'] = "/data/catalog/Ocultos/d-pat.sqlite"

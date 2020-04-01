@@ -214,8 +214,8 @@ body .ui-tabview .ui-tabview-panels {
 }
 
 .layersConteudo {
-	max-height: 702px;
-	overflow: auto;
+	max-height: 1500px;
+	/* overflow: auto; */
 }
 
 /*.collapseLayer {
