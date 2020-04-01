@@ -35,6 +35,7 @@ fs.createReadStream(csvFilepath)
 
             var newLastDate = undefined
 
+
             for(i in csvRows) {
                 var row = csvRows[i]
                 var rowDate = new Date(row.data)
@@ -45,9 +46,10 @@ fs.createReadStream(csvFilepath)
                         newLastDate = row.data
 					}
 					
-					if(row.suspeitos == "") row.suspeitos = null
-					if(row.obitos == "") row.obitos = null
-					
+					if(row.confirmados == '') row.confirmados = null
+					if(row.suspeitos == '') row.suspeitos = null
+					if(row.obitos == '') row.obitos = null
+
                     var rowValues = [row.cd_geocmu, row.data, row.confirmados, row.suspeitos, row.obitos] 
                     const res = await client.query(insertRow, rowValues)
                     console.log(res.rowCount + ' inserted.')

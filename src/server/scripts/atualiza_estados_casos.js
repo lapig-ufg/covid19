@@ -44,7 +44,6 @@ fs.createReadStream(csvFilepath)
 			    		newLastDate = row.data
 					}
 					
-					
 			    	var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.estados, row.obitos, row.novos_casos, row.total_casos] 
 		  			const res = await client.query(insertRow, rowValues)
 		  			console.log(res.rowCount + ' inserted.')
