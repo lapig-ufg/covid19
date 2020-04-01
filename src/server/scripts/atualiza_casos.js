@@ -37,7 +37,6 @@ fs.createReadStream(csvFilepath)
 
             var newLastDate = undefined
 
-
             for(i in csvRows) {
                 var row = csvRows[i]
 				var rowDate = new Date(row.data)
@@ -45,7 +44,7 @@ fs.createReadStream(csvFilepath)
 
                 if (rowDate > lastDate || rowID > lastid) {
                     
-                    if (newLastDate == undefined || newLastDate < rowDate) {                        
+                    if (newLastDate == undefined || new Date(newLastDate) < rowDate) {                        
                         newLastDate = row.data
 					}
 					
