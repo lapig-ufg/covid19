@@ -32,7 +32,6 @@ fs.createReadStream(csvFilepath)
             
             const lastDateResul = await client.query(lastDateQuery)
             const lastDate = lastDateResul.rows[0]['last_date']
-
             var newLastDate = undefined
 
 

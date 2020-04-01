@@ -17,54 +17,63 @@ fs.createReadStream(csvFilepath)
 		csvRows.push(row)
 	})
 	.on('end', () => {
-		
+
 		(async () => {
-  
-		  const client = await pool.connect()
-		  try {
-            await client.query('BEGIN')
-            await client.query('SET datestyle = dmy')
-		    
-		    const lastDateResul = await client.query(lastDateQuery)
-		    const lastDate = lastDateResul.rows[0]['last_date']
 
-		    var newLastDate = undefined
+			const client = await pool.connect()
+			try {
+				await client.query('BEGIN')
+				await client.query('SET datestyle = dmy')
 
-		    for(i in csvRows) {
-		    	var row = csvRows[i]
-                var rowDate = new Date(row.data)
-                
-                /* for initial population*/ 
-                // var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.estados, row.obitos, row.novos_casos, row.total_casos] 
-		  		// 	const res = await client.query(insertRow, rowValues)
+				const lastDateResul = await client.query(lastDateQuery)
+				const lastDate = lastDateResul.rows[0]['last_date']
 
-		    	if (rowDate > lastDate) {
-			    	
-			    	if (newLastDate == undefined || newLastDate < rowDate) {			    		
-			    		newLastDate = row.data
+				var newLastDate = undefined
+
+				for (i in csvRows) {
+					var row = csvRows[i]
+					var rowDate = new Date(toISOFormat(row.data))
+
+					/* for initial population*/
+					//          var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.estados, row.obitos, row.novos_casos, row.total_casos] 
+					// const res = await client.query(insertRow, rowValues)
+
+					if (rowDate > lastDate) {
+
+						if (newLastDate == undefined || newLastDate < rowDate) {
+							newLastDate = row.data
+						}
+
+						var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.estados, row.obitos, row.novos_casos, row.total_casos]
+						const res = await client.query(insertRow, rowValues)
+						console.log(res.rowCount + ' inserted.')
+					} else {
+						console.log('Duplicated register ignored.')
 					}
-					
-			    	var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.estados, row.obitos, row.novos_casos, row.total_casos] 
-		  			const res = await client.query(insertRow, rowValues)
-		  			console.log(res.rowCount + ' inserted.')
-		    	} else {
-		    		console.log('Duplicated register ignored.')
-		    	}
 
-		    }
+				}
 
-		    console.log((newLastDate != undefined), newLastDate)
+				console.log((newLastDate != undefined), newLastDate)
 
-		    console.log("Doing commit")
-		    await client.query('COMMIT')
+				console.log("Doing commit")
+				await client.query('COMMIT')
 
-		  } catch (e) {
-		    console.log("Doing rollback")
-		    await client.query('ROLLBACK')
-		    throw e
-		  } finally {
-		    client.release()
-		  }
+			} catch (e) {
+				console.log("Doing rollback")
+				await client.query('ROLLBACK')
+				throw e
+			} finally {
+				client.release()
+			}
 		})().catch(e => console.error(e.stack))
 
-});	
+	});
+
+function toISOFormat(dateTimeString) {
+
+	var date1 = dateTimeString.split('/')
+	var newDate = date1[2] + '-' + date1[1] + '-' + date1[0];
+
+	// Retornamos a data formatada em um padrão compatível com ISO:
+	return newDate;
+}
