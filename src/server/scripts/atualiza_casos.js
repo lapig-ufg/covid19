@@ -44,7 +44,7 @@ fs.createReadStream(csvFilepath)
 
                 if (rowDate > lastDate || rowID > lastid) {
                     
-                    if (newLastDate == undefined || new Date(newLastDate) < rowDate) {                        
+                    if (newLastDate == undefined || new Date(newLastDate).getTime() < rowDate.getTime()) {                        
                         newLastDate = row.data
 					}
 					
