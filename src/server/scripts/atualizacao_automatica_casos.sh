@@ -12,9 +12,10 @@ sleep 2
 
 python2 download_planilha_casos.py
 
-mv 1I4BM9x3CKNFAwLlm_EN3RrLOBhLZK_M-SWFPmLEbohY-worksheet0.csv casos.csv
+mv 1mlyQIUbGKB2J3UIQrCPxAORaY5HYAPlMgY61IMCu4JY-worksheet0.csv casos.csv
 
-mv 1onQ_CDx2359c-ZTsmcyOm9f77JJM2zDgNXuK2VV-Kkw-worksheet0.csv estados_casos.csv
+mv 163Agr2r4r4evn74SUkVojcdg-hq6urb0qcCMk5Pdknw-worksheet0.csv estados_casos.csv
+
 clear
 echo -n -e "Planilha baixada com sucesso!"
 sleep 2
@@ -24,6 +25,7 @@ sleep 2
 clear
 echo -n -e "Populando banco de dados!"
 sleep 2
+
 node atualiza_casos.js
 node atualiza_estados_casos.js
 
@@ -34,8 +36,22 @@ clear
 echo -n -e "Excluindo Cache!"
 sleep 2
 
+if [[ -e "$BASEDIR/covid19_municipios_casos_utfgrid-tiles" ]] || [[ -e "$BASEDIR/covid19_municipios_casos-tiles" ]];then
+
+clear
+echo "Os diretorios existem, apagando!"
+sleep 2
+
 cd $BASEDIR
 
-rm -r covid19_municipios_casos_utfgrid-tiles/
+rm -rfv covid19_municipios_casos_utfgrid-tiles/
 
-rm -r covid19_municipios_casos-tiles/
+rm -rfv covid19_municipios_casos-tiles/
+
+else
+clear
+echo "Os diretorios nao existem!"
+sleep 2
+clear
+fi
+
