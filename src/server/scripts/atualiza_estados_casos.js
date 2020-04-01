@@ -38,7 +38,7 @@ fs.createReadStream(csvFilepath)
 					//          var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.estados, row.obitos, row.novos_casos, row.total_casos] 
 					// const res = await client.query(insertRow, rowValues)
 
-					if (rowDate > lastDate) {
+					if (rowDate > lastDate ) {
 
 						if (newLastDate == undefined || newLastDate < rowDate) {
 							newLastDate = row.data
@@ -47,7 +47,7 @@ fs.createReadStream(csvFilepath)
 						var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.estados, row.obitos, row.novos_casos, row.total_casos]
 						const res = await client.query(insertRow, rowValues)
 						console.log(res.rowCount + ' inserted.')
-					} else {
+					} else  {
 						console.log('Duplicated register ignored.')
 					}
 
