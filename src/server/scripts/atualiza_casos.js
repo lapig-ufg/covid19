@@ -2,7 +2,7 @@ const { Pool, Client } = require('pg')
 const csv = require('csv-parser');
 const fs = require('fs');
 
-var config = require('../configScript.js')()
+var config = require('../config.js')()
 var pool = new Pool(config['pg'])
 
 var csvRows = []
@@ -43,10 +43,6 @@ fs.createReadStream(csvFilepath)
 				var rowID = new Number(row.id);
 
                 if (rowDate > lastDate || rowID > lastid) {
-                    
-                    if (newLastDate == undefined || new Date(newLastDate).getTime() < rowDate.getTime()) {                        
-                        newLastDate = row.data
-					}
 					
 					if(row.confirmados == '') row.confirmados = null
 					if(row.suspeitos == '') row.suspeitos = null
@@ -56,12 +52,16 @@ fs.createReadStream(csvFilepath)
                     const res = await client.query(insertRow, rowValues)
                     console.log(res.rowCount + ' inserted.')
                 } else {
-                    console.log('Duplicated register ignored.')
-                }
+                    // console.log('Duplicated register ignored.')
+				}
+				
+				if (newLastDate == undefined || new Date(newLastDate).getTime() < rowDate.getTime()) {  
+					newLastDate = row.data
+				}
 
-            }
-
-            console.log((newLastDate != undefined), newLastDate)
+			}
+			console.log('last update: ', lastDate)
+			
             if (newLastDate != undefined) {
                 await client.query(dropView)
                 await client.query(newView + "'" + newLastDate + "'")

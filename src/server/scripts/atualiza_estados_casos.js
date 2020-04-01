@@ -28,8 +28,6 @@ fs.createReadStream(csvFilepath)
 				const lastDateResul = await client.query(lastDateQuery)
 				const lastDate = lastDateResul.rows[0]['last_date']
 
-				var newLastDate = undefined
-
 				for (i in csvRows) {
 					var row = csvRows[i]
 					var rowDate = new Date(toISOFormat(row.data))
@@ -40,10 +38,6 @@ fs.createReadStream(csvFilepath)
 
 					if (rowDate > lastDate ) {
 
-						if (newLastDate == undefined || newLastDate < rowDate) {
-							newLastDate = row.data
-						}
-
 						var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.estados, row.obitos, row.novos_casos, row.total_casos]
 						const res = await client.query(insertRow, rowValues)
 						console.log(res.rowCount + ' inserted.')
@@ -53,7 +47,7 @@ fs.createReadStream(csvFilepath)
 
 				}
 
-				console.log((newLastDate != undefined), newLastDate)
+				console.log('last update: ', lastDate)
 
 				console.log("Doing commit")
 				await client.query('COMMIT')
