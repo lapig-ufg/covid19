@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, HostListener, Injectable, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, HostListener, Injectable, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -33,10 +33,10 @@ import { MetadataComponent } from './metadata/metadata.component';
 import CropFilter from 'ol-ext/filter/Crop';
 import MaskFilter from 'ol-ext/filter/Mask';
 import MultiPolygon from 'ol/geom/MultiPolygon';
-import {defaults as defaultControls, Control} from 'ol/control';
+import { defaults as defaultControls, Control } from 'ol/control';
 
-import{GoogleAnalyticsService} from '../services/google-analytics.service';
-import {AjudaComponent} from "./ajuda/ajuda.component";
+import { GoogleAnalyticsService } from '../services/google-analytics.service';
+import { AjudaComponent } from "./ajuda/ajuda.component";
 
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
@@ -64,8 +64,7 @@ export class SearchService {
   selector: 'app-map',
   templateUrl: './map.component.html',
   providers: [SearchService],
-  styleUrls: ['./map.component.css']
-
+  styleUrls: ['./map.component.css'],
 })
 export class MapComponent implements OnInit {
   map: OlMap;
@@ -78,7 +77,7 @@ export class MapComponent implements OnInit {
   dataProjSeries: any;
   dataStates: any;
   dataCities: any;
-  dataSource:any;
+  dataSource: any;
   chartResultCities: any;
   chartResultCitiesIllegalAPP: any;
   chartResultCitiesIllegalRL: any;
@@ -135,10 +134,10 @@ export class MapComponent implements OnInit {
   isFilteredByState = false;
   selectedIndex: any;
   collapseLegends = false;
-  
+
   clickable = true;
-  clickableTitle:any;
-  
+  clickableTitle: any;
+
   infodata: any;
   infodataCampo: any;
   infodataMunicipio: any;
@@ -187,8 +186,8 @@ export class MapComponent implements OnInit {
   showStatistics: boolean;
   showDrawer: boolean;
 
-  summary:any;
-  lastUpdate:any;
+  summary: any;
+  lastUpdate: any;
 
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
 
@@ -363,20 +362,20 @@ export class MapComponent implements OnInit {
 
     if (this.descriptor.maskUrl) {
       this.http.get(this.descriptor.maskUrl).subscribe(maskGeoJson => {
-        var features = new GeoJSON().readFeatures(maskGeoJson,{
+        var features = new GeoJSON().readFeatures(maskGeoJson, {
           dataProjection: 'EPSG:4326',
           featureProjection: 'EPSG:3857'
         });
 
-        var filter = new MaskFilter({ feature: features[0], inner:false, fill: new Fill({ color:[0,0,0,0.55] }) })
+        var filter = new MaskFilter({ feature: features[0], inner: false, fill: new Fill({ color: [0, 0, 0, 0.55] }) })
         if (this.descriptor.maskOption == 'crop') {
-          filter = new CropFilter({ feature: features[0], inner:false })
+          filter = new CropFilter({ feature: features[0], inner: false })
         }
 
         this.map.addFilter(filter)
-        
+
       });
-    } 
+    }
 
   }
 
@@ -482,7 +481,7 @@ export class MapComponent implements OnInit {
     }
   }
 
-  private updateSource(){
+  private updateSource() {
     let sourceUrl = '/service/indicators/source' + this.getServiceParams();
 
     this.http.get(sourceUrl).subscribe(result => {
@@ -563,7 +562,7 @@ export class MapComponent implements OnInit {
 
     this.http.get(projectionURL).subscribe(result => {
 
-    this.dataProjSeries = result;
+      this.dataProjSeries = result;
 
       for (let graphic of this.dataProjSeries.timeseries.chartResult) {
 
@@ -580,7 +579,7 @@ export class MapComponent implements OnInit {
 
         graphic.options.scales.yAxes = y;
 
-    this.updateSource();
+        this.updateSource();
         let x = [{
           ticks: {
             autoskip: true,
@@ -606,8 +605,8 @@ export class MapComponent implements OnInit {
 
     let statesURL = '/service/indicators/states' + this.getServiceParams();
     this.http.get(statesURL).subscribe(statesResult => {
-        this.dataStates = statesResult
-        this.optionsStates = statesResult['optionsStates'];
+      this.dataStates = statesResult
+      this.optionsStates = statesResult['optionsStates'];
     });
 
   }
@@ -715,7 +714,7 @@ export class MapComponent implements OnInit {
     let viewResolution = this.map.getView().getResolution();
 
 
-    var feature = this.map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+    var feature = this.map.forEachFeatureAtPixel(evt.pixel, function (feature) {
       return feature;
     });
 
@@ -725,8 +724,8 @@ export class MapComponent implements OnInit {
       this.clickable = true
       var properties = feature.getProperties();
       window.document.body.style.cursor = 'pointer';
-      
-      if(properties['label'] != undefined) {
+
+      if (properties['label'] != undefined) {
         this.clickableTitle = properties['label']
       }
 
@@ -734,7 +733,7 @@ export class MapComponent implements OnInit {
       this.clickableTitle = this.minireportText.label_clickable
       this.clickable = false
       window.document.body.style.cursor = 'auto';
-      
+
       let info = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
 
       if (info.visible) {
@@ -779,14 +778,14 @@ export class MapComponent implements OnInit {
     let coordinate = this.map.getEventCoordinate(evt.originalEvent);
     let viewResolution = this.map.getView().getResolution();
 
-    var feature = this.map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+    var feature = this.map.forEachFeatureAtPixel(evt.pixel, function (feature) {
       return feature;
     });
 
     if (feature) {
       var properties = feature.getProperties();
-      if(properties.lon != undefined && properties.lat != undefined) {
-        var redirectUrl = "https://www.google.com/maps/search/?api=1&query="+properties.lat+","+properties.lon
+      if (properties.lon != undefined && properties.lat != undefined) {
+        var redirectUrl = "https://www.google.com/maps/search/?api=1&query=" + properties.lat + "," + properties.lon
         window.open(redirectUrl, "_blank");
       }
     } else if (this.utfgridsource) {
@@ -892,10 +891,10 @@ export class MapComponent implements OnInit {
   private createMarkerLayer(layer) {
     var markerStyle = {
       'Point': new Style({
-                image: new Icon({
-                  src: layer.iconUrl
-                })
+        image: new Icon({
+          src: layer.iconUrl
         })
+      })
     };
 
     return new VectorLayer({
@@ -903,7 +902,7 @@ export class MapComponent implements OnInit {
         url: layer.geoJsonUrl,
         format: new GeoJSON()
       }),
-      style: function(feature) {
+      style: function (feature) {
         return markerStyle[feature.getGeometry().getType()]
       },
       visible: layer.visible
@@ -916,7 +915,7 @@ export class MapComponent implements OnInit {
 
     // layers
     for (let layer of this.layersTypes) {
-      
+
       if (layer.source == 'geojson') {
         this.LayersTMS[layer.value] = this.createMarkerLayer(layer);
       } else {
@@ -1342,7 +1341,7 @@ export class MapComponent implements OnInit {
     }
   }
 
-  private updateSummary(){
+  private updateSummary() {
     let sourceUrl = '/service/summary/data' + this.getServiceParams();
 
     this.http.get(sourceUrl).subscribe(result => {
@@ -1350,7 +1349,7 @@ export class MapComponent implements OnInit {
     });
   }
 
-  private ultimaAtualizacao(){
+  private ultimaAtualizacao() {
     let sourceUrl = '/service/summary/last-update' + this.getServiceParams();
 
     this.http.get(sourceUrl).subscribe(result => {
@@ -1376,22 +1375,22 @@ export class MapComponent implements OnInit {
     this.showDrawer = !this.showDrawer;
   }
 
-  zoomIn(){
+  zoomIn() {
     this.map.getView().setZoom(this.map.getView().getZoom() + 0.7)
     this.googleAnalyticsService.eventEmitter("controll", "zomm", "zoomin");
   }
 
-  zoomOut(){
+  zoomOut() {
     this.map.getView().setZoom(this.map.getView().getZoom() - 0.7)
     this.googleAnalyticsService.eventEmitter("controll", "zomm", "zoomout");
   }
 
-  handleAnalytics(eventName, eventCategory, eventAction){
+  handleAnalytics(eventName, eventCategory, eventAction) {
     this.googleAnalyticsService.eventEmitter(eventName, eventCategory, eventAction);
 
   }
 
-  openDialogAjuda(){
+  openDialogAjuda() {
     let dialogRef = this.dialog.open(AjudaComponent, {
       width: '90%',
       height: '90%'
@@ -1413,7 +1412,7 @@ export class MapComponent implements OnInit {
 
       for (let group of this.descriptor.groups) {
         for (let layer of group.layers) {
-          
+
           if (layer.id != 'satelite') {
             for (let type of layer.types) {
               if (type.source == 'geojson') {

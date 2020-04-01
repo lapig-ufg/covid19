@@ -24,6 +24,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
@@ -74,6 +75,7 @@ registerLocaleData(localePt);
     FieldsetModule,
     CardModule,
     LightboxModule,
+    ScrollingModule,
     ScrollPanelModule,
     PanelModule,
     AccordionModule,
