@@ -166,6 +166,10 @@
 					 [class]="'btn-layers'" aria-label="Menos Zoom" (click)="zoomOut()">
 					<img width="30" height="30" src="../../assets/img/menos.svg" alt="Menos Zoom">
 				</div>
+				<div matTooltip="Ajuda"
+					 [class]="'btn-layers'" aria-label="Menos Zoom" (click)="openDialogAjuda()" >
+					<img width="30" height="30" src="../../assets/img/ajuda.svg" alt="Ajuda">
+				</div>
 			</div>
 
 			<div *ngIf="showStatistics" id="positionCharts">

@@ -36,6 +36,7 @@ import MultiPolygon from 'ol/geom/MultiPolygon';
 import {defaults as defaultControls, Control} from 'ol/control';
 
 import{GoogleAnalyticsService} from '../services/google-analytics.service';
+import {AjudaComponent} from "./ajuda/ajuda.component";
 
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
@@ -1388,6 +1389,17 @@ export class MapComponent implements OnInit {
   handleAnalytics(eventName, eventCategory, eventAction){
     this.googleAnalyticsService.eventEmitter(eventName, eventCategory, eventAction);
 
+  }
+
+  openDialogAjuda(){
+    let dialogRef = this.dialog.open(AjudaComponent, {
+      width: '90%',
+      height: '90%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+    });
   }
 
   ngOnInit() {

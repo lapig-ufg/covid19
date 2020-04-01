@@ -50,7 +50,8 @@ import { MetadataComponent } from './views/metadata/metadata.component';
 import { GoogleAnalyticsService } from  './services/google-analytics.service'
 
 import { APP_BASE_HREF } from '@angular/common';
-import { MapMobileComponent, DialogMobile } from './views/map-mobile/map-mobile.component'; 
+import { MapMobileComponent, DialogMobile } from './views/map-mobile/map-mobile.component';
+import { AjudaComponent } from './views/ajuda/ajuda.component'; 
 
 registerLocaleData(localePt);
 
@@ -62,7 +63,8 @@ registerLocaleData(localePt);
     FileUploadComponent,
     MetadataComponent,
     MapMobileComponent,
-    DialogMobile
+    DialogMobile,
+    AjudaComponent
   ],
   imports: [
     TabViewModule,
@@ -100,7 +102,7 @@ registerLocaleData(localePt);
     RouterModule,
     NgbModule
   ],
-  entryComponents:[MetadataComponent, MapComponent, DialogMobile],
+  entryComponents:[MetadataComponent, MapComponent, DialogMobile, AjudaComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     DatePipe,

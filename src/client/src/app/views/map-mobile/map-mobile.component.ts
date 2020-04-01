@@ -24,7 +24,6 @@ export class MapMobileComponent extends MapComponent {
       console.log('The dialog was closed');
     });
   }
-
 }
 
 @Component({
@@ -35,15 +34,9 @@ export class DialogMobile {
 
   constructor(
     public dialogRef: MatDialogRef<DialogMobile>,
-    public googleAnalyticsService: GoogleAnalyticsService,
     @Inject(MAT_DIALOG_DATA) public data) {}
 
   onNoClick(): void {
     this.dialogRef.close();
   }
-  handleAnalytics(eventName, eventCategory, eventAction){
-    this.googleAnalyticsService.eventEmitter(eventName, eventCategory, eventAction);
-  }
-
-
 }
