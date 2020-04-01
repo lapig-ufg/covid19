@@ -35,7 +35,7 @@ fs.createReadStream(csvFilepath)
                 var rowDate = new Date(row.data)
                 
                 /* for initial population*/ 
-                // var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.uf, row.obitos, row.novos_casos, row.total_casos] 
+                // var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.estados, row.obitos, row.novos_casos, row.total_casos] 
 		  		// 	const res = await client.query(insertRow, rowValues)
 
 		    	if (rowDate > lastDate) {
@@ -45,7 +45,7 @@ fs.createReadStream(csvFilepath)
 					}
 					
 					
-			    	var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.uf, row.obitos, row.novos_casos, row.total_casos] 
+			    	var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.estados, row.obitos, row.novos_casos, row.total_casos] 
 		  			const res = await client.query(insertRow, rowValues)
 		  			console.log(res.rowCount + ' inserted.')
 		    	} else {
