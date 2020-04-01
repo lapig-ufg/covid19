@@ -52,7 +52,7 @@ fs.createReadStream(csvFilepath)
                     const res = await client.query(insertRow, rowValues)
                     console.log(res.rowCount + ' inserted.')
                 } else {
-                    // console.log('Duplicated register ignored.')
+                    console.log('Duplicated register ignored.')
 				}
 				
 				if (newLastDate == undefined || new Date(newLastDate).getTime() < rowDate.getTime()) {  
@@ -61,7 +61,7 @@ fs.createReadStream(csvFilepath)
 
 			}
 			console.log('last update: ', lastDate)
-			
+
             if (newLastDate != undefined) {
                 await client.query(dropView)
                 await client.query(newView + "'" + newLastDate + "'")
