@@ -19,7 +19,8 @@
 				<p-scrollPanel [style]="{width: '100%', height: '40vh', padding:'10px'}" styleClass="custom">
 					<mat-tab-group class="layersConteudo" dynamicHeight>
 						<mat-tab label="{{titlesLayerBox.label_data}}">
-							<p-scrollPanel [style]="{width: '100%', height: '65vh', padding:'10px'}" styleClass="panel-layers">
+							<p-scrollPanel [style]="{width: '100%', height: '65vh', padding:'10px'}"
+								styleClass="panel-layers">
 								<mat-accordion multi="true">
 									<div id="layer_dados">
 										<ng-template #rt let-r="result" let-t="term">
@@ -43,20 +44,21 @@
 													<h5 class="expansion-layer"><b>{{groups.label}}</b></h5>
 												</mat-expansion-panel-header>
 
-											<div class="layersContent" *ngFor="let layer of groups.layers">
-												<div style="display: flex">
-													<mat-checkbox class="example-margin"
-														(change)="changeVisibility(layer, $event)"
-														[checked]=layer.visible>
-														{{layer.label}}
-													</mat-checkbox>
-													<!-- <div class="space"></div>
+												<div class="layersContent" *ngFor="let layer of groups.layers">
+													<div style="display: flex">
+														<mat-checkbox class="example-margin"
+															(change)="changeVisibility(layer, $event)"
+															[checked]=layer.visible>
+															{{layer.label}}
+														</mat-checkbox>
+														<!-- <div class="space"></div>
 														<button *ngIf="layer.visible"  (click)="openDialogMetadata(layer)" classs="btn-info" mat-icon-button>
 															<mat-icon>info</mat-icon>
 														</button> -->
-												</div>
-												<div *ngIf="layer.visible" style="padding-left: 8%; padding-right: 8%">
-													<!--	 <mat-form-field style="width: 130px">
+													</div>
+													<div *ngIf="layer.visible"
+														style="padding-left: 8%; padding-right: 8%">
+														<!--	 <mat-form-field style="width: 130px">
 														<mat-label>{{descriptor.type}}</mat-label>
 														<mat-select (selectionChange)="changeVisibility(layer)"
 															[(value)]="layer.selectedType">
@@ -79,9 +81,10 @@
 															</mat-select>
 														</mat-form-field> 
 													</span>-->
-													<div *ngFor="let type of layer.types">
-														<img *ngIf="layer.selectedType === type.value"
-															[src]="type.urlLegend">
+														<div *ngFor="let type of layer.types">
+															<img *ngIf="layer.selectedType === type.value"
+																[src]="type.urlLegend">
+														</div>
 													</div>
 												</div>
 											</mat-expansion-panel>
@@ -110,6 +113,7 @@
 							</div>
 						</mat-tab>
 					</mat-tab-group>
+					</p-scrollPanel>
 			</div>
 
 		</div>
@@ -124,8 +128,10 @@
 					<img usemap="#logos" src="../../assets/logo/logos.png" alt="Logos" hidefocus="true" />
 
 					<map name="logos">
-						<area target="_self" alt="COVIDGOIÀS :: HOME" title="COVIDGOIÀS" href="https://covidgoias.ufg.br" coords="4,149,240,26" shape="rect">
-						<area target="_blank" alt="Acesse o site da UFG" title="UFG" href="https://www.ufg.br/" coords="250,24,520,149" shape="rect">
+						<area target="_self" alt="COVIDGOIÁS :: HOME" title="COVIDGOIÁS"
+							href="https://covidgoias.ufg.br" coords="4,149,240,26" shape="rect">
+						<area target="_blank" alt="Acesse o site da UFG" title="UFG" href="https://www.ufg.br/"
+							coords="250,24,520,149" shape="rect">
 					</map>
 				</div>
 			</div>
@@ -160,9 +166,9 @@
 					(click)="handleDrawer()">
 					<img width="30" height="30" src="../../assets/img/btn_layers.svg" alt="">
 				</div>
-<!--				<div matTooltip="Administração" [class]="'btn-layers'" aria-label="Área Administrativa" >-->
-<!--					<img width="30" height="30" src="../../assets/img/admin.svg" alt="Área Administrativa">-->
-<!--				</div>-->
+				<!--				<div matTooltip="Administração" [class]="'btn-layers'" aria-label="Área Administrativa" >-->
+				<!--					<img width="30" height="30" src="../../assets/img/admin.svg" alt="Área Administrativa">-->
+				<!--				</div>-->
 				<div matTooltip="Visualizar estatísticas"
 					[class]="showStatistics ? 'btn-layers btn-layers-active' : 'btn-layers'" aria-label="Estatísticas"
 					(click)="showStatistics = !showStatistics">
