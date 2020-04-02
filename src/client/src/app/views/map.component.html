@@ -19,28 +19,29 @@
 				<p-scrollPanel [style]="{width: '100%', height: '40vh', padding:'10px'}" styleClass="custom">
 					<mat-tab-group class="layersConteudo" dynamicHeight>
 						<mat-tab label="{{titlesLayerBox.label_data}}">
-							<mat-accordion multi="true">
-								<div id="layers_desmatamentos">
-									<ng-template #rt let-r="result" let-t="term">
-										<ngb-highlight [result]="r.nome" [term]="t"></ngb-highlight>
-									</ng-template>
-									<input id="typeahead-http" type="text" class="form-control searchRegion"
-										[class.is-invalid]="searchFailed" [(ngModel)]="valueRegion"
-										[ngbTypeahead]="search" placeholder="{{titlesLayerBox.search_placeholder}}"
-										(selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
-										[inputFormatter]="formatter" [value]="currentData" />
-									<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
-										(click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
-									<span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
-									<div class="invalid-feedback" *ngIf="searchFailed">
-										{{titlesLayerBox.search_failed}}</div>
+							<p-scrollPanel [style]="{width: '100%', height: '65vh', padding:'10px'}" styleClass="panel-layers">
+								<mat-accordion multi="true">
+									<div id="layer_dados">
+										<ng-template #rt let-r="result" let-t="term">
+											<ngb-highlight [result]="r.nome" [term]="t"></ngb-highlight>
+										</ng-template>
+										<input id="typeahead-http" type="text" class="form-control searchRegion"
+											[class.is-invalid]="searchFailed" [(ngModel)]="valueRegion"
+											[ngbTypeahead]="search" placeholder="{{titlesLayerBox.search_placeholder}}"
+											(selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
+											[inputFormatter]="formatter" [value]="currentData" />
+										<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
+											(click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
+										<span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
+										<div class="invalid-feedback" *ngIf="searchFailed">
+											{{titlesLayerBox.search_failed}}</div>
 
-									<div *ngFor="let groups of descriptor.groups" style="margin-bottom: 10px">
-										<mat-expansion-panel [expanded]=groups.group_expanded>
-											<mat-expansion-panel-header [collapsedHeight]="'50px'"
-												[expandedHeight]="'50px'" class="expansion-header-layer">
-												<h5 class="expansion-layer"><b>{{groups.label}}</b></h5>
-											</mat-expansion-panel-header>
+										<div *ngFor="let groups of descriptor.groups" style="margin-bottom: 10px">
+											<mat-expansion-panel [expanded]=groups.group_expanded>
+												<mat-expansion-panel-header [collapsedHeight]="'50px'"
+													[expandedHeight]="'50px'" class="expansion-header-layer">
+													<h5 class="expansion-layer"><b>{{groups.label}}</b></h5>
+												</mat-expansion-panel-header>
 
 											<div class="layersContent" *ngFor="let layer of groups.layers">
 												<div style="display: flex">
@@ -83,12 +84,12 @@
 															[src]="type.urlLegend">
 													</div>
 												</div>
-											</div>
-
-										</mat-expansion-panel>
+											</mat-expansion-panel>
+										</div>
 									</div>
-								</div>
-							</mat-accordion>
+								</mat-accordion>
+								<div style="height: 20vh"></div>
+							</p-scrollPanel>
 						</mat-tab>
 						<mat-tab label="{{titlesLayerBox.label_mapabase}}">
 							<div class="form-group baseMap" *ngFor="let basemap of basemapsNames">
@@ -109,7 +110,6 @@
 							</div>
 						</mat-tab>
 					</mat-tab-group>
-				</p-scrollPanel>
 			</div>
 
 		</div>
@@ -121,7 +121,12 @@
 
 			<div class="dpat-logo">
 				<div class="container-logos">
-					<img src="../../assets/logo/logos.png" alt="Logos" />
+					<img usemap="#logos" src="../../assets/logo/logos.png" alt="Logos" hidefocus="true" />
+
+					<map name="logos">
+						<area target="_self" alt="COVIDGOIÀS :: HOME" title="COVIDGOIÀS" href="https://covidgoias.ufg.br" coords="4,149,240,26" shape="rect">
+						<area target="_blank" alt="Acesse o site da UFG" title="UFG" href="https://www.ufg.br/" coords="250,24,520,149" shape="rect">
+					</map>
 				</div>
 			</div>
 
@@ -155,6 +160,9 @@
 					(click)="handleDrawer()">
 					<img width="30" height="30" src="../../assets/img/btn_layers.svg" alt="">
 				</div>
+<!--				<div matTooltip="Administração" [class]="'btn-layers'" aria-label="Área Administrativa" >-->
+<!--					<img width="30" height="30" src="../../assets/img/admin.svg" alt="Área Administrativa">-->
+<!--				</div>-->
 				<div matTooltip="Visualizar estatísticas"
 					[class]="showStatistics ? 'btn-layers btn-layers-active' : 'btn-layers'" aria-label="Estatísticas"
 					(click)="showStatistics = !showStatistics">
