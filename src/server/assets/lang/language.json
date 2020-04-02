@@ -363,6 +363,10 @@
 				"googlemaps": {
 					"pt-br": "Google Maps",
 					"en-us": "Google Maps"
+				},
+				"trafficgoogle": {
+					"pt-br": "Tráfego Urbano em tempo real (Google Maps)",
+					"en-us": "Real-time Urban Traffic (Google Maps)"
 				}
 			}
 		},

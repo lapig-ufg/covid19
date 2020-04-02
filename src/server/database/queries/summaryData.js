@@ -7,7 +7,7 @@ module.exports = function(app) {
     };
 
     Query.query = function() {
-        return "with cte as (select max(confirmados) as confirmados, max(suspeitos) as suspeitos , max(obitos) as obitos from casos where cd_geocmu <> '52' and cd_geocmu <> '5300108' group by cd_geocmu)\n" +
+        return "with cte as (select max(confirmados) as confirmados, (select max(suspeitos) as suspeitos from casos group by data order by data desc limit 1) as suspeitos, max(obitos) as obitos from casos where cd_geocmu <> '52' and cd_geocmu <> '5300108' group by cd_geocmu)\n" +
             "select sum (confirmados) as confirmados, max(suspeitos) as suspeitos, sum(obitos) as obitos from cte";
     };
 

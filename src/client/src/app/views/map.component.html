@@ -17,7 +17,7 @@
 
 			<div class="collapseLayer">
 				<p-scrollPanel [style]="{width: '100%', height: '40vh', padding:'10px'}" styleClass="custom">
-				<mat-tab-group class="layersConteudo" dynamicHeight>
+					<mat-tab-group class="layersConteudo" dynamicHeight>
 						<mat-tab label="{{titlesLayerBox.label_data}}">
 							<mat-accordion multi="true">
 								<div id="layers_desmatamentos">
@@ -55,7 +55,7 @@
 														</button> -->
 												</div>
 												<div *ngIf="layer.visible" style="padding-left: 8%; padding-right: 8%">
-													<mat-form-field style="width: 130px">
+													<!--	 <mat-form-field style="width: 130px">
 														<mat-label>{{descriptor.type}}</mat-label>
 														<mat-select (selectionChange)="changeVisibility(layer)"
 															[(value)]="layer.selectedType">
@@ -64,10 +64,10 @@
 																{{type.Viewvalue}}
 															</mat-option>
 														</mat-select>
-													</mat-form-field>
+													</mat-form-field> 
 													<span class="" *ngFor="let type of layer.types"
 														[hidden]="type.value != layer.selectedType">
-														<mat-form-field *ngIf="type.times">
+														< <mat-form-field *ngIf="type.times">
 															<mat-label>{{type.timeLabel}}</mat-label>
 															<mat-select (selectionChange)="updateSourceLayer(type)"
 																[(value)]="type.timeSelected">
@@ -76,8 +76,8 @@
 																	{{times.Viewvalue}}
 																</mat-option>
 															</mat-select>
-														</mat-form-field>
-													</span>
+														</mat-form-field> 
+													</span>-->
 													<div *ngFor="let type of layer.types">
 														<img *ngIf="layer.selectedType === type.value"
 															[src]="type.urlLegend">
@@ -133,11 +133,13 @@
 				</div>
 				<div class="resumo">
 					<div class="card-resumo">
-						<div class="card-resumo-title confirmado" title="Titulo">{{textSummary.confirmed_label}}</div>
+						<div class="card-resumo-title confirmado" title="Titulo">{{textSummary.confirmed_label}}
+						</div>
 						<h2>{{summary.confirmados}}</h2>
 					</div>
 					<div class="card-resumo">
-						<div class="card-resumo-title recuperado" title="Titulo">{{textSummary.suspects_label}}</div>
+						<div class="card-resumo-title recuperado" title="Titulo">{{textSummary.suspects_label}}
+						</div>
 						<h2>{{summary.suspeitos}}</h2>
 					</div>
 					<div class="card-resumo">
@@ -327,7 +329,9 @@
 					</div>
 				</div>
 			</div>
+
 		</div>
+
 	</div>
 
 </mat-drawer-container>

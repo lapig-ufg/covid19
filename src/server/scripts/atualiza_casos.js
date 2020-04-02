@@ -2,7 +2,7 @@ const { Pool, Client } = require('pg')
 const csv = require('csv-parser');
 const fs = require('fs');
 
-var config = require('../config.js')()
+var config = require('../configScript.js')()
 var pool = new Pool(config['pg'])
 
 var csvRows = []
@@ -18,66 +18,66 @@ FROM municipios m \
 WHERE m.cd_geocmu <> '52' AND c.data IS NULL OR c.data = "
 
 fs.createReadStream(csvFilepath)
-    .pipe(csv())
-    .on('data', (row) => {
-        csvRows.push(row)
-    })
-    .on('end', () => {
-        
-        (async () => {
-  
-          const client = await pool.connect()
-          try {
-            await client.query('BEGIN')
-            
-            const lastDateResul = await client.query(lastDateQuery)
-			const lastDate = lastDateResul.rows[0]['last_date']
-			const lastid = lastDateResul.rows[0]['last_id']
-			
+  .pipe(csv())
+  .on('data', (row) => {
+    csvRows.push(row)
+  })
+  .on('end', () => {
 
-            var newLastDate = undefined
+    (async () => {
 
-            for(i in csvRows) {
-                var row = csvRows[i]
-				var rowDate = new Date(row.data)
-				var rowID = new Number(row.id);
+      const client = await pool.connect()
+      try {
+        await client.query('BEGIN')
 
-                if (rowDate > lastDate || rowID > lastid) {
-					
-					if(row.confirmados == '') row.confirmados = null
-					if(row.suspeitos == '') row.suspeitos = null
-					if(row.obitos == '') row.obitos = null
+        const lastDateResul = await client.query(lastDateQuery)
+        const lastDate = lastDateResul.rows[0]['last_date']
+        const lastid = lastDateResul.rows[0]['last_id']
 
-                    var rowValues = [row.cd_geocmu, row.data, row.confirmados, row.suspeitos, row.obitos] 
-                    const res = await client.query(insertRow, rowValues)
-                    console.log(res.rowCount + ' inserted.')
-                } else {
-                    console.log('Duplicated register ignored.')
-				}
-				
-				if (newLastDate == undefined || new Date(newLastDate).getTime() < rowDate.getTime()) {  
-					newLastDate = row.data
-				}
 
-			}
-			console.log('last update: ', lastDate)
+        var newLastDate = undefined
 
-            if (newLastDate != undefined) {
-                await client.query(dropView)
-                await client.query(newView + "'" + newLastDate + "'")
-                console.log('View municipios_casos updated')
-            }
+        for (i in csvRows) {
+          var row = csvRows[i]
+          var rowDate = new Date(row.data)
+          var rowID = new Number(row.id);
 
-            console.log("Doing commit")
-            await client.query('COMMIT')
+          if (rowDate > lastDate || rowID > lastid) {
 
-          } catch (e) {
-            console.log("Doing rollback")
-            await client.query('ROLLBACK')
-            throw e
-          } finally {
-            client.release()
+            if (row.confirmados == '') row.confirmados = null
+            if (row.suspeitos == '') row.suspeitos = null
+            if (row.obitos == '') row.obitos = null
+
+            var rowValues = [row.cd_geocmu, row.data, row.confirmados, row.suspeitos, row.obitos]
+            const res = await client.query(insertRow, rowValues)
+            console.log(res.rowCount + ' inserted.')
+          } else {
+            console.log('Duplicated register ignored.')
           }
-        })().catch(e => console.error(e.stack))
 
-});
+          if (newLastDate == undefined || new Date(newLastDate).getTime() < rowDate.getTime()) {
+            newLastDate = row.data
+          }
+
+        }
+        console.log('last update: ', lastDate)
+
+        if (newLastDate != undefined) {
+          await client.query(dropView)
+          await client.query(newView + "'" + newLastDate + "'")
+          console.log('View municipios_casos updated')
+        }
+
+        console.log("Doing commit")
+        await client.query('COMMIT')
+
+      } catch (e) {
+        console.log("Doing rollback")
+        await client.query('ROLLBACK')
+        throw e
+      } finally {
+        client.release()
+      }
+    })().catch(e => console.error(e.stack))
+
+  });

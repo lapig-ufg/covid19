@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, HostListener, Injectable, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, HostListener, Injectable, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -33,10 +33,20 @@ import { MetadataComponent } from './metadata/metadata.component';
 import CropFilter from 'ol-ext/filter/Crop';
 import MaskFilter from 'ol-ext/filter/Mask';
 import MultiPolygon from 'ol/geom/MultiPolygon';
-import { defaults as defaultControls, Control } from 'ol/control';
+import { defaults as defaultControls, Control, Attribution } from 'ol/control';
+
+import { google } from "google-maps";
 
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
 import { AjudaComponent } from "./ajuda/ajuda.component";
+
+import OLGoogleMaps from 'olgm/OLGoogleMaps.js';
+import GoogleLayer from 'olgm/layer/Google.js';
+
+/// <reference types="@types/googlemaps" />
+
+
+declare var google: google;
 
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
@@ -64,7 +74,8 @@ export class SearchService {
   selector: 'app-map',
   templateUrl: './map.component.html',
   providers: [SearchService],
-  styleUrls: ['./map.component.css'],
+  styleUrls: ['./map.component.css']
+
 })
 export class MapComponent implements OnInit {
   map: OlMap;
@@ -92,6 +103,8 @@ export class MapComponent implements OnInit {
   viewWidth = 600;
   viewWidthMobile = 350;
   chartRegionScale: boolean;
+
+  trafficgoogle: any;
 
   textOnDialog: any;
   mapbox: any;
@@ -376,7 +389,6 @@ export class MapComponent implements OnInit {
 
       });
     }
-
   }
 
   private updateExtent() {
@@ -657,6 +669,7 @@ export class MapComponent implements OnInit {
     this.createBaseLayers();
     this.createLayers();
 
+
     this.map = new OlMap({
       target: 'map',
       controls: [],
@@ -855,9 +868,30 @@ export class MapComponent implements OnInit {
       layer: new OlTileLayer({
         source: new OlXYZ({
           url:
-            'https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
+            'http://mt{0-3}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+          attributions: [
+            new Attribution({ html: '© Google' }),
+            new Attribution({ html: '<a href="https://developers.google.com/maps/terms">Terms of Use.</a>' })
+          ]
+
         }),
         visible: true
+      })
+    };
+
+    this.trafficgoogle = {
+      visible: false,
+      layer: new OlTileLayer({
+        source: new OlXYZ({
+          url:
+            'https://mt1.google.com/vt?lyrs=h@159000000,traffic|seconds_into_week:-1&style=3&x={x}&y={y}&z={z}',
+          attributions: [
+            new Attribution({ html: '© Google' }),
+            new Attribution({ html: '<a href="https://developers.google.com/maps/terms">Terms of Use.</a>' })
+          ]
+
+        }),
+        visible: false
       })
     };
 
@@ -899,7 +933,7 @@ export class MapComponent implements OnInit {
 
     return new VectorLayer({
       source: new VectorSource({
-        url: layer.geoJsonUrl,
+        url: layer.url,
         format: new GeoJSON()
       }),
       style: function (feature) {
@@ -965,6 +999,7 @@ export class MapComponent implements OnInit {
     return '/ows?layers=' + layername + '&MSFILTER=' + filter + '&mode=tile&tile=' + tile + '&tilemode=gmap&map.imagetype=utfgrid'
   }
 
+
   private createTMSLayer(layer) {
     return new OlTileLayer({
       source: new OlXYZ({
@@ -1000,28 +1035,39 @@ export class MapComponent implements OnInit {
   private parseUrls(layer) {
     let result = [];
 
-    let filters = [];
+    if (layer.source == 'ows') {
 
-    if (layer.timeHandler == 'msfilter' && layer.times) {
-      filters.push(layer.timeSelected);
+      let filters = [];
+
+      if (layer.timeHandler == 'msfilter' && layer.times) {
+        filters.push(layer.timeSelected);
+      }
+
+      if (layer.layerfilter) { filters.push(layer.layerfilter); }
+      if (this.regionFilterDefault != "") { filters.push(this.regionFilterDefault); }
+      if (layer.regionFilter) {
+        this.msFilterRegion = "uf = 'GO'"
+        filters.push(this.msFilterRegion);
+      }
+
+      let msfilter = '';
+      if (filters.length > 0) { msfilter += '&MSFILTER=' + filters.join(' AND '); }
+
+      let layername = layer.value;
+      if (layer.timeHandler == 'layername') { layername = layer.timeSelected; }
+
+      for (let url of this.urls) {
+        result.push(url + '?layers=' + layername + msfilter + '&mode=tile&tile={x}+{y}+{z}' + '&tilemode=gmap' + '&map.imagetype=png');
+      }
+    }
+    else if(layer.source == 'external')
+    {
+      result.push(layer.url)
     }
 
-    if (layer.layerfilter) { filters.push(layer.layerfilter); }
-    if (this.regionFilterDefault != "") { filters.push(this.regionFilterDefault); }
-    if (layer.regionFilter) {
-      this.msFilterRegion = "uf = 'GO'"
-      filters.push(this.msFilterRegion);
-    }
 
-    let msfilter = '';
-    if (filters.length > 0) { msfilter += '&MSFILTER=' + filters.join(' AND '); }
-
-    let layername = layer.value;
-    if (layer.timeHandler == 'layername') { layername = layer.timeSelected; }
-
-    for (let url of this.urls) {
-      result.push(url + '?layers=' + layername + msfilter + '&mode=tile&tile={x}+{y}+{z}' + '&tilemode=gmap' + '&map.imagetype=png');
-    }
+    console.log(layer, result)
+    
     return result;
   }
 
@@ -1032,6 +1078,7 @@ export class MapComponent implements OnInit {
   }
 
   private updateSourceLayer(layer) {
+    console.log("layer - ", layer)
     if (layer['times']) {
       this.periodSelected = layer['times'].find(
         element => element.value === layer.timeSelected
@@ -1062,6 +1109,7 @@ export class MapComponent implements OnInit {
         }
       }
     }
+
   }
 
   groupLayerschecked(layers, e) {
@@ -1116,7 +1164,7 @@ export class MapComponent implements OnInit {
       layer.visible = e.checked;
     }
 
-    if (layer.id == "casos-covid") {
+    if (layer.id == "casos_covid_confirmados") {
       if (layer.visible) {
         this.handleInteraction();
       }
@@ -1412,7 +1460,6 @@ export class MapComponent implements OnInit {
 
       for (let group of this.descriptor.groups) {
         for (let layer of group.layers) {
-
           if (layer.id != 'satelite') {
             for (let type of layer.types) {
               if (type.source == 'geojson') {
