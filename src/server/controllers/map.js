@@ -69,6 +69,7 @@ module.exports = function (app) {
               source: 'external',
               // url: 'https://mt1.google.com/vt?lyrs=h@159000000,traffic|seconds_into_week:-1&style=3&x={x}&y={y}&z={z}',
               url: 'https://mt0.google.com/vt/lyrs=m@221097413,traffic&x={x}&y={y}&z={z}',
+              legendUrl: 'assets/legends/legend-trafficgoogle-br.png',
               opacity: 0.8,
               order: 3
             }]

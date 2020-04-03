@@ -59,7 +59,7 @@ module.exports = function (app) {
     return [
       {
         id: 'confirmados_recuperados',
-        sql: "SELECT data, confirmados, recuperados FROM projecao_casos_go where data >= now() - interval '1' day AND data <= now() + interval '5' day order by data;"
+        sql: "SELECT data, confirmados, recuperados FROM projecao_casos where data >= now() - interval '1' day AND data <= now() + interval '5' day order by data;"
       },
       {
         id: 'next',
