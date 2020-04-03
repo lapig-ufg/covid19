@@ -53,6 +53,8 @@ import { FileUploadComponent } from './views/file-upload/file-upload.component';
 import { MetadataComponent } from './views/metadata/metadata.component';
 import { GoogleAnalyticsService } from  './services/google-analytics.service'
 
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MapMobileComponent, DialogMobile } from './views/map-mobile/map-mobile.component';
@@ -61,6 +63,8 @@ import { RestrictedAreaAccessComponent } from './views/restricted-area-access/re
 import { RestrictedAreaFormComponent } from './views/restricted-area-form/restricted-area-form.component';
 
 registerLocaleData(localePt);
+
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
 const ENTRY_COMPONENTS = [
   MetadataComponent,
@@ -123,7 +127,8 @@ const ENTRY_COMPONENTS = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    NgbModule
+    NgbModule,
+    NgxMaskModule.forRoot(options)
   ],
 
   entryComponents:[ENTRY_COMPONENTS],

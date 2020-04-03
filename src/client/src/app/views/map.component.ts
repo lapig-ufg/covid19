@@ -1502,7 +1502,7 @@ export class MapComponent implements OnInit {
   onResize(event) {
     this.innerHeigth = window.innerHeight;
     if (window.innerWidth < 1480) {
-      this.currentZoom = 5.7;
+      this.currentZoom = 6.2;
     } else {
       this.currentZoom = 7.6;
     }
@@ -1615,7 +1615,7 @@ export class MapComponent implements OnInit {
     this.innerHeigth = window.innerHeight;
 
     if (window.innerWidth < 1480) {
-      this.currentZoom = 5.7;
+      this.currentZoom = 6.2;
     } else {
       this.currentZoom = 7.6;
     }

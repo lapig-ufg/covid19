@@ -3,32 +3,36 @@
         <img src="../.././../assets/logo/logo_white.png" alt="COVIDGOIÀS">
         <h4>Solicitação de acesso à Área Restrita</h4>
     </div>
-
     <mat-form-field appearance="outline" [floatLabel]="'auto'">
         <mat-label>Nome do responsável</mat-label>
-        <input matInput placeholder="Nome do responsável">
+        <input matInput [(ngModel)]="nomeresponsavel">
+        <span class="erros" *ngIf="errorNomeresponsavel">O preenchimento do nome do responsável é obrigatório</span>
     </mat-form-field>
     <mat-form-field appearance="outline" [floatLabel]="'auto'">
         <mat-label>E-mail principal</mat-label>
-        <input matInput placeholder="Nome do responsável">
+        <input matInput type="email" [(ngModel)]="email">
+        <span class="erros" *ngIf="errorEmail">O informe um e-mail válido</span>
     </mat-form-field>
 
     <mat-form-field appearance="outline" [floatLabel]="'auto'">
         <mat-label>Telefone para contato</mat-label>
-        <input matInput>
+        <input matInput [(ngModel)]="telefone" mask="00 00000 0000">
+        <span class="erros" *ngIf="errorTelefone">O preenchimento do telefone para contato é obrigatório</span>
     </mat-form-field>
     <mat-form-field appearance="outline" [floatLabel]="'auto'">
         <mat-label>Instituição do solicitante</mat-label>
-        <input matInput>
+        <input matInput [(ngModel)]="orgao">
+        <span class="erros" *ngIf="errorOrgao">O preenchimento da Instituição do solicitante é obrigatório</span>
     </mat-form-field>
     <mat-form-field appearance="outline" [floatLabel]="'auto'">
         <mat-label>Munícipio de origem</mat-label>
-        <mat-select>
+        <mat-select [(ngModel)]="cd_geocmu">
             <mat-option value="option">Option</mat-option>
         </mat-select>
+        <span class="erros" *ngIf="errorCd_geocmu">A seleção município de origem é obrigatória</span>
     </mat-form-field>
     <div class="group-btn">
         <button mat-raised-button color="accent" (click)="closeDialog()">Cancelar</button>
-        <button mat-raised-button color="warn" >Enviar</button>
+        <button mat-raised-button color="warn" (click)="onSubmit()">Enviar</button>
     </div>
 </div>

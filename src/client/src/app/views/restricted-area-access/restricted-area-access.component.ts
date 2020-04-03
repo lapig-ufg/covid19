@@ -10,10 +10,18 @@ export class RestrictedAreaAccessComponent implements OnInit {
 
   @Output() requireAccess = new EventEmitter();
 
+  @Input() codigoautorizacao:any;
+
+  errorCodigoautorizacao:boolean;
+
   constructor(
       public dialogRef: MatDialogRef<RestrictedAreaAccessComponent>,
       @Optional() @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+  ) {
+    this.codigoautorizacao     = '';
+
+    this.errorCodigoautorizacao  = false;
+  }
 
   ngOnInit() {
   }
@@ -24,6 +32,16 @@ export class RestrictedAreaAccessComponent implements OnInit {
 
   onRequireAccess(){
     this.requireAccess.emit();
+  }
+
+  onSubmit(){
+    if(this.codigoautorizacao == '' || this.codigoautorizacao == null){
+      console.log("Campos vazios");
+      this.errorCodigoautorizacao = true;
+    }else{
+      this.errorCodigoautorizacao = false;
+      console.log("Todos dados preenchidos");
+    }
   }
 
 }
