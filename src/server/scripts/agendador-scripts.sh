@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #sleep 1h
-
+#sleep 5m
 while :; do
 
 comando=$(date +%H:%M)
