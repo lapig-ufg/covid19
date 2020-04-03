@@ -1,0 +1,34 @@
+<div class = "tp-container">
+    <div class="container-logo">
+        <img src="../.././../assets/logo/logo_white.png" alt="COVIDGOIÀS">
+        <h4>Solicitação de acesso à Área Restrita</h4>
+    </div>
+
+    <mat-form-field appearance="outline" [floatLabel]="'auto'">
+        <mat-label>Nome do responsável</mat-label>
+        <input matInput placeholder="Nome do responsável">
+    </mat-form-field>
+    <mat-form-field appearance="outline" [floatLabel]="'auto'">
+        <mat-label>E-mail principal</mat-label>
+        <input matInput placeholder="Nome do responsável">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" [floatLabel]="'auto'">
+        <mat-label>Telefone para contato</mat-label>
+        <input matInput>
+    </mat-form-field>
+    <mat-form-field appearance="outline" [floatLabel]="'auto'">
+        <mat-label>Instituição do solicitante</mat-label>
+        <input matInput>
+    </mat-form-field>
+    <mat-form-field appearance="outline" [floatLabel]="'auto'">
+        <mat-label>Munícipio de origem</mat-label>
+        <mat-select>
+            <mat-option value="option">Option</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div class="group-btn">
+        <button mat-raised-button color="accent" (click)="closeDialog()">Cancelar</button>
+        <button mat-raised-button color="warn" >Enviar</button>
+    </div>
+</div>

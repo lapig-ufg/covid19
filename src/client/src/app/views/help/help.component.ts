@@ -3,14 +3,14 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 
 @Component({
-  selector: 'app-ajuda',
-  templateUrl: './ajuda.component.html',
-  styleUrls: ['./ajuda.component.css']
+  selector: 'app-help',
+  templateUrl: './help.component.html',
+  styleUrls: ['./help.component.css']
 })
-export class AjudaComponent implements OnInit {
+export class HelpComponent implements OnInit {
 
   constructor(
-      public dialogRef: MatDialogRef<AjudaComponent>,
+      public dialogRef: MatDialogRef<HelpComponent>,
       @Optional() @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
