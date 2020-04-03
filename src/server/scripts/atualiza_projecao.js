@@ -2,14 +2,14 @@ const { Pool, Client } = require('pg')
 const csv = require('csv-parser');
 const fs = require('fs');
 
-var config = require('../configScript.js')()
+var config = require('../config.js')()
 var pool = new Pool(config['pg'])
 
 var csvRows = []
-var csvFilepath = 'estados_casos.csv'
+var csvFilepath = 'projecao_casos_go.csv'
 
 const lastDateQuery = 'SELECT max(data) AS last_date FROM casos_estados'
-const insertRow = 'INSERT INTO casos_estados(ordem_dia, data, cd_geouf,	uf,	obitos,	novos_casos, total_casos) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING gid'
+const insertRow = 'INSERT INTO projecao_casos(tipo, ordem_dia, data, cd_geocmu, nm_municipio, confirmados) VALUES($1,$2,$3,$4,$5,$6) RETURNING gid'
 
 fs.createReadStream(csvFilepath)
 	.pipe(csv())
@@ -23,28 +23,37 @@ fs.createReadStream(csvFilepath)
 			const client = await pool.connect()
 			try {
 				await client.query('BEGIN')
-				await client.query('SET datestyle = dmy')
-				await client.query('TRUNCATE TABLE casos_estados RESTART IDENTITY')
+				// await client.query('SET datestyle = dmy')
+				await client.query('TRUNCATE TABLE projecao_casos RESTART IDENTITY')
 
 				const lastDateResul = await client.query(lastDateQuery)
 				const lastDate = lastDateResul.rows[0]['last_date']
 
 				for (i in csvRows) {
 					var row = csvRows[i]
-					var rowDate = new Date(toISOFormat(row.data))
+                    var rowDate = new Date(row.data)
+                    
+                    if(row.total_casos == "NA"){
+                        row.total_casos = -1
+                    }
 
 					/* for initial population*/
-					//          var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.estados, row.obitos, row.novos_casos, row.total_casos] 
-					// const res = await client.query(insertRow, rowValues)
+					var rowValues = [row.tipo, row.ordem_dia, row.data, row.codigo_municipio, row.municipios, row.total_casos] 
+					const res = await client.query(insertRow, rowValues)
 
-					if (rowDate > lastDate ) {
+					// if (rowDate > lastDate ) {
 
-						var rowValues = [row.ordem_dia, row.data, row.codigo_estadual, row.estados, row.obitos, row.novos_casos, row.total_casos]
-						const res = await client.query(insertRow, rowValues)
+                    //     if(row.total_casos == "NA"){
+                    //         row_total_casos = -1
+                    //     }
+
+
+					// 	var rowValues = [row.tipo, row.ordem_dia, row.data, row.codigo_municipio, row.municipios, row.total_casos] 
+					// 	const res = await client.query(insertRow, rowValues)
 						console.log(res.rowCount + ' inserted.')
-					} else  {
-						console.log('Duplicated register ignored.')
-					}
+					// } else  {
+					// 	console.log('Duplicated register ignored.')
+					// }
 
 				}
 
