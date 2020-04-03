@@ -233,7 +233,7 @@ export class MapComponent implements OnInit {
     this.textSummary = {};
 
     this.defaultRegion = {
-      nome: 'GO',
+      nome: 'Goiás',
       area_mun: 1547.26991096032,
       estado: 'GOIÁS',
       uf: 'GO',
@@ -308,7 +308,6 @@ export class MapComponent implements OnInit {
     this.summary = {};
     this.lastUpdate = {};
     this.updateSummary();
-    this.ultimaAtualizacao()
 
   }
   search = (text$: Observable<string>) =>
@@ -359,9 +358,7 @@ export class MapComponent implements OnInit {
   private getServiceParams() {
     let params = [];
 
-    if (this.selectRegion.type != '') {
-      params.push('cd_geocmu=' + this.selectRegion.cd_geocmu);
-    }
+    params.push('cd_geocmu=' + this.selectRegion.cd_geocmu);
 
     params.push('lang=' + this.language);
 
@@ -394,24 +391,24 @@ export class MapComponent implements OnInit {
   private updateExtent() {
     let extenUrl = '/service/map/extent' + this.getServiceParams();
 
-    if (this.selectRegion.type != "") {
-      var map = this.map;
-      this.http.get(extenUrl).subscribe(extentResult => {
-        var features = new GeoJSON().readFeatures(extentResult, {
-          dataProjection: "EPSG:4326",
-          featureProjection: "EPSG:3857"
-        });
-
-        this.regionSource = this.regionsLimits.getSource();
-        this.regionSource.clear();
-        this.regionSource.addFeature(features[0]);
-
-        var extent = features[0].getGeometry().getExtent();
-        map.getView().fit(extent, { duration: 1500 });
-
-        this.selectRegion.area_mun = extentResult["area_mun"];
+    // if (this.selectRegion.type != "") {
+    var map = this.map;
+    this.http.get(extenUrl).subscribe(extentResult => {
+      var features = new GeoJSON().readFeatures(extentResult, {
+        dataProjection: "EPSG:4326",
+        featureProjection: "EPSG:3857"
       });
-    }
+
+      this.regionSource = this.regionsLimits.getSource();
+      this.regionSource.clear();
+      this.regionSource.addFeature(features[0]);
+
+      var extent = features[0].getGeometry().getExtent();
+      map.getView().fit(extent, { duration: 1500 });
+
+      this.selectRegion.area_mun = extentResult["area_mun"];
+    });
+    // }
   }
 
   changeTab(event) {
@@ -480,6 +477,27 @@ export class MapComponent implements OnInit {
 
     this.http.get(sumBoxURL).subscribe(result => {
       this.textSummary = result;
+
+      let sp = this.textSummary.title.split("?")
+      let tmp = ''
+
+      if (this.selectRegion.cd_geocmu == '52') {
+        if (this.language == 'pt-br') {
+          tmp = "Estado"
+        }
+        else {
+          tmp = "State"
+        }
+      }
+      else {
+        if (this.language == 'pt-br') {
+          tmp = "Município"
+        }
+        else{
+          tmp = "Municipality"
+        }
+      }
+      this.textSummary.title = sp[0] + tmp + sp[1] + this.selectRegion.nome
     });
 
 
@@ -630,29 +648,52 @@ export class MapComponent implements OnInit {
       this.currentData = {
         text: ''
       }
+
+      let l = this.layersNames.find(element => element.id === 'urban_traffic');
+      this.changeVisibility(l, { checked: false });
+      let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+      this.changeVisibility(p, { checked: true });
+
+      this.isFilteredByCity = false;
+    }
+    else{
+      this.isFilteredByCity = true;
     }
 
     this.currentData = region.nome;
-    this.valueRegion = region.nome.toString();
+    this.valueRegion = region.nome;
 
     this.selectRegion = region;
-
-    this.isFilteredByCity = false;
-    this.isFilteredByState = false;
+    this.selectRegion.nome = this.captalizeCity(this.selectRegion.nome)
 
     // if (this.selectRegion.type == 'city') {
     //   this.msFilterRegion = ' cd_geocmu = \'' + this.selectRegion.cd_geocmu + '\'';
-    //   this.isFilteredByCity = true;
+    
     //   this.isFilteredByState = true;
     //   this.selectRegion.regionTypeBr = 'Município de ';
     // } else if (this.selectRegion.type == 'state') {
     //   this.msFilterRegion = 'uf = \'' + this.selectRegion.value + '\'';
     //   this.isFilteredByState = true;
     // } else { this.msFilterRegion = ""; }
-
+    this.updateCharts();
     this.updateExtent();
     this.updateSourceAllLayer();
+    this.updateSummary();
     this.googleAnalyticsService.eventEmitter("updateRegion", "search_box", this.valueRegion);
+  }
+
+  private captalizeCity(word: string) {
+    let finalword = "";
+    let tmp = word.toLowerCase().split(" ");
+    for (let i = 0; i < tmp.length; i++) {
+      if (tmp[i] == 'da' || tmp[i] == 'de' || tmp[i] == 'do') {
+        finalword += tmp[i] + " "
+      } else {
+        finalword += tmp[i].charAt(0).toUpperCase() + tmp[i].slice(1) + " "
+      }
+    }
+
+    return finalword
   }
 
   private getResolutions(projection) {
@@ -756,6 +797,7 @@ export class MapComponent implements OnInit {
           if (this.utfgridsource) {
             this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
               if (data) {
+                window.document.body.style.cursor = 'pointer';
 
                 this.infodata = data;
 
@@ -795,6 +837,8 @@ export class MapComponent implements OnInit {
       return feature;
     });
 
+    let layerinfo = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+
     if (feature) {
       var properties = feature.getProperties();
       if (properties.lon != undefined && properties.lat != undefined) {
@@ -804,7 +848,19 @@ export class MapComponent implements OnInit {
     } else if (this.utfgridsource) {
       this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
         if (data) {
+          // console.log(layerinfo, data)
+          if (layerinfo.selectedType == 'covid19_municipios_casos') {
+            this.http.get(SEARCH_URL, { params: PARAMS.set('key', data.nome) }).subscribe(result => {
 
+              let ob = result[0];
+              this.updateRegion(ob);
+              let l = this.layersNames.find(element => element.id === 'urban_traffic');
+              this.changeVisibility(l, { checked: true });
+              let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+              this.changeVisibility(p, { checked: false });
+              this.infodata = null
+            });
+          }
 
         }
       }.bind(this)
@@ -1060,14 +1116,11 @@ export class MapComponent implements OnInit {
         result.push(url + '?layers=' + layername + msfilter + '&mode=tile&tile={x}+{y}+{z}' + '&tilemode=gmap' + '&map.imagetype=png');
       }
     }
-    else if(layer.source == 'external')
-    {
+    else if (layer.source == 'external') {
       result.push(layer.url)
     }
 
 
-    console.log(layer, result)
-    
     return result;
   }
 
@@ -1078,7 +1131,6 @@ export class MapComponent implements OnInit {
   }
 
   private updateSourceLayer(layer) {
-    console.log("layer - ", layer)
     if (layer['times']) {
       this.periodSelected = layer['times'].find(
         element => element.value === layer.timeSelected
@@ -1088,8 +1140,10 @@ export class MapComponent implements OnInit {
     this.handleInteraction();
 
     let source_layers = this.LayersTMS[layer.value].getSource();
-    source_layers.setUrls(this.parseUrls(layer));
-    source_layers.refresh();
+    if (layer.source != 'geojson') {
+      source_layers.setUrls(this.parseUrls(layer));
+      source_layers.refresh();
+    }
 
   }
 
@@ -1135,7 +1189,7 @@ export class MapComponent implements OnInit {
 
   private handleInteraction() {
 
-    let covid = this.layersNames.find(element => element.id === 'casos-covid');
+    let covid = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
 
     if (covid.visible) {
       if (this.utfgridsource) {
@@ -1170,8 +1224,7 @@ export class MapComponent implements OnInit {
       }
     }
     this.LayersTMS[layer.selectedType].setVisible(layer.visible);
-    this.updateSummary();
-    this.ultimaAtualizacao();
+    // this.updateSummary();
     this.googleAnalyticsService.eventEmitter("changeVisibility", "camadaDado", layer.label);
 
 
@@ -1186,6 +1239,7 @@ export class MapComponent implements OnInit {
       group.label = this.descriptorText[group.id].label[this.language];
 
       for (let layer of group.layers) {
+
         layer.label = this.descriptorText[group.id].layers[layer.id].label[this.language];
 
         for (let layerType of layer.types) {
@@ -1393,15 +1447,46 @@ export class MapComponent implements OnInit {
     let sourceUrl = '/service/summary/data' + this.getServiceParams();
 
     this.http.get(sourceUrl).subscribe(result => {
-      this.summary = result;
+      this.summary = result['resumed'];
+     
+      if(this.summary.confirmados == null)
+      {
+        this.summary.confirmados = "0"
+      }
+      
+      if (this.summary.obitos == null){
+        this.summary.obitos = "0"
+      } 
+      this.lastUpdate = result['last_update']
+
     });
-  }
 
-  private ultimaAtualizacao() {
-    let sourceUrl = '/service/summary/last-update' + this.getServiceParams();
+    let sumBoxURL = '/service/summary/texts' + this.getServiceParams();
 
-    this.http.get(sourceUrl).subscribe(result => {
-      this.lastUpdate = result;
+    this.http.get(sumBoxURL).subscribe(result => {
+      this.textSummary = result;
+
+      let sp = this.textSummary.title.split("?")
+      let tmp = ''
+
+      if (this.selectRegion.cd_geocmu == '52') {
+        if (this.language == 'pt-br') {
+          tmp = "Estado"
+        }
+        else {
+          tmp = "State"
+        }
+      }
+      else {
+        if (this.language == 'pt-br') {
+          tmp = "Município"
+        }
+        else{
+          tmp = "Municipality"
+        }
+      }
+      this.textSummary.title = sp[0] + tmp + sp[1] + this.selectRegion.nome
+
     });
 
   }

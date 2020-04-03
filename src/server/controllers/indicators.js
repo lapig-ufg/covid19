@@ -119,7 +119,7 @@ module.exports = function (app) {
     var chartResult = [
       {
         id: "timeseries_go",
-        title: "Goiás",
+        title: "",
         label_confirmados_projecao: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["label_confirmados_projecao"][language],
         label_recuperados_projecao: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["label_recuperados_projecao"][language],
         label_confirmados: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["label_confirmados"][language],
@@ -174,13 +174,14 @@ module.exports = function (app) {
     for (let chart of chartResult) {
 
       chart['show'] = false
+      var qr = request.queryResult[chart.id]
+
       if (chart.id == 'timeseries_go') {
-        chart["dataResult"] = createDataSetTimeSeriesGO(chart, request.queryResult[chart.id], language);
+        chart["dataResult"] = createDataSetTimeSeriesGO(chart, qr , language);
       }
       else {
-        chart["dataResult"] = request.queryResult[chart.id]
+        chart["dataResult"] = qr
       }
-
       if (chart['dataResult'].labels.length > 0) {
         chart['show'] = true
         chart['text'] = chart.getText(chart)
@@ -192,6 +193,7 @@ module.exports = function (app) {
       title: languageJson["charts_box"]["charts_box_title"][language],
       timeseries: {
         label: languageJson["charts_box"]["charts_box_dados_oficiais"]["label"][language],
+        not_cases: languageJson["charts_box"]["charts_box_dados_oficiais"]["not_cases"][language],
         chartResult: chartResult
       }
     };

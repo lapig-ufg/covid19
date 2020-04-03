@@ -60,14 +60,29 @@ module.exports = function (app) {
           },
           {
             id: "urban_traffic",
-            label: "Tempo Real",
+            label:  languageJson["descriptor"]["informacoes"]["layers"]["urban_traffic"]["label"][language],
             visible: false,
             selectedType: "urban_traffic_real_time",
             types: [{
               value: "urban_traffic_real_time",
-              Viewvalue: "Google Traffic",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["urban_traffic"]["types"]["urban_traffic_real_time"]["view_value"][language],
               source: 'external',
-              url: 'https://mt1.google.com/vt?lyrs=h@159000000,traffic|seconds_into_week:-1&style=3&x={x}&y={y}&z={z}',
+              // url: 'https://mt1.google.com/vt?lyrs=h@159000000,traffic|seconds_into_week:-1&style=3&x={x}&y={y}&z={z}',
+              url: 'https://mt0.google.com/vt/lyrs=m@221097413,traffic&x={x}&y={y}&z={z}',
+              opacity: 0.8,
+              order: 3
+            }]
+          },
+          {
+            id: "qtd_populacional",
+            label: languageJson["descriptor"]["informacoes"]["layers"]["qtd_populacional"]["label"][language],
+            visible: false,
+            selectedType: "covid19_ibge_populacao",
+            types: [{
+              value: "covid19_ibge_populacao",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["qtd_populacional"]["types"]["covid19_ibge_populacao"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
               opacity: 0.8,
               order: 3
             }]
@@ -79,20 +94,6 @@ module.exports = function (app) {
           label: languageJson["descriptor"]["servicos"]["label"][language],
           group_expanded: false,
           layers: [
-            {
-              id: "qtd_populacional",
-              label: languageJson["descriptor"]["informacoes"]["layers"]["qtd_populacional"]["label"][language],
-              visible: false,
-              selectedType: "covid19_ibge_populacao",
-              types: [{
-                value: "covid19_ibge_populacao",
-                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["qtd_populacional"]["types"]["covid19_ibge_populacao"]["view_value"][language],
-                regionFilter: true,
-                source: 'ows',
-                opacity: 0.8,
-                order: 3
-              }]
-            },
             {
               id: "gyn_locais_vacinacao",
               label: languageJson["descriptor"]["servicos"]["layers"]["gyn_locais_vacinacao"]["label"][language],
