@@ -286,6 +286,13 @@ body {
 	background: #dd4646;
 }
 
+:host {
+	.mat-form-field-label,
+	.mat-focused .mat-form-field-label {
+		color: #dd4646 !important;
+	}
+}
+
 .mat-drawer-backdrop.mat-drawer-shown {
 	background-color:transparent !important;
 	visibility: hidden !important;
@@ -305,3 +312,5 @@ body {
 #positionCharts .mat-tab-body-content{
 	overflow: hidden!important;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

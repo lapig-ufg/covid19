@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, HostListener, Injectable, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component, HostListener, Injectable, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { MatDialog, MatDialogConfig  } from '@angular/material';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as OlExtent from 'ol/extent.js';
@@ -38,7 +38,9 @@ import { defaults as defaultControls, Control, Attribution } from 'ol/control';
 import { google } from "google-maps";
 
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
-import { AjudaComponent } from "./ajuda/ajuda.component";
+import { HelpComponent } from "./help/help.component";
+import {RestrictedAreaAccessComponent} from "./restricted-area-access/restricted-area-access.component";
+import {RestrictedAreaFormComponent} from "./restricted-area-form/restricted-area-form.component";
 
 import OLGoogleMaps from 'olgm/OLGoogleMaps.js';
 import GoogleLayer from 'olgm/layer/Google.js';
@@ -202,6 +204,8 @@ export class MapComponent implements OnInit {
   summary: any;
   lastUpdate: any;
 
+  restrictedArea:boolean;
+
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
 
   constructor(
@@ -308,6 +312,8 @@ export class MapComponent implements OnInit {
     this.summary = {};
     this.lastUpdate = {};
     this.updateSummary();
+
+    this.restrictedArea = true;
 
   }
   search = (text$: Observable<string>) =>
@@ -668,7 +674,7 @@ export class MapComponent implements OnInit {
 
     // if (this.selectRegion.type == 'city') {
     //   this.msFilterRegion = ' cd_geocmu = \'' + this.selectRegion.cd_geocmu + '\'';
-    
+
     //   this.isFilteredByState = true;
     //   this.selectRegion.regionTypeBr = 'Município de ';
     // } else if (this.selectRegion.type == 'state') {
@@ -1448,15 +1454,15 @@ export class MapComponent implements OnInit {
 
     this.http.get(sourceUrl).subscribe(result => {
       this.summary = result['resumed'];
-     
+
       if(this.summary.confirmados == null)
       {
         this.summary.confirmados = "0"
       }
-      
+
       if (this.summary.obitos == null){
         this.summary.obitos = "0"
-      } 
+      }
       this.lastUpdate = result['last_update']
 
     });
@@ -1524,13 +1530,35 @@ export class MapComponent implements OnInit {
   }
 
   openDialogAjuda() {
-    let dialogRef = this.dialog.open(AjudaComponent, {
+    let dialogRef = this.dialog.open(HelpComponent, {
       width: '90%',
       height: '90%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       // console.log('The dialog was closed');
+    });
+  }
+
+  handleRestrictedArea() {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = false;
+    dialogConfig.width = '40%';
+    dialogConfig.id = "modal-restricted-area-access";
+
+    let dialogRestrictedAreaAccess = this.dialog.open(RestrictedAreaAccessComponent, dialogConfig);
+
+    const sub = dialogRestrictedAreaAccess.componentInstance.requireAccess.subscribe(() => {
+      const dialogConfig = new MatDialogConfig();
+
+      dialogConfig.disableClose = false;
+      dialogConfig.id = "modal-restricted-area-form";
+
+      this.dialog.open(RestrictedAreaFormComponent, dialogConfig);
+
+      dialogRestrictedAreaAccess.close();
     });
   }
 
