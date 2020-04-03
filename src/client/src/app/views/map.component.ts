@@ -1577,7 +1577,10 @@ export class MapComponent implements OnInit {
             for (let type of layer.types) {
               if (type.source == 'geojson') {
                 type.urlLegend = type.iconUrl
-              } else {
+              } else if (type.source == 'external'){
+                type.urlLegend = type.legendUrl
+              }
+              else{
                 type.urlLegend = this.urls[0] + '?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=' + type.value + '&format=image/png';
               }
             }
