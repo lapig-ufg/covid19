@@ -19,21 +19,23 @@
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     background-color: #dd4646;
-    font-size: 1.5rem;
+
     margin-bottom: 10px;
     display: flex;
     justify-content: center;
     justify-items: center;
     vertical-align: middle;
 }
-.container-logo h4{
+.container-logo span{
     color: white;
     margin: auto;
+    font-weight: 700;
+    font-size: 3vh;
 }
 
 .container-logo img {
-    min-width: 5%;
-    max-width: 25%;
+    max-width: 100%;
+    padding-right: 20px;
 }
 
 
@@ -55,4 +57,24 @@ mat-form-field.mat-label {
 .group-btn button{
     margin: 5px;
     width: 10vw;
+}
+
+.erros {
+    margin-top: 8px;
+    font-weight: bold;
+    color: red;
+    width: 100%;
+    display: block;
+    text-align: left;
+}
+
+.msg-error{
+    text-align: center;
+    font-weight: bold;
+    color: red;
+    margin: 30px;
+}
+
+.ui-dialog{
+
 }
