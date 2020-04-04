@@ -39,7 +39,7 @@ module.exports = function (app) {
     return formated;
   }
 
-  function createDataSetTimeSeriesGO(labels, graphic, language){
+  function createDataSetTimeSeriesGO(labels, graphic, language) {
     let data = {
       labels: graphic.map(element => formatDate(element.data, language)),
       datasets: [
@@ -93,20 +93,22 @@ module.exports = function (app) {
           label: labels.label_confirmados,
           data: graphic.map(element => parseInt(element.confirmados)),
           fill: false,
-          backgroundColor: '#e85662',
-          borderColor: '#e85662',
-          borderDash: labels.borderDashRef,
+          backgroundColor: '#e31425',
+          borderColor: '#e31425',
           spanGaps: true,
-        },
-        {
-          label: labels.label_recuperados,
-          data: graphic.map(element => parseInt(element.recuperados)),
-          fill: false,
-          backgroundColor: '#53c274',
-          borderColor: '#53c274',
-          borderDash: labels.borderDashRef,
-          spanGaps: true,
+          pointBackgroundColor: ""
         }
+        // {
+        //   label: labels.label_previstos,
+        //   data: prev.map(element => parseInt(element.confirmados)),
+        //   fill: false,
+        //   backgroundColor: '#c9700a',
+        //   borderColor: '#c9700a',
+        //   borderDash: labels.borderDashRef,
+        //   spanGaps: true,
+
+        // }
+
       ]
     };
 
@@ -177,7 +179,7 @@ module.exports = function (app) {
       var qr = request.queryResult[chart.id]
 
       if (chart.id == 'timeseries_go') {
-        chart["dataResult"] = createDataSetTimeSeriesGO(chart, qr , language);
+        chart["dataResult"] = createDataSetTimeSeriesGO(chart, qr, language);
       }
       else {
         chart["dataResult"] = qr
@@ -227,15 +229,16 @@ module.exports = function (app) {
     var language = request.param('lang')
     var chartResult = [
       {
-        id: "confirmados_recuperados",
-        title: "Goiás",
-        label_confirmados: languageJson["charts_box"]["charts_box_projecoes"]["confirmados_recuperados"]["label_confirmados"][language],
-        label_recuperados: languageJson["charts_box"]["charts_box_projecoes"]["confirmados_recuperados"]["label_recuperados"][language],
-        label_obitos: languageJson["charts_box"]["charts_box_projecoes"]["confirmados_recuperados"]["label_obitos"][language],
+        id: "projections_go",
+        title: "",
+        label_confirmados: languageJson["charts_box"]["charts_box_projecoes"]["projections_go"]["label_confirmados"][language],
+        label_recuperados: languageJson["charts_box"]["charts_box_projecoes"]["projections_go"]["label_recuperados"][language],
+        label_obitos: languageJson["charts_box"]["charts_box_projecoes"]["projections_go"]["label_obitos"][language],
+        label_previstos:  languageJson["charts_box"]["charts_box_projecoes"]["projections_go"]["label_previstos"][language],
         borderDashRef: [5, 5],
         getText: function (chart) {
 
-          var text = languageJson["charts_box"]["charts_box_projecoes"]["confirmados_recuperados"]["title"][language];
+          var text = languageJson["charts_box"]["charts_box_projecoes"]["projections_go"]["title"][language];
 
           return text;
         },
@@ -245,7 +248,7 @@ module.exports = function (app) {
         options: {
           title: {
             display: true,
-            text: languageJson["charts_box"]["charts_box_projecoes"]["confirmados_recuperados"]["text"][language],
+            text: languageJson["charts_box"]["charts_box_projecoes"]["projections_go"]["text"][language],
             fontSize: 10,
             position: "bottom"
           },
@@ -269,24 +272,33 @@ module.exports = function (app) {
 
     for (let chart of chartResult) {
 
+      var qr = request.queryResult[chart.id]
       chart['show'] = false
-      if (chart.id == 'confirmados_recuperados') {
-        chart["dataResult"] = createProjectionsGO(chart, request.queryResult[chart.id], language);
+      if (chart.id == 'projections_go') {
+
+        var conf = []
+        var prev = []
+        var qFinal = []
+        if (qr.length > 0) {
+          chart['show'] = true
+          qr.filter(item => item.confirmados != -1)
+          .forEach(item => qFinal.push(item))
+            // .forEach(item => item.tipo == 'Obs' ? conf.push(item) : prev.push(item)            )
+        }
+
+        chart["dataResult"] = createProjectionsGO(chart, qFinal, language);
+        chart["last_model_date"] = qr[0]['last_model_date']
       }
       else {
-        chart["dataResult"] = request.queryResult[chart.id]
+        chart["dataResult"] = qr
       }
-
-      if (chart['dataResult'].labels.length > 0) {
-        chart['show'] = true
-        chart['text'] = chart.getText(chart)
-      }
-
     }
+
 
     let finalResult = {
       timeseries: {
         label: languageJson["charts_box"]["charts_box_projecoes"]["label"][language],
+        not_cases: languageJson["charts_box"]["charts_box_projecoes"]["projections_go"]["not_cases"][language],
         chartResult: chartResult
       }
     };
@@ -294,13 +306,12 @@ module.exports = function (app) {
 
     response.send(finalResult);
     response.end();
-  }
+  };
 
   Controller.states = function (request, response) {
 
 
     var language = request.param('lang')
-
     var queryResult = request.queryResult
 
     var qResult = [];
@@ -315,8 +326,8 @@ module.exports = function (app) {
     })
 
     var regionResult = [];
-    qResult.filter(item => item.uf =='GO')
-    .forEach(item => regionResult.push(item))
+    qResult.filter(item => item.uf == 'GO')
+      .forEach(item => regionResult.push(item))
 
 
     for (var i = 0; i < qResult.length; i++) {
@@ -341,42 +352,42 @@ module.exports = function (app) {
           backgroundColor: '#b52016'
         }
       ],
-      description:  languageJson["charts_box"]["charts_box_dados_oficiais"]["charts_box_states"]["description"][language],
+      description: languageJson["charts_box"]["charts_box_dados_oficiais"]["charts_box_states"]["description"][language],
       pointStyle: 'rect',
       label: languageJson["charts_box"]["charts_box_dados_oficiais"]["charts_box_states"]["label"][language],
-    optionsStates : {
-      tooltips: {
-      },
-      scales: {
-        xAxes: [
-          {
-            ticks: {
+      optionsStates: {
+        tooltips: {
+        },
+        scales: {
+          xAxes: [
+            {
+              ticks: {
+              }
             }
+          ]
+        },
+        legend: {
+          position: 'bottom',
+          labels: {
+            usePointStyle: true,
+            fontSize: 12
           }
-        ]
-      },
-      legend: {
-        position: 'bottom',
-        labels: {
-          usePointStyle: true,
-          fontSize: 12
         }
       }
-    }
-  };
+    };
 
 
 
 
     response.send(dataStates)
-		response.end()
+    response.end()
 
   }
 
   Controller.sourceText = function (request, response) {
     var language = request.param('lang')
     var sourceResult = {
-      id:"source",
+      id: "source",
       title: languageJson["charts_box"]["source"]["label"][language],
       technical_note_title: languageJson["charts_box"]["source"]["technical_note_title"][language],
       technical_note: languageJson["charts_box"]["source"]["technical_note"][language],
