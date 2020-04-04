@@ -231,8 +231,8 @@ table tr td {
 }
 
 .layersConteudo {
-	max-height: 702px;
-	overflow: auto;
+	max-height: 1500px;
+	/* overflow: auto; */
 }
 
 /*.collapseLayer {
