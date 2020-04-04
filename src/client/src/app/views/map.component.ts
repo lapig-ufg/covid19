@@ -605,20 +605,10 @@ export class MapComponent implements OnInit {
 
       this.dataProjSeries = result;
 
-      console.log(this.dataProjSeries)
+      // console.log(this.dataProjSeries)
 
       for (let graphic of this.dataProjSeries.timeseries.chartResult) {
 
-        if(graphic.id == "projections_go")
-        {
-          graphic.dataResult.datasets[0].pointBackgroundColor = function() {
-           
-            // if(new Date(graphic.dataResult.last_model_date) < )
-            // return value < 0 ? 'red' :  // draw negative values in red
-            //     index % 2 ? 'blue' :    // else, alternate values in blue and green
-            //         'green';
-        }
-        }
 
         let y = [{
           ticks: {

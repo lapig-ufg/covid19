@@ -267,6 +267,36 @@
 
 							</p-tabView>
 						</mat-tab>
+
+
+						<!-- <mat-tab label="{{dataProjSeries.timeseries.label}}">
+							<p-tabView>
+								<p-tabPanel [header]="selectRegion.nome">
+									<h5 *ngIf="!dataProjSeries.timeseries.chartResult[0]?.show" style="text-align: center;">
+										<br>
+										<br>
+										<strong> {{dataProjSeries.timeseries.not_cases}} {{selectRegion.nome}} </strong>
+										<br>
+										<br>
+									</h5>
+
+									<div *ngIf="dataProjSeries.timeseries.chartResult[0]?.show">
+										<p style="font-weight: bold; text-align: end;">
+											{{dataProjSeries.timeseries.last_updated}}  {{dataProjSeries.timeseries.chartResult[0]?.last_model_date | date : 'dd/MM/yyyy'}}</p>
+										<p-chart [ngStyle]="{'overflow-x': hidden}"
+											*ngIf="dataProjSeries.timeseries.chartResult[0]?.type"
+											[type]="dataProjSeries.timeseries.chartResult[0]?.type"
+											[data]="dataProjSeries.timeseries.chartResult[0]?.dataResult"
+											[options]="dataProjSeries.timeseries.chartResult[0]?.options">
+										</p-chart>
+									</div>
+								</p-tabPanel>
+							</p-tabView>
+						</mat-tab> -->
+
+
+
+
 						<mat-tab label="{{dataSource.title}}">
 							<p-scrollPanel [style]="{width: '100%', height: '60vh'}">
 								<div class="container-ft">
@@ -279,32 +309,6 @@
 							</p-scrollPanel>
 						</mat-tab>
 
-
-						<!-- <mat-tab label="{{dataProjSeries.timeseries.label}}">
-							<p-tabView>
-								<p-tabPanel [header]="selectRegion.nome">
-
-									<h5 *ngIf="!dataProjSeries.timeseries.chartResult[0]?.show" style="text-align: center;">
-										<br>
-										<br>
-										<strong> {{dataProjSeries.timeseries.not_cases}} {{selectRegion.nome}} </strong>
-										<br>
-										<br>
-									</h5>
-
-									<div *ngIf="dataProjSeries.timeseries.chartResult[0]?.show">
-										<p style="font-weight: bold; text-align: center;">
-											{{ dataProjSeries.timeseries.chartResult[0]?.text }}</p>
-										<p-chart [ngStyle]="{'overflow-x': hidden}"
-											*ngIf="dataProjSeries.timeseries.chartResult[0]?.type"
-											[type]="dataProjSeries.timeseries.chartResult[0]?.type"
-											[data]="dataProjSeries.timeseries.chartResult[0]?.dataResult"
-											[options]="dataProjSeries.timeseries.chartResult[0]?.options">
-										</p-chart>
-									</div>
-								</p-tabPanel>
-							</p-tabView>
-						</mat-tab> -->
 
 					</mat-tab-group>
 

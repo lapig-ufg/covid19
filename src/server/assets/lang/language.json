@@ -120,12 +120,20 @@
 					"en-us": "Confirmed future projections"
 				},
 				"not_cases":{
-					"pt-br": "Não foram feitas projeções para municípios sem casos confirmados.",
-					"en-us": "No projections were made for municipalities without confirmed cases."
+					"pt-br": "Não foram feitas projeções para ",
+					"en-us": "No projections were made for "
 				},
 				"text":{
 					"pt-br": "Clique nos botões para atualizar o gráfico.",
 					"en-us": "Click on the buttons here to update the statistics."
+				},
+				"ytitle":{
+					"pt-br": "Nº de casos",
+					"en-us": "Number of cases"
+				},
+				"last_updated":{
+					"pt-br": "Data da última atualização do modelo: ",
+					"en-us": "Model last updated date: "
 				}
 			}
 		},
@@ -252,6 +260,68 @@
 		"search_failed": {
 			"pt-br": "Desculpe, muncípio não encontrada.",
 			"en-us": "Sorry, municipality not found."
+		}
+	},
+	"restricted_area": {
+		"access": {
+			"title": {
+				"pt-br": "Camada de Dados",
+				"en-us": "Layers"
+			},
+			"label_data": {
+				"pt-br": "Informações",
+				"en-us": "Information"
+			},
+			"label_mapabase": {
+				"pt-br": "Mapa Base",
+				"en-us": "BaseMap"
+			},
+			"label_limits": {
+				"pt-br": "Limites",
+				"en-us": "Limits"
+			},
+			"search_placeholder": {
+				"pt-br": "Por favor informe um Município",
+				"en-us": "Please inform a Municipality name"
+			},
+			"search_loading": {
+				"pt-br": "Procurando...",
+				"en-us": "Searching"
+			},
+			"search_failed": {
+				"pt-br": "Desculpe, muncípio não encontrada.",
+				"en-us": "Sorry, municipality not found."
+			}
+		},
+		"form": {
+			"title": {
+				"pt-br": "Camada de Dados",
+				"en-us": "Layers"
+			},
+			"label_data": {
+				"pt-br": "Informações",
+				"en-us": "Information"
+			},
+			"label_mapabase": {
+				"pt-br": "Mapa Base",
+				"en-us": "BaseMap"
+			},
+			"label_limits": {
+				"pt-br": "Limites",
+				"en-us": "Limits"
+			},
+			"search_placeholder": {
+				"pt-br": "Por favor informe um Município",
+				"en-us": "Please inform a Municipality name"
+			},
+			"search_loading": {
+				"pt-br": "Procurando...",
+				"en-us": "Searching"
+			},
+			"search_failed": {
+				"pt-br": "Desculpe, muncípio não encontrada.",
+				"en-us": "Sorry, municipality not found."
+			}
 		}
 	},
 	"descriptor": {

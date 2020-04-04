@@ -69,7 +69,6 @@ module.exports = function (app) {
       sub = "(select nome from municipios where cd_geocmu = '" + cd_geocmu + "')"
       filter = "cd_geocmu = '" + cd_geocmu + "' "
     }
-    console.log(cd_geocmu)
     return [
       {
         id: 'projections_go',

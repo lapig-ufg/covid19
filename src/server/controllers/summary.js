@@ -17,7 +17,6 @@ module.exports = function (app) {
         let indicators = request.queryResult['resumed_indicators']
         let last = request.queryResult['last_update']
 
-        console.log(indicators)
         if (indicators.length == 0) {
             indicators.push( {
                 nome: 'vazio',
@@ -31,8 +30,6 @@ module.exports = function (app) {
             resumed: indicators[0],
             last_update: last[0]
         }
-
-        console.log(result)
 
         response.send(result)
         response.end()
