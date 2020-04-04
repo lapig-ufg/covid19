@@ -84,30 +84,29 @@ module.exports = function (app) {
     return data;
   }
 
-  function createProjectionsGO(labels, graphic, language) {
+  function createProjectionsGO(labels, graphic, conf, language) {
 
     let data = {
       labels: graphic.map(element => formatDate(element.data, language)),
       datasets: [
         {
           label: labels.label_confirmados,
-          data: graphic.map(element => parseInt(element.confirmados)),
+          data: conf.map(element => parseInt(element.confirmados)),
           fill: false,
           backgroundColor: '#e31425',
           borderColor: '#e31425',
+          // borderDash: labels.borderDashRef,
           spanGaps: true,
-          pointBackgroundColor: ""
-        }
-        // {
-        //   label: labels.label_previstos,
-        //   data: prev.map(element => parseInt(element.confirmados)),
-        //   fill: false,
-        //   backgroundColor: '#c9700a',
-        //   borderColor: '#c9700a',
-        //   borderDash: labels.borderDashRef,
-        //   spanGaps: true,
-
-        // }
+        },
+        {
+          label: labels.label_previstos,
+          data: graphic.map(element => parseInt(element.confirmados)),
+          fill: false,
+          backgroundColor: '#c9700a',
+          borderColor: '#c9700a',
+          spanGaps: true,
+          borderDash: labels.borderDashRef,
+        },
 
       ]
     };
@@ -234,8 +233,8 @@ module.exports = function (app) {
         label_confirmados: languageJson["charts_box"]["charts_box_projecoes"]["projections_go"]["label_confirmados"][language],
         label_recuperados: languageJson["charts_box"]["charts_box_projecoes"]["projections_go"]["label_recuperados"][language],
         label_obitos: languageJson["charts_box"]["charts_box_projecoes"]["projections_go"]["label_obitos"][language],
-        label_previstos:  languageJson["charts_box"]["charts_box_projecoes"]["projections_go"]["label_previstos"][language],
-        borderDashRef: [5, 5],
+        label_previstos: languageJson["charts_box"]["charts_box_projecoes"]["projections_go"]["label_previstos"][language],
+        borderDashRef: [4, 4],
         getText: function (chart) {
 
           var text = languageJson["charts_box"]["charts_box_projecoes"]["projections_go"]["title"][language];
@@ -261,7 +260,12 @@ module.exports = function (app) {
           },
           tooltips: {},
           scales: {
-            yAxes: [],
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: languageJson["charts_box"]["charts_box_projecoes"]["projections_go"]["ytitle"][language],
+              }
+            }],
             xAxes: []
           }
 
@@ -282,12 +286,17 @@ module.exports = function (app) {
         if (qr.length > 0) {
           chart['show'] = true
           qr.filter(item => item.confirmados != -1)
-          .forEach(item => qFinal.push(item))
-            // .forEach(item => item.tipo == 'Obs' ? conf.push(item) : prev.push(item)            )
-        }
+            .forEach(item => {
+              // .forEach(item => item.tipo == 'Obs' ? conf.push(item) : prev.push(item)            )
 
-        chart["dataResult"] = createProjectionsGO(chart, qFinal, language);
-        chart["last_model_date"] = qr[0]['last_model_date']
+              qFinal.push(item)
+              if (item.tipo == 'Obs') {
+                  conf.push(item)
+              }
+            });
+            chart["last_model_date"] = qFinal[0]['last_model_date']
+        }
+        chart["dataResult"] = createProjectionsGO(chart, qFinal, conf, language);
       }
       else {
         chart["dataResult"] = qr
@@ -299,6 +308,7 @@ module.exports = function (app) {
       timeseries: {
         label: languageJson["charts_box"]["charts_box_projecoes"]["label"][language],
         not_cases: languageJson["charts_box"]["charts_box_projecoes"]["projections_go"]["not_cases"][language],
+        last_updated: languageJson["charts_box"]["charts_box_projecoes"]["projections_go"]["last_updated"][language],
         chartResult: chartResult
       }
     };
