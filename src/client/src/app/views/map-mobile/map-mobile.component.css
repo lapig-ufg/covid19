@@ -346,8 +346,6 @@ table tr td {
 	background-color: #dd4646;
 	padding-top: 5px;
 	padding-bottom: 5px;
-	margin-right: 3px;
-	margin-left: 3px;
 	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
 	box-shadow: -1px 1px 10px 0px #7a2525;
 }
@@ -903,8 +901,8 @@ mat-select {
 .controls {
 	position: absolute;
 	display: flex;
-	left: 12%;
-	top: 2%;
+	right: 23%;
+	top: 25%;
 	z-index: 10000;
 	padding: 10px;
 	border-radius: 10px;
@@ -913,11 +911,14 @@ mat-select {
 
 .btn-layers {
 	cursor: pointer;
-	padding: 15px;
-	margin-left: 10px;
-	background-color: #823333;
+	padding: 5px;
+	background-color: #7e1e17;
 	border-radius: 100px;
 	transition: 0.3s;
+	width: 60%;
+	margin-left: 20%;
+	color: white;
+	font-size: 0.7rem;
 }
 
 .btn-layers:hover {
