@@ -56,6 +56,13 @@
 									<h2>{{summary.obitos}}</h2>
 								</div>
 							</div>
+							<div class="resumo">
+								<div matTooltip="Sair do Município" *ngIf="this.selectRegion != this.defaultRegion"
+									[class]="'btn-layers'" aria-label="Sair do Município" (click)="updateRegion(defaultRegion)">
+									<img width="22" height="22" src="../../assets/img/close-button.svg" alt="Sair do Município">
+									Sair do Município
+								</div>
+							</div>
 						</div>
 				<img class="dpat-logo" src="https://o1.lapig.iesa.ufg.br/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=covid19_municipios_casos&format=image/png">
 				<!-- <div class="card-mobile">
