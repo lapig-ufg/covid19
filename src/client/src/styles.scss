@@ -294,13 +294,6 @@ body {
 	background: #dd4646;
 }
 
-:host {
-	.mat-form-field-label,
-	.mat-focused .mat-form-field-label {
-		color: #dd4646 !important;
-	}
-}
-
 .mat-drawer-backdrop.mat-drawer-shown {
 	background-color:transparent !important;
 	visibility: hidden !important;

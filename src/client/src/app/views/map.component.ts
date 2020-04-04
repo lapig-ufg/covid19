@@ -205,6 +205,10 @@ export class MapComponent implements OnInit {
   lastUpdate: any;
 
   restrictedArea:boolean;
+  user:any;
+
+  msg:any;
+  display:boolean;
 
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
 
@@ -313,8 +317,9 @@ export class MapComponent implements OnInit {
     this.lastUpdate = {};
     this.updateSummary();
 
-    this.restrictedArea = true;
-
+    this.restrictedArea = false;
+    this.user = {};
+    this.display = false;
   }
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -665,7 +670,10 @@ export class MapComponent implements OnInit {
       this.valueRegion = '';
       this.currentData = {
         text: ''
-      }
+      };
+
+      this.user = {};
+      this.restrictedArea = false;
 
       let l = this.layersNames.find(element => element.id === 'urban_traffic');
       this.changeVisibility(l, { checked: false });
@@ -1514,7 +1522,7 @@ export class MapComponent implements OnInit {
   onResize(event) {
     this.innerHeigth = window.innerHeight;
     if (window.innerWidth < 1480) {
-      this.currentZoom = 5.7;
+      this.currentZoom = 6.2;
     } else {
       this.currentZoom = 7.6;
     }
@@ -1562,16 +1570,29 @@ export class MapComponent implements OnInit {
 
     let dialogRestrictedAreaAccess = this.dialog.open(RestrictedAreaAccessComponent, dialogConfig);
 
-    const sub = dialogRestrictedAreaAccess.componentInstance.requireAccess.subscribe(() => {
+   dialogRestrictedAreaAccess.componentInstance.userEvent.subscribe((user) => {
+      this.user = user;
+      this.updateRegion(user);
+      this.restrictedArea = true;
+      dialogRestrictedAreaAccess.close();
+    });
+
+   dialogRestrictedAreaAccess.componentInstance.requireAccess.subscribe(() => {
       const dialogConfig = new MatDialogConfig();
 
       dialogConfig.disableClose = false;
       dialogConfig.id = "modal-restricted-area-form";
 
-      this.dialog.open(RestrictedAreaFormComponent, dialogConfig);
+      let restrictedAreaFormRef = this.dialog.open(RestrictedAreaFormComponent, dialogConfig);
+      restrictedAreaFormRef.componentInstance.msgEvent.subscribe((msg) => {
+         this.display = true;
+         this.msg = msg;
+          restrictedAreaFormRef.close();
+       });
 
       dialogRestrictedAreaAccess.close();
     });
+
   }
 
   ngOnInit() {
@@ -1630,7 +1651,7 @@ export class MapComponent implements OnInit {
     this.innerHeigth = window.innerHeight;
 
     if (window.innerWidth < 1480) {
-      this.currentZoom = 5.7;
+      this.currentZoom = 6.2;
     } else {
       this.currentZoom = 7.6;
     }

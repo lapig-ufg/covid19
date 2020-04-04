@@ -25,6 +25,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
@@ -53,6 +55,8 @@ import { FileUploadComponent } from './views/file-upload/file-upload.component';
 import { MetadataComponent } from './views/metadata/metadata.component';
 import { GoogleAnalyticsService } from  './services/google-analytics.service'
 
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MapMobileComponent, DialogMobile } from './views/map-mobile/map-mobile.component';
@@ -61,6 +65,8 @@ import { RestrictedAreaAccessComponent } from './views/restricted-area-access/re
 import { RestrictedAreaFormComponent } from './views/restricted-area-form/restricted-area-form.component';
 
 registerLocaleData(localePt);
+
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
 const ENTRY_COMPONENTS = [
   MetadataComponent,
@@ -117,13 +123,16 @@ const ENTRY_COMPONENTS = [
     MatButtonToggleModule,
     MatInputModule,
     MatFormFieldModule,
+    MatSnackBarModule,
+    MatAutocompleteModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    NgbModule
+    NgbModule,
+    NgxMaskModule.forRoot(options)
   ],
 
   entryComponents:[ENTRY_COMPONENTS],
