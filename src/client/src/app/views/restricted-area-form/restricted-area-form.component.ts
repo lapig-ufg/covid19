@@ -118,8 +118,9 @@ export class RestrictedAreaFormComponent implements OnInit {
 
       this.http.post('/service/restrictedAccess/requireAccess', JSON.stringify(dados), this.httpOptions).subscribe(result => {
         this.erroMsg = false;
+        let response = result;
 
-        if(result.length <= 0){
+        if(response.length <= 0){
           this.display = true;
           this.msg = "Não foi possível enviar sua solicitação. Por favor, tente novamente. Se o problema persistir, contate a administração da plataforma!";
         }else{
