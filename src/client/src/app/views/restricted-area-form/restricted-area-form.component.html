@@ -3,6 +3,9 @@
         <img src="../.././../assets/logo/logo_white.png" alt="COVIDGOIÀS">
         <h4>Solicitação de acesso à Área Restrita</h4>
     </div>
+
+    <span class="erros-http">{{erroMsg}}</span>
+
     <mat-form-field appearance="outline" [floatLabel]="'auto'">
         <mat-label>Nome do responsável</mat-label>
         <input matInput [(ngModel)]="nomeresponsavel">
@@ -16,7 +19,7 @@
 
     <mat-form-field appearance="outline" [floatLabel]="'auto'">
         <mat-label>Telefone para contato</mat-label>
-        <input matInput [(ngModel)]="telefone" mask="00 00000 0000">
+        <input matInput [(ngModel)]="telefone" mask="(00) 00000-0000">
         <span class="erros" *ngIf="errorTelefone">O preenchimento do telefone para contato é obrigatório</span>
     </mat-form-field>
     <mat-form-field appearance="outline" [floatLabel]="'auto'">
@@ -24,11 +27,17 @@
         <input matInput [(ngModel)]="orgao">
         <span class="erros" *ngIf="errorOrgao">O preenchimento da Instituição do solicitante é obrigatório</span>
     </mat-form-field>
-    <mat-form-field appearance="outline" [floatLabel]="'auto'">
+
+    <mat-form-field class="auto-complete" appearance="outline" [floatLabel]="'auto'">
         <mat-label>Munícipio de origem</mat-label>
-        <mat-select [(ngModel)]="cd_geocmu">
-            <mat-option value="option">Option</mat-option>
-        </mat-select>
+        <input type="text"
+               matInput
+               [(ngModel)]="cd_geocmu"
+               [formControl]="countiesControl"
+               [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let county of filteredOptions | async" [value]="county.value + ' - ' + county.label">{{county.value + " - " + county.label}}</mat-option>
+        </mat-autocomplete>
         <span class="erros" *ngIf="errorCd_geocmu">A seleção município de origem é obrigatória</span>
     </mat-form-field>
     <div class="group-btn">

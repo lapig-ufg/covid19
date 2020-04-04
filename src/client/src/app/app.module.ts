@@ -25,6 +25,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
@@ -121,6 +123,8 @@ const ENTRY_COMPONENTS = [
     MatButtonToggleModule,
     MatInputModule,
     MatFormFieldModule,
+    MatSnackBarModule,
+    MatAutocompleteModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
