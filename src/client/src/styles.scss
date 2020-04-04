@@ -22,6 +22,14 @@ body {
 	opacity: unset;
 }
 
+#tab-mobile .dropdown-menu.show {
+	display: contents !important;
+}
+
+#tab-mobile .mat-tab-body-content {
+	overflow: hidden;
+}
+
 .mat-mini-fab {
 	width: 35px !important;
 	height: 35px !important;
