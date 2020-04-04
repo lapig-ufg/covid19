@@ -10,27 +10,7 @@
 </nav>
 <mat-tab-group id="tab-mobile" style="height: 88%"> 
 		<mat-tab label = "Mapa">  
-				<!-- <div class="controls">	
-					<div matTooltip="Acessar camada de dados"
-						[class]="showDrawer ? 'btn-layers btn-layers-active' : 'btn-layers'" aria-label="Camadas de dados"
-						(click)="handleDrawer()">
-						<img width="30" height="30" src="../../assets/img/search-mobile.svg" alt="">
-					</div>
-					<div matTooltip="Mais Zoom"
-							[class]="'btn-layers'" aria-label="Mais Zoom" (click)="zoomIn()">
-						<img width="30" height="30" src="../../assets/img/mais.svg" alt="Mais Zoom">
-					</div>
-					<div matTooltip="Visualizar estatísticas"
-						[class]="showStatistics ? 'btn-layers btn-layers-active' : 'btn-layers'" aria-label="Estatísticas"
-						(click)="showStatistics = !showStatistics">
-						<img width="30" height="30" src="../../assets/img/charts.svg" alt="Estatísticas">
-					</div>
-					<div matTooltip="Menos Zoom"
-						[class]="'btn-layers'" aria-label="Menos Zoom" (click)="zoomOut()">
-						<img width="30" height="30" src="../../assets/img/menos.svg" alt="Menos Zoom">
-					</div>
-				</div> -->
-			<mat-drawer #drawer [style.z-index]="showDrawer? '4' : '-1'" class="layer-sidenav" mode="over" [autoFocus]="false"
+			<!-- <mat-drawer #drawer [style.z-index]="showDrawer? '4' : '-1'" class="layer-sidenav" mode="over" [autoFocus]="false"
 				[opened]="showDrawer">
 				<div class="container-drawer">
 						<ng-template #rt let-r="result" let-t="term">
@@ -52,20 +32,43 @@
 				<button mat-raised-button matTooltip="Acessar camada de dados"  class="controls button-search-mobile" (click)="handleDrawer()">
 						<img width="40" height="40" src="../../assets/img/search-mobile.svg" alt="">
 				</button>
-			</div>
+			</div> -->
 			<div id="map" class="dpat-ol-map" style="overflow: hidden" [style.height]="(innerHeigth - 115) + 'px'">
+					<div class="container-resumo">
+							<div class="resumo-subtitle-card">
+								<h1 class="resumo-subtitle"> {{textSummary.title}} </h1>
+								<p> {{textSummary.last_update_label}} {{lastUpdate.data}}</p>
+								<p> {{textSummary.source_text}}</p>
+							</div>
+							<div class="resumo">
+								<div class="card-resumo">
+									<div class="card-resumo-title confirmado" title="Titulo">{{textSummary.confirmed_label}}
+									</div>
+									<h2>{{summary.confirmados}}</h2>
+								</div>
+								<div *ngIf="!isFilteredByCity" class="card-resumo">
+									<div class="card-resumo-title recuperado" title="Titulo">{{textSummary.suspects_label}}
+									</div>
+									<h2>{{summary.suspeitos}}</h2>
+								</div>
+								<div class="card-resumo">
+									<div class="card-resumo-title obitos" title="Titulo">{{textSummary.deaths_label}}</div>
+									<h2>{{summary.obitos}}</h2>
+								</div>
+							</div>
+						</div>
 				<img class="dpat-logo" src="https://o1.lapig.iesa.ufg.br/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=covid19_municipios_casos&format=image/png">
-				<div class="card-mobile">
+				<!-- <div class="card-mobile">
 					<div class="card">
 						<div *ngIf="infodata && !clickable" class="card-body">
 									<p class="card-text">{{infodata.nome}} - {{infodata.uf}}</p>
 									<p class="card-result">Confirmados: {{infodata.confirmados}}</p>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</mat-tab> 
-		<mat-tab  label = "Total"  style="overflow-x: hidden"> 
+		<!-- <mat-tab  label = "Total"  style="overflow-x: hidden"> 
 				<p-scrollPanel [style]="{width: '100%', height: '100%'}">
 					<div class="resumo-subtitle-card">
 							<h1 class="resumo-subtitle">Casos no Estado de Goiás</h1>
@@ -78,7 +81,7 @@
 								<div class="card-resumo-title confirmado" title="Titulo">Confirmados</div>
 								<h2>{{summary.confirmados}}</h2>
 							</div>
-							<div class="card-resumo">
+							<div *ngIf="!isFilteredByCity" class="card-resumo">
 								<div class="card-resumo-title recuperado" title="Titulo">Suspeitos</div>
 								<h2>{{summary.suspeitos}}</h2>
 							</div>
@@ -89,7 +92,50 @@
 						</div>
 					</div>
 				</p-scrollPanel>
-		</mat-tab> 
+		</mat-tab>  -->
+		<mat-tab  label = "Gráficos" > 
+				<mat-tab label="{{dataSeries.timeseries.label}}" >
+						<p-scrollPanel [style]="{width: '100%', height: '90vh'}" >
+						<ng-template matTabContent>
+							<p-tabView >
+									<p-tabPanel [header]="selectRegion.nome">
+
+											<h5 *ngIf="!dataSeries.timeseries.chartResult[0]?.show" style="text-align: center;">
+												<br>
+												<br>
+												<strong> {{dataSeries.timeseries.not_cases}} {{selectRegion.nome}} </strong>
+												<br>
+												<br>
+											</h5>
+		
+											<div *ngIf="dataSeries.timeseries.chartResult[0]?.show">
+												<p style="font-weight: bold; text-align: center;">
+													{{ dataSeries.timeseries.chartResult[0]?.text }}</p>
+												<p-chart [ngStyle]="{'overflow-x': hidden}"
+												height="37vh"
+													*ngIf="dataSeries.timeseries.chartResult[0]?.type"
+													[type]="dataSeries.timeseries.chartResult[0]?.type"
+													[data]="dataSeries.timeseries.chartResult[0]?.dataResult"
+													[options]="dataSeries.timeseries.chartResult[0]?.options">
+												</p-chart>
+											</div>
+										</p-tabPanel>
+								<p-tabPanel  [header]="dataStates.label" id="tabGraficoLinhas">
+									<h6 style="text-align: center;">
+										<b>{{dataStates.description}}</b>
+									</h6>
+									<p-chart type="bar" height="36.5vh" [data]="dataStates" [options]="optionsStates">
+									</p-chart>
+								</p-tabPanel>
+								<div>
+									<button mat-raised-button style="background-color: #7e1116; margin-bottom: 10px;" (click)="openDialog()">Fontes</button>
+								</div>
+							</p-tabView>
+							<p style="padding: 0px 10px; text-align: justify; font-size: 10px; line-height: 1.6">Acesse a plataforma no computador para uma melhor experiência de visualização, acesso a outros dados e funcionalidades.</p>
+						</ng-template>
+					</p-scrollPanel>
+				</mat-tab>
+		</mat-tab>
 		<mat-tab  (click)="handleAnalytics('charts', 'dados_oficiais', 'Municípios')" label = "Municípios" >
 				<p-scrollPanel [style]="{width: '100%', height: '100%'}">
 						<p-table [value]="chartResultCities.series">
@@ -109,41 +155,7 @@
 							</ng-template>
 						</p-table>
 					</p-scrollPanel>
-		</mat-tab> 
-		<mat-tab  label = "Gráficos" > 
-				<mat-tab label="{{dataSeries.timeseries.label}}" >
-						<p-scrollPanel [style]="{width: '100%', height: '72vh'}" >
-						<ng-template matTabContent>
-							<p-tabView >
-									<p-tabPanel [header]="dataSeries.timeseries.chartResult[0]?.title"
-									[disabled]="!dataSeries.timeseries.chartResult[0]?.show">
-									<div>
-										<p style="font-weight: bold; text-align: center;">
-											{{ dataSeries.timeseries.chartResult[0]?.text }}</p>
-										<p-chart [ngStyle]="{'overflow-x': hidden}"
-											*ngIf="dataSeries.timeseries.chartResult[0]?.type"
-											[type]="dataSeries.timeseries.chartResult[0]?.type"
-											[data]="dataSeries.timeseries.chartResult[0]?.dataResult"
-											[options]="dataSeries.timeseries.chartResult[0]?.options">
-										</p-chart>
-									</div>
-								</p-tabPanel>
-								<p-tabPanel [header]="dataStates.label" id="tabGraficoLinhas">
-										<h6 style="text-align: center;">
-											<b>{{dataStates.description}}</b>
-										</h6>
-										<p-chart type="horizontalBar" [data]="dataStates" [options]="optionsStates">
-										</p-chart>
-								</p-tabPanel>
-								<div>
-									<button mat-raised-button style="background-color: #7e1116; margin-bottom: 10px;" (click)="openDialog()">Fontes</button>
-								</div>
-							</p-tabView>
-							<p style="padding: 0px 10px; text-align: justify; font-size: 10px;">Acesse a plataforma no computador para uma melhor experiência de visualização, acesso a outros dados e funcionalidades.</p>
-						</ng-template>
-					</p-scrollPanel>
-				</mat-tab>
-		</mat-tab> 
+		</mat-tab>  
 		<mat-tab  label = "Ajuda" > 
 				<p-scrollPanel [style]="{width: '100%', height: '100%'}">
 					<div style="padding: 10px">
