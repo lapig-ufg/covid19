@@ -14,6 +14,10 @@
 				"pt-br": "Dados Oficiais",
 				"en-us": "Official Data"
 			},
+			"not_cases": {
+				"pt-br": "Não existem casos confirmados em ",
+				"en-us": "There are no confirmed cases in"
+			},
 			"timeseries_go":{
 				"title": {
 					"pt-br": "Dados da Secretaria de Saúde do Estado de Goiás",
@@ -188,8 +192,8 @@
 	},
 	"summary_box":{
 		"title":{
-			"pt-br": "Casos no Estado de Goiás",
-			"en-us": "Cases in the State of Goiás"
+			"pt-br": "Casos no ? de ",
+			"en-us": "Cases in the ? of "
 		},
 		"last_update_label":{
 			"pt-br": "Última atualização em: ",
@@ -231,7 +235,7 @@
 		},
 		"search_placeholder": {
 			"pt-br": "Por favor informe um Município",
-			"en-us": "Please inform a State or Municipality name"
+			"en-us": "Please inform a Municipality name"
 		},
 		"search_loading": {
 			"pt-br": "Procurando...",
@@ -250,13 +254,13 @@
 		"informacoes": {
 			"label": {
 				"pt-br": "Informações",
-				"en-us": "Informations"
+				"en-us": "Information"
 			},
 			"layers": {
 				"casos_covid_confirmados": {
 					"label": {
-						"pt-br": "Incidência de Casos",
-						"en-us": "Case Incidence"
+						"pt-br": "Incidência de Casos do COVID-19",
+						"en-us": "COVID-19 Case Incidence"
 					},
 					"types": {
 						"covid19_municipios_casos": {
@@ -278,9 +282,23 @@
 					}]
 
 				},
+				"urban_traffic":{
+					"label":{
+						"pt-br": "Tráfego Urbano pelo Google Traffic",
+						"en-us": "Urban Traffic by Google Traffic"
+					},
+					"types": {
+						"urban_traffic_real_time": {
+							"view_value": {
+								"pt-br": "Google Traffic",
+								"en-us": "Google Traffic"
+							}
+						}
+					}
+				},
 				"qtd_populacional": {
 					"label": {
-						"pt-br": "População- IBGE",
+						"pt-br": "População - IBGE",
 						"en-us": "Population - IBGE"
 					},
 					"metadata": [{
@@ -363,6 +381,10 @@
 				"googlemaps": {
 					"pt-br": "Google Maps",
 					"en-us": "Google Maps"
+				},
+				"trafficgoogle": {
+					"pt-br": "Tráfego Urbano em tempo real (Google Maps)",
+					"en-us": "Real-time Urban Traffic (Google Maps)"
 				}
 			}
 		},

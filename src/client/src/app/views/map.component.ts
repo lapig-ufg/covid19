@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, HostListener, Injectable, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogConfig  } from '@angular/material';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as OlExtent from 'ol/extent.js';
@@ -33,10 +33,22 @@ import { MetadataComponent } from './metadata/metadata.component';
 import CropFilter from 'ol-ext/filter/Crop';
 import MaskFilter from 'ol-ext/filter/Mask';
 import MultiPolygon from 'ol/geom/MultiPolygon';
-import { defaults as defaultControls, Control } from 'ol/control';
+import { defaults as defaultControls, Control, Attribution } from 'ol/control';
+
+import { google } from "google-maps";
 
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
-import { AjudaComponent } from "./ajuda/ajuda.component";
+import { HelpComponent } from "./help/help.component";
+import {RestrictedAreaAccessComponent} from "./restricted-area-access/restricted-area-access.component";
+import {RestrictedAreaFormComponent} from "./restricted-area-form/restricted-area-form.component";
+
+import OLGoogleMaps from 'olgm/OLGoogleMaps.js';
+import GoogleLayer from 'olgm/layer/Google.js';
+
+/// <reference types="@types/googlemaps" />
+
+
+declare var google: google;
 
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
@@ -64,7 +76,8 @@ export class SearchService {
   selector: 'app-map',
   templateUrl: './map.component.html',
   providers: [SearchService],
-  styleUrls: ['./map.component.css'],
+  styleUrls: ['./map.component.css']
+
 })
 export class MapComponent implements OnInit {
   map: OlMap;
@@ -92,6 +105,8 @@ export class MapComponent implements OnInit {
   viewWidth = 600;
   viewWidthMobile = 350;
   chartRegionScale: boolean;
+
+  trafficgoogle: any;
 
   textOnDialog: any;
   mapbox: any;
@@ -189,6 +204,8 @@ export class MapComponent implements OnInit {
   summary: any;
   lastUpdate: any;
 
+  restrictedArea:boolean;
+
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
 
   constructor(
@@ -220,7 +237,7 @@ export class MapComponent implements OnInit {
     this.textSummary = {};
 
     this.defaultRegion = {
-      nome: 'GO',
+      nome: 'Goiás',
       area_mun: 1547.26991096032,
       estado: 'GOIÁS',
       uf: 'GO',
@@ -295,7 +312,8 @@ export class MapComponent implements OnInit {
     this.summary = {};
     this.lastUpdate = {};
     this.updateSummary();
-    this.ultimaAtualizacao()
+
+    this.restrictedArea = true;
 
   }
   search = (text$: Observable<string>) =>
@@ -346,9 +364,7 @@ export class MapComponent implements OnInit {
   private getServiceParams() {
     let params = [];
 
-    if (this.selectRegion.type != '') {
-      params.push('cd_geocmu=' + this.selectRegion.cd_geocmu);
-    }
+    params.push('cd_geocmu=' + this.selectRegion.cd_geocmu);
 
     params.push('lang=' + this.language);
 
@@ -376,30 +392,29 @@ export class MapComponent implements OnInit {
 
       });
     }
-
   }
 
   private updateExtent() {
     let extenUrl = '/service/map/extent' + this.getServiceParams();
 
-    if (this.selectRegion.type != "") {
-      var map = this.map;
-      this.http.get(extenUrl).subscribe(extentResult => {
-        var features = new GeoJSON().readFeatures(extentResult, {
-          dataProjection: "EPSG:4326",
-          featureProjection: "EPSG:3857"
-        });
-
-        this.regionSource = this.regionsLimits.getSource();
-        this.regionSource.clear();
-        this.regionSource.addFeature(features[0]);
-
-        var extent = features[0].getGeometry().getExtent();
-        map.getView().fit(extent, { duration: 1500 });
-
-        this.selectRegion.area_mun = extentResult["area_mun"];
+    // if (this.selectRegion.type != "") {
+    var map = this.map;
+    this.http.get(extenUrl).subscribe(extentResult => {
+      var features = new GeoJSON().readFeatures(extentResult, {
+        dataProjection: "EPSG:4326",
+        featureProjection: "EPSG:3857"
       });
-    }
+
+      this.regionSource = this.regionsLimits.getSource();
+      this.regionSource.clear();
+      this.regionSource.addFeature(features[0]);
+
+      var extent = features[0].getGeometry().getExtent();
+      map.getView().fit(extent, { duration: 1500 });
+
+      this.selectRegion.area_mun = extentResult["area_mun"];
+    });
+    // }
   }
 
   changeTab(event) {
@@ -468,6 +483,27 @@ export class MapComponent implements OnInit {
 
     this.http.get(sumBoxURL).subscribe(result => {
       this.textSummary = result;
+
+      let sp = this.textSummary.title.split("?")
+      let tmp = ''
+
+      if (this.selectRegion.cd_geocmu == '52') {
+        if (this.language == 'pt-br') {
+          tmp = "Estado"
+        }
+        else {
+          tmp = "State"
+        }
+      }
+      else {
+        if (this.language == 'pt-br') {
+          tmp = "Município"
+        }
+        else{
+          tmp = "Municipality"
+        }
+      }
+      this.textSummary.title = sp[0] + tmp + sp[1] + this.selectRegion.nome
     });
 
 
@@ -618,29 +654,52 @@ export class MapComponent implements OnInit {
       this.currentData = {
         text: ''
       }
+
+      let l = this.layersNames.find(element => element.id === 'urban_traffic');
+      this.changeVisibility(l, { checked: false });
+      let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+      this.changeVisibility(p, { checked: true });
+
+      this.isFilteredByCity = false;
+    }
+    else{
+      this.isFilteredByCity = true;
     }
 
     this.currentData = region.nome;
-    this.valueRegion = region.nome.toString();
+    this.valueRegion = region.nome;
 
     this.selectRegion = region;
-
-    this.isFilteredByCity = false;
-    this.isFilteredByState = false;
+    this.selectRegion.nome = this.captalizeCity(this.selectRegion.nome)
 
     // if (this.selectRegion.type == 'city') {
     //   this.msFilterRegion = ' cd_geocmu = \'' + this.selectRegion.cd_geocmu + '\'';
-    //   this.isFilteredByCity = true;
+
     //   this.isFilteredByState = true;
     //   this.selectRegion.regionTypeBr = 'Município de ';
     // } else if (this.selectRegion.type == 'state') {
     //   this.msFilterRegion = 'uf = \'' + this.selectRegion.value + '\'';
     //   this.isFilteredByState = true;
     // } else { this.msFilterRegion = ""; }
-
+    this.updateCharts();
     this.updateExtent();
     this.updateSourceAllLayer();
+    this.updateSummary();
     this.googleAnalyticsService.eventEmitter("updateRegion", "search_box", this.valueRegion);
+  }
+
+  private captalizeCity(word: string) {
+    let finalword = "";
+    let tmp = word.toLowerCase().split(" ");
+    for (let i = 0; i < tmp.length; i++) {
+      if (tmp[i] == 'da' || tmp[i] == 'de' || tmp[i] == 'do') {
+        finalword += tmp[i] + " "
+      } else {
+        finalword += tmp[i].charAt(0).toUpperCase() + tmp[i].slice(1) + " "
+      }
+    }
+
+    return finalword
   }
 
   private getResolutions(projection) {
@@ -656,6 +715,7 @@ export class MapComponent implements OnInit {
   private createMap() {
     this.createBaseLayers();
     this.createLayers();
+
 
     this.map = new OlMap({
       target: 'map',
@@ -743,6 +803,7 @@ export class MapComponent implements OnInit {
           if (this.utfgridsource) {
             this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
               if (data) {
+                window.document.body.style.cursor = 'pointer';
 
                 this.infodata = data;
 
@@ -782,6 +843,8 @@ export class MapComponent implements OnInit {
       return feature;
     });
 
+    let layerinfo = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+
     if (feature) {
       var properties = feature.getProperties();
       if (properties.lon != undefined && properties.lat != undefined) {
@@ -791,7 +854,19 @@ export class MapComponent implements OnInit {
     } else if (this.utfgridsource) {
       this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
         if (data) {
+          // console.log(layerinfo, data)
+          if (layerinfo.selectedType == 'covid19_municipios_casos') {
+            this.http.get(SEARCH_URL, { params: PARAMS.set('key', data.nome) }).subscribe(result => {
 
+              let ob = result[0];
+              this.updateRegion(ob);
+              let l = this.layersNames.find(element => element.id === 'urban_traffic');
+              this.changeVisibility(l, { checked: true });
+              let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+              this.changeVisibility(p, { checked: false });
+              this.infodata = null
+            });
+          }
 
         }
       }.bind(this)
@@ -855,9 +930,30 @@ export class MapComponent implements OnInit {
       layer: new OlTileLayer({
         source: new OlXYZ({
           url:
-            'https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
+            'http://mt{0-3}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+          attributions: [
+            new Attribution({ html: '© Google' }),
+            new Attribution({ html: '<a href="https://developers.google.com/maps/terms">Terms of Use.</a>' })
+          ]
+
         }),
         visible: true
+      })
+    };
+
+    this.trafficgoogle = {
+      visible: false,
+      layer: new OlTileLayer({
+        source: new OlXYZ({
+          url:
+            'https://mt1.google.com/vt?lyrs=h@159000000,traffic|seconds_into_week:-1&style=3&x={x}&y={y}&z={z}',
+          attributions: [
+            new Attribution({ html: '© Google' }),
+            new Attribution({ html: '<a href="https://developers.google.com/maps/terms">Terms of Use.</a>' })
+          ]
+
+        }),
+        visible: false
       })
     };
 
@@ -899,7 +995,7 @@ export class MapComponent implements OnInit {
 
     return new VectorLayer({
       source: new VectorSource({
-        url: layer.geoJsonUrl,
+        url: layer.url,
         format: new GeoJSON()
       }),
       style: function (feature) {
@@ -965,6 +1061,7 @@ export class MapComponent implements OnInit {
     return '/ows?layers=' + layername + '&MSFILTER=' + filter + '&mode=tile&tile=' + tile + '&tilemode=gmap&map.imagetype=utfgrid'
   }
 
+
   private createTMSLayer(layer) {
     return new OlTileLayer({
       source: new OlXYZ({
@@ -1000,28 +1097,36 @@ export class MapComponent implements OnInit {
   private parseUrls(layer) {
     let result = [];
 
-    let filters = [];
+    if (layer.source == 'ows') {
 
-    if (layer.timeHandler == 'msfilter' && layer.times) {
-      filters.push(layer.timeSelected);
+      let filters = [];
+
+      if (layer.timeHandler == 'msfilter' && layer.times) {
+        filters.push(layer.timeSelected);
+      }
+
+      if (layer.layerfilter) { filters.push(layer.layerfilter); }
+      if (this.regionFilterDefault != "") { filters.push(this.regionFilterDefault); }
+      if (layer.regionFilter) {
+        this.msFilterRegion = "uf = 'GO'"
+        filters.push(this.msFilterRegion);
+      }
+
+      let msfilter = '';
+      if (filters.length > 0) { msfilter += '&MSFILTER=' + filters.join(' AND '); }
+
+      let layername = layer.value;
+      if (layer.timeHandler == 'layername') { layername = layer.timeSelected; }
+
+      for (let url of this.urls) {
+        result.push(url + '?layers=' + layername + msfilter + '&mode=tile&tile={x}+{y}+{z}' + '&tilemode=gmap' + '&map.imagetype=png');
+      }
+    }
+    else if (layer.source == 'external') {
+      result.push(layer.url)
     }
 
-    if (layer.layerfilter) { filters.push(layer.layerfilter); }
-    if (this.regionFilterDefault != "") { filters.push(this.regionFilterDefault); }
-    if (layer.regionFilter) {
-      this.msFilterRegion = "uf = 'GO'"
-      filters.push(this.msFilterRegion);
-    }
 
-    let msfilter = '';
-    if (filters.length > 0) { msfilter += '&MSFILTER=' + filters.join(' AND '); }
-
-    let layername = layer.value;
-    if (layer.timeHandler == 'layername') { layername = layer.timeSelected; }
-
-    for (let url of this.urls) {
-      result.push(url + '?layers=' + layername + msfilter + '&mode=tile&tile={x}+{y}+{z}' + '&tilemode=gmap' + '&map.imagetype=png');
-    }
     return result;
   }
 
@@ -1041,8 +1146,10 @@ export class MapComponent implements OnInit {
     this.handleInteraction();
 
     let source_layers = this.LayersTMS[layer.value].getSource();
-    source_layers.setUrls(this.parseUrls(layer));
-    source_layers.refresh();
+    if (layer.source != 'geojson') {
+      source_layers.setUrls(this.parseUrls(layer));
+      source_layers.refresh();
+    }
 
   }
 
@@ -1062,6 +1169,7 @@ export class MapComponent implements OnInit {
         }
       }
     }
+
   }
 
   groupLayerschecked(layers, e) {
@@ -1087,7 +1195,7 @@ export class MapComponent implements OnInit {
 
   private handleInteraction() {
 
-    let covid = this.layersNames.find(element => element.id === 'casos-covid');
+    let covid = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
 
     if (covid.visible) {
       if (this.utfgridsource) {
@@ -1116,14 +1224,13 @@ export class MapComponent implements OnInit {
       layer.visible = e.checked;
     }
 
-    if (layer.id == "casos-covid") {
+    if (layer.id == "casos_covid_confirmados") {
       if (layer.visible) {
         this.handleInteraction();
       }
     }
     this.LayersTMS[layer.selectedType].setVisible(layer.visible);
-    this.updateSummary();
-    this.ultimaAtualizacao();
+    // this.updateSummary();
     this.googleAnalyticsService.eventEmitter("changeVisibility", "camadaDado", layer.label);
 
 
@@ -1138,6 +1245,7 @@ export class MapComponent implements OnInit {
       group.label = this.descriptorText[group.id].label[this.language];
 
       for (let layer of group.layers) {
+
         layer.label = this.descriptorText[group.id].layers[layer.id].label[this.language];
 
         for (let layerType of layer.types) {
@@ -1345,15 +1453,46 @@ export class MapComponent implements OnInit {
     let sourceUrl = '/service/summary/data' + this.getServiceParams();
 
     this.http.get(sourceUrl).subscribe(result => {
-      this.summary = result;
+      this.summary = result['resumed'];
+
+      if(this.summary.confirmados == null)
+      {
+        this.summary.confirmados = "0"
+      }
+
+      if (this.summary.obitos == null){
+        this.summary.obitos = "0"
+      }
+      this.lastUpdate = result['last_update']
+
     });
-  }
 
-  private ultimaAtualizacao() {
-    let sourceUrl = '/service/summary/last-update' + this.getServiceParams();
+    let sumBoxURL = '/service/summary/texts' + this.getServiceParams();
 
-    this.http.get(sourceUrl).subscribe(result => {
-      this.lastUpdate = result;
+    this.http.get(sumBoxURL).subscribe(result => {
+      this.textSummary = result;
+
+      let sp = this.textSummary.title.split("?")
+      let tmp = ''
+
+      if (this.selectRegion.cd_geocmu == '52') {
+        if (this.language == 'pt-br') {
+          tmp = "Estado"
+        }
+        else {
+          tmp = "State"
+        }
+      }
+      else {
+        if (this.language == 'pt-br') {
+          tmp = "Município"
+        }
+        else{
+          tmp = "Municipality"
+        }
+      }
+      this.textSummary.title = sp[0] + tmp + sp[1] + this.selectRegion.nome
+
     });
 
   }
@@ -1391,13 +1530,35 @@ export class MapComponent implements OnInit {
   }
 
   openDialogAjuda() {
-    let dialogRef = this.dialog.open(AjudaComponent, {
+    let dialogRef = this.dialog.open(HelpComponent, {
       width: '90%',
       height: '90%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       // console.log('The dialog was closed');
+    });
+  }
+
+  handleRestrictedArea() {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = false;
+    dialogConfig.width = '40%';
+    dialogConfig.id = "modal-restricted-area-access";
+
+    let dialogRestrictedAreaAccess = this.dialog.open(RestrictedAreaAccessComponent, dialogConfig);
+
+    const sub = dialogRestrictedAreaAccess.componentInstance.requireAccess.subscribe(() => {
+      const dialogConfig = new MatDialogConfig();
+
+      dialogConfig.disableClose = false;
+      dialogConfig.id = "modal-restricted-area-form";
+
+      this.dialog.open(RestrictedAreaFormComponent, dialogConfig);
+
+      dialogRestrictedAreaAccess.close();
     });
   }
 
@@ -1412,12 +1573,14 @@ export class MapComponent implements OnInit {
 
       for (let group of this.descriptor.groups) {
         for (let layer of group.layers) {
-
           if (layer.id != 'satelite') {
             for (let type of layer.types) {
               if (type.source == 'geojson') {
                 type.urlLegend = type.iconUrl
-              } else {
+              } else if (type.source == 'external'){
+                type.urlLegend = type.legendUrl
+              }
+              else{
                 type.urlLegend = this.urls[0] + '?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=' + type.value + '&format=image/png';
               }
             }

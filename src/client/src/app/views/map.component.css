@@ -225,9 +225,9 @@ ngb-highlight .ngb-highlight:first-child {
 	background-color: blue;
 }
 
-/*.collapseLayer {
+.collapseLayer {
 	height: 86%
-}*/
+}
 
 .searchRegion {
 	border: 1px solid #d1d1d1;
@@ -807,17 +807,17 @@ mat-select {
 	color: #ffff !important;
 }
 
-::ng-deep .custom .ui-scrollpanel-wrapper {
+::ng-deep .panel-layers .ui-scrollpanel-wrapper {
     border-right: 9px solid #f4f4f4; 
 }
 
-::ng-deep .custom .ui-scrollpanel-bar {
+::ng-deep .panel-layers .ui-scrollpanel-bar {
     background-color: #d21919; 
     opacity: 1; 
     transition: background-color .3s; 
 }
 
-::ng-deep .custom .ui-scrollpanel-bar:hover {
+::ng-deep .panel-layers .ui-scrollpanel-bar:hover {
     background-color: #a11313;
 }
 :host /deep/ .ui-accordion .ui-accordion-header:not(.ui-state-disabled).ui-state-active a {
@@ -1191,6 +1191,8 @@ img[usemap], map area{
 
 .panel-layers{
 	max-height: 100%;
+	background-color: #a11313;
+	border-right: 9px solid #f4f4f4;
 }
 
 .layer_dados{

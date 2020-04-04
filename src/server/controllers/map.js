@@ -53,6 +53,23 @@ module.exports = function (app) {
               value: "covid19_municipios_casos",
               Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_covid_confirmados"]["types"]["covid19_municipios_casos"]["view_value"][language],
               regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            }]
+          },
+          {
+            id: "urban_traffic",
+            label:  languageJson["descriptor"]["informacoes"]["layers"]["urban_traffic"]["label"][language],
+            visible: false,
+            selectedType: "urban_traffic_real_time",
+            types: [{
+              value: "urban_traffic_real_time",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["urban_traffic"]["types"]["urban_traffic_real_time"]["view_value"][language],
+              source: 'external',
+              // url: 'https://mt1.google.com/vt?lyrs=h@159000000,traffic|seconds_into_week:-1&style=3&x={x}&y={y}&z={z}',
+              url: 'https://mt0.google.com/vt/lyrs=m@221097413,traffic&x={x}&y={y}&z={z}',
+              legendUrl: 'assets/legends/legend-trafficgoogle-br.png',
               opacity: 0.8,
               order: 3
             }]
@@ -66,6 +83,7 @@ module.exports = function (app) {
               value: "covid19_ibge_populacao",
               Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["qtd_populacional"]["types"]["covid19_ibge_populacao"]["view_value"][language],
               regionFilter: true,
+              source: 'ows',
               opacity: 0.8,
               order: 3
             }]
@@ -85,7 +103,7 @@ module.exports = function (app) {
               types: [{
                 value: "gyn_locais_vacinacao_gripe",
                 Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["gyn_locais_vacinacao"]["types"]["gyn_locais_vacinacao_gripe"]["view_value"][language],
-                geoJsonUrl: 'service/map/marker?layer=vacinacao_gripe',
+                url: 'service/map/marker?layer=vacinacao_gripe',
                 iconUrl: 'assets/markers/icon.png',
                 source: 'geojson',
                 opacity: 0.8,
@@ -135,6 +153,7 @@ module.exports = function (app) {
             Viewvalue: languageJson["descriptor"]["limits"]["types"]["municipios_goias"][language],
             visible: true,
             layer_limits: true,
+            source: 'ows',
             opacity: 1
           }
         ],
@@ -201,19 +220,19 @@ module.exports = function (app) {
 
     features = []
 
-    for(var i=0; i < queryResult.length; i++) {
-      
+    for (var i = 0; i < queryResult.length; i++) {
+
       geometry = JSON.parse(queryResult[i].geojson)
       delete queryResult[i].geojson
       delete queryResult[i].geom
 
       features.push({
         "type": "Feature",
-         "geometry": geometry,
-         "properties": queryResult[i]
+        "geometry": geometry,
+        "properties": queryResult[i]
 
       })
-      
+
     }
 
     response.send({

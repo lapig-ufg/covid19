@@ -8,10 +8,21 @@ module.exports = function (app) {
 
   Query.timeseries = function (params) {
 
+    var filter = ""
+    var cd_geocmu = params['cd_geocmu']
+
+    if(cd_geocmu == 52)
+    {
+      filter = "cd_geocmu <> '52' AND cd_geocmu <> '5300108' "
+    }
+    else{
+      filter = "cd_geocmu = '" + cd_geocmu + "' "
+    }
+
     return [
       {
         id: 'timeseries_go',
-        sql: "select data, sum(confirmados) as confirmados, sum(suspeitos) as suspeitos, sum(obitos) as obitos , sum(descartados) as descartados from casos where cd_geocmu <> '52' AND cd_geocmu <> '5300108' group by data order by data;"
+        sql: "select (select nome from municipios where cd_geocmu = '" + cd_geocmu + "'), data, sum(confirmados) as confirmados, sum(suspeitos) as suspeitos, sum(obitos) as obitos , sum(descartados) as descartados from casos where " + filter +  " group by data order by data;"
       },
       {
         id: 'timeseries_cities',
@@ -48,7 +59,7 @@ module.exports = function (app) {
     return [
       {
         id: 'confirmados_recuperados',
-        sql: "SELECT data, confirmados, recuperados FROM projecao_casos_go where data >= now() - interval '1' day AND data <= now() + interval '5' day order by data;"
+        sql: "SELECT data, confirmados, recuperados FROM projecao_casos where data >= now() - interval '1' day AND data <= now() + interval '5' day order by data;"
       },
       {
         id: 'next',

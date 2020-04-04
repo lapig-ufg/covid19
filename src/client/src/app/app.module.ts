@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes, Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from "@angular/material";
 
 import { AppComponent } from './app.component';
@@ -30,6 +30,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
 
 import { LOCALE_ID } from '@angular/core';
+import { MAT_LABEL_GLOBAL_OPTIONS } from '@angular/material/core';
+
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
@@ -45,16 +47,29 @@ import { NgxGalleryModule } from 'ngx-image-video-gallery';
 import { CardModule } from 'primeng/card';
 import { AccordionModule } from 'primeng/accordion';
 import { DatePipe } from '@angular/common';
+import { DialogModule } from 'primeng/dialog';
 import { SpinnerImgComponent } from './views/spinner-img/spinner-img.component';
 import { FileUploadComponent } from './views/file-upload/file-upload.component';
 import { MetadataComponent } from './views/metadata/metadata.component';
 import { GoogleAnalyticsService } from  './services/google-analytics.service'
 
-import { APP_BASE_HREF } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MapMobileComponent, DialogMobile } from './views/map-mobile/map-mobile.component';
-import { AjudaComponent } from './views/ajuda/ajuda.component'; 
+import { HelpComponent } from './views/help/help.component';
+import { RestrictedAreaAccessComponent } from './views/restricted-area-access/restricted-area-access.component';
+import { RestrictedAreaFormComponent } from './views/restricted-area-form/restricted-area-form.component';
 
 registerLocaleData(localePt);
+
+const ENTRY_COMPONENTS = [
+  MetadataComponent,
+  MapComponent,
+  DialogMobile,
+  HelpComponent,
+  RestrictedAreaAccessComponent,
+  RestrictedAreaFormComponent
+];
 
 @NgModule({
   declarations: [
@@ -65,7 +80,9 @@ registerLocaleData(localePt);
     MetadataComponent,
     MapMobileComponent,
     DialogMobile,
-    AjudaComponent
+    HelpComponent,
+    RestrictedAreaAccessComponent,
+    RestrictedAreaFormComponent
   ],
   imports: [
     TabViewModule,
@@ -81,6 +98,7 @@ registerLocaleData(localePt);
     AccordionModule,
     TableModule,
     ChartModule,
+    DialogModule,
     MatDialogModule,
     BrowserAnimationsModule,
     MatExpansionModule,
@@ -97,16 +115,22 @@ registerLocaleData(localePt);
     MatSidenavModule,
     MatTooltipModule,
     MatButtonToggleModule,
+    MatInputModule,
+    MatFormFieldModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     NgbModule
   ],
-  entryComponents:[MetadataComponent, MapComponent, DialogMobile, AjudaComponent],
+
+  entryComponents:[ENTRY_COMPONENTS],
+
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
+    { provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: {float: 'always'} },
     DatePipe,
     GoogleAnalyticsService
   ],
