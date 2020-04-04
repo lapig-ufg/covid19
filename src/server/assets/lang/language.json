@@ -98,10 +98,10 @@
 				"pt-br": "Projeções",
 				"en-us": "Projections"
 			},
-			"confirmados_recuperados":{
+			"projections_go":{
 				"title": {
-					"pt-br": "Estimativas da quantidade de casos para o Estado de Goiás",
-					"en-us": "Estimates on the number of cases for the State of Goiás"
+					"pt-br": "Estimativas da quantidade de casos para o ",
+					"en-us": "Estimates on the number of cases for the "
 				},
 				"label_confirmados":{
 					"pt-br": "Confirmados",
@@ -114,6 +114,14 @@
 				"label_obitos":{
 					"pt-br": "Óbitos",
 					"en-us": "Deaths"
+				},
+				"label_previstos":{
+					"pt-br": "Projeção de Confirmados",
+					"en-us": "Confirmed future projections"
+				},
+				"not_cases":{
+					"pt-br": "Não foram feitas projeções para municípios sem casos confirmados.",
+					"en-us": "No projections were made for municipalities without confirmed cases."
 				},
 				"text":{
 					"pt-br": "Clique nos botões para atualizar o gráfico.",
@@ -186,8 +194,8 @@
 			"en-us": "View on Google Maps "
 		},
 		"label_clickable": {
-			"pt-br": "Informações",
-			"en-us": "Informations"
+			"pt-br": "Nome não informado",
+			"en-us": "Name not available"
 		}
 	},
 	"summary_box":{
@@ -331,8 +339,8 @@
 			"layers": {
 				"pharmacy_supermarket_hospital": {
 					"label": {
-						"pt-br": "Hospitais, Farmácias e Supermercados",
-						"en-us": "Hospitals, Pharmacies and Supermarkets"
+						"pt-br": "Hospitais",
+						"en-us": "Hospitals"
 					},
 					"types": {
 						"pharmacy_supermarket_hospital_covid": {
@@ -356,8 +364,77 @@
 							}
 						}
 					}
+				},	
+				"go_leitos_mun_clinicos_uti": {
+					"label": {
+						"pt-br": "Quantidade de Leitos Geral e UTI",
+						"en-us": "Number of General Clinic and ICU Beds"
+					},
+					"types": {
+						"go_leitos_mun_clinica_covid": {
+							"view_value": {
+								"pt-br": "Clínica Geral",
+								"en-us": "General Clinic"
+							}
+						},
+						"go_leitos_mun_uti_covid": {
+							"view_value": {
+								"pt-br": "UTI",
+								"en-us": "ICU"
+							}
+						}
+					}
+				}	
+			}
+		},
+		"geoinformacoes": {
+			"label": {
+				"pt-br": "GeoInformações",
+				"en-us": "GeoInformations"
+			},
+			"layers": {
+				"rendimento_mensal": {
+					"label": {
+						"pt-br": "Rendimento Mensal",
+						"en-us": "Monthly income"
+					},
+					"types": {
+						"rendimento_mensal_domicilio_covid": {
+							"view_value": {
+								"pt-br": "Valor",
+								"en-us": "Value"
+							}
+						}
+					}
+				},
+				"hab_censitaria": {
+					"label": {
+						"pt-br": "Nº de Habitantes por unidade Censitária",
+						"en-us": "Inhabitants per Census Unit"
+					},
+					"types": {
+						"hab_unidade_censitaria_covid": {
+							"view_value": {
+								"pt-br": "Quantidade",
+								"en-us": "Amount"
+							}
+						}
+					}
+				},
+				"esgotos_domiclios": {
+					"label": {
+						"pt-br": "Domicilios com Esgoto a Ceu Aberto",
+						"en-us": "Housing with open sewage"
+					},
+					"types": {
+						"esgoto_domicilios_covid": {
+							"view_value": {
+								"pt-br": "Quantidade",
+								"en-us": "Amount"
+							}
+						}
+					}
 				}
-				
 			}
 		},
 		"basemaps": {

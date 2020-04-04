@@ -55,11 +55,25 @@ module.exports = function (app) {
   }
   
   Query.projections = function(params) {
+    
+    var filter = ""
+    var sub = ""
+    var cd_geocmu = params['cd_geocmu']
 
+    if(cd_geocmu == 52)
+    {
+      sub = "'GOIÁS' as nome"
+      filter = "cd_geocmu <> '52' AND cd_geocmu <> '5300108' "
+    }
+    else{
+      sub = "(select nome from municipios where cd_geocmu = '" + cd_geocmu + "')"
+      filter = "cd_geocmu = '" + cd_geocmu + "' "
+    }
+    console.log(cd_geocmu)
     return [
       {
-        id: 'confirmados_recuperados',
-        sql: "SELECT data, confirmados, recuperados FROM projecao_casos where data >= now() - interval '1' day AND data <= now() + interval '5' day order by data;"
+        id: 'projections_go',
+        sql: "select (select max(data) as last_model_date from projecao_casos where tipo = 'Obs'), " + sub + " , tipo, data, sum(confirmados) as confirmados from projecao_casos where " + filter +  " AND data >= (now() - '10 days'::interval day) AND data <= (now() + '5 days'::interval day) group by data,tipo order by data;"
       },
       {
         id: 'next',

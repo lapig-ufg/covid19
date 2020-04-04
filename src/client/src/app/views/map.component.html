@@ -57,30 +57,30 @@
 												</div>
 												<div *ngIf="layer.visible" style="padding-left: 8%; padding-right: 8%">
 													<div *ngIf="layer.types?.length > 1">
-														 <mat-form-field style="width: 130px">
-														<mat-label>{{descriptor.type}}</mat-label>
-														<mat-select (selectionChange)="changeVisibility(layer)"
-															[(value)]="layer.selectedType">
-															<mat-option *ngFor="let type of layer.types"
-																[value]="type.value">
-																{{type.Viewvalue}}
-															</mat-option>
-														</mat-select>
-													</mat-form-field>
-													<span class="" *ngFor="let type of layer.types"
-														[hidden]="type.value != layer.selectedType">
-														<mat-form-field *ngIf="type.times">
-															<mat-label>{{type.timeLabel}}</mat-label>
-															<mat-select (selectionChange)="updateSourceLayer(type)"
-																[(value)]="type.timeSelected">
-																<mat-option *ngFor="let times of type.times"
-																	[value]="times.value">
-																	{{times.Viewvalue}}
+														<mat-form-field style="width: 130px">
+															<mat-label>{{descriptor.type}}</mat-label>
+															<mat-select (selectionChange)="changeVisibility(layer)"
+																[(value)]="layer.selectedType">
+																<mat-option *ngFor="let type of layer.types"
+																	[value]="type.value">
+																	{{type.Viewvalue}}
 																</mat-option>
 															</mat-select>
 														</mat-form-field>
-													</span>
-												</div>
+														<span class="" *ngFor="let type of layer.types"
+															[hidden]="type.value != layer.selectedType">
+															<mat-form-field *ngIf="type.times">
+																<mat-label>{{type.timeLabel}}</mat-label>
+																<mat-select (selectionChange)="updateSourceLayer(type)"
+																	[(value)]="type.timeSelected">
+																	<mat-option *ngFor="let times of type.times"
+																		[value]="times.value">
+																		{{times.Viewvalue}}
+																	</mat-option>
+																</mat-select>
+															</mat-form-field>
+														</span>
+													</div>
 													<div *ngFor="let type of layer.types">
 														<img *ngIf="layer.selectedType === type.value"
 															[src]="type.urlLegend">
@@ -168,7 +168,8 @@
 			</div>
 
 			<div class="controls">
-				<div matTooltip="Sair do Município" *ngIf="this.selectRegion != this.defaultRegion" [class]="'btn-layers'" aria-label="Sair do Município" (click)="updateRegion(defaultRegion)">
+				<div matTooltip="Sair do Município" *ngIf="this.selectRegion != this.defaultRegion"
+					[class]="'btn-layers'" aria-label="Sair do Município" (click)="updateRegion(defaultRegion)">
 					<img width="30" height="30" src="../../assets/img/close-button.svg" alt="Sair do Município">
 				</div>
 				<div matTooltip="Acessar camada de dados"
@@ -191,7 +192,8 @@
 				<div matTooltip="Ajuda" [class]="'btn-layers'" aria-label="Menos Zoom" (click)="openDialogAjuda()">
 					<img width="30" height="30" src="../../assets/img/ajuda.svg" alt="Ajuda">
 				</div>
-				<div matTooltip="Área Restrita" [class]="'btn-layers'" aria-label="Área Restrita" (click)="handleRestrictedArea()">
+				<div matTooltip="Área Restrita" [class]="'btn-layers'" aria-label="Área Restrita"
+					(click)="handleRestrictedArea()">
 					<img width="30" height="30" src="../../assets/img/restrictedArea.svg" alt="Área Restrita">
 				</div>
 			</div>
@@ -234,7 +236,7 @@
 										</p-chart>
 									</div>
 								</p-tabPanel>
-								<p-tabPanel  [header]="chartResultCities.label" [cache]="true" >
+								<p-tabPanel [header]="chartResultCities.label" [cache]="true">
 									<p-scrollPanel [style]="{width: '100%', height: '38vh'}">
 										<p-table [value]="chartResultCities.series">
 											<ng-template pTemplate="header">
@@ -255,7 +257,7 @@
 									</p-scrollPanel>
 								</p-tabPanel>
 
-								<p-tabPanel  [header]="dataStates.label" id="tabGraficoLinhas">
+								<p-tabPanel [header]="dataStates.label" id="tabGraficoLinhas">
 									<h6 style="text-align: center;">
 										<b>{{dataStates.description}}</b>
 									</h6>
@@ -276,17 +278,45 @@
 								</div>
 							</p-scrollPanel>
 						</mat-tab>
+
+
+						<mat-tab label="{{dataProjSeries.timeseries.label}}">
+							<p-tabView>
+								<p-tabPanel [header]="selectRegion.nome">
+
+									<h5 *ngIf="!dataProjSeries.timeseries.chartResult[0]?.show" style="text-align: center;">
+										<br>
+										<br>
+										<strong> {{dataProjSeries.timeseries.not_cases}} {{selectRegion.nome}} </strong>
+										<br>
+										<br>
+									</h5>
+
+									<div *ngIf="dataProjSeries.timeseries.chartResult[0]?.show">
+										<p style="font-weight: bold; text-align: center;">
+											{{ dataProjSeries.timeseries.chartResult[0]?.text }}</p>
+										<p-chart [ngStyle]="{'overflow-x': hidden}"
+											*ngIf="dataProjSeries.timeseries.chartResult[0]?.type"
+											[type]="dataProjSeries.timeseries.chartResult[0]?.type"
+											[data]="dataProjSeries.timeseries.chartResult[0]?.dataResult"
+											[options]="dataProjSeries.timeseries.chartResult[0]?.options">
+										</p-chart>
+									</div>
+								</p-tabPanel>
+							</p-tabView>
+						</mat-tab>
+
 					</mat-tab-group>
 
 
 
+
 					<!-- <mat-tab label="{{dataProjSeries.timeseries.label}}">
-							<p-scrollPanel [style]="{width: '100%', height: '72vh'}">
 								<ng-template matTabContent>
 									<p-tabView>
-										<p-tabPanel [header]="dat.title"
+										<p-tabPanel [header]="selectRegion.nome"
 											*ngFor="let dat of dataProjSeries.timeseries.chartResult; let i = index"
-											[selected]="i == 0" [disabled]="!dat.show" [cache]="true">
+											[selected]="i == 0" [cache]="true">
 											<div>
 												<p style="font-weight: bold; text-align: center;">{{ dat.text }}</p>
 												<p-chart [ngStyle]="{'overflow-x': hidden}" *ngIf="dat.type"
@@ -296,8 +326,7 @@
 										</p-tabPanel>
 									</p-tabView>
 								</ng-template>
-							</p-scrollPanel>
-						</mat-tab> -->
+						</mat-tab>  -->
 
 					<!--				<div id="positionLegend" class="control-layers" cdkDrag>-->
 					<!--					<div [class]="collapseLegends ? 'titleWindows radius-bottom' : 'titleWindows'" >-->

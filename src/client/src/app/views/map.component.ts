@@ -229,7 +229,7 @@ export class MapComponent implements OnInit {
     this.dataProjSeries = { timeseries: { label: "", chartResult: [] } };
     this.dataStates = {};
 
-    this.clickableTitle = 'Informações';
+    this.clickableTitle = 'Informações não disponíveis';
 
     this.chartResultCities = {
       split: []
@@ -605,7 +605,20 @@ export class MapComponent implements OnInit {
 
       this.dataProjSeries = result;
 
+      console.log(this.dataProjSeries)
+
       for (let graphic of this.dataProjSeries.timeseries.chartResult) {
+
+        if(graphic.id == "projections_go")
+        {
+          graphic.dataResult.datasets[0].pointBackgroundColor = function() {
+           
+            // if(new Date(graphic.dataResult.last_model_date) < )
+            // return value < 0 ? 'red' :  // draw negative values in red
+            //     index % 2 ? 'blue' :    // else, alternate values in blue and green
+            //         'green';
+        }
+        }
 
         let y = [{
           ticks: {
@@ -620,10 +633,9 @@ export class MapComponent implements OnInit {
 
         graphic.options.scales.yAxes = y;
 
-        this.updateSource();
         let x = [{
           ticks: {
-            autoskip: true,
+            autoskip: false,
             autoSkipPadding: 20
           }
         }]
@@ -804,7 +816,7 @@ export class MapComponent implements OnInit {
 
       let info = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
 
-      if (info.visible) {
+      // if (info.visible) {
 
         if (info.selectedType == "covid19_municipios_casos") {
 
@@ -834,7 +846,7 @@ export class MapComponent implements OnInit {
         else {
           this.infodata = null;
         }
-      }
+      // }
 
     }
 
@@ -938,7 +950,7 @@ export class MapComponent implements OnInit {
       layer: new OlTileLayer({
         source: new OlXYZ({
           url:
-            'http://mt{0-3}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+            'https://mt{0-3}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
           attributions: [
             new Attribution({ html: '© Google' }),
             new Attribution({ html: '<a href="https://developers.google.com/maps/terms">Terms of Use.</a>' })

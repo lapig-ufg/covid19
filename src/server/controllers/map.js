@@ -96,6 +96,43 @@ module.exports = function (app) {
           group_expanded: false,
           layers: [
             {
+              id: "pharmacy_supermarket_hospital",
+              label: languageJson["descriptor"]["servicos"]["layers"]["pharmacy_supermarket_hospital"]["label"][language],
+              visible: false,
+              selectedType: "pharmacy_supermarket_hospital_covid",
+              types: [{
+                value: "pharmacy_supermarket_hospital_covid",
+                Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["pharmacy_supermarket_hospital"]["types"]["pharmacy_supermarket_hospital_covid"]["view_value"][language],
+                url: 'service/map/marker?layer=hospitais&filter=1=1',
+                iconUrl: 'assets/markers/hospital.png',
+                source: 'geojson',
+                opacity: 0.8,
+                order: 1
+              }]
+            },
+            {
+              id: "go_leitos_mun_clinicos_uti",
+              label: languageJson["descriptor"]["servicos"]["layers"]["go_leitos_mun_clinicos_uti"]["label"][language],
+              visible: false,
+              selectedType: "go_leitos_mun_clinica_covid",
+              types: [{
+                value: "go_leitos_mun_clinica_covid",
+                Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["go_leitos_mun_clinicos_uti"]["types"]["go_leitos_mun_clinica_covid"]["view_value"][language],
+                regionFilter: false,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              },
+              {
+                value: "go_leitos_mun_uti_covid",
+                Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["go_leitos_mun_clinicos_uti"]["types"]["go_leitos_mun_uti_covid"]["view_value"][language],
+                regionFilter: false,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              }]
+            },
+            {
               id: "gyn_locais_vacinacao",
               label: languageJson["descriptor"]["servicos"]["layers"]["gyn_locais_vacinacao"]["label"][language],
               visible: false,
@@ -103,11 +140,60 @@ module.exports = function (app) {
               types: [{
                 value: "gyn_locais_vacinacao_gripe",
                 Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["gyn_locais_vacinacao"]["types"]["gyn_locais_vacinacao_gripe"]["view_value"][language],
-                url: 'service/map/marker?layer=vacinacao_gripe',
+                url: 'service/map/marker?layer=vacinacao_gripe&filter=1=1',
                 iconUrl: 'assets/markers/icon.png',
                 source: 'geojson',
                 opacity: 0.8,
                 order: 1
+              }]
+            },
+          ]
+        },
+        {
+          id: "geoinformacoes",
+          label: languageJson["descriptor"]["geoinformacoes"]["label"][language],
+          group_expanded: false,
+          layers: [
+            {
+              id: "rendimento_mensal",
+              label: languageJson["descriptor"]["geoinformacoes"]["layers"]["rendimento_mensal"]["label"][language],
+              visible: false,
+              selectedType: "rendimento_mensal_domicilio_covid",
+              types: [{
+                value: "rendimento_mensal_domicilio_covid",
+                Viewvalue: languageJson["descriptor"]["geoinformacoes"]["layers"]["rendimento_mensal"]["types"]["rendimento_mensal_domicilio_covid"]["view_value"][language],
+                regionFilter: false,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              }]
+            },
+            {
+              id: "hab_censitaria",
+              label: languageJson["descriptor"]["geoinformacoes"]["layers"]["hab_censitaria"]["label"][language],
+              visible: false,
+              selectedType: "hab_unidade_censitaria_covid",
+              types: [{
+                value: "hab_unidade_censitaria_covid",
+                Viewvalue: languageJson["descriptor"]["geoinformacoes"]["layers"]["hab_censitaria"]["types"]["hab_unidade_censitaria_covid"]["view_value"][language],
+                regionFilter: false,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              }]
+            },
+            {
+              id: "esgotos_domiclios",
+              label: languageJson["descriptor"]["geoinformacoes"]["layers"]["esgotos_domiclios"]["label"][language],
+              visible: false,
+              selectedType: "esgoto_domicilios_covid",
+              types: [{
+                value: "esgoto_domicilios_covid",
+                Viewvalue: languageJson["descriptor"]["geoinformacoes"]["layers"]["esgotos_domiclios"]["types"]["esgoto_domicilios_covid"]["view_value"][language],
+                regionFilter: false,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
               }]
             }
           ]
