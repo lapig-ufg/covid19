@@ -1,17 +1,22 @@
-<div class = "tp-container">
+<p-dialog header="Acesso à Área Restrita" [(visible)]="display" >
+    <p class="msg-error">{{msg}}</p>
+</p-dialog>
 
+<div class = "tp-container">
     <div class="container-logo">
         <img src="../.././../assets/logo/logo_white.png" alt="COVIDGOIÀS">
-        <h4>Acesso à Área Restrita</h4>
+        <span>Acesso à Área Restrita</span>
     </div>
 
     <mat-form-field appearance="outline" [floatLabel]="'auto'">
         <mat-label>Código de Autorização</mat-label>
-        <input matInput type="password">
+        <input matInput type="password" [(ngModel)]="codigoautorizacao">
+        <span class="erros" *ngIf="errorCodigoautorizacao">O preenchimento do campo de Código de Autorização é obrigatório</span>
     </mat-form-field>
     <div class="group-btn">
         <button mat-raised-button color="primary" (click)="onRequireAccess()">Solicitar Acesso</button>
         <button mat-raised-button color="accent" (click)="closeDialog()">Cancelar</button>
-        <button mat-raised-button color="warn" >Entrar</button>
+        <button mat-raised-button color="warn" (click)="onSubmit()" >Entrar</button>
     </div>
+
 </div>

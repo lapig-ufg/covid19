@@ -13,7 +13,7 @@
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     background-color: #dd4646;
-    font-size: 1.5rem;
+    font-size: 1.9vh;
     margin-bottom: 10px;
     display: flex;
     justify-content: center;
@@ -22,13 +22,15 @@
 }
 
 .container-logo img {
-    min-width: 5%;
-    max-width: 25%;
+    max-width: 100%;
+    padding-right: 20px;
 }
 
-.container-logo h4{
+.container-logo span{
     color: white;
     margin: auto;
+    font-weight: 700;
+    font-size: 3vh;
 }
 
 .tp-container > * {
@@ -40,6 +42,29 @@
 mat-form-field.mat-form-field {
     font-size: 18px;
     width: 100%;
+}
+
+.erros {
+    margin-top: 8px;
+    font-weight: bold;
+    color: red;
+    width: 100%;
+    display: block;
+    text-align: left;
+}
+
+.auto-complete{
+    width: 100%;
+}
+
+.erros-http{
+    display: block;
+    width: 100%;
+    margin: 20px;
+    text-align: center;
+    -webkit-box-shadow:  2px 2px 10px #dd4646;
+    box-shadow: 2px 2px 10px #dd4646;
+
 }
 
 mat-form-field.mat-label {
@@ -55,4 +80,14 @@ mat-form-field.mat-label {
 .group-btn button{
     margin: 5px;
     width: 12vw;
+}
+
+::ng-deep .mat-select-trigger {
+    min-width: 100%;
+    width: 100%;
+}
+
+::ng-deep .mat-select-panel {
+    width: 100%;
+    max-height: 100% !important;
 }
