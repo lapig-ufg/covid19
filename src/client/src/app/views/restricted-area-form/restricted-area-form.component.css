@@ -13,7 +13,7 @@
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     background-color: #dd4646;
-    font-size: 1.5rem;
+    font-size: 1.9vh;
     margin-bottom: 10px;
     display: flex;
     justify-content: center;
@@ -22,13 +22,15 @@
 }
 
 .container-logo img {
-    min-width: 5%;
-    max-width: 25%;
+    max-width: 100%;
+    padding-right: 20px;
 }
 
-.container-logo h4{
+.container-logo span{
     color: white;
     margin: auto;
+    font-weight: 700;
+    font-size: 3vh;
 }
 
 .tp-container > * {

@@ -55,7 +55,7 @@ module.exports = function(app) {
         return [
             {
                 id: 'access',
-                sql: " SELECT gid, cd_geocmu, nomeresponsavel, orgao, email, ativo FROM usuarios WHERE ativo = TRUE AND codigoencrypted = '"+ md5(codigoautorizacao)+"' ; "
+                sql: " SELECT gid, mun.cd_geocmu, nomeresponsavel, orgao, email, ativo, nome, estado, uf FROM usuarios as usuario INNER JOIN municipios as mun ON  usuario.cd_geocmu = mun.cd_geocmu WHERE ativo = TRUE AND codigoencrypted = '"+ md5(codigoautorizacao)+"' ; "
             },
             {
                 id: 'next',

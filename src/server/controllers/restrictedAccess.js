@@ -17,14 +17,14 @@ module.exports = function (app) {
 
     Controller.requireAccess = function (request, response) {
         let gid = request.queryResult['insert'];
+        console.log("gid", gid);
         response.send(gid);
         response.end()
     };
 
     Controller.access = function (request, response) {
         let user = request.queryResult['access'];
-        console.log("access: ", user);
-        response.send(user[0]);
+        response.send(user);
         response.end()
     };
 

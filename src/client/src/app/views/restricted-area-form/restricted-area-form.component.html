@@ -1,10 +1,12 @@
+<p-dialog header="Solicitação de Acesso à Área Restrita" [(visible)]="display" >
+    <p class="msg-error">{{msg}}</p>
+</p-dialog>
+
 <div class = "tp-container">
     <div class="container-logo">
         <img src="../.././../assets/logo/logo_white.png" alt="COVIDGOIÀS">
-        <h4>Solicitação de acesso à Área Restrita</h4>
+        <span>Solicitação de acesso à Área Restrita</span>
     </div>
-
-    <span class="erros-http">{{erroMsg}}</span>
 
     <mat-form-field appearance="outline" [floatLabel]="'auto'">
         <mat-label>Nome do responsável</mat-label>

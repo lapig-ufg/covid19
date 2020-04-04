@@ -10,12 +10,14 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class RestrictedAreaAccessComponent implements OnInit {
 
   @Output() requireAccess = new EventEmitter();
-  @Output() userEvent          = new EventEmitter();
+  @Output() userEvent     = new EventEmitter();
 
   @Input() codigoautorizacao:any;
 
   httpOptions:any;
   user:any;
+  msg:any;
+  display:boolean;
 
   errorCodigoautorizacao:boolean;
 
@@ -24,7 +26,9 @@ export class RestrictedAreaAccessComponent implements OnInit {
       @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
       private http: HttpClient
   ) {
-    this.codigoautorizacao     = '';
+
+    this.codigoautorizacao = '';
+    this.display = false;
 
     this.errorCodigoautorizacao  = false;
     this.httpOptions = {
@@ -56,8 +60,17 @@ export class RestrictedAreaAccessComponent implements OnInit {
 
       this.http.post('/service/restrictedAccess/access', JSON.stringify(dados), this.httpOptions).subscribe(result => {
         this.user = result;
+
+        if(this.user.length <= 0){
+          this.display = true;
+          this.msg = "Acesso não identificado!";
+        }else{
+          this.userEvent.emit(result[0]);
+        }
+
       },(err) => {
-        // this.erroMsg = err;
+        this.display = true;
+        this.msg = "Não foi possível autenticar seu acesso. Por favor, tente novamente. Se o problema persistir contate a administração da plataforma. ";
       });
     }
 

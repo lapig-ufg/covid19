@@ -16,6 +16,7 @@ export class RestrictedAreaFormComponent implements OnInit {
 
   countiesControl = new FormControl();
   filteredOptions: Observable<string[]>;
+  @Output() msgEvent = new EventEmitter();
 
   // Headers
   httpOptions:any;
@@ -31,6 +32,9 @@ export class RestrictedAreaFormComponent implements OnInit {
   errorTelefone:boolean;
   errorOrgao:boolean;
   errorCd_geocmu:boolean;
+
+  msg:any;
+  display:boolean;
 
   counties:any = [];
 
@@ -82,6 +86,14 @@ export class RestrictedAreaFormComponent implements OnInit {
     });
   }
 
+  clearForm(){
+    this.nomeresponsavel = '';
+    this.email           = '';
+    this.telefone        = '';
+    this.orgao           = '';
+    this.cd_geocmu       = '';
+  }
+
   handleErros(){
     this.errorNomeresponsavel  = this.nomeresponsavel == '' ? true : false;
     this.errorEmail            = (this.email == '' ? true : false) || (this.email.includes("@") ? false : true);
@@ -104,10 +116,20 @@ export class RestrictedAreaFormComponent implements OnInit {
         cd_geocmu : county[0].trim()
       };
 
-      this.http.post('/service/restrictedAccess/access', JSON.stringify(dados), this.httpOptions).subscribe(result => {
+      this.http.post('/service/restrictedAccess/requireAccess', JSON.stringify(dados), this.httpOptions).subscribe(result => {
         this.erroMsg = false;
+
+        if(result.length <= 0){
+          this.display = true;
+          this.msg = "Não foi possível enviar sua solicitação. Por favor, tente novamente. Se o problema persistir, contate a administração da plataforma!";
+        }else{
+          this.clearForm();
+          this.msgEvent.emit("Dados enviados com sucesso! Analisaremos sua solicitação e em breve entraremos em contato.");
+        }
+
       },(err) => {
-            this.erroMsg = err;
+        this.display = true;
+        this.msg = "Não foi possível enviar sua solicitação. Por favor, tente novamente. Se o problema persistir, contate a administração da plataforma!";
       });
 
     }
