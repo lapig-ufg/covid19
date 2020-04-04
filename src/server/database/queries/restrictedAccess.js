@@ -29,7 +29,7 @@ module.exports = function(app) {
         let charset = params['cd_geocmu'] + params['nomeresponsavel'] + params['orgao'] + params['telefone'];
 
         let codigoautorizacao = randomstring.generate({
-            length: 28,
+            length: 10,
             charset: charset.replace(/ /g,'')
         });
 
