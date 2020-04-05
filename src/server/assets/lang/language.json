@@ -493,7 +493,7 @@
 				},
 				"esgotos_domiclios": {
 					"label": {
-						"pt-br": "Domicilios com Esgoto a Ceu Aberto",
+						"pt-br": "Domicilios com Esgoto a Céu Aberto",
 						"en-us": "Housing with open sewage"
 					},
 					"types": {

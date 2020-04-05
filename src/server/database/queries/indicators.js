@@ -60,16 +60,10 @@ module.exports = function (app) {
     var sub = ""
     var cd_geocmu = params['cd_geocmu']
 
-    if(cd_geocmu == 52)
-    {
-      sub = "'GOIÁS' as nome"
-      filter = "cd_geocmu <> '52' AND cd_geocmu <> '5300108' "
-    }
-    else{
       sub = "(select nome from municipios where cd_geocmu = '" + cd_geocmu + "')"
       filter = "cd_geocmu = '" + cd_geocmu + "' "
-    }
-    return [
+    
+      return [
       {
         id: 'projections_go',
         sql: "select (select max(data) as last_model_date from projecao_casos where tipo = 'Obs'), " + sub + " , tipo, data, sum(confirmados) as confirmados from projecao_casos where " + filter +  " AND data >= (now() - '10 days'::interval day) AND data <= (now() + '5 days'::interval day) group by data,tipo order by data;"

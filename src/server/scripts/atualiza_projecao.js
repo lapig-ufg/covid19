@@ -2,7 +2,7 @@ const { Pool, Client } = require('pg')
 const csv = require('csv-parser');
 const fs = require('fs');
 
-var config = require('../config.js')()
+var config = require('../configScript.js')()
 var pool = new Pool(config['pg'])
 
 var csvRows = []
@@ -33,12 +33,12 @@ fs.createReadStream(csvFilepath)
 					var row = csvRows[i]
                     var rowDate = new Date(row.data)
                     
-                    if(row.total_casos == "NA"){
-                        row.total_casos = -1
+                    if(row.confirmados == "NA"){
+                        row.confirmados = -1
                     }
 
 					/* for initial population*/
-					var rowValues = [row.tipo, row.ordem_dia, row.data, row.codigo_municipio, row.municipios, row.total_casos] 
+					var rowValues = [row.tipo, row.ordem_dia, row.data, row.cd_geocmu, row.municipios, row.confirmados] 
 					const res = await client.query(insertRow, rowValues)
 
 					// if (rowDate > lastDate ) {
