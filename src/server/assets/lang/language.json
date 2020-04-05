@@ -135,6 +135,26 @@
 					"pt-br": "Data da última atualização do modelo: ",
 					"en-us": "Model last updated date: "
 				}
+			},
+			"statistics":{
+				"title": {
+					"pt-br": "Estatisticas sobre: ",
+					"en-us": "Estimates about : "
+				},
+				"text":{
+					"total_dias":{
+						"pt-br": "Total de Dias: ",
+						"en-us": "Total Days: "
+					},
+					"media_novos_casos_3dias":{
+						"pt-br": "Média de Casos a cada 3 dias: ",
+						"en-us": "Average number of cases every 3 days: "
+					},
+					"dias_duplicacao_confirmados":{
+						"pt-br": "Quantidade de dias até duplicação de casos confirmados: ",
+						"en-us": "Number of days until duplication of confirmed cases: "
+					}
+				}
 			}
 		},
 		"source":{
