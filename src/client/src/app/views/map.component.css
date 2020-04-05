@@ -925,6 +925,14 @@ mat-select {
 	padding: 10px;
 }
 
+.msg-error{
+	text-align: center;
+	font-weight: bold;
+	color: #5b2d31;
+	margin: 30px;
+	font-size: 2.8vh;
+}
+
 .container-logos {
 	position: relative;
 }
@@ -934,6 +942,17 @@ mat-select {
 	padding: 10px;
 	max-width: 100%;
 }
+
+.container-logos-msg {
+	position: relative;
+}
+
+.container-logos-msg img {
+	vertical-align: middle !important;
+	padding: 10px;
+	max-width: 20%;
+}
+
 
 .btn-languages {
 	border-radius: 10px;
@@ -1028,7 +1047,7 @@ mat-select {
 .controls {
 	position: absolute;
 	left: 21px;
-	top: 39%;
+	top: 25%;
 	z-index: 100000;
 	padding: 14px;
 	border-radius: 10px;
@@ -1210,6 +1229,28 @@ img[usemap], map area{
 }
 .info-user > *{
 	margin-right: 10px;
+}
+
+.container-team{
+	margin: 15px;
+	column-count: 2;
+}
+.team-section{
+	margin: 10px;
+	width: 100%;
+}
+
+.team-member a{
+	transition: 0.3s;
+	color: rgba(161, 19, 19, 0.75);
+	font-size: 1.5vh;
+}
+.team-member a:hover{
+	color: rgba(126, 53, 60, 0.75);
+}
+
+.team-section h4{
+	font-size: 1.8vh;
 }
 
 @media screen and (max-width: 1080px) {

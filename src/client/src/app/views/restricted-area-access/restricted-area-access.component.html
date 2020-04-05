@@ -1,5 +1,16 @@
 <p-dialog header="Acesso à Área Restrita" [(visible)]="display" >
     <p class="msg-error">{{msg}}</p>
+
+    <div class="container-logos">
+        <img usemap="#logos" src="../../assets/logo/logos.png" alt="Logos" hidefocus="true" />
+
+        <map name="logos">
+            <area target="_self" alt="COVIDGOIÁS :: HOME" title="COVIDGOIÁS"
+                  href="https://covidgoias.ufg.br" coords="4,149,240,26" shape="rect">
+            <area target="_blank" alt="Acesse o site da UFG" title="UFG" href="https://www.ufg.br/"
+                  coords="250,24,520,149" shape="rect">
+        </map>
+    </div>
 </p-dialog>
 
 <div class = "tp-container">

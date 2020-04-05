@@ -123,6 +123,16 @@
 		<div id="map" class="dpat-ol-map" [style.height]="innerHeigth + 'px'">
 			<p-dialog header="Solicitação de Acesso à Área Restrita" [(visible)]="display" >
 				<p class="msg-error">{{msg}}</p>
+				<div class="container-logos-msg">
+					<img usemap="#logos" src="../../assets/logo/logos.png" alt="Logos" hidefocus="true" />
+
+					<map name="logos">
+						<area target="_self" alt="COVIDGOIÁS :: HOME" title="COVIDGOIÁS"
+							  href="https://covidgoias.ufg.br" coords="4,149,240,26" shape="rect">
+						<area target="_blank" alt="Acesse o site da UFG" title="UFG" href="https://www.ufg.br/"
+							  coords="250,24,520,149" shape="rect">
+					</map>
+				</div>
 			</p-dialog>
 
 			<div class="dpat-logo">
@@ -295,8 +305,6 @@
 						</mat-tab>
 
 
-
-
 						<mat-tab label="{{dataSource.title}}">
 							<p-scrollPanel [style]="{width: '100%', height: '60vh'}">
 								<div class="container-ft">
@@ -306,6 +314,21 @@
 										{{dataSource.technical_note}}
 									</p>
 								</div>
+							</p-scrollPanel>
+						</mat-tab>
+
+						<mat-tab label="Equipe">
+							<p-scrollPanel [style]="{width: '100%', height: '60vh'}">
+								<div class="container-team">
+									<div class="team-section" *ngFor="let section of team">
+										<h4>{{section.title}}</h4>
+										<div class="team-member" *ngFor="let member of section.members">
+											<a target="_blank" [href]="member.link" >{{member.nome}}</a> <br>
+											<span>{{member.description}}</span>
+										</div>
+									</div>
+								</div>
+								<div style="height: 30vh"></div>
 							</p-scrollPanel>
 						</mat-tab>
 
