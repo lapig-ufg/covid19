@@ -42,6 +42,8 @@ import { HelpComponent } from "./help/help.component";
 import {RestrictedAreaAccessComponent} from "./restricted-area-access/restricted-area-access.component";
 import {RestrictedAreaFormComponent} from "./restricted-area-form/restricted-area-form.component";
 
+import TEAM from './team.js';
+
 import OLGoogleMaps from 'olgm/OLGoogleMaps.js';
 import GoogleLayer from 'olgm/layer/Google.js';
 
@@ -211,6 +213,7 @@ export class MapComponent implements OnInit {
 
   msg:any;
   display:boolean;
+  team:any
 
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
 
@@ -322,6 +325,7 @@ export class MapComponent implements OnInit {
     this.restrictedArea = false;
     this.user = {};
     this.display = false;
+    this.team = TEAM;
   }
   search = (text$: Observable<string>) =>
     text$.pipe(
