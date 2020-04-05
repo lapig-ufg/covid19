@@ -136,6 +136,8 @@ export class MapComponent implements OnInit {
 
   statePreposition = [];
 
+  statistics_county: any;
+
   layersNames = [];
   layersTypes = [];
   basemapsNames = [];
@@ -257,7 +259,7 @@ export class MapComponent implements OnInit {
     this.currentData = "";
 
     this.optionsStates = {};
-
+    this.statistics_county = { result: {}, text: {}};
     this.valueRegion = '';
 
     this.changeTabSelected = "";
@@ -655,6 +657,15 @@ export class MapComponent implements OnInit {
       this.dataStates = statesResult
       this.optionsStates = statesResult['optionsStates'];
     });
+
+    let statisticsURL = '/service/indicators/statistics' + this.getServiceParams();
+
+    this.http.get(statisticsURL).subscribe(res => {
+      this.statistics_county = res
+
+      console.log(this.statistics_county)
+    });
+    
 
   }
 

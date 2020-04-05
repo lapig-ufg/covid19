@@ -282,6 +282,15 @@
 						<mat-tab label="{{dataProjSeries.timeseries.label}}">
 							<p-tabView>
 								<p-tabPanel [header]="selectRegion.nome">
+
+									<div style="text-align: start;">
+										<!-- <h5><b>{{statistics_county.text.title}}</b> {{selectRegion.nome}}</h5> -->
+										<p><b>{{statistics_county.text.total_dias}}</b> {{statistics_county.result.total_dias}}</p>
+										<p *ngIf="statistics_county.result.media_novos_casos_3dias != -1"><b>{{statistics_county.text.media_novos_casos_3dias}}</b> {{statistics_county.result.media_novos_casos_3dias}}</p>
+										<p *ngIf="statistics_county.result.dias_duplicacao_confirmados != -1"><b>{{statistics_county.text.dias_duplicacao_confirmados}}</b> {{statistics_county.result.dias_duplicacao_confirmados | number:'1.0-3'}}</p>
+										<br>
+									</div>
+
 									<h5 *ngIf="!dataProjSeries.timeseries.chartResult[0]?.show" style="text-align: center;">
 										<br>
 										<br>

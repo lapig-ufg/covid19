@@ -386,9 +386,6 @@ module.exports = function (app) {
       }
     };
 
-
-
-
     response.send(dataStates)
     response.end()
 
@@ -405,6 +402,39 @@ module.exports = function (app) {
     response.send(sourceResult);
     response.end();
   };
+
+  Controller.statistics = function (request, response)
+  {
+    var language = request.param('lang')
+
+    var queryResult = request.queryResult['estatisticas_municipios']
+
+    var qResult = []
+
+    queryResult.forEach(function (row) {
+
+      qResult.push({
+        total_dias: row['total_dias'],
+        media_novos_casos_3dias: row['media_novos_casos_3dias'],
+        dias_duplicacao_confirmados: row['dias_duplicacao_confirmados']
+      })
+
+    })
+
+    let texts = {
+      title: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["title"][language], 
+      total_dias: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["total_dias"][language], 
+      media_novos_casos_3dias: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["media_novos_casos_3dias"][language], 
+      dias_duplicacao_confirmados: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["dias_duplicacao_confirmados"][language]
+    }
+
+    response.send({
+      result: qResult[0],
+      text: texts
+    }
+      );
+    response.end();
+  }
 
   return Controller;
 };
