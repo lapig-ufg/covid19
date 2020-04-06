@@ -15,7 +15,7 @@ module.exports = function(app) {
         return [
             {
                 id: 'counties',
-                sql: " SELECT nome as label, cd_geocmu as value FROM municipios WHERE cd_geocmu <> '52' AND cd_geocmu <> '5300108' ORDER BY nome ASC; "
+                sql: " SELECT unaccent(nome) as label, cd_geocmu as value FROM municipios WHERE cd_geocmu <> '52' ORDER BY nome ASC; "
             },
             {
                 id: 'next',

@@ -73,7 +73,7 @@ export class RestrictedAreaFormComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.counties.filter(option => option.label.toLowerCase().includes(filterValue));
+    return this.counties.filter(option => option.label.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(filterValue));
   }
 
   closeDialog(){

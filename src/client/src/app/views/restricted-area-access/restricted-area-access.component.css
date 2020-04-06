@@ -71,10 +71,17 @@ mat-form-field.mat-label {
 .msg-error{
     text-align: center;
     font-weight: bold;
-    color: red;
+    color: #5b2d31;
     margin: 30px;
+    font-size: 4vh;
 }
 
-.ui-dialog{
+.container-logos {
+    position: relative;
+}
 
+.container-logos img {
+    vertical-align: middle !important;
+    padding: 10px;
+    max-width: 30%;
 }
