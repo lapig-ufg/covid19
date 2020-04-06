@@ -22,6 +22,10 @@ body {
 	opacity: unset;
 }
 
+#tab-mobile .ui-tabview-panels {
+	padding: 0.6em;
+}
+
 #tab-mobile .dropdown-menu.show {
 	display: contents !important;
 }

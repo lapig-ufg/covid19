@@ -382,6 +382,28 @@ margin: 4px;
 font-size: 1em;
 }
 
+.container-team{
+	margin: 15px;
+	column-count: 2;
+}
+.team-section{
+	margin: 10px;
+	width: 100%;
+}
+
+.team-member a{
+	transition: 0.3s;
+	color: rgba(161, 19, 19, 0.75);
+	font-size: 1.5vh;
+}
+.team-member a:hover{
+	color: rgba(126, 53, 60, 0.75);
+}
+
+.team-section h4{
+	font-size: 1.8vh;
+}
+
 .nav-title-laudo {
 	border-bottom: 5px solid #bb6666;
 	position: sticky

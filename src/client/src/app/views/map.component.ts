@@ -663,7 +663,6 @@ export class MapComponent implements OnInit {
     this.http.get(statisticsURL).subscribe(res => {
       this.statistics_county = res
 
-      console.log(this.statistics_county)
     });
     
 
