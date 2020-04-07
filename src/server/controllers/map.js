@@ -75,6 +75,20 @@ module.exports = function (app) {
             }]
           },
           {
+            id: "doencas_respiratorias",
+            label: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["label"][language],
+            visible: false,
+            selectedType: "doencas_respiratorias_2015_2019_covid",
+            types: [{
+              value: "doencas_respiratorias_2015_2019_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            }]
+          },
+          {
             id: "qtd_populacional",
             label: languageJson["descriptor"]["informacoes"]["layers"]["qtd_populacional"]["label"][language],
             visible: false,

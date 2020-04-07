@@ -394,6 +394,20 @@
 						}
 					}
 				},
+				"doencas_respiratorias": {
+					"label": {
+						"pt-br": "Nº de pessoas com Doenças respiratórias (2015-2019)",
+						"en-us": "Number of people with respiratory diseases (2015-2019)"
+					},
+					"types": {
+						"doencas_respiratorias_2015_2019_covid": {
+							"view_value": {
+								"pt-br": "Quantidade",
+								"en-us": "Number"
+							}
+						}
+					}
+				},
 				"qtd_populacional": {
 					"label": {
 						"pt-br": "População - IBGE",

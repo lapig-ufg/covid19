@@ -57,7 +57,7 @@
 												</div>
 												<div *ngIf="layer.visible" style="padding-left: 8%; padding-right: 8%">
 													<div *ngIf="layer.types?.length > 1">
-														<mat-form-field style="width: 130px">
+														<mat-form-field style="width: 130px;">
 															<mat-label>{{descriptor.type}}</mat-label>
 															<mat-select (selectionChange)="changeVisibility(layer)"
 																[(value)]="layer.selectedType">
