@@ -65,82 +65,75 @@
 							</div>
 						</div>
 				<img class="dpat-logo" src="https://o1.lapig.iesa.ufg.br/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=covid19_municipios_casos&format=image/png">
-				<!-- <div class="card-mobile">
-					<div class="card">
-						<div *ngIf="infodata && !clickable" class="card-body">
-									<p class="card-text">{{infodata.nome}} - {{infodata.uf}}</p>
-									<p class="card-result">Confirmados: {{infodata.confirmados}}</p>
-						</div>
-					</div>
-				</div> -->
 			</div>
 		</mat-tab> 
-		<!-- <mat-tab  label = "Total"  style="overflow-x: hidden"> 
-				<p-scrollPanel [style]="{width: '100%', height: '100%'}">
-					<div class="resumo-subtitle-card">
-							<h1 class="resumo-subtitle">Casos no Estado de Goiás</h1>
-							<p style="font-size: 0.8rem">Última atualização em  {{lastUpdate.data}}</p>
-							<p style="font-size: 0.8rem">Fonte: Secretaria de Saúde do Estado de Goiás</p>
-					</div>
-					<div class="container-resumo">
-						<div class="resumo">
-							<div class="card-resumo">
-								<div class="card-resumo-title confirmado" title="Titulo">Confirmados</div>
-								<h2>{{summary.confirmados}}</h2>
-							</div>
-							<div *ngIf="!isFilteredByCity" class="card-resumo">
-								<div class="card-resumo-title recuperado" title="Titulo">Suspeitos</div>
-								<h2>{{summary.suspeitos}}</h2>
-							</div>
-							<div class="card-resumo">
-								<div class="card-resumo-title obitos" title="Titulo">Óbitos</div>
-								<h2>{{summary.obitos}}</h2>
-							</div>
-						</div>
-					</div>
-				</p-scrollPanel>
-		</mat-tab>  -->
 		<mat-tab  label = "Gráficos" > 
 				<mat-tab label="{{dataSeries.timeseries.label}}" >
-						<p-scrollPanel [style]="{width: '100%', height: '90vh'}" >
-						<ng-template matTabContent>
+					<ng-template matTabContent>
+							<p-scrollPanel [style]="{width: '100%', height: '100vh'}" >
 							<p-tabView >
 									<p-tabPanel [header]="selectRegion.nome">
-
-											<h5 *ngIf="!dataSeries.timeseries.chartResult[0]?.show" style="text-align: center;">
+										<h5 *ngIf="!dataSeries.timeseries.chartResult[0]?.show" style="text-align: center;">
+											<br>
+											<br>
+											<strong> {{dataSeries.timeseries.not_cases}} {{selectRegion.nome}} </strong>
+											<br>
+											<br>
+										</h5>
+										<div *ngIf="dataSeries.timeseries.chartResult[0]?.show">
+											<p style="font-weight: bold; text-align: center;">
+												{{ dataSeries.timeseries.chartResult[0]?.text }}</p>
+											<p-chart [ngStyle]="{'overflow-x': hidden}"
+											height="37vh"
+												*ngIf="dataSeries.timeseries.chartResult[0]?.type"
+												[type]="dataSeries.timeseries.chartResult[0]?.type"
+												[data]="dataSeries.timeseries.chartResult[0]?.dataResult"
+												[options]="dataSeries.timeseries.chartResult[0]?.options">
+											</p-chart>
+										</div>
+									</p-tabPanel>
+									<p-tabPanel header="Projeções">
+											<div style="text-align: justify; padding-bottom: 10px;">
+												<h5 style="text-align: center;"><b>{{statistics_county.text.title}}</b> {{selectRegion.nome}}</h5>
+												<p><b>{{statistics_county.text.total_dias}}</b> {{statistics_county.result.total_dias}}</p>
+												<p *ngIf="statistics_county.result.media_novos_casos_3dias != -1"><b>{{statistics_county.text.media_novos_casos_3dias}}</b> {{statistics_county.result.media_novos_casos_3dias}}</p>
+												<p *ngIf="statistics_county.result.dias_duplicacao_confirmados != -1"><b>{{statistics_county.text.dias_duplicacao_confirmados}}</b> {{statistics_county.result.dias_duplicacao_confirmados | number:'1.0-3'}}</p>
+											</div>
+		
+											<h5 *ngIf="!dataProjSeries.timeseries.chartResult[0]?.show" style="text-align: center;">
 												<br>
 												<br>
-												<strong> {{dataSeries.timeseries.not_cases}} {{selectRegion.nome}} </strong>
+												<strong> {{dataProjSeries.timeseries.not_cases}} {{selectRegion.nome}} </strong>
 												<br>
 												<br>
 											</h5>
 		
-											<div *ngIf="dataSeries.timeseries.chartResult[0]?.show">
-												<p style="font-weight: bold; text-align: center;">
-													{{ dataSeries.timeseries.chartResult[0]?.text }}</p>
+											<div *ngIf="dataProjSeries.timeseries.chartResult[0]?.show">
+												<p style="font-weight: bold; text-align: end;">
+													{{dataProjSeries.timeseries.last_updated}}  {{dataProjSeries.timeseries.chartResult[0]?.last_model_date | date : 'dd/MM/yyyy'}}</p>
 												<p-chart [ngStyle]="{'overflow-x': hidden}"
-												height="37vh"
-													*ngIf="dataSeries.timeseries.chartResult[0]?.type"
-													[type]="dataSeries.timeseries.chartResult[0]?.type"
-													[data]="dataSeries.timeseries.chartResult[0]?.dataResult"
-													[options]="dataSeries.timeseries.chartResult[0]?.options">
+													height="37vh"
+													*ngIf="dataProjSeries.timeseries.chartResult[0]?.type"
+													[type]="dataProjSeries.timeseries.chartResult[0]?.type"
+													[data]="dataProjSeries.timeseries.chartResult[0]?.dataResult"
+													[options]="dataProjSeries.timeseries.chartResult[0]?.options">
 												</p-chart>
 											</div>
-										</p-tabPanel>
-								<p-tabPanel  [header]="dataStates.label" id="tabGraficoLinhas">
-									<h6 style="text-align: center;">
-										<b>{{dataStates.description}}</b>
-									</h6>
-									<p-chart type="bar" height="36.5vh" [data]="dataStates" [options]="optionsStates">
-									</p-chart>
-								</p-tabPanel>
-								<div>
-									<button mat-raised-button style="background-color: #7e1116; margin-bottom: 10px;" (click)="openDialog()">Fontes</button>
-								</div>
+									</p-tabPanel>
+									<p-tabPanel  [header]="dataStates.label" id="tabGraficoLinhas">
+										<h6 style="text-align: center;">
+											<b>{{dataStates.description}}</b>
+										</h6>
+										<p-chart type="bar" height="36.5vh" [data]="dataStates" [options]="optionsStates">
+										</p-chart>
+									</p-tabPanel>
+									<div>
+										<button mat-raised-button style="background-color: #7e1116; margin-bottom: 10px;" (click)="openDialog()">Fontes</button>
+									</div>
 							</p-tabView>
 							<p style="padding: 0px 10px; text-align: justify; font-size: 10px; line-height: 1.6">Acesse a plataforma no computador para uma melhor experiência de visualização, acesso a outros dados e funcionalidades.</p>
+						</p-scrollPanel>
 						</ng-template>
-					</p-scrollPanel>
 				</mat-tab>
 		</mat-tab>
 		<mat-tab  (click)="handleAnalytics('charts', 'dados_oficiais', 'Municípios')" label = "Municípios" >
@@ -169,5 +162,19 @@
 						<img width="100%" src="../../../assets/img/ajuda_covid_mobile.png" />
 					</div>
 				</p-scrollPanel>
+		</mat-tab> 
+		<mat-tab  label = "Equipe" > 
+				<p-scrollPanel [style]="{width: '100%', height: '100vh'}">
+						<div class="container-team">
+							<div class="team-section" *ngFor="let section of team">
+								<h4>{{section.title}}</h4>
+								<div class="team-member" *ngFor="let member of section.members">
+									<a target="_blank" [href]="member.link" >{{member.nome}}</a> <br>
+									<span>{{member.description}}</span>
+								</div>
+							</div>
+						</div>
+						<div style="height: 30vh"></div>
+					</p-scrollPanel>
 		</mat-tab> 
 </mat-tab-group >
