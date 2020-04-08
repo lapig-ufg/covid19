@@ -17,10 +17,9 @@ module.exports = function(app) {
 
 	Query.marker = function(params) {
 
+		var lay = params['layer']
 
-		console.log(params['filter'])
-
-		return "SELECT *, ST_X(geom) lon, ST_Y(geom) lat, ST_AsGeoJSON(geom) AS geojson FROM $[layer] where $[filter]";
+		return "SELECT *, '" + lay + "' as source, ST_X(geom) lon, ST_Y(geom) lat, ST_AsGeoJSON(geom) AS geojson FROM $[layer] where $[filter]";
 	}
 
 	return Query;

@@ -60,7 +60,7 @@ module.exports = function (app) {
           },
           {
             id: "urban_traffic",
-            label:  languageJson["descriptor"]["informacoes"]["layers"]["urban_traffic"]["label"][language],
+            label: languageJson["descriptor"]["informacoes"]["layers"]["urban_traffic"]["label"][language],
             visible: false,
             selectedType: "urban_traffic_real_time",
             types: [{
@@ -71,6 +71,20 @@ module.exports = function (app) {
               url: 'https://mt0.google.com/vt/lyrs=m@221097413,traffic&x={x}&y={y}&z={z}',
               legendUrl: 'assets/legends/legend-trafficgoogle-br.png',
               opacity: 0.8,
+              order: 3
+            }]
+          },
+          {
+            id: "casos_bairro",
+            label: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["label"][language],
+            visible: false,
+            selectedType: "casos_por_bairro_goiania",
+            types: [{
+              value: "casos_por_bairro_goiania",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_goiania"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 1,
               order: 3
             }]
           },
@@ -87,20 +101,6 @@ module.exports = function (app) {
               opacity: 0.8,
               order: 3
             }]
-          },
-          {
-            id: "qtd_populacional",
-            label: languageJson["descriptor"]["informacoes"]["layers"]["qtd_populacional"]["label"][language],
-            visible: false,
-            selectedType: "covid19_ibge_populacao",
-            types: [{
-              value: "covid19_ibge_populacao",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["qtd_populacional"]["types"]["covid19_ibge_populacao"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            }]
           }
           ]
         },
@@ -109,15 +109,30 @@ module.exports = function (app) {
           label: languageJson["descriptor"]["servicos"]["label"][language],
           group_expanded: false,
           layers: [
+            // {
+            //   id: "pharmacy_supermarket_hospital",
+            //   label: languageJson["descriptor"]["servicos"]["layers"]["pharmacy_supermarket_hospital"]["label"][language],
+            //   visible: false,
+            //   selectedType: "pharmacy_supermarket_hospital_covid",
+            //   types: [{
+            //     value: "pharmacy_supermarket_hospital_covid",
+            //     Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["pharmacy_supermarket_hospital"]["types"]["pharmacy_supermarket_hospital_covid"]["view_value"][language],
+            //     url: 'service/map/marker?layer=hospitais&filter=1=1',
+            //     iconUrl: 'assets/markers/hospital.png',
+            //     source: 'geojson',
+            //     opacity: 0.8,
+            //     order: 1
+            //   }]
+            // },
             {
-              id: "pharmacy_supermarket_hospital",
-              label: languageJson["descriptor"]["servicos"]["layers"]["pharmacy_supermarket_hospital"]["label"][language],
+              id: "hospitais",
+              label: languageJson["descriptor"]["servicos"]["layers"]["hospitais"]["label"][language],
               visible: false,
-              selectedType: "pharmacy_supermarket_hospital_covid",
+              selectedType: "go_hospitais_datasus",
               types: [{
-                value: "pharmacy_supermarket_hospital_covid",
-                Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["pharmacy_supermarket_hospital"]["types"]["pharmacy_supermarket_hospital_covid"]["view_value"][language],
-                url: 'service/map/marker?layer=hospitais&filter=1=1',
+                value: "go_hospitais_datasus",
+                Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["hospitais"]["types"]["go_hospitais_datasus"]["view_value"][language],
+                url: 'service/map/marker?layer=go_hospitais_datasus&filter=1=1',
                 iconUrl: 'assets/markers/hospital.png',
                 source: 'geojson',
                 opacity: 0.8,
@@ -168,6 +183,89 @@ module.exports = function (app) {
           label: languageJson["descriptor"]["geoinformacoes"]["label"][language],
           group_expanded: false,
           layers: [
+            {
+              id: "qtd_populacional",
+              label: languageJson["descriptor"]["geoinformacoes"]["layers"]["qtd_populacional"]["label"][language],
+              visible: false,
+              selectedType: "covid19_ibge_populacao",
+              types: [{
+                value: "covid19_ibge_populacao",
+                Viewvalue: languageJson["descriptor"]["geoinformacoes"]["layers"]["qtd_populacional"]["types"]["covid19_ibge_populacao"]["view_value"][language],
+                regionFilter: true,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              }]
+            },
+            {
+              id: "idh_municipios",
+              label: languageJson["descriptor"]["geoinformacoes"]["layers"]["idh_municipios"]["label"][language],
+              visible: false,
+              selectedType: "idh_por_municipio_goiano_covid",
+              types: [{
+                value: "idh_por_municipio_goiano_covid",
+                Viewvalue: languageJson["descriptor"]["geoinformacoes"]["layers"]["idh_municipios"]["types"]["idh_por_municipio_goiano_covid"]["view_value"][language],
+                regionFilter: false,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              }]
+            },
+            {
+              id: "faixa_etaria",
+              label: languageJson["descriptor"]["geoinformacoes"]["layers"]["faixa_etaria"]["label"][language],
+              visible: false,
+              selectedType: "pop_faixa_etaria_menor19_covid",
+              types: [{
+                value: "pop_faixa_etaria_menor19_covid",
+                Viewvalue: languageJson["descriptor"]["geoinformacoes"]["layers"]["faixa_etaria"]["types"]["pop_faixa_etaria_menor19_covid"]["view_value"][language],
+                regionFilter: true,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              },
+              {
+                value: "pop_faixa_etaria_20_a_29_covid",
+                Viewvalue: languageJson["descriptor"]["geoinformacoes"]["layers"]["faixa_etaria"]["types"]["pop_faixa_etaria_20_a_29_covid"]["view_value"][language],
+                regionFilter: true,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              },
+              {
+                value: "pop_faixa_etaria_30_a_39_covid",
+                Viewvalue: languageJson["descriptor"]["geoinformacoes"]["layers"]["faixa_etaria"]["types"]["pop_faixa_etaria_30_a_39_covid"]["view_value"][language],
+                regionFilter: true,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              },
+              {
+                value: "pop_faixa_etaria_40_a_49_covid",
+                Viewvalue: languageJson["descriptor"]["geoinformacoes"]["layers"]["faixa_etaria"]["types"]["pop_faixa_etaria_40_a_49_covid"]["view_value"][language],
+                regionFilter: true,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              },
+              {
+                value: "pop_faixa_etaria_50_a_59_covid",
+                Viewvalue: languageJson["descriptor"]["geoinformacoes"]["layers"]["faixa_etaria"]["types"]["pop_faixa_etaria_50_a_59_covid"]["view_value"][language],
+                regionFilter: true,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              },
+              {
+                value: "pop_faixa_etaria_acima_60_covid",
+                Viewvalue: languageJson["descriptor"]["geoinformacoes"]["layers"]["faixa_etaria"]["types"]["pop_faixa_etaria_acima_60_covid"]["view_value"][language],
+                regionFilter: true,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              }
+              ]
+            },
             {
               id: "rendimento_mensal",
               label: languageJson["descriptor"]["geoinformacoes"]["layers"]["rendimento_mensal"]["label"][language],
