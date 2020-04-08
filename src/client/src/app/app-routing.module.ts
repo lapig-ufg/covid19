@@ -27,7 +27,7 @@ export class AppRoutingModule {
 
   constructor(public router: Router){
 
-    if (window.innerWidth < 769) {
+    if (window.innerWidth < 1024) {
       router.resetConfig(routesMobile);
     }
 
