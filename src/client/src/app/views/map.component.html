@@ -57,7 +57,7 @@
 												</div>
 												<div *ngIf="layer.visible" style="padding-left: 8%; padding-right: 8%">
 													<div *ngIf="layer.types?.length > 1">
-														<mat-form-field style="width: 130px">
+														<mat-form-field style="width: 130px;">
 															<mat-label>{{descriptor.type}}</mat-label>
 															<mat-select (selectionChange)="changeVisibility(layer)"
 																[(value)]="layer.selectedType">
@@ -422,6 +422,24 @@
 				<div *ngIf="clickable" class="card-body">
 					<p class="card-text">{{clickableTitle}}</p>
 					<div align="center" style="padding: 10px">
+						<table>
+							<tbody>
+								<tr>
+									<th>{{minireportText.label_horario_atendimento}} </th>
+									<td>{{infomarker.horario}} </td>
+								</tr>
+								<tr *ngIf="infomarker.leitos_clinica">
+									<th>{{minireportText.label_qnt_geral}} </th>
+									<td>{{infomarker.leitos_clinica}}</td>
+								</tr>
+								<tr *ngIf="infomarker.leitos_uti">
+									<th>{{minireportText.label_qnt_uti}}</th>
+									<td>{{infomarker.leitos_uti}}</td>
+								</tr>
+							</tbody>
+						</table>
+
+
 						<img src='assets/markers/google_maps.png'> <br>
 						<b> {{minireportText.open_googlemaps}} </b>
 					</div>

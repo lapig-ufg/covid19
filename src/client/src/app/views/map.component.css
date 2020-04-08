@@ -1231,6 +1231,10 @@ img[usemap], map area{
 	margin-right: 10px;
 }
 
+::ng-deep .mat-checkbox-layout .mat-checkbox-label {
+    white-space: normal;
+}
+
 .container-team{
 	margin: 15px;
 	column-count: 2;

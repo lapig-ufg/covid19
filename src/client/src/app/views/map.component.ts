@@ -158,7 +158,7 @@ export class MapComponent implements OnInit {
   clickableTitle: any;
 
   infodata: any;
-  infodataCampo: any;
+  infomarker: any;
   infodataMunicipio: any;
   fieldPointsStop: any;
   utfgridsource: UTFGrid;
@@ -244,6 +244,8 @@ export class MapComponent implements OnInit {
     this.chartUsoSolo = [];
 
     this.textSummary = {};
+
+    this.infomarker = {};
 
     this.defaultRegion = {
       nome: 'Goiás',
@@ -663,7 +665,6 @@ export class MapComponent implements OnInit {
     this.http.get(statisticsURL).subscribe(res => {
       this.statistics_county = res
 
-      console.log(this.statistics_county)
     });
     
 
@@ -810,14 +811,34 @@ export class MapComponent implements OnInit {
       var properties = feature.getProperties();
       window.document.body.style.cursor = 'pointer';
 
-      if (properties['label'] != undefined) {
-        this.clickableTitle = properties['label']
+      if (properties['nome'] != undefined) {
+        this.clickableTitle = properties['nome']
       }
+
+      if(properties['source'] == "go_hospitais_datasus"){
+        if(properties['horario'] != undefined)  {
+          this.infomarker.horario = properties['horario']
+        }
+        if(properties['leitos_cli'] != undefined)  {
+          this.infomarker.leitos_clinica = parseInt(properties['leitos_cli'])
+        }
+        if(properties['leitos_uti'] != undefined)  {
+          this.infomarker.leitos_uti = parseInt(properties['leitos_uti'])
+        }
+      }
+      else if (properties['source'] == "vacinacao_gripe")
+      {
+        if(properties['horario'] != undefined)  {
+          this.infomarker.horario = properties['horario']
+        }
+      }
+
 
     } else {
       this.clickableTitle = this.minireportText.label_clickable
       this.clickable = false
       window.document.body.style.cursor = 'auto';
+      this.infomarker = {};
 
       let info = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
 

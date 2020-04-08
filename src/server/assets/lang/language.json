@@ -218,12 +218,24 @@
 			"en-us": "Year: "
 		},
 		"open_googlemaps": {
-			"pt-br": "Abrir no Google Maps",
-			"en-us": "View on Google Maps "
+			"pt-br": "Clique para abrir no Google Maps",
+			"en-us": "Click to view on Google Maps "
 		},
 		"label_clickable": {
 			"pt-br": "Nome não informado",
 			"en-us": "Name not available"
+		},
+		"label_qnt_uti": {
+			"pt-br": "Nº de Leitos de UTI:",
+			"en-us": "Number of ICU beds:"
+		},
+		"label_qnt_geral": {
+			"pt-br": "Nº de Leitos de Clínica Geral:",
+			"en-us": "Number of beds in General Practice:"
+		},
+		"label_horario_atendimento": {
+			"pt-br": "Horário de Atendimento:",
+			"en-us": "Opening Hours:"
 		}
 	},
 	"summary_box":{
@@ -394,31 +406,34 @@
 						}
 					}
 				},
-				"qtd_populacional": {
+				"casos_bairro": {
 					"label": {
-						"pt-br": "População - IBGE",
-						"en-us": "Population - IBGE"
+						"pt-br": "Casos confirmados por bairro (Goiânia)",
+						"en-us": "Confirmed cases by district (Goiânia)"
 					},
-					"metadata": [{
-						"title": {
-							"pt-br": "Dado",
-							"en-us": "Data"
-						},
-						"description": {
-							"pt-br": "Avisos - DETER-Cerrado",
-							"en-us": "Warnings - DETER-Cerrado"
-						}
-					}],
 					"types": {
-						"covid19_ibge_populacao": {
+						"casos_por_bairro_goiania": {
 							"view_value": {
-								"pt-br": "Habitantes",
-								"en-us": "Population"
+								"pt-br": "Goiânia",
+								"en-us": "Goiânia"
+							}
+						}
+					}
+				},
+				"doencas_respiratorias": {
+					"label": {
+						"pt-br": "Mediana do nº de pessoas com Doenças Respiratórias (2015-2019)",
+						"en-us": "Median number of people with respiratory diseases (2015-2019)"
+					},
+					"types": {
+						"doencas_respiratorias_2015_2019_covid": {
+							"view_value": {
+								"pt-br": "Quantidade",
+								"en-us": "Number"
 							}
 						}
 					}
 				}
-
 			}
 		},
 		"servicos": {
@@ -434,6 +449,20 @@
 					},
 					"types": {
 						"pharmacy_supermarket_hospital_covid": {
+							"view_value": {
+								"pt-br": "Pontos",
+								"en-us": "Points"
+							}
+						}
+					}
+				},
+				"hospitais": {
+					"label": {
+						"pt-br": "Hospitais",
+						"en-us": "Hospitals"
+					},
+					"types": {
+						"go_hospitais_datasus": {
 							"view_value": {
 								"pt-br": "Pontos",
 								"en-us": "Points"
@@ -483,6 +512,88 @@
 				"en-us": "GeoInformations"
 			},
 			"layers": {
+				"qtd_populacional": {
+					"label": {
+						"pt-br": "População - IBGE",
+						"en-us": "Population - IBGE"
+					},
+					"metadata": [{
+						"title": {
+							"pt-br": "Dado",
+							"en-us": "Data"
+						},
+						"description": {
+							"pt-br": "Avisos - DETER-Cerrado",
+							"en-us": "Warnings - DETER-Cerrado"
+						}
+					}],
+					"types": {
+						"covid19_ibge_populacao": {
+							"view_value": {
+								"pt-br": "Habitantes",
+								"en-us": "Population"
+							}
+						}
+					}
+				},
+				"faixa_etaria": {
+					"label": {
+						"pt-br": "Quantidade de pessoas por Faixa Etária em unidades censitárias",
+						"en-us": "Number of people by Age Group in Census unit"
+					},
+					"types": {
+						"pop_faixa_etaria_menor19_covid": {
+							"view_value": {
+								"pt-br": "Menor que 19",
+								"en-us": "Less than 19"
+							}
+						},
+						"pop_faixa_etaria_20_a_29_covid": {
+							"view_value": {
+								"pt-br": "20 - 29",
+								"en-us": "20 - 29"
+							}
+						},
+						"pop_faixa_etaria_30_a_39_covid": {
+							"view_value": {
+								"pt-br": "30 - 39",
+								"en-us": "30 - 39"
+							}
+						},
+						"pop_faixa_etaria_40_a_49_covid": {
+							"view_value": {
+								"pt-br": "40 - 49",
+								"en-us": "40 - 49"
+							}
+						},
+						"pop_faixa_etaria_50_a_59_covid": {
+							"view_value": {
+								"pt-br": "50 - 59",
+								"en-us": "50 - 59"
+							}
+						},
+						"pop_faixa_etaria_acima_60_covid": {
+							"view_value": {
+								"pt-br": "Acima de 60",
+								"en-us": "Above 60"
+							}
+						}
+					}
+				},
+				"idh_municipios": {
+					"label": {
+						"pt-br": "IDH Municipal",
+						"en-us": "Municipal HDI"
+					},
+					"types": {
+						"idh_por_municipio_goiano_covid": {
+							"view_value": {
+								"pt-br": "Valor",
+								"en-us": "Value"
+							}
+						}
+					}
+				},
 				"rendimento_mensal": {
 					"label": {
 						"pt-br": "Rendimento Mensal",

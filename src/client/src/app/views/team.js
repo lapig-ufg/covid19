@@ -16,6 +16,41 @@ export default  [
         ]
     },
     {
+        title: "Tecnologia da informação",
+        members: [
+            {
+                nome: "Leandro Leal Parente",
+                link: "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4424657A7",
+                description: "Analista de desenvolvimento do Lapig/UFG"
+            },
+            {
+                nome: "Luiz Mário Lustosa Pascoal",
+                link: "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4400707P7",
+                description:"Analista de desenvolvimento do Lapig/UFG"
+            },
+            {
+                nome: "Fernanda Stefani Souza Malaquias",
+                link: "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K8478743T6",
+                description:"Analista de desenvolvimento do Lapig/UFG"
+            },
+            {
+                nome: "Renato Gomes Silvério",
+                link: "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K2182822Y8",
+                description:"Analista DevOps do Lapig/UFG"
+            },
+            {
+                nome: "Roberto de Urzeda Paiva",
+                link: "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4377562A1",
+                description:"Técnico em Tecnologia da Informação do Lapig/UFG"
+            },
+            {
+                nome: "Tharles de Sousa Andrade",
+                link: "http://lattes.cnpq.br/6994901089843835",
+                description:"Analista de desenvolvimento do Lapig/UFG"
+            }
+        ]
+    },
+    {
         title: "Comunicação institucional",
         members: [
             {
@@ -82,41 +117,6 @@ export default  [
                 nome: "Tatiane Cristina Moraes de Sousa",
                 link: "http://lattes.cnpq.br/6548173548667596",
                 description:"Pesquisadora Fiocruz"
-            }
-        ]
-    },
-    {
-        title: "Tecnologia da informação",
-        members: [
-            {
-                nome: "Leandro Leal Parente",
-                link: "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4424657A7",
-                description: "Pesquisador do Lapig/UFG"
-            },
-            {
-                nome: "Luiz Mário Lustosa Pascoal",
-                link: "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4400707P7",
-                description:" Pesquisador do Lapig/UFG"
-            },
-            {
-                nome: "Fernanda Stefani Souza Malaquias",
-                link: "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K8478743T6",
-                description:"Pesquisadora do Lapig/UFG"
-            },
-            {
-                nome: "Renato Gomes Silvério",
-                link: "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K2182822Y8",
-                description:"Pesquisador do Lapig/UFG"
-            },
-            {
-                nome: "Roberto Urzêda de Paiva",
-                link: "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4377562A1",
-                description:"Técnico-administrativo Iesa/Lapig/UFG"
-            },
-            {
-                nome: "Tharles de Sousa Andrade",
-                link: "http://lattes.cnpq.br/6994901089843835",
-                description:"Pesquisador do Lapig/UFG"
             }
         ]
     }
