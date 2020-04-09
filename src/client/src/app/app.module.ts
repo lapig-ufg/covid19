@@ -50,6 +50,7 @@ import { CardModule } from 'primeng/card';
 import { AccordionModule } from 'primeng/accordion';
 import { DatePipe } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 import { SpinnerImgComponent } from './views/spinner-img/spinner-img.component';
 import { FileUploadComponent } from './views/file-upload/file-upload.component';
 import { MetadataComponent } from './views/metadata/metadata.component';
@@ -105,6 +106,7 @@ const ENTRY_COMPONENTS = [
     TableModule,
     ChartModule,
     DialogModule,
+    ToggleButtonModule,
     MatDialogModule,
     BrowserAnimationsModule,
     MatExpansionModule,

@@ -34,6 +34,18 @@ body {
 	overflow: hidden;
 }
 
+#tab-mobile .mat-expansion-panel-body {
+	padding: 0 4px 10px !important;
+}
+
+#tab-mobile .mat-expansion-panel-content {
+	font-size: 0.9em;
+}
+
+#tab-mobile .mat-checkbox-label {
+	white-space: initial;
+}
+
 .mat-mini-fab {
 	width: 35px !important;
 	height: 35px !important;
