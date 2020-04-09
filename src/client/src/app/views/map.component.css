@@ -135,6 +135,7 @@ ngb-highlight .ngb-highlight:first-child {
 .card-body {
 	padding: 5px;
 	font-size: 13px;
+	max-width: 400px;
 }
 
 #positionheaders {

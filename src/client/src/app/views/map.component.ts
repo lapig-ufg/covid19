@@ -900,7 +900,7 @@ export class MapComponent implements OnInit {
               if (this.infobairro.nm_bai == "") {
                 this.infobairro.nm_bai = this.minireportText.undisclosed_message;
               }
-              // console.log(this.infobairro)
+              console.log(this.infobairro)
 
             } else {
               window.document.body.style.cursor = 'auto';
@@ -1343,11 +1343,11 @@ export class MapComponent implements OnInit {
       layer.visible = e.checked;
     }
 
-    if (layer.id == "casos_covid_confirmados") {
+    if (layer.id == "casos_covid_confirmados" || layer.id == "casos_bairro") {
       if (layer.visible) {
+        this.handleInteraction();
       }
     }
-    this.handleInteraction();
 
     // if(layer.id == "casos_bairro")
     // {
@@ -1356,7 +1356,6 @@ export class MapComponent implements OnInit {
     this.LayersTMS[layer.selectedType].setVisible(layer.visible);
     // this.updateSummary();
     this.googleAnalyticsService.eventEmitter("changeVisibility", "camadaDado", layer.label);
-
 
   }
 
