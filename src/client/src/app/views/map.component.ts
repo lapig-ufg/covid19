@@ -34,7 +34,7 @@ import CropFilter from 'ol-ext/filter/Crop';
 import MaskFilter from 'ol-ext/filter/Mask';
 import MultiPolygon from 'ol/geom/MultiPolygon';
 import { defaults as defaultControls, Control, Attribution } from 'ol/control';
-
+import { Router} from '@angular/router';
 import { google } from "google-maps";
 
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
@@ -223,7 +223,8 @@ export class MapComponent implements OnInit {
     public dialog: MatDialog,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
-    public googleAnalyticsService: GoogleAnalyticsService
+    public googleAnalyticsService: GoogleAnalyticsService,
+    private router: Router
   ) {
 
     this.projection = OlProj.get('EPSG:900913');
@@ -1553,6 +1554,10 @@ export class MapComponent implements OnInit {
       this.currentZoom = 7.6;
     }
 
+    if (window.innerWidth < 1024) {
+      this.router.navigate(['/mobile']);
+    }
+
     this.innerWidth = window.innerWidth;
   }
 
@@ -1697,5 +1702,9 @@ export class MapComponent implements OnInit {
       `csv`,
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/csv.svg')
     );
+
+    if (window.innerWidth < 1024) {
+      this.router.navigate(['/mobile']);
+    }
   }
 }
