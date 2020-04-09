@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#sleep 1h
+BASEDIR='/APP/covid19/src/server/scripts/'
 
 while :; do
 
@@ -9,7 +9,8 @@ comando=$(date +%H:%M)
 if [[ "$comando" == '18:00' ]] || [[ "$comando" == '06:00' ]] || [[ "$comando" == '10:00' ]];then
                    sleep 5
                    echo -n "Atualizando Plataforma!!"
-		               cd /APP/covid19/src/server/scripts/
+		   cd $BASEDIR
+                   chmod -R 777 *
                    /APP/covid19/src/server/scripts/atualizacao_automatica_casos.sh
                    sleep 3
                    clear
