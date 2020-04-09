@@ -202,7 +202,7 @@
 			"en-us": "Not Computed"
 		},
 		"undisclosed_message": {
-			"pt-br": "Não Divulgada",
+			"pt-br": "Não Informado",
 			"en-us": "Undisclosed"
 		},
 		"click_more_text": {
@@ -236,6 +236,22 @@
 		"label_horario_atendimento": {
 			"pt-br": "Horário de Atendimento:",
 			"en-us": "Opening Hours:"
+		},
+		"label_qnt_casos": {
+			"pt-br": "Quantidade de Casos:",
+			"en-us": "Number of cases:"
+		},
+		"label_fonte": {
+			"pt-br": "Fonte:",
+			"en-us": "Source:"
+		},
+		"label_last_update": {
+			"pt-br": "Atualizado em:",
+			"en-us": "Last Updated on:"
+		},
+		"label_area_bairro": {
+			"pt-br": "Área do Bairro:",
+			"en-us": "District Area:"
 		}
 	},
 	"summary_box":{
@@ -408,14 +424,22 @@
 				},
 				"casos_bairro": {
 					"label": {
-						"pt-br": "Casos confirmados por bairro (Goiânia)",
-						"en-us": "Confirmed cases by district (Goiânia)"
+						"pt-br": "Casos confirmados por Bairros",
+						"en-us": "Confirmed cases by Districts"
 					},
 					"types": {
-						"casos_por_bairro_goiania": {
+						"casos_por_bairro_em_municipios_covid": {
 							"view_value": {
-								"pt-br": "Goiânia",
-								"en-us": "Goiânia"
+								"pt-br": "Bairros",
+								"en-us": "District"
+							},
+							"timelabel": {
+								"pt-br": "Município",
+								"en-us": "Municipality"
+							},
+							"default_placeholder":{
+								"pt-br": "Selecione...",
+								"en-us": "Select..."
 							}
 						}
 					}
