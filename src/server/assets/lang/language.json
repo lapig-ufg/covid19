@@ -206,7 +206,7 @@
 			"en-us": "Undisclosed"
 		},
 		"click_more_text": {
-			"pt-br": "Clique para visualizar o relatório completo deste desmatamento",
+			"pt-br": "Clique para visualizar o relatório completo ",
 			"en-us": "Click to open the full deforestation report"
 		},
 		"click_more_municipio": {
@@ -424,7 +424,7 @@
 				},
 				"casos_bairro": {
 					"label": {
-						"pt-br": "Casos confirmados por Bairros (Goiânia)",
+						"pt-br": "Casos confirmados por Bairros",
 						"en-us": "Confirmed cases by Districts"
 					},
 					"types": {
@@ -438,8 +438,8 @@
 								"en-us": "Municipality"
 							},
 							"default_placeholder":{
-								"pt-br": "Selecione...",
-								"en-us": "Select..."
+								"pt-br": "Selecione aqui...",
+								"en-us": "Select here..."
 							}
 						}
 					}
@@ -497,7 +497,7 @@
 				"gyn_locais_vacinacao": {
 					"label": {
 						"pt-br": "Locais de Vacinação H1N1 (Goiânia)",
-						"en-us": "H1N1 Flu Vaccination Sites (Goiania)"
+						"en-us": "H1N1 Flu Vaccination Sites (Goiânia)"
 					},
 					"types": {
 						"gyn_locais_vacinacao_gripe": {
