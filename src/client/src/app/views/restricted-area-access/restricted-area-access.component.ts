@@ -70,11 +70,9 @@ export class RestrictedAreaAccessComponent implements OnInit {
 
       },(err) => {
         this.display = true;
-        this.msg = "Não foi possível autenticar seu acesso. Por favor, tente novamente. Se o problema persistir contate a administração da plataforma. ";
+        this.msg = "Não foi possível autenticar seu acesso. Por favor, tente novamente. Se o problema persistir contate a administração da plataforma.";
       });
     }
-
-    console.log("USer: ", this.user);
   }
 
 }
