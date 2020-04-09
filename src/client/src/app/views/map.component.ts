@@ -462,6 +462,7 @@ export class MapComponent implements OnInit {
       this.updateTexts();
       this.updateCharts();
       this.updateDescriptor();
+      this.updateSource();
     }
 
     this.googleAnalyticsService.eventEmitter("changeLanguage", "lang", lang);
@@ -711,6 +712,7 @@ export class MapComponent implements OnInit {
     this.updateCharts();
     this.updateExtent();
     this.updateSourceAllLayer();
+    this.updateSource();
     this.updateSummary();
     this.googleAnalyticsService.eventEmitter("updateRegion", "search_box", this.valueRegion);
   }

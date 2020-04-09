@@ -199,8 +199,8 @@
 				<div matTooltip="Menos Zoom" [class]="'btn-layers'" aria-label="Menos Zoom" (click)="zoomOut()">
 					<img width="30" height="30" src="../../assets/img/menos.svg" alt="Menos Zoom">
 				</div>
-				<div matTooltip="Ajuda" [class]="'btn-layers'" aria-label="Menos Zoom" (click)="openDialogAjuda()">
-					<img width="30" height="30" src="../../assets/img/ajuda.svg" alt="Ajuda">
+				<div matTooltip="Dicas" [class]="'btn-layers'" aria-label="Dicas" (click)="openDialogAjuda()">
+					<img width="30" height="30" src="../../assets/img/tips.svg" alt="Dicas">
 				</div>
 				<div matTooltip="Área Restrita" [class]="'btn-layers'" aria-label="Área Restrita"
 					(click)="handleRestrictedArea()">
@@ -278,7 +278,6 @@
 							</p-tabView>
 						</mat-tab>
 
-
 						<mat-tab label="{{dataProjSeries.timeseries.label}}">
 							<p-tabView>
 								<p-tabPanel [header]="selectRegion.nome">
@@ -313,7 +312,6 @@
 							</p-tabView>
 						</mat-tab>
 
-
 						<mat-tab label="{{dataSource.title}}">
 							<p-scrollPanel [style]="{width: '100%', height: '60vh'}">
 								<div class="container-ft">
@@ -342,11 +340,7 @@
 							</p-scrollPanel>
 						</mat-tab>
 
-
 					</mat-tab-group>
-
-
-
 
 					<!-- <mat-tab label="{{dataProjSeries.timeseries.label}}">
 								<ng-template matTabContent>

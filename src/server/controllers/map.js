@@ -356,7 +356,17 @@ module.exports = function (app) {
           }
         ],
         selectedType: "municipios_goias"
-      }]
+      }],
+      controls: {
+        id: "limits",
+        "label_close_mun": languageJson["controls"]["label_close_mun"][language],
+        "label_layers": languageJson["controls"]["label_layers"][language],
+        "label_statistics": languageJson["controls"]["label_statistics"][language],
+        "label_zoomin": languageJson["controls"]["label_zoomin"][language],
+        "label_zoomout": languageJson["controls"]["label_zoomout"][language],
+        "label_tips": languageJson["controls"]["label_tips"][language],
+        "label_restricted_area": languageJson["controls"]["label_restricted_area"][language],
+      }
     };
 
     response.send(result);

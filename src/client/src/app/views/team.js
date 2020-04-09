@@ -1,5 +1,6 @@
 
-export default  [
+export default
+[
     {
         title: "Coordenação",
         members: [
@@ -120,4 +121,4 @@ export default  [
             }
         ]
     }
-];
+]

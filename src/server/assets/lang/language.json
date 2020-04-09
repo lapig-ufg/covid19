@@ -3,7 +3,6 @@
 		"pt-br": "Legenda",
 		"en-us": "Legend"
 	},
-
 	"charts_box": {
 		"charts_box_title": {
 			"pt-br": "Informações sobre o COVID-19",
@@ -327,32 +326,52 @@
 		},
 		"form": {
 			"title": {
-				"pt-br": "Camada de Dados",
-				"en-us": "Layers"
+				"pt-br": "Solicitação de acesso à Área Restrita",
+				"en-us": "Request for access to the Restricted Area"
 			},
-			"label_data": {
-				"pt-br": "Informações",
-				"en-us": "Information"
+			"label_input_responsible": {
+				"pt-br": "Nome do responsável",
+				"en-us": "Responsible name"
 			},
-			"label_mapabase": {
-				"pt-br": "Mapa Base",
-				"en-us": "BaseMap"
+			"label_input_error": {
+				"pt-br": "O preenchimento do nome do responsável é obrigatório.",
+				"en-us": "The name of the responsible person is mandatory"
 			},
-			"label_limits": {
-				"pt-br": "Limites",
-				"en-us": "Limits"
+			"label_email": {
+				"pt-br": "E-mail principal",
+				"en-us": "E-mail"
 			},
-			"search_placeholder": {
-				"pt-br": "Por favor informe um Município",
-				"en-us": "Please inform a Municipality name"
+			"label_email_error": {
+				"pt-br": "O informe um e-mail válido",
+				"en-us": "Enter a valid email address"
 			},
-			"search_loading": {
-				"pt-br": "Procurando...",
-				"en-us": "Searching"
+			"label_contact": {
+				"pt-br": "Telefone para contato",
+				"en-us": "Contact phone"
 			},
-			"search_failed": {
-				"pt-br": "Desculpe, muncípio não encontrada.",
-				"en-us": "Sorry, municipality not found."
+			"label_contact_error": {
+				"pt-br": "O preenchimento do telefone para contato é obrigatório",
+				"en-us": "The contact phone number is mandatory"
+			},
+			"label_institution": {
+				"pt-br": "Instituição do solicitante",
+				"en-us": "Requestor institution"
+			},
+			"label_institution_error": {
+				"pt-br": "O preenchimento da Instituição do solicitante é obrigatório",
+				"en-us": "Completing the applicant's Institution is mandatory"
+			},
+			"label_municipality": {
+				"pt-br": "Munícipio de origem<",
+				"en-us": "Home municipality"
+			},
+			"response_msg_error_one": {
+				"pt-br": "Não foi possível enviar sua solicitação. Por favor, tente novamente. Se o problema persistir, contate a administração da plataforma!",
+				"en-us": "We were unable to submit your request. Please try again. If the problem persists, contact the platform administration!"
+			},
+			"response_msg_error_two": {
+				"pt-br": "Dados enviados com sucesso! Analisaremos sua solicitação e em breve entraremos em contato.",
+				"en-us": "Data sent successfully! We will review your request and get back to you shortly."
 			}
 		}
 	},
@@ -483,7 +502,7 @@
 							}
 						}
 					}
-				},	
+				},
 				"go_leitos_mun_clinicos_uti": {
 					"label": {
 						"pt-br": "Quantidade de Leitos Geral e UTI",
@@ -503,7 +522,7 @@
 							}
 						}
 					}
-				}	
+				}
 			}
 		},
 		"geoinformacoes": {
@@ -673,7 +692,239 @@
 					"en-us": "Municipality"
 				}
 			}
+		},
+		"controls": {
+			"types": {
+				"label_close_mun": {
+					"pt-br": "Sair do Município",
+					"en-us": "Leave the Municipality"
+				},
+				"label_layers": {
+					"pt-br": "Acessar camada de dados",
+					"en-us": "Access data layer"
+				},
+				"label_statistics": {
+					"pt-br": "Estatísticas",
+					"en-us": "Statistics"
+				},
+				"label_zoomin": {
+					"pt-br": "Mais Zoom",
+					"en-us": "Zoom In"
+				},
+				"label_zoomout": {
+					"pt-br": "Menos Zoom",
+					"en-us": "Zoom Out"
+				},
+				"label_tips": {
+					"pt-br": "Dicas",
+					"en-us": "Tips"
+				},
+				"label_restricted_area": {
+					"pt-br": "Área Restrita",
+					"en-us": "Restricted Area"
+				}
+			}
 		}
-	}
+	},
+	"team": {
+		"title": {
+			"pt-br": "Equipe",
+			"en-us": "Team"
+		},
+		"data": [
+			{
+				"title": {
+					"pt-br": "Coordenação",
+					"en-us": "Coordination"
+				},
+				"members": [
+					{
+						"nome": "Manuel Eduardo Ferreira",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4766027A0",
+						"description" :{
+							"pt-br": "Professor do Iesa/Lapig/UFG",
+							"en-us": "Professor at Iesa / Lapig / UFG"
+						}
+					},
+					{
+						"nome": "Laerte Guimarães Ferreira Júnior",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4782789P0",
+						"description":{
+							"pt-br": "Pró-Reitor de Pós-graduação da UFG e professor Iesa/Lapig/UFG",
+							"en-us": "Dean of the Postgraduation at UFG and Professor Iesa / Lapig / UFG"
+						}
+					}
+				]
+			},
+			{
+				"title": {
+					"pt-br": "Tecnologia da informação",
+					"en-us": "Information Technology"
+				},
+				"members": [
+					{
+						"nome": "Leandro Leal Parente",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4424657A7",
+						"description":{
+							"pt-br": "Analista de desenvolvimento do Lapig/UFG",
+							"en-us": "Development Analyst at Lapig / UFG"
+						}
+					},
+					{
+						"nome": "Luiz Mário Lustosa Pascoal",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4400707P7",
+						"description":{
+							"pt-br": "Analista de desenvolvimento do Lapig/UFG",
+							"en-us": "Development Analyst at Lapig / UFG"
+						}
+					},
+					{
+						"nome": "Fernanda Stefani Souza Malaquias",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K8478743T6",
+						"description":{
+							"pt-br": "Analista de desenvolvimento do Lapig/UFG",
+							"en-us": "Development Analyst at Lapig / UFG"
+						}
+					},
+					{
+						"nome": "Renato Gomes Silvério",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K2182822Y8",
+						"description":{
+							"pt-br": "Analista DevOps do Lapig/UFG",
+							"en-us": "DevOps Analyst at Lapig / UFG"
+						}
+					},
+					{
+						"nome": "Roberto de Urzeda Paiva",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4377562A1",
+						"description":{
+							"pt-br": "Técnico em Tecnologia da Informação do Lapig/UFG",
+							"en-us": "Information Technology Technician at Lapig / UFG"
+						}
+					},
+					{
+						"nome": "Tharles de Sousa Andrade",
+						"link": "http://lattes.cnpq.br/6994901089843835",
+						"description":{
+							"pt-br": "Analista de desenvolvimento do Lapig/UFG",
+							"en-us": "Development Analyst at Lapig / UFG"
+						}
+					}
+				]
+			},
+			{
+				"title": {
+					"pt-br": "Comunicação institucional",
+					"en-us": "Institutional communication"
+				},
+				"members": [
+					{
+						"nome": "Gabrielly Cristiny de Andrade",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K8283740Y2",
+						"description":{
+							"pt-br": "Graduanda em Ciências Ambientais e Pesquisadora do Lapig/UFG",
+							"en-us": "Undergraduate student in Environmental Sciences and Researcher at Lapig / UFG"
+						}
+					},
+					{
+						"nome": "Mariana de Oliveira Gomes",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4405820E1",
+						"description": {
+							"pt-br": "Relações Públicas e Gestora de Projetos Lapig/UFG",
+							"en-us": "Public Relations and Project Manager at Lapig / UFG"
+						}
+					}
+				]
+			},
+			{
+				"title": {
+					"pt-br": "Base de dados",
+					"en-us": "Data base"
+				},
+				"members": [
+					{
+						"nome": "Elaine Barbosa da Silva",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4750186J4",
+						"description": {
+							"pt-br": "Coordenadora do Lapig e professora do Iesa/UFG",
+							"en-us": "Lapig coordinator and teacher at Iesa / UFG"
+						}
+					},
+					{
+						"nome": "Nilson Ferreira Clementino",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4782468P7",
+						"description": {
+							"pt-br": "Professor da Engenharia Ambiental e Sanitária/Lapig/UFG",
+							"en-us": "Professor of Environmental and Sanitary Engineering / Lapig / UFG"
+						}
+					},
+					{
+						"nome": "Rherison Tyrone Silva Almeida",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4290282H6",
+						"description": {
+							"pt-br": "Professor do Iesa/Lapig/UFG",
+							"en-us": "Professor at Iesa / Lapig / UFG"
+						}
+					},
+					{
+						"nome": "Sérgio Henrique de Moura Nogueira",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4478311P3",
+						"description": {
+							"pt-br": "Doutorando (Ciamb) e pesquisador do Lapig/UFG",
+							"en-us": "PhD student (Ciamb) and researcher at Lapig / UFG"
+						}
+					},
+					{
+						"nome": "Vinícius Vieira Mesquita",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4312402Y9",
+						"description": {
+							"pt-br": "Doutorando (Ciamb) e pesquisador do Lapig/UFG",
+							"en-us": "PhD student (Ciamb) and researcher at Lapig / UFG"
+						}
+					},
+					{
+						"nome": "Yves Mauro Fernandes Ternes",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4732348E1",
+						"description": {
+							"pt-br": "Superintendente da Vigilância em Saúde de Goiânia e professor IPTSP/UFG",
+							"en-us": "Superintendent of Health Surveillance in Goiânia and professor IPTSP / UFG"
+						}
+					}
+				]
+			},
+			{
+				"title": {
+					"pt-br": "Modelagem e análises espaciais",
+					"en-us": "Spatial modeling and analysis"
+				},
+				"members": [
+					{
+						"nome": "Claudinei Oliveira dos Santos",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4270895Y2",
+						"description": {
+							"pt-br": "Doutorando (Ciamb) e pesquisador do Lapig/UFG",
+							"en-us": "PhD student (Ciamb) and researcher at Lapig / UFG"
+						}
 
+					},
+					{
+						"nome": "Luís Rodrigo Fernandes Baumann",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4137321Y7",
+						"description": {
+							"pt-br": "Professor do IME/UFG e pesquisador do Lapig/UFG",
+							"en-us": "Professor at IME / UFG and researcher at Lapig / UFG"
+						}
+					},
+					{
+						"nome": "Tatiane Cristina Moraes de Sousa",
+						"link": "http://lattes.cnpq.br/6548173548667596",
+						"description": {
+							"pt-br": "Pesquisadora Fiocruz",
+							"en-us": "Researcher Fiocruz"
+						}
+					}
+				]
+			}
+		]
+	}
 }
