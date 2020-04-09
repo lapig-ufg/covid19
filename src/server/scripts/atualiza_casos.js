@@ -29,6 +29,7 @@ fs.createReadStream(csvFilepath)
       const client = await pool.connect()
       try {
         await client.query('BEGIN')
+        await client.query('TRUNCATE TABLE casos RESTART IDENTITY')
 
         const lastDateResul = await client.query(lastDateQuery)
         const lastDate = lastDateResul.rows[0]['last_date']
@@ -42,18 +43,19 @@ fs.createReadStream(csvFilepath)
           var rowDate = new Date(row.data)
           var rowID = new Number(row.id);
 
-          if (rowDate > lastDate || rowID > lastid) {
+          // if (rowDate > lastDate || rowID > lastid) {
 
             if (row.confirmados == '') row.confirmados = null
             if (row.suspeitos == '') row.suspeitos = null
             if (row.obitos == '') row.obitos = null
 
+
             var rowValues = [row.cd_geocmu, row.data, row.confirmados, row.suspeitos, row.obitos]
             const res = await client.query(insertRow, rowValues)
             console.log(res.rowCount + ' inserted.')
-          } else {
-            console.log('Duplicated register ignored.')
-          }
+          // } else {
+          //   console.log('Duplicated register ignored.')
+          // }
 
           if (newLastDate == undefined || new Date(newLastDate).getTime() < rowDate.getTime()) {
             newLastDate = row.data
