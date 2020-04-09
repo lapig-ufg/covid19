@@ -63,7 +63,7 @@ module.exports = function (app) {
             label: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["label"][language],
             visible: false,
             selectedType: "casos_por_bairro_em_municipios_covid",
-            showTypes: true,
+            // showTypes: true,
             types: [{
               value: "casos_por_bairro_em_municipios_covid",
               Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_em_municipios_covid"]["view_value"][language],
@@ -72,7 +72,7 @@ module.exports = function (app) {
               opacity: 0.8,
               order: 3,
               timeLabel: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_em_municipios_covid"]["timelabel"][language],
-              timeSelected: "cd_geocmu = '5208707'",
+              timeSelected: "1=1",
               timeHandler: "msfilter",
               times: [
               //   {
@@ -80,7 +80,7 @@ module.exports = function (app) {
               //   Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_em_municipios_covid"]["default_placeholder"][language]
               // },
               {
-                value: "cd_geocmu = '5208707'",
+                value: "1=1",
                 Viewvalue: "Goiânia"
               }
               ]

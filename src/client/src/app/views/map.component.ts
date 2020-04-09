@@ -154,7 +154,7 @@ export class MapComponent implements OnInit {
   fieldPointsStop: any;
   utfgridsource: UTFGrid;
   utfgridlayer: OlTileLayer;
-   utfgridBairro: UTFGrid;
+  utfgridBairro: UTFGrid;
   utfgridlayerBairro: OlTileLayer;
   utfgridmunicipio: UTFGrid;
   utfgridlayerMunicipio: OlTileLayer;
@@ -235,7 +235,7 @@ export class MapComponent implements OnInit {
 
     this.infomarker = {};
     this.infobairro = {};
-  
+
     this.defaultRegion = {
       nome: 'Goiás',
       area_mun: 1547.26991096032,
@@ -815,7 +815,6 @@ export class MapComponent implements OnInit {
     let viewResolution = this.map.getView().getResolution();
 
 
-    console.log(coordinate)
     var feature = this.map.forEachFeatureAtPixel(evt.pixel, function (feature) {
       return feature;
     });
@@ -887,26 +886,21 @@ export class MapComponent implements OnInit {
       }
 
       let bairro = this.layersNames.find(element => element.id === 'casos_bairro');
-      console.log(bairro)
-      if(bairro.visible)
-      {
+      if (bairro.visible) {
+
+        let zoom = this.map.getView().getZoom();
 
         if (this.utfgridBairro) {
           this.utfgridBairro.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
             if (data) {
               window.document.body.style.cursor = 'pointer';
-              let zoom = this.map.getView().getZoom();
 
-              console.log("ZOOM ", zoom)
               this.infobairro = data;
 
               if (this.infobairro.nm_bai == "") {
                 this.infobairro.nm_bai = this.minireportText.undisclosed_message;
               }
-
-
-              console.log(this.infobairro)
-
+              // console.log(this.infobairro)
 
             } else {
               window.document.body.style.cursor = 'auto';
@@ -916,12 +910,9 @@ export class MapComponent implements OnInit {
           }.bind(this)
           );
         }
-      }
-      else{
+      } else {
         this.infobairro = null;
       }
-      
-
     }
 
   }
@@ -1133,7 +1124,7 @@ export class MapComponent implements OnInit {
       source: this.utfgridsource
     });
 
-    
+
     this.utfgridBairro = new UTFGrid({
       tileJSON: this.getTileJSONBairros()
     });
@@ -1324,8 +1315,7 @@ export class MapComponent implements OnInit {
 
 
     let bairros = this.layersNames.find(element => element.id === 'casos_bairro');
-    if(bairros.visible)
-    {
+    if (bairros.visible) {
       if (this.utfgridBairro) {
         let tileJSON = this.getTileJSONBairros();
 

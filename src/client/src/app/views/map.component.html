@@ -399,7 +399,7 @@
 			<!-- [ngStyle]="{'visibility': infodata  ? 'visible' : (infobairro ? 'visible' : (clickable ? 'visible' : 'hidden'))}"> -->
 
 			<div id="map-info" class="card" 
-			 [ngStyle]="{'visibility': (infodata || clickable) || infobairro ? 'visible' : 'hidden'}"> 
+			[ngStyle]="{'visibility': infodata  ? 'visible' : (infobairro ? 'visible' : (clickable ? 'visible' : 'hidden'))}">
 				<div *ngIf="infodata && !clickable" class="card-body">
 					<p class="card-text">{{infodata.nome}} - {{infodata.uf}}</p>
 					<table>
@@ -422,7 +422,7 @@
 							</tr>
 						</tbody>
 					</table>
-					<div style="text-align:center;color:darkred"> <br> <strong>{{minireportText.click_more_text}} </strong></div>
+					<div style="text-align:center;color:darkred"> <br> <strong>{{minireportText.click_more_municipio}} </strong></div>
 				</div>
 				<div *ngIf="infobairro && !clickable" class="card-body">
 					<p class="card-text">{{infobairro.nm_bai}}</p>

@@ -424,7 +424,7 @@
 				},
 				"casos_bairro": {
 					"label": {
-						"pt-br": "Casos confirmados por Bairros",
+						"pt-br": "Casos confirmados por Bairros (Goiânia)",
 						"en-us": "Confirmed cases by Districts"
 					},
 					"types": {
