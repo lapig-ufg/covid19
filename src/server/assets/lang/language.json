@@ -147,8 +147,8 @@
 						"en-us": "Total Days: "
 					},
 					"media_novos_casos_3dias":{
-						"pt-br": "Média de Casos a cada 3 dias: ",
-						"en-us": "Average number of cases every 3 days: "
+						"pt-br": "Média de novos casos dos últimos 3 dias: ",
+						"en-us": "Average number of new cases every 3 days: "
 					},
 					"dias_duplicacao_confirmados":{
 						"pt-br": "Quantidade de dias até duplicação de casos confirmados: ",
