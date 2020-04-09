@@ -313,28 +313,28 @@
 	"restricted_area": {
 		"access": {
 			"title": {
-				"pt-br": "Camada de Dados",
-				"en-us": "Layers"
+				"pt-br": "Acesso à Área Restrita",
+				"en-us": "Access to Restricted Area"
 			},
-			"label_data": {
-				"pt-br": "Informações",
-				"en-us": "Information"
+			"label_auth": {
+				"pt-br": "Código de Autorização",
+				"en-us": "Authorization Code"
 			},
-			"label_mapabase": {
-				"pt-br": "Mapa Base",
-				"en-us": "BaseMap"
+			"label_btn_cancel": {
+				"pt-br": "Cancelar",
+				"en-us": "Cancel"
 			},
-			"label_limits": {
-				"pt-br": "Limites",
-				"en-us": "Limits"
+			"label_btn_login": {
+				"pt-br": "Entrar",
+				"en-us": "Log in"
 			},
-			"search_placeholder": {
-				"pt-br": "Por favor informe um Município",
-				"en-us": "Please inform a Municipality name"
+			"error_msg_unidentified": {
+				"pt-br": "Acesso não identificado!",
+				"en-us": "Unidentified access!"
 			},
-			"search_loading": {
-				"pt-br": "Procurando...",
-				"en-us": "Searching"
+			"error_msg_acces": {
+				"pt-br": "Não foi possível autenticar seu acesso. Por favor, tente novamente. Se o problema persistir contate a administração da plataforma.",
+				"en-us": "We were unable to authenticate your access. Please try again. If the problem persists, contact the platform administration."
 			},
 			"search_failed": {
 				"pt-br": "Desculpe, muncípio não encontrada.",

@@ -21,7 +21,16 @@ hr {
 }
 
 .button-menu {
-    align-self: center;
+	align-self: center;
+	display: flex;
+    position: absolute;
+    z-index: 1000;
+    top: 1.5%;
+    left: 1%;
+}
+
+.mat-icon-button {
+	color: white !important;
 }
 
 .card-mobile {
@@ -70,7 +79,11 @@ hr {
 }
 
 .mat-expansion-panel-body {
-	padding: 0 4px 10px;
+	padding: 0 4px 10px !important;
+}
+
+.mat-expansion-panel-content {
+	font-size: 12px;
 }
 
 body .ui-tabview .ui-tabview-panels {
@@ -162,7 +175,7 @@ table tr td {
 
 #positionLayers {
     position: relative;
-    margin-top: 10px;
+    /* margin-top: 10px; */
 	/* left: 2%; */
 	/*bottom: 2%;*/
 	/*height: 90%;*/
@@ -177,8 +190,8 @@ table tr td {
 	overflow:hidden;
 	/*border: 1px solid #808080;*/
 	opacity: .93;
-	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
-	box-shadow: -1px 1px 10px 0px #7a2525;
+	/* -webkit-box-shadow: -1px 1px 10px 0px #7a2525; */
+	/* box-shadow: -1px 1px 10px 0px #7a2525; */
 }
 
 /* #positionCharts {
@@ -313,10 +326,14 @@ table tr td {
 
 .container-resumo {
 	position: absolute;
-	top: 2%;
+	bottom: 2%;
 	right: 0.7%;
 	z-index: 2200000;
-	width: 60%;
+	width: 48%;
+	background-color: #7e1116;
+	opacity: 0.7;
+	padding: 1%;
+	border-radius: 5%;
 }
 
 .resumo {
@@ -325,14 +342,14 @@ table tr td {
 
 .card-resumo {
 	position: relative;
-	margin: 8px;
+	margin: 5px;
 	background-color: rgba(255, 255, 255, 0.93);
 	text-align: center;
 	width: 100%;
 	overflow: hidden;
-	border-radius: 8px;
-	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
-	box-shadow: -1px 1px 10px 0px #7a2525;
+	border-radius: 7px;
+	/* -webkit-box-shadow: -1px 1px 10px 0px #7a2525; */
+	/* box-shadow: -1px 1px 10px 0px #7a2525; */
 
 }
 
@@ -341,28 +358,28 @@ table tr td {
 	position: relative;
 	top: 0;
 	text-align: center;
-	border-radius: 8px;
+	border-radius: 7px;
 	color: white;
-	background-color: #dd4646;
+	/* background-color: #dd4646; */
 	padding-top: 5px;
 	padding-bottom: 5px;
-	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
-	box-shadow: -1px 1px 10px 0px #7a2525;
+	/* -webkit-box-shadow: -1px 1px 10px 0px #7a2525; */
+	/* box-shadow: -1px 1px 10px 0px #7a2525; */
 }
 
 .resumo-subtitle-card p {
 	text-align: center;
-	font-size: 0.7em;
-	line-height: 1.6;
+	font-size: 0.5em;
+	line-height: 1.5;
 }
 
 .resumo-subtitle {
-	font-size: 1.0em;
+	font-size: 0.8em;
 	color: white;
 }
 
 .card-resumo-title {
-	font-size: 0.7em;
+	font-size: 0.5em;
 	padding: 2px;
 	color: white;
 }
@@ -378,8 +395,8 @@ table tr td {
 }
 
 .card-resumo h2{
-margin: 4px;
-font-size: 1em;
+margin: 3px;
+font-size: 0.9em;
 }
 
 .container-team{
@@ -449,10 +466,10 @@ font-size: 1em;
 }
 
 .mat-icon-button {
-	width: 50px;
+	width: 105%;
     height: 50px;
     border-radius: initial;
-    background-color: #dd4c4f;
+    background-color: #7e1116;
 	line-height: 0px;
 }
 #buttonMenu {
@@ -934,11 +951,11 @@ mat-select {
 .btn-layers {
 	cursor: pointer;
 	padding: 5px;
-	background-color: #7e1e17;
+	background-color: #7e1116;
 	border-radius: 100px;
 	transition: 0.3s;
-	width: 60%;
-	margin-left: 20%;
+	width: 75%;
+	margin-left: 14%;
 	color: white;
 	font-size: 0.7rem;
 }

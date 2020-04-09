@@ -1,70 +1,142 @@
 <nav class="barra-titulo" >
 	<div class="row" style="margin-left: 0.8%; margin-right: 0.8%">
-		<div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6" style="text-align: left; align-self: center">
-			<a href="."><img width="70%" src="../../../assets/logo/logo_covidgo_mobile.png" alt="Covid-19"/></a>
+		<div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6" style="text-align: left; align-self: center;">
+			<a href="."><img width="70%" style="max-width: 200px;"  src="../../../assets/logo/logo_covidgo_mobile.png" alt="Covid-19"/></a>
 		</div>
 		<div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6" style="text-align: right">
-			<a href="https://www.ufg.br/" target="_blank"><img width="70%" src="../../assets/logo/logo_ufg.png" alt="UFG"/></a>
+			<a href="https://www.ufg.br/" target="_blank"><img width="70%" style="max-width: 200px;" src="../../assets/logo/logo_ufg.png" alt="UFG"/></a>
 		</div>
 	</div>
 </nav>
 <mat-tab-group id="tab-mobile" style="height: 88%"> 
-		<mat-tab label = "Mapa">  
-			<!-- <mat-drawer #drawer [style.z-index]="showDrawer? '4' : '-1'" class="layer-sidenav" mode="over" [autoFocus]="false"
-				[opened]="showDrawer">
-				<div class="container-drawer">
-						<ng-template #rt let-r="result" let-t="term">
-								<ngb-highlight [result]="r.nome" [term]="t"></ngb-highlight>
-							</ng-template>
-							<input id="typeahead-http" type="text" class="form-control searchRegion"
-								[class.is-invalid]="searchFailed" [(ngModel)]="valueRegion"
-								[ngbTypeahead]="search" placeholder="Filtre por um Município"
-								(selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
-								[inputFormatter]="formatter" [value]="currentData" />
-							<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
-								(click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
-							<span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
-							<div class="invalid-feedback" *ngIf="searchFailed">
-								{{titlesLayerBox.search_failed}}</div>
+		<mat-tab label = "Mapa">
+				<div class="button-menu">
+					<button mat-icon-button (click)="snav.toggle()">
+						<img width="30" height="30" src="../../assets/img/btn_layers.svg" alt="">
+						Camadas de dados
+					</button>
 				</div>
-			</mat-drawer>
-			<div class="controls button-search-mobile">
-				<button mat-raised-button matTooltip="Acessar camada de dados"  class="controls button-search-mobile" (click)="handleDrawer()">
-						<img width="40" height="40" src="../../assets/img/search-mobile.svg" alt="">
-				</button>
-			</div> -->
-			<div id="map" class="dpat-ol-map" style="overflow: hidden" [style.height]="(innerHeigth - 115) + 'px'">
-					<div class="container-resumo">
-							<div class="resumo-subtitle-card">
-								<h1 class="resumo-subtitle"> {{textSummary.title}} </h1>
-								<p> {{textSummary.last_update_label}} {{lastUpdate.data}}</p>
-								<p> {{textSummary.source_text}}</p>
-							</div>
-							<div class="resumo">
-								<div class="card-resumo">
-									<div class="card-resumo-title confirmado" title="Titulo">{{textSummary.confirmed_label}}
+			<div class="container-fluid layersConteudo">
+				<mat-sidenav-container>
+					<mat-sidenav #snav>
+						<div id="positionLayers" class="control-layers" style="padding-top:15%" cdkDrag>
+							<!-- <div class="titleWindows">
+								{{titlesLayerBox.label_data}}
+							</div> -->
+							<!-- <div class="collapseLayer"> -->
+								<!-- <mat-tab-group class="layersConteudo"> -->
+									<!-- <mat-tab label="{{titlesLayerBox.label_data}}"> -->
+										<p-scrollPanel [style]="{width: '100%', height: '65vh', padding:'10px'}"
+							styleClass="panel-layers">
+							<mat-accordion multi="true">
+								<div id="layer_dados">
+									<ng-template #rt let-r="result" let-t="term">
+										<ngb-highlight [result]="r.nome" [term]="t"></ngb-highlight>
+									</ng-template>
+									<input id="typeahead-http" type="text" class="form-control searchRegion"
+										[class.is-invalid]="searchFailed" [(ngModel)]="valueRegion"
+										[ngbTypeahead]="search" placeholder="{{titlesLayerBox.search_placeholder}}"
+										(selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
+										[inputFormatter]="formatter" [value]="currentData" />
+									<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
+										(click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
+									<span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
+									<div class="invalid-feedback" *ngIf="searchFailed">
+										{{titlesLayerBox.search_failed}}</div>
+
+									<div *ngFor="let groups of descriptor.groups" style="margin-bottom: 10px">
+										<mat-expansion-panel [expanded]=groups.group_expanded>
+											<mat-expansion-panel-header [collapsedHeight]="'40px'"
+												[expandedHeight]="'40px'" class="expansion-header-layer">
+												<h5 class="expansion-layer"><b>{{groups.label}}</b></h5>
+											</mat-expansion-panel-header>
+
+											<div class="layersContent" *ngFor="let layer of groups.layers">
+												<div style="display: flex">
+													<mat-checkbox class="example-margin"
+														(change)="changeVisibility(layer, $event)"
+														[checked]=layer.visible>
+														{{layer.label}}
+													</mat-checkbox>
+													<!-- <div class="space"></div>
+														<button *ngIf="layer.visible"  (click)="openDialogMetadata(layer)" classs="btn-info" mat-icon-button>
+															<mat-icon>info</mat-icon>
+														</button> -->
+												</div>
+												<div *ngIf="layer.visible" style="padding-left: 8%; padding-right: 8%">
+													<div *ngIf="layer.types?.length > 1">
+														<mat-form-field style="width: 130px;">
+															<mat-label>{{descriptor.type}}</mat-label>
+															<mat-select (selectionChange)="changeVisibility(layer)"
+																[(value)]="layer.selectedType">
+																<mat-option *ngFor="let type of layer.types"
+																	[value]="type.value">
+																	{{type.Viewvalue}}
+																</mat-option>
+															</mat-select>
+														</mat-form-field>
+														<span class="" *ngFor="let type of layer.types"
+															[hidden]="type.value != layer.selectedType">
+															<mat-form-field *ngIf="type.times">
+																<mat-label>{{type.timeLabel}}</mat-label>
+																<mat-select (selectionChange)="updateSourceLayer(type)"
+																	[(value)]="type.timeSelected">
+																	<mat-option *ngFor="let times of type.times"
+																		[value]="times.value">
+																		{{times.Viewvalue}}
+																	</mat-option>
+																</mat-select>
+															</mat-form-field>
+														</span>
+													</div>
+													<div *ngFor="let type of layer.types">
+														<img *ngIf="layer.selectedType === type.value"
+															[src]="type.urlLegend">
+													</div>
+												</div>
+											</div>
+										</mat-expansion-panel>
 									</div>
-									<h2>{{summary.confirmados}}</h2>
 								</div>
-								<div *ngIf="!isFilteredByCity" class="card-resumo">
-									<div class="card-resumo-title recuperado" title="Titulo">{{textSummary.suspects_label}}
-									</div>
-									<h2>{{summary.suspeitos}}</h2>
-								</div>
-								<div class="card-resumo">
-									<div class="card-resumo-title obitos" title="Titulo">{{textSummary.deaths_label}}</div>
-									<h2>{{summary.obitos}}</h2>
-								</div>
-							</div>
-							<div class="resumo">
-								<div matTooltip="Sair do Município" *ngIf="this.selectRegion != this.defaultRegion"
-									[class]="'btn-layers'" aria-label="Sair do Município" (click)="updateRegion(defaultRegion)">
-									<img width="22" height="22" src="../../assets/img/close-button.svg" alt="Sair do Município">
-									Sair do Município
-								</div>
-							</div>
+							</mat-accordion>
+							<div style="height: 20vh"></div>
+						</p-scrollPanel>
 						</div>
-				<img class="dpat-logo" src="https://o1.lapig.iesa.ufg.br/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=covid19_municipios_casos&format=image/png">
+					</mat-sidenav>
+					<div id="map" class="dpat-ol-map" style="overflow: hidden" [style.height]="(innerHeigth - 115) + 'px'">	
+						<div class="container-resumo">
+									<div class="resumo-subtitle-card">
+										<h1 class="resumo-subtitle"> {{textSummary.title}} </h1>
+										<p> {{textSummary.last_update_label}} {{lastUpdate.data}}</p>
+										<p> {{textSummary.source_text}}</p>
+									</div>
+									<div class="resumo">
+										<div class="card-resumo">
+											<div class="card-resumo-title confirmado" title="Titulo">{{textSummary.confirmed_label}}
+											</div>
+											<h2>{{summary.confirmados}}</h2>
+										</div>
+										<div *ngIf="!isFilteredByCity" class="card-resumo">
+											<div class="card-resumo-title recuperado" title="Titulo">{{textSummary.suspects_label}}
+											</div>
+											<h2>{{summary.suspeitos}}</h2>
+										</div>
+										<div class="card-resumo">
+											<div class="card-resumo-title obitos" title="Titulo">{{textSummary.deaths_label}}</div>
+											<h2>{{summary.obitos}}</h2>
+										</div>
+									</div>
+									<div class="resumo" *ngIf="this.selectRegion != this.defaultRegion" style="padding-bottom: 5px; padding-top: 5px;">
+										<div matTooltip="Sair do Município"
+											[class]="'btn-layers'" aria-label="Sair do Município" (click)="updateRegion(defaultRegion)">
+											<img width="22" height="22" src="../../assets/img/close-button.svg" alt="Sair do Município">
+											Sair do Município
+										</div>
+									</div>
+								</div>
+						<!-- <img class="dpat-logo" src="https://o1.lapig.iesa.ufg.br/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=covid19_municipios_casos&format=image/png"> -->
+					</div>
+				</mat-sidenav-container>
 			</div>
 		</mat-tab> 
 		<mat-tab  label = "Gráficos" > 
@@ -156,7 +228,7 @@
 						</p-table>
 					</p-scrollPanel>
 		</mat-tab>  
-		<mat-tab  label = "Ajuda" > 
+		<mat-tab  label = "Dicas" > 
 				<p-scrollPanel [style]="{width: '100%', height: '100%'}">
 					<div style="padding: 10px">
 						<img width="100%" src="../../../assets/img/ajuda_covid_mobile.png" />
