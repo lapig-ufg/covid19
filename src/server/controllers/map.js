@@ -59,6 +59,34 @@ module.exports = function (app) {
             }]
           },
           {
+            id: "casos_bairro",
+            label: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["label"][language],
+            visible: false,
+            selectedType: "casos_por_bairro_em_municipios_covid",
+            // showTypes: true,
+            types: [{
+              value: "casos_por_bairro_em_municipios_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_em_municipios_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3,
+              timeLabel: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_em_municipios_covid"]["timelabel"][language],
+              timeSelected: "1=1",
+              timeHandler: "msfilter",
+              times: [
+              //   {
+              //   value: "1=1",
+              //   Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_em_municipios_covid"]["default_placeholder"][language]
+              // },
+              {
+                value: "1=1",
+                Viewvalue: "Goiânia"
+              }
+              ]
+            }]
+          },
+          {
             id: "urban_traffic",
             label: languageJson["descriptor"]["informacoes"]["layers"]["urban_traffic"]["label"][language],
             visible: false,
@@ -71,20 +99,6 @@ module.exports = function (app) {
               url: 'https://mt0.google.com/vt/lyrs=m@221097413,traffic&x={x}&y={y}&z={z}',
               legendUrl: 'assets/legends/legend-trafficgoogle-br.png',
               opacity: 0.8,
-              order: 3
-            }]
-          },
-          {
-            id: "casos_bairro",
-            label: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["label"][language],
-            visible: false,
-            selectedType: "casos_por_bairro_goiania",
-            types: [{
-              value: "casos_por_bairro_goiania",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_goiania"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 1,
               order: 3
             }]
           },

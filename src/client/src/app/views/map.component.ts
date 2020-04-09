@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, HostListener, Injectable, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialog, MatDialogConfig  } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as OlExtent from 'ol/extent.js';
@@ -34,23 +34,15 @@ import CropFilter from 'ol-ext/filter/Crop';
 import MaskFilter from 'ol-ext/filter/Mask';
 import MultiPolygon from 'ol/geom/MultiPolygon';
 import { defaults as defaultControls, Control, Attribution } from 'ol/control';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { google } from "google-maps";
 
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
 import { HelpComponent } from "./help/help.component";
-import {RestrictedAreaAccessComponent} from "./restricted-area-access/restricted-area-access.component";
-import {RestrictedAreaFormComponent} from "./restricted-area-form/restricted-area-form.component";
+import { RestrictedAreaAccessComponent } from "./restricted-area-access/restricted-area-access.component";
+import { RestrictedAreaFormComponent } from "./restricted-area-form/restricted-area-form.component";
 
 import TEAM from './team.js';
-
-import OLGoogleMaps from 'olgm/OLGoogleMaps.js';
-import GoogleLayer from 'olgm/layer/Google.js';
-
-/// <reference types="@types/googlemaps" />
-
-
-declare var google: google;
 
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
@@ -96,8 +88,6 @@ export class MapComponent implements OnInit {
   chartResultCities: any;
   chartResultCitiesIllegalAPP: any;
   chartResultCitiesIllegalRL: any;
-  chartUsoSolo = [] as any;
-  periodSelected: any;
   desmatInfo: any;
 
   optionsStates: any
@@ -159,12 +149,13 @@ export class MapComponent implements OnInit {
 
   infodata: any;
   infomarker: any;
+  infobairro: any;
   infodataMunicipio: any;
   fieldPointsStop: any;
   utfgridsource: UTFGrid;
   utfgridlayer: OlTileLayer;
-  utfgridCampo: UTFGrid;
-  utfgridlayerCampo: OlTileLayer;
+  utfgridBairro: UTFGrid;
+  utfgridlayerBairro: OlTileLayer;
   utfgridmunicipio: UTFGrid;
   utfgridlayerMunicipio: OlTileLayer;
   infoOverlay: Overlay;
@@ -208,12 +199,12 @@ export class MapComponent implements OnInit {
   summary: any;
   lastUpdate: any;
 
-  restrictedArea:boolean;
-  user:any;
+  restrictedArea: boolean;
+  user: any;
 
-  msg:any;
-  display:boolean;
-  team:any
+  msg: any;
+  display: boolean;
+  team: any
 
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
 
@@ -240,13 +231,10 @@ export class MapComponent implements OnInit {
     this.chartResultCities = {
       split: []
     };
-    this.chartResultCitiesIllegalAPP = {};
-    this.chartResultCitiesIllegalRL = {};
-    this.chartUsoSolo = [];
-
     this.textSummary = {};
 
     this.infomarker = {};
+    this.infobairro = {};
 
     this.defaultRegion = {
       nome: 'Goiás',
@@ -262,7 +250,7 @@ export class MapComponent implements OnInit {
     this.currentData = "";
 
     this.optionsStates = {};
-    this.statistics_county = { result: {}, text: {}};
+    this.statistics_county = { result: {}, text: {} };
     this.valueRegion = '';
 
     this.changeTabSelected = "";
@@ -283,12 +271,6 @@ export class MapComponent implements OnInit {
 
     this.descriptor = {
       groups: []
-    };
-
-    this.periodSelected = {
-      value: 'year=2019',
-      Viewvalue: '2018/2019',
-      year: 2019
     };
 
     this.desmatInfo = {
@@ -514,7 +496,7 @@ export class MapComponent implements OnInit {
         if (this.language == 'pt-br') {
           tmp = "Município"
         }
-        else{
+        else {
           tmp = "Municipality"
         }
       }
@@ -668,7 +650,7 @@ export class MapComponent implements OnInit {
       this.statistics_county = res
 
     });
-    
+
 
   }
 
@@ -688,9 +670,14 @@ export class MapComponent implements OnInit {
       let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
       this.changeVisibility(p, { checked: true });
 
+      let bairro = this.layersNames.find(element => element.id === 'casos_bairro');
+      this.changeVisibility(bairro, { checked: false });
+      bairro.types[0].timeSelected = '1=1'
+
+
       this.isFilteredByCity = false;
     }
-    else{
+    else {
       this.isFilteredByCity = true;
     }
 
@@ -700,21 +687,43 @@ export class MapComponent implements OnInit {
     this.selectRegion = region;
     this.selectRegion.nome = this.captalizeCity(this.selectRegion.nome)
 
-    // if (this.selectRegion.type == 'city') {
-    //   this.msFilterRegion = ' cd_geocmu = \'' + this.selectRegion.cd_geocmu + '\'';
+    if (this.isFilteredByCity) {
+      this.msFilterRegion = ' cd_geocmu = \'' + this.selectRegion.cd_geocmu + '\'';
+    }
 
-    //   this.isFilteredByState = true;
-    //   this.selectRegion.regionTypeBr = 'Município de ';
-    // } else if (this.selectRegion.type == 'state') {
-    //   this.msFilterRegion = 'uf = \'' + this.selectRegion.value + '\'';
-    //   this.isFilteredByState = true;
-    // } else { this.msFilterRegion = ""; }
     this.updateCharts();
     this.updateExtent();
     this.updateSourceAllLayer();
     this.updateSource();
     this.updateSummary();
     this.googleAnalyticsService.eventEmitter("updateRegion", "search_box", this.valueRegion);
+  }
+
+  zoomToCityOnTypesLayer(layer) {
+
+    if (layer.timeSelected == '1=1') { }
+    else {
+
+      let tmp
+
+      if (layer['times']) {
+        tmp = layer['times'].find(
+          element => element.value === layer.timeSelected
+        );
+      }
+
+      this.http.get(SEARCH_URL, { params: PARAMS.set('key', tmp.Viewvalue) }).subscribe(result => {
+
+        let ob = result[0];
+        this.updateRegion(ob);
+        // let l = this.layersNames.find(element => element.id === 'urban_traffic');
+        // this.changeVisibility(l, { checked: true });
+        let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+        this.changeVisibility(p, { checked: false });
+        this.infodata = null
+        this.handleInteraction()
+      });
+    }
   }
 
   private captalizeCity(word: string) {
@@ -799,6 +808,11 @@ export class MapComponent implements OnInit {
       return;
     }
 
+    let utfgridlayerBairroVisible = this.utfgridlayerBairro.getVisible();
+    if (!utfgridlayerBairroVisible || evt.dragging) {
+      return;
+    }
+
     let coordinate = this.map.getEventCoordinate(evt.originalEvent);
     let viewResolution = this.map.getView().getResolution();
 
@@ -818,20 +832,19 @@ export class MapComponent implements OnInit {
         this.clickableTitle = properties['nome']
       }
 
-      if(properties['source'] == "go_hospitais_datasus"){
-        if(properties['horario'] != undefined)  {
+      if (properties['source'] == "go_hospitais_datasus") {
+        if (properties['horario'] != undefined) {
           this.infomarker.horario = properties['horario']
         }
-        if(properties['leitos_cli'] != undefined)  {
+        if (properties['leitos_cli'] != undefined) {
           this.infomarker.leitos_clinica = parseInt(properties['leitos_cli'])
         }
-        if(properties['leitos_uti'] != undefined)  {
+        if (properties['leitos_uti'] != undefined) {
           this.infomarker.leitos_uti = parseInt(properties['leitos_uti'])
         }
       }
-      else if (properties['source'] == "vacinacao_gripe")
-      {
-        if(properties['horario'] != undefined)  {
+      else if (properties['source'] == "vacinacao_gripe") {
+        if (properties['horario'] != undefined) {
           this.infomarker.horario = properties['horario']
         }
       }
@@ -845,38 +858,63 @@ export class MapComponent implements OnInit {
 
       let info = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
 
-      // if (info.visible) {
+      if (info.visible) {
 
-        if (info.selectedType == "covid19_municipios_casos") {
+        if (this.utfgridsource) {
+          this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+            if (data) {
+              window.document.body.style.cursor = 'pointer';
 
-          if (this.utfgridsource) {
-            this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
-              if (data) {
-                window.document.body.style.cursor = 'pointer';
+              this.infodata = data;
 
-                this.infodata = data;
-
-                if (this.infodata.confirmados == "") {
-                  this.infodata.confirmados = 0;
-                }
-
-                this.infodata.pop_2019 = this.infodata.pop_2019.toLocaleString('de-DE')
-                this.infodata.area_mun = Math.round(this.infodata.area_mun * 1000) / 1000
-
-              } else {
-                window.document.body.style.cursor = 'auto';
-                this.infodata = null;
+              if (this.infodata.confirmados == "") {
+                this.infodata.confirmados = 0;
               }
 
-            }.bind(this)
-            );
-          }
-        }
-        else {
-          this.infodata = null;
-        }
-      // }
+              this.infodata.pop_2019 = this.infodata.pop_2019.toLocaleString('de-DE')
+              this.infodata.area_mun = Math.round(this.infodata.area_mun * 1000) / 1000
 
+            } else {
+              window.document.body.style.cursor = 'auto';
+              this.infodata = null;
+            }
+
+          }.bind(this)
+          );
+        }
+      }
+      else {
+        this.infodata = null;
+      }
+
+      let bairro = this.layersNames.find(element => element.id === 'casos_bairro');
+      if (bairro.visible) {
+
+        let zoom = this.map.getView().getZoom();
+
+        if (this.utfgridBairro) {
+          this.utfgridBairro.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+            if (data) {
+              window.document.body.style.cursor = 'pointer';
+
+              this.infobairro = data;
+
+              if (this.infobairro.nm_bai == "") {
+                this.infobairro.nm_bai = this.minireportText.undisclosed_message;
+              }
+              console.log(this.infobairro)
+
+            } else {
+              window.document.body.style.cursor = 'auto';
+              this.infobairro = null;
+            }
+
+          }.bind(this)
+          );
+        }
+      } else {
+        this.infobairro = null;
+      }
     }
 
   }
@@ -1088,7 +1126,17 @@ export class MapComponent implements OnInit {
       source: this.utfgridsource
     });
 
+
+    this.utfgridBairro = new UTFGrid({
+      tileJSON: this.getTileJSONBairros()
+    });
+
+    this.utfgridlayerBairro = new OlTileLayer({
+      source: this.utfgridBairro
+    });
+
     this.layers.push(this.utfgridlayer);
+    this.layers.push(this.utfgridlayerBairro)
 
     this.layers = this.layers.concat(olLayers.reverse());
   }
@@ -1101,6 +1149,19 @@ export class MapComponent implements OnInit {
       version: '2.2.0',
       grids: [
         this.returnUTFGRID('covid19_municipios_casos_utfgrid', filter, '{x}+{y}+{z}')
+      ]
+    };
+
+  }
+
+  private getTileJSONBairros() {
+
+    let filter = true;
+
+    return {
+      version: '2.2.0',
+      grids: [
+        this.returnUTFGRID('casos_por_bairro_em_municipios_covid', filter, '{x}+{y}+{z}')
       ]
     };
 
@@ -1157,7 +1218,6 @@ export class MapComponent implements OnInit {
       if (layer.layerfilter) { filters.push(layer.layerfilter); }
       if (this.regionFilterDefault != "") { filters.push(this.regionFilterDefault); }
       if (layer.regionFilter) {
-        this.msFilterRegion = "uf = 'GO'"
         filters.push(this.msFilterRegion);
       }
 
@@ -1186,11 +1246,6 @@ export class MapComponent implements OnInit {
   }
 
   private updateSourceLayer(layer) {
-    if (layer['times']) {
-      this.periodSelected = layer['times'].find(
-        element => element.value === layer.timeSelected
-      );
-    }
 
     this.handleInteraction();
 
@@ -1259,6 +1314,23 @@ export class MapComponent implements OnInit {
     } else if (this.utfgridsource) {
       this.utfgridlayer.setVisible(false);
     }
+
+
+    let bairros = this.layersNames.find(element => element.id === 'casos_bairro');
+    if (bairros.visible) {
+      if (this.utfgridBairro) {
+        let tileJSON = this.getTileJSONBairros();
+
+        this.utfgridBairro.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridBairro.tileGrid);
+        this.utfgridBairro.tileJSON = tileJSON;
+        this.utfgridBairro.refresh();
+
+        this.utfgridlayerBairro.setVisible(true);
+      }
+    } else if (this.utfgridBairro) {
+      this.utfgridlayerBairro.setVisible(false);
+    }
+
     this.googleAnalyticsService.eventEmitter("handleInteraction", "geojson", 'casos-covid');
 
   }
@@ -1273,15 +1345,19 @@ export class MapComponent implements OnInit {
       layer.visible = e.checked;
     }
 
-    if (layer.id == "casos_covid_confirmados") {
+    if (layer.id == "casos_covid_confirmados" || layer.id == "casos_bairro") {
       if (layer.visible) {
         this.handleInteraction();
       }
     }
+
+    // if(layer.id == "casos_bairro")
+    // {
+    //   this.zoomToCityOnTypesLayer(layer)
+    // }
     this.LayersTMS[layer.selectedType].setVisible(layer.visible);
     // this.updateSummary();
     this.googleAnalyticsService.eventEmitter("changeVisibility", "camadaDado", layer.label);
-
 
   }
 
@@ -1504,12 +1580,11 @@ export class MapComponent implements OnInit {
     this.http.get(sourceUrl).subscribe(result => {
       this.summary = result['resumed'];
 
-      if(this.summary.confirmados == null)
-      {
+      if (this.summary.confirmados == null) {
         this.summary.confirmados = "0"
       }
 
-      if (this.summary.obitos == null){
+      if (this.summary.obitos == null) {
         this.summary.obitos = "0"
       }
       this.lastUpdate = result['last_update']
@@ -1536,7 +1611,7 @@ export class MapComponent implements OnInit {
         if (this.language == 'pt-br') {
           tmp = "Município"
         }
-        else{
+        else {
           tmp = "Municipality"
         }
       }
@@ -1603,14 +1678,14 @@ export class MapComponent implements OnInit {
 
     let dialogRestrictedAreaAccess = this.dialog.open(RestrictedAreaAccessComponent, dialogConfig);
 
-   dialogRestrictedAreaAccess.componentInstance.userEvent.subscribe((user) => {
+    dialogRestrictedAreaAccess.componentInstance.userEvent.subscribe((user) => {
       this.user = user;
       this.updateRegion(user);
       this.restrictedArea = true;
       dialogRestrictedAreaAccess.close();
     });
 
-   dialogRestrictedAreaAccess.componentInstance.requireAccess.subscribe(() => {
+    dialogRestrictedAreaAccess.componentInstance.requireAccess.subscribe(() => {
       const dialogConfig = new MatDialogConfig();
 
       dialogConfig.disableClose = false;
@@ -1618,10 +1693,10 @@ export class MapComponent implements OnInit {
 
       let restrictedAreaFormRef = this.dialog.open(RestrictedAreaFormComponent, dialogConfig);
       restrictedAreaFormRef.componentInstance.msgEvent.subscribe((msg) => {
-         this.display = true;
-         this.msg = msg;
-          restrictedAreaFormRef.close();
-       });
+        this.display = true;
+        this.msg = msg;
+        restrictedAreaFormRef.close();
+      });
 
       dialogRestrictedAreaAccess.close();
     });
@@ -1643,10 +1718,10 @@ export class MapComponent implements OnInit {
             for (let type of layer.types) {
               if (type.source == 'geojson') {
                 type.urlLegend = type.iconUrl
-              } else if (type.source == 'external'){
+              } else if (type.source == 'external') {
                 type.urlLegend = type.legendUrl
               }
-              else{
+              else {
                 type.urlLegend = this.urls[0] + '?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=' + type.value + '&format=image/png';
               }
             }

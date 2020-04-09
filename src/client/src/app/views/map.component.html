@@ -56,7 +56,7 @@
 														</button> -->
 												</div>
 												<div *ngIf="layer.visible" style="padding-left: 8%; padding-right: 8%">
-													<div *ngIf="layer.types?.length > 1">
+													<div *ngIf="layer.types?.length > 1 || layer.showTypes">
 														<mat-form-field style="width: 130px;">
 															<mat-label>{{descriptor.type}}</mat-label>
 															<mat-select (selectionChange)="changeVisibility(layer)"
@@ -71,11 +71,11 @@
 															[hidden]="type.value != layer.selectedType">
 															<mat-form-field *ngIf="type.times">
 																<mat-label>{{type.timeLabel}}</mat-label>
-																<mat-select (selectionChange)="updateSourceLayer(type)"
-																	[(value)]="type.timeSelected">
-																	<mat-option *ngFor="let times of type.times"
-																		[value]="times.value">
-																		{{times.Viewvalue}}
+																<mat-select (selectionChange)="zoomToCityOnTypesLayer(type)"
+																[(ngModel)]="type.timeSelected">
+																	<mat-option *ngFor="let time of type.times"
+																		[value]="time.value">
+																		{{time.Viewvalue}}
 																	</mat-option>
 																</mat-select>
 															</mat-form-field>
@@ -389,8 +389,11 @@
 				</div>
 
 			</div>
+			<!-- [ngStyle]="{'visibility': (infodata || clickable) || infobairro ? 'visible' : 'hidden'}"> -->
+			<!-- [ngStyle]="{'visibility': infodata  ? 'visible' : (infobairro ? 'visible' : (clickable ? 'visible' : 'hidden'))}"> -->
 
-			<div id="map-info" class="card" [ngStyle]="{'visibility': infodata || clickable  ? 'visible' : 'hidden'}">
+			<div id="map-info" class="card" 
+			[ngStyle]="{'visibility': infodata  ? 'visible' : (infobairro ? 'visible' : (clickable ? 'visible' : 'hidden'))}">
 				<div *ngIf="infodata && !clickable" class="card-body">
 					<p class="card-text">{{infodata.nome}} - {{infodata.uf}}</p>
 					<table>
@@ -410,6 +413,30 @@
 							<tr>
 								<th>{{minireportText.confirmed_cases}} </th>
 								<td>{{infodata.confirmados}}</td>
+							</tr>
+						</tbody>
+					</table>
+					<div style="text-align:center;color:darkred"> <br> <strong>{{minireportText.click_more_municipio}} </strong></div>
+				</div>
+				<div *ngIf="infobairro && !clickable" class="card-body">
+					<p class="card-text">{{infobairro.nm_bai}}</p>
+					<table>
+						<tbody>
+							<tr>
+								<th>{{minireportText.label_area_bairro}}</th>
+								<td>{{infobairro.area_km2 | number:'1.2-2'  }} km²</td>
+							</tr>
+							<tr>
+								<th>{{minireportText.confirmed_cases}} </th>
+								<td>{{infobairro.numpoints}} </td>
+							</tr>
+							<tr>
+								<th>{{minireportText.label_fonte}} </th>
+								<td>{{infobairro.fonte}}</td>
+							</tr>
+							<tr>
+								<th>{{minireportText.label_last_update}} </th>
+								<td>{{infobairro.data_ultima_atualizacao | date : 'dd/MM/yyyy'}}</td>
 							</tr>
 						</tbody>
 					</table>
