@@ -9,4 +9,6 @@ module.exports = function (app) {
 	app.get('/service/indicators/projections', dataInjector, indicators.projections);
 	app.get('/service/indicators/source', dataInjector, indicators.sourceText);
 	app.get('/service/indicators/statistics', dataInjector, indicators.statistics);
+	app.get('/service/indicators/dates', dataInjector, indicators.dates);
+	app.get('/service/indicators/team', indicators.team);
 }

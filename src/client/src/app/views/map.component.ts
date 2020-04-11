@@ -42,8 +42,6 @@ import { HelpComponent } from "./help/help.component";
 import { RestrictedAreaAccessComponent } from "./restricted-area-access/restricted-area-access.component";
 import { RestrictedAreaFormComponent } from "./restricted-area-form/restricted-area-form.component";
 
-import TEAM from './team.js';
-
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
   fromObject: {
@@ -170,6 +168,7 @@ export class MapComponent implements OnInit {
   titlesLayerBox: any;
   minireportText: any;
   descriptorText: any;
+  controls:any;
 
   bntStylePOR: any;
   bntStyleENG: any;
@@ -204,7 +203,9 @@ export class MapComponent implements OnInit {
 
   msg: any;
   display: boolean;
-  team: any
+  team:any;
+  dates:any;
+  showSlider:boolean;
 
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
 
@@ -246,6 +247,7 @@ export class MapComponent implements OnInit {
     this.selectRegion = this.defaultRegion;
 
     this.textOnDialog = {};
+    this.controls = {};
 
     this.currentData = "";
 
@@ -296,9 +298,10 @@ export class MapComponent implements OnInit {
     this.chartRegionScale = true;
     this.titlesLayerBox = {};
     this.minireportText = {};
+    this.updateControls();
     this.updateSource();
-
     this.updateTexts();
+    this.updateTeam();
 
     this.showStatistics = true;
     this.showDrawer = false;
@@ -310,8 +313,13 @@ export class MapComponent implements OnInit {
     this.restrictedArea = false;
     this.user = {};
     this.display = false;
-    this.team = TEAM;
+    this.team = {};
+
+    this.dates = [];
+    this.getDates();
+    this.showSlider = false;
   }
+
   search = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(300),
@@ -445,6 +453,8 @@ export class MapComponent implements OnInit {
       this.updateCharts();
       this.updateDescriptor();
       this.updateSource();
+      this.updateControls();
+      this.updateTeam();
     }
 
     this.googleAnalyticsService.eventEmitter("changeLanguage", "lang", lang);
@@ -519,6 +529,33 @@ export class MapComponent implements OnInit {
 
     this.http.get(sourceUrl).subscribe(result => {
       this.dataSource = result;
+    });
+
+  }
+
+  private updateControls() {
+    let sourceUrl = '/service/map/controls' + this.getServiceParams();
+
+    this.http.get(sourceUrl).subscribe(result => {
+      this.controls = result;
+    });
+
+  }
+
+  private updateTeam() {
+    let sourceUrl = '/service/indicators/team' + this.getServiceParams();
+
+    this.http.get(sourceUrl).subscribe(result => {
+      this.team = result;
+    });
+
+  }
+
+  getDates() {
+    let sourceUrl = '/service/indicators/dates' + this.getServiceParams();
+
+    this.http.get(sourceUrl).subscribe(result => {
+      this.dates = result;
     });
 
   }
@@ -1352,6 +1389,12 @@ export class MapComponent implements OnInit {
       layer.visible = e.checked;
     }
 
+    if(layer.id == 'casos_covid_confirmados'){
+      this.showSlider = true;
+    }else{
+      this.showSlider = false;
+    }
+
     if (layer.id == "casos_covid_confirmados" || layer.id == "casos_bairro") {
       if (layer.visible) {
         this.handleInteraction();
@@ -1417,7 +1460,6 @@ export class MapComponent implements OnInit {
         types.Viewvalue = this.descriptorText.limits.types[types.value][this.language];
       }
     }
-
   }
 
   public onFileComplete(data: any) {
@@ -1628,7 +1670,6 @@ export class MapComponent implements OnInit {
 
   }
 
-
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerHeigth = window.innerHeight;
@@ -1682,6 +1723,7 @@ export class MapComponent implements OnInit {
     dialogConfig.disableClose = false;
     dialogConfig.width = '40%';
     dialogConfig.id = "modal-restricted-area-access";
+    dialogConfig.data = {lang: this.language};
 
     let dialogRestrictedAreaAccess = this.dialog.open(RestrictedAreaAccessComponent, dialogConfig);
 
@@ -1708,6 +1750,18 @@ export class MapComponent implements OnInit {
       dialogRestrictedAreaAccess.close();
     });
 
+  }
+
+  formatRateLabel = (v) => {
+    return (value: number) => {
+      if(this.dates[value] != undefined){
+        return this.dates[value].data_formatada;
+      }
+    }
+  };
+
+  onInputChange(event) {
+    console.log(this.dates[event.value].data_db);
   }
 
   ngOnInit() {
@@ -1741,6 +1795,10 @@ export class MapComponent implements OnInit {
               layerType.visible = layer.visible;
             }
 
+            if(layerType.value == 'covid19_municipios_casos' && layerType.visible == true){
+              this.showSlider = true;
+            }
+
             this.layersTypes.push(layerType);
             this.layersTypes.sort(function (e1, e2) {
               return e2.order - e1.order;
@@ -1760,6 +1818,7 @@ export class MapComponent implements OnInit {
           this.limitsNames.push(types);
         }
       }
+
       this.createMap();
     });
     // keep height of window

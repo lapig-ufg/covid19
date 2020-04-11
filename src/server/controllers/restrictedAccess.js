@@ -29,5 +29,37 @@ module.exports = function (app) {
     };
 
 
+    Controller.lablesAccess = function (request, response) {
+        var language = request.param('lang');
+
+        var accessJson = languageJson["restricted_area"]['access'];
+
+        var result = {};
+
+        Object.keys(accessJson).forEach(function (key, index) {
+            result[key] = accessJson[key][language];
+        });
+
+        response.send(result);
+        response.end();
+
+    };
+
+    Controller.lablesForm = function (request, response) {
+        var language = request.param('lang');
+
+        var accessJson = languageJson["restricted_area"]['form'];
+
+        var result = {};
+
+        Object.keys(accessJson).forEach(function (key, index) {
+            result[key] = accessJson[key][language];
+        });
+
+        response.send(result);
+        response.end();
+
+    };
+
     return Controller;
 };

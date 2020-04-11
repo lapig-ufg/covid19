@@ -178,35 +178,52 @@
 			</div>
 
 			<div class="controls">
-				<div matTooltip="Sair do Município" *ngIf="this.selectRegion != this.defaultRegion"
-					[class]="'btn-layers'" aria-label="Sair do Município" (click)="updateRegion(defaultRegion)">
-					<img width="30" height="30" src="../../assets/img/close-button.svg" alt="Sair do Município">
+				<div [matTooltip]="controls.label_close_mun" *ngIf="this.selectRegion != this.defaultRegion"
+					[class]="'btn-layers'" (click)="updateRegion(defaultRegion)">
+					<img width="30" height="30" src="../../assets/img/close-button.svg" [alt]="controls.label_close_mun">
 				</div>
-				<div matTooltip="Acessar camada de dados"
-					[class]="showDrawer ? 'btn-layers btn-layers-active' : 'btn-layers'" aria-label="Camadas de dados"
+				<div [matTooltip]="controls.label_layers"
+					[class]="showDrawer ? 'btn-layers btn-layers-active' : 'btn-layers'"
 					(click)="handleDrawer()">
-					<img width="30" height="30" src="../../assets/img/btn_layers.svg" alt="">
+					<img width="30" height="30" src="../../assets/img/btn_layers.svg" [alt]="controls.label_layers">
 				</div>
 
-				<div matTooltip="Visualizar estatísticas"
-					[class]="showStatistics ? 'btn-layers btn-layers-active' : 'btn-layers'" aria-label="Estatísticas"
+				<div [matTooltip]="controls.label_statistics"
+					[class]="showStatistics ? 'btn-layers btn-layers-active' : 'btn-layers'"
 					(click)="showStatistics = !showStatistics">
-					<img width="30" height="30" src="../../assets/img/charts.svg" alt="Estatísticas">
+					<img width="30" height="30" src="../../assets/img/charts.svg"[alt]="controls.label_statistics">
 				</div>
-				<div matTooltip="Mais Zoom" [class]="'btn-layers'" aria-label="Mais Zoom" (click)="zoomIn()">
-					<img width="30" height="30" src="../../assets/img/mais.svg" alt="Mais Zoom">
+				<div [matTooltip]="controls.label_zoomin" [class]="'btn-layers'"  (click)="zoomIn()">
+					<img width="30" height="30" src="../../assets/img/mais.svg"  [alt]="controls.label_zoomin">
 				</div>
-				<div matTooltip="Menos Zoom" [class]="'btn-layers'" aria-label="Menos Zoom" (click)="zoomOut()">
-					<img width="30" height="30" src="../../assets/img/menos.svg" alt="Menos Zoom">
+				<div [matTooltip]="controls.label_zoomout" [class]="'btn-layers'"  (click)="zoomOut()">
+					<img width="30" height="30" src="../../assets/img/menos.svg"  [alt]="controls.label_zoomout" >
 				</div>
-				<div matTooltip="Dicas" [class]="'btn-layers'" aria-label="Dicas" (click)="openDialogAjuda()">
-					<img width="30" height="30" src="../../assets/img/tips.svg" alt="Dicas">
+				<div [matTooltip]="controls.label_tips" [class]="'btn-layers'" (click)="openDialogAjuda()">
+					<img width="30" height="30" src="../../assets/img/tips.svg" [alt]="controls.label_tips">
 				</div>
-				<div matTooltip="Área Restrita" [class]="'btn-layers'" aria-label="Área Restrita"
+				<div [matTooltip]="controls.label_restricted_area" [class]="'btn-layers'"
 					(click)="handleRestrictedArea()">
-					<img width="30" height="30" src="../../assets/img/restrictedArea.svg" alt="Área Restrita">
+					<img width="30" height="30" src="../../assets/img/restrictedArea.svg" [alt]="controls.label_restricted_area">
 				</div>
 			</div>
+
+<!--			<div class="slider" *ngIf="showSlider" >-->
+<!--				<h6>Histórico de casos dos <br> últimos {{dates.length}} dias </h6>-->
+<!--				<mat-slider-->
+<!--						#datesSlider-->
+<!--						vertical-->
+<!--						thumbLabel-->
+<!--						(input)="onInputChange($event)"-->
+<!--						[displayWith]="formatRateLabel(datesSlider.value)"-->
+<!--						color="warn"-->
+<!--						value="{{dates.length -1}}"-->
+<!--						tickInterval="1"-->
+<!--						min="{{'0'}}"-->
+<!--						max="{{dates.length -1}}"-->
+<!--				>-->
+<!--				</mat-slider>-->
+<!--			</div>-->
 
 			<div *ngIf="showStatistics" id="positionCharts">
 				<div class="titleWindows">
@@ -326,10 +343,10 @@
 							</p-scrollPanel>
 						</mat-tab>
 
-						<mat-tab label="Equipe">
+						<mat-tab label="{{team.title}}">
 							<p-scrollPanel [style]="{width: '100%', height: '60vh'}">
 								<div class="container-team">
-									<div class="team-section" *ngFor="let section of team">
+									<div class="team-section" *ngFor="let section of team.data">
 										<h4>{{section.title}}</h4>
 										<div class="team-member" *ngFor="let member of section.members">
 											<a target="_blank" [href]="member.link" >{{member.nome}}</a> <br>

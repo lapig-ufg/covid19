@@ -325,6 +325,10 @@ body {
 .mat-tab-body-content{
 	overflow-x: hidden!important;
 }
+.mat-slider-vertical .mat-slider-thumb-label-text {
+	padding-right: 135px;
+	font-size: 1.5vh;
+}
 
 #positionCharts .mat-tab-body-content{
 	overflow: hidden!important;

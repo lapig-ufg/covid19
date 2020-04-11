@@ -370,17 +370,7 @@ module.exports = function (app) {
           }
         ],
         selectedType: "municipios_goias"
-      }],
-      controls: {
-        id: "limits",
-        "label_close_mun": languageJson["controls"]["label_close_mun"][language],
-        "label_layers": languageJson["controls"]["label_layers"][language],
-        "label_statistics": languageJson["controls"]["label_statistics"][language],
-        "label_zoomin": languageJson["controls"]["label_zoomin"][language],
-        "label_zoomout": languageJson["controls"]["label_zoomout"][language],
-        "label_tips": languageJson["controls"]["label_tips"][language],
-        "label_restricted_area": languageJson["controls"]["label_restricted_area"][language],
-      }
+      }]
     };
 
     response.send(result);
@@ -490,6 +480,25 @@ module.exports = function (app) {
           result[key][key2] = dialogJson[key][key2][language]
         });
       }
+    });
+
+    response.send(result);
+    response.end();
+
+  };
+
+  Controller.controls = function (request, response) {
+    var language = request.param('lang');
+
+    var jsonPath = path.join(__dirname, '..', 'assets', 'lang', 'language.json');
+    var languageFile = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+
+    var controlsJson = languageFile["controls"];
+
+    var result = {};
+
+    Object.keys(controlsJson).forEach(function (key, index) {
+      result[key] = controlsJson[key][language];
     });
 
     response.send(result);

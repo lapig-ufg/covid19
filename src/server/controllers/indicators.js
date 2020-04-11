@@ -403,8 +403,7 @@ module.exports = function (app) {
     response.end();
   };
 
-  Controller.statistics = function (request, response)
-  {
+  Controller.statistics = function (request, response) {
     var language = request.param('lang')
 
     var queryResult = request.queryResult['estatisticas_municipios']
@@ -435,6 +434,47 @@ module.exports = function (app) {
       );
     response.end();
   }
+
+  Controller.team = function (request, response) {
+    var language = request.param('lang');
+
+    var teamJson = languageJson["team"];
+    var result = {};
+
+    result.title = teamJson.title[language];
+    result.data = [];
+
+    teamJson.data.forEach(function (elem, elmIndex) {
+
+      let membersLang = [];
+
+      teamJson.data[elmIndex].members.forEach(function (member, index) {
+        membersLang.push(
+            {
+              nome: teamJson.data[elmIndex].members[index].nome,
+              link: teamJson.data[elmIndex].members[index].link,
+              description: teamJson.data[elmIndex].members[index].description[language]
+            }
+        );
+      });
+
+      result.data.push({
+        title:   teamJson.data[elmIndex].title[language],
+        members: membersLang
+      });
+    });
+
+    response.send(result);
+    response.end();
+
+  };
+
+  Controller.dates = function (request, response) {
+    let dates = request.queryResult['dates'];
+    response.send(dates);
+    response.end()
+  };
+
 
   return Controller;
 };

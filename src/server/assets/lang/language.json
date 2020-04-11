@@ -465,8 +465,8 @@
 				},
 				"doencas_respiratorias": {
 					"label": {
-						"pt-br": "Mediana do nº de pessoas com Doenças Respiratórias (2015-2019)",
-						"en-us": "Median number of people with respiratory diseases (2015-2019)"
+						"pt-br": "Mediana do nº de internações causadas por doenças respiratórias (2015-2019)",
+						"en-us": "Median number of hospitalizations caused by respiratory diseases (2015-2019)"
 					},
 					"types": {
 						"doencas_respiratorias_2015_2019_covid": {
@@ -716,39 +716,38 @@
 					"en-us": "Municipality"
 				}
 			}
-		},
-		"controls": {
-			"types": {
-				"label_close_mun": {
-					"pt-br": "Sair do Município",
-					"en-us": "Leave the Municipality"
-				},
-				"label_layers": {
-					"pt-br": "Acessar camada de dados",
-					"en-us": "Access data layer"
-				},
-				"label_statistics": {
-					"pt-br": "Estatísticas",
-					"en-us": "Statistics"
-				},
-				"label_zoomin": {
-					"pt-br": "Mais Zoom",
-					"en-us": "Zoom In"
-				},
-				"label_zoomout": {
-					"pt-br": "Menos Zoom",
-					"en-us": "Zoom Out"
-				},
-				"label_tips": {
-					"pt-br": "Dicas",
-					"en-us": "Tips"
-				},
-				"label_restricted_area": {
-					"pt-br": "Área Restrita",
-					"en-us": "Restricted Area"
-				}
-			}
 		}
+	},
+	"controls": {
+		"label_close_mun": {
+			"pt-br": "Sair do Município",
+			"en-us": "Leave the Municipality"
+		},
+		"label_layers": {
+			"pt-br": "Acessar camada de dados",
+			"en-us": "Access data layer"
+		},
+		"label_statistics": {
+			"pt-br": "Estatísticas",
+			"en-us": "Statistics"
+		},
+		"label_zoomin": {
+			"pt-br": "Mais Zoom",
+			"en-us": "Zoom In"
+		},
+		"label_zoomout": {
+			"pt-br": "Menos Zoom",
+			"en-us": "Zoom Out"
+		},
+		"label_tips": {
+			"pt-br": "Dicas",
+			"en-us": "Tips"
+		},
+		"label_restricted_area": {
+			"pt-br": "Área Restrita",
+			"en-us": "Restricted Area"
+		}
+
 	},
 	"team": {
 		"title": {
