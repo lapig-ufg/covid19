@@ -106,14 +106,69 @@ module.exports = function (app) {
             id: "doencas_respiratorias",
             label: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["label"][language],
             visible: false,
-            selectedType: "doencas_respiratorias_2015_2019_covid",
+            showTypes: true,
+            selectedType: "doencas_respiratorias_2015_2019_covid_2",
             types: [{
-              value: "doencas_respiratorias_2015_2019_covid",
+              value: "doencas_respiratorias_2015_2019_covid_2",
               Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_covid"]["view_value"][language],
               regionFilter: true,
               source: 'ows',
               opacity: 0.8,
-              order: 3
+              order: 3,
+              timeLabel: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_em_municipios_covid"]["timelabel"][language],
+              timeSelected: "1=1&COLUMN=abr_med",
+              timeHandler: "msfilter",
+              times: [
+                {
+                value: "1=1&COLUMN=jan_med",
+                Viewvalue: "Janeiro"
+              },
+              {
+                value: "1=1&COLUMN=fev_med",
+                Viewvalue: "Fevereiro"
+              },
+              {
+                value: "1=1&COLUMN=mar_med",
+                Viewvalue: "Março"
+              },
+              {
+                value: "1=1&COLUMN=abr_med",
+                Viewvalue: "Abril"
+              },
+              {
+                value: "1=1&COLUMN=mai_med",
+                Viewvalue: "Maio"
+              },
+              {
+                value: "1=1&COLUMN=jun_med",
+                Viewvalue: "Junho"
+              },
+              {
+                value: "1=1&COLUMN=jul_med",
+                Viewvalue: "Julho"
+              },
+              {
+                value: "1=1&COLUMN=ago_med",
+                Viewvalue: "Agosto"
+              },
+              {
+                value: "1=1&COLUMN=set_med",
+                Viewvalue: "Setembro"
+              },
+              {
+                value: "1=1&COLUMN=out_med",
+                Viewvalue: "Outubro"
+              },
+              {
+                value: "1=1&COLUMN=nov_med",
+                Viewvalue: "Novembro"
+              },
+              {
+                value: "1=1&COLUMN=dez_med",
+                Viewvalue: "Dezembro"
+              }
+
+              ]
             }]
           }
           ]

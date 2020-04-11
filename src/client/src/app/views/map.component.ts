@@ -698,28 +698,37 @@ export class MapComponent implements OnInit {
 
   zoomToCityOnTypesLayer(layer) {
 
-    if (layer.timeSelected == "cd_geocmu = '52'") { }
-    else {
+    console.log(layer)
 
-      let tmp
+    if (layer.value == "casos_por_bairro_em_municipios_covid") {
+      if (layer.timeSelected == "cd_geocmu = '52'") { }
+      else {
 
-      if (layer['times']) {
-        tmp = layer['times'].find(
-          element => element.value === layer.timeSelected
-        );
+        let tmp
+
+        if (layer['times']) {
+          tmp = layer['times'].find(
+            element => element.value === layer.timeSelected
+          );
+        }
+
+        this.http.get(SEARCH_URL, { params: PARAMS.set('key', tmp.Viewvalue) }).subscribe(result => {
+
+          let ob = result[0];
+          this.updateRegion(ob);
+          this.handleInteraction()
+          // let l = this.layersNames.find(element => element.id === 'urban_traffic');
+          // this.changeVisibility(l, { checked: true });
+          let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+          this.changeVisibility(p, { checked: false });
+          this.infodata = null
+        });
       }
-
-      this.http.get(SEARCH_URL, { params: PARAMS.set('key', tmp.Viewvalue) }).subscribe(result => {
-
-        let ob = result[0];
-        this.updateRegion(ob);
-        this.handleInteraction()
-        // let l = this.layersNames.find(element => element.id === 'urban_traffic');
-        // this.changeVisibility(l, { checked: true });
-        let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
-        this.changeVisibility(p, { checked: false });
-        this.infodata = null
-      });
+    }else if (layer.value == "doencas_respiratorias_2015_2019_covid_2")
+    {
+      layer.urlLegend = this.urls[0] + '?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=doencas_respiratorias_2015_2019_covid_2&COLUMN=' + layer.timeSelected + '&format=image/png';
+      
+      this.updateSourceLayer(layer)
     }
   }
 
