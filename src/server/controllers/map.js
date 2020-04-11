@@ -542,6 +542,25 @@ module.exports = function (app) {
 
   };
 
+  Controller.controls = function (request, response) {
+    var language = request.param('lang');
+
+    var jsonPath = path.join(__dirname, '..', 'assets', 'lang', 'language.json');
+    var languageFile = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+
+    var controlsJson = languageFile["controls"];
+
+    var result = {};
+
+    Object.keys(controlsJson).forEach(function (key, index) {
+      result[key] = controlsJson[key][language];
+    });
+
+    response.send(result);
+    response.end();
+
+  };
+
 
   return Controller;
 };

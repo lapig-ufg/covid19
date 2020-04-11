@@ -8,5 +8,5 @@ module.exports = function (app) {
 	app.get('/service/map/extent', dataInjector, map.extent);
 	app.get('/service/map/marker', dataInjector, map.marker);
 	app.get('/service/map/titles', map.titles);
-
+	app.get('/service/map/controls', map.controls);
 }

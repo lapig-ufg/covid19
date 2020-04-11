@@ -6,4 +6,6 @@ module.exports = function (app) {
     app.get('/service/restrictedAccess/counties', dataInjector, restrictedAccess.counties);
     app.post('/service/restrictedAccess/requireAccess', dataInjector, restrictedAccess.requireAccess);
     app.post('/service/restrictedAccess/access', dataInjector, restrictedAccess.access);
+    app.get('/service/restrictedAccess/lablesAccess', restrictedAccess.lablesAccess);
+    app.get('/service/restrictedAccess/lablesForm', restrictedAccess.lablesForm);
 }

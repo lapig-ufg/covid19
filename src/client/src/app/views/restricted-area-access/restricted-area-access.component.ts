@@ -18,6 +18,9 @@ export class RestrictedAreaAccessComponent implements OnInit {
   user:any;
   msg:any;
   display:boolean;
+  lang:any;
+
+  lables:any;
 
   errorCodigoautorizacao:boolean;
 
@@ -27,6 +30,7 @@ export class RestrictedAreaAccessComponent implements OnInit {
       private http: HttpClient
   ) {
 
+    this.lang = data.lang;
     this.codigoautorizacao = '';
     this.display = false;
 
@@ -34,6 +38,9 @@ export class RestrictedAreaAccessComponent implements OnInit {
     this.httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
+    this.lables = {};
+    this.updateLables();
+
   }
 
   ngOnInit() {
@@ -46,6 +53,24 @@ export class RestrictedAreaAccessComponent implements OnInit {
   onRequireAccess(){
     this.requireAccess.emit();
   }
+
+  private updateLables() {
+    let sourceUrl = '/service/restrictedAccess/lablesAccess' + this.getServiceParams();
+    this.http.get(sourceUrl).subscribe(result => {
+      this.lables = result;
+    });
+  }
+
+  private getServiceParams() {
+    let params = [];
+
+    params.push('lang=' + this.lang);
+
+    let urlParams = '?' + params.join('&');
+
+    return urlParams;
+  }
+
 
   onSubmit(){
     if(this.codigoautorizacao == '' || this.codigoautorizacao == null){
@@ -63,14 +88,14 @@ export class RestrictedAreaAccessComponent implements OnInit {
 
         if(this.user.length <= 0){
           this.display = true;
-          this.msg = "Acesso não identificado!";
+          this.msg = this.lables.error_msg_unidentified;
         }else{
           this.userEvent.emit(result[0]);
         }
 
       },(err) => {
         this.display = true;
-        this.msg = "Não foi possível autenticar seu acesso. Por favor, tente novamente. Se o problema persistir contate a administração da plataforma.";
+        this.msg = this.lables.error_msg_acces;
       });
     }
   }

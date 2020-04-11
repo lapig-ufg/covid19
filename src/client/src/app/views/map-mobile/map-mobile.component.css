@@ -93,8 +93,13 @@ body .ui-tabview .ui-tabview-panels {
 .dpat-ol-map {
 	
 	/* 100% of the viewport height - navbar height */
-    overflow: hidden;
-    /* height: calc(50vh); */
+	overflow: hidden;
+	margin: 5px;
+	padding: 10px;
+	height: calc(40vh);
+	border-radius: 7px;
+	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
+	box-shadow: -1px 1px 10px 0px #7a2525;
 }
 
 .dpat-ol-map .ol-viewport canvas {
@@ -245,6 +250,7 @@ table tr td {
 
 .layersConteudo {
 	max-height: 1500px;
+	margin-top: 15px;
 	/* overflow: auto; */
 }
 
@@ -325,15 +331,15 @@ table tr td {
 } */
 
 .container-resumo {
-	position: absolute;
-	bottom: 2%;
-	right: 0.7%;
-	z-index: 2200000;
-	width: 48%;
-	background-color: #7e1116;
+	/* position: absolute; */
+	/* bottom: 2%;
+	right: 0.7%; */
+	/* z-index: 2200000; */
+	/* width: 48%; */
+	/* background-color: #7e1116;
 	opacity: 0.7;
 	padding: 1%;
-	border-radius: 5%;
+	border-radius: 5%; */
 }
 
 .resumo {
@@ -348,8 +354,8 @@ table tr td {
 	width: 100%;
 	overflow: hidden;
 	border-radius: 7px;
-	/* -webkit-box-shadow: -1px 1px 10px 0px #7a2525; */
-	/* box-shadow: -1px 1px 10px 0px #7a2525; */
+	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
+	box-shadow: -1px 1px 10px 0px #7a2525;
 
 }
 
@@ -360,26 +366,26 @@ table tr td {
 	text-align: center;
 	border-radius: 7px;
 	color: white;
-	/* background-color: #dd4646; */
+	background-color: #dd4646;
 	padding-top: 5px;
 	padding-bottom: 5px;
-	/* -webkit-box-shadow: -1px 1px 10px 0px #7a2525; */
-	/* box-shadow: -1px 1px 10px 0px #7a2525; */
+	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
+	box-shadow: -1px 1px 10px 0px #7a2525;
 }
 
 .resumo-subtitle-card p {
 	text-align: center;
-	font-size: 0.5em;
+	font-size: 0.6em;
 	line-height: 1.5;
 }
 
 .resumo-subtitle {
-	font-size: 0.8em;
+	font-size: 1em;
 	color: white;
 }
 
 .card-resumo-title {
-	font-size: 0.5em;
+	font-size: 0.9em;
 	padding: 2px;
 	color: white;
 }
@@ -590,9 +596,9 @@ h6 {
 
 .clear-region-btn {
 	height: 18px;
-	position: absolute;
-	left: 85%;
-	top: 10px;
+	position: relative;
+	left: 90%;
+	top: -36px;
 	cursor: pointer;
 	opacity: 0.8;
 }
@@ -939,13 +945,25 @@ mat-select {
 
 .controls {
 	position: absolute;
-	display: flex;
-	right: 23%;
-	top: 25%;
-	z-index: 10000;
-	padding: 10px;
+	left: 15px;
+	/* top: 18%; */
+	z-index: 100000;
+	padding: 5px 14px;
 	border-radius: 10px;
-	background-color: #584e4f8c;
+	/* background-color: #584e4f8c; */
+}
+
+.btn-zoom {
+	cursor: pointer;
+	padding: 6px 6px;
+	margin-bottom: 8px;
+	background-color: #823333;
+	border-radius: 10px;
+	transition: 0.3s;
+	color: white;
+	font-size: 3em;
+	text-align: center;
+	align-self: center;
 }
 
 .btn-layers {
@@ -954,17 +972,17 @@ mat-select {
 	background-color: #7e1116;
 	border-radius: 100px;
 	transition: 0.3s;
-	width: 75%;
-	margin-left: 14%;
+	width: 40%;
+	margin-left: 30%;
 	color: white;
 	font-size: 0.7rem;
 }
 
-.btn-layers:hover {
+.btn-layers:hover .btn-zoom:hover{
 	background-color: #dd4646;
 }
 
-.btn-layers-active {
+.btn-layers-active .btn-zoom-active {
 	background-color: #dd4646;
 }
 

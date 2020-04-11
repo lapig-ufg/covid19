@@ -87,6 +87,20 @@ module.exports = function (app) {
       }
     ]
   }
+
+  Query.dates = function (params) {
+    return [
+
+      {
+        id: 'dates',
+        sql: " SELECT  to_char(max(data), 'DD/MM/YYYY') as data_formatada, to_char(max(data), 'YYYY-MM-DD') as data_db, to_char(max(data), 'DD/MM') as data_rotulo FROM casos GROUP BY data ORDER BY data; "
+      },
+      {
+        id: 'next',
+        sql: "select true"
+      }
+    ]
+  }
   return Query;
 
 };
