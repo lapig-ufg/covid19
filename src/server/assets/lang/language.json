@@ -447,7 +447,7 @@
 						"en-us": "Confirmed cases by Districts"
 					},
 					"types": {
-						"casos_por_bairro_em_municipios_covid": {
+						"casos_por_bairro_covid": {
 							"view_value": {
 								"pt-br": "Bairros",
 								"en-us": "District"
@@ -468,13 +468,86 @@
 						"pt-br": "Mediana do nº de internações causadas por doenças respiratórias (2015-2019)",
 						"en-us": "Median number of hospitalizations caused by respiratory diseases (2015-2019)"
 					},
-					"types": {
-						"doencas_respiratorias_2015_2019_covid": {
-							"view_value": {
-								"pt-br": "Quantidade",
-								"en-us": "Number"
+					"types": 
+						{
+							"doencas_respiratorias_2015_2019_ano_total_covid_": {
+								"view_value": {
+									"pt-br": "Mediana de 2015-2019",
+									"en-us": "Median 2015-2019"
+								}
+							},
+							"doencas_respiratorias_2015_2019_janeiro_covid": {
+								"view_value": {
+									"pt-br": "Janeiro",
+									"en-us": "January"
+								}
+							},
+							"doencas_respiratorias_2015_2019_fevereiro_covid": {
+								"view_value": {
+									"pt-br": "Fevereiro",
+									"en-us": "February"
+								}
+							},
+							"doencas_respiratorias_2015_2019_marco_covid": {
+								"view_value": {
+									"pt-br": "Março",
+									"en-us": "March"
+								}
+							},
+							"doencas_respiratorias_2015_2019_abril_covid": {
+								"view_value": {
+									"pt-br": "Abril",
+									"en-us": "April"
+								}
+							},
+							"doencas_respiratorias_2015_2019_maio_covid": {
+								"view_value": {
+									"pt-br": "Maio",
+									"en-us": "May"
+								}
+							},
+							"doencas_respiratorias_2015_2019_junho_covid": {
+								"view_value": {
+									"pt-br": "Junho",
+									"en-us": "June"
+								}
+							},
+							"doencas_respiratorias_2015_2019_julho_covid": {
+								"view_value": {
+									"pt-br": "Julho",
+									"en-us": "July"
+								}
+							},
+							"doencas_respiratorias_2015_2019_agosto_covid": {
+								"view_value": {
+									"pt-br": "Agosto",
+									"en-us": "August"
+								}
+							},
+							"doencas_respiratorias_2015_2019_setembro_covid": {
+								"view_value": {
+									"pt-br": "Setembro",
+									"en-us": "September"
+								}
+							},
+							"doencas_respiratorias_2015_2019_outubro_covid": {
+								"view_value": {
+									"pt-br": "Outubro",
+									"en-us": "October"
+								}
+							},
+							"doencas_respiratorias_2015_2019_novembro_covid": {
+								"view_value": {
+									"pt-br": "Novembro",
+									"en-us": "November"
+								}
+							},
+							"doencas_respiratorias_2015_2019_dezembro_covid": {
+								"view_value": {
+									"pt-br": "Dezembro",
+									"en-us": "December"
+								}
 							}
-						}
 					}
 				}
 			}
@@ -485,24 +558,24 @@
 				"en-us": "General Services"
 			},
 			"layers": {
-				"pharmacy_supermarket_hospital": {
+				"unidades_basicas": {
 					"label": {
-						"pt-br": "Hospitais",
-						"en-us": "Hospitals"
+						"pt-br": "Unidades Básicas de Saúde",
+						"en-us": "Basic Health Units"
 					},
 					"types": {
-						"pharmacy_supermarket_hospital_covid": {
+						"uni_basicas_goiania": {
 							"view_value": {
-								"pt-br": "Pontos",
-								"en-us": "Points"
+								"pt-br": "Goiânia",
+								"en-us": "Goiânia"
 							}
 						}
 					}
 				},
 				"hospitais": {
 					"label": {
-						"pt-br": "Hospitais",
-						"en-us": "Hospitals"
+						"pt-br": "Hospitais no Estado (DataSUS)",
+						"en-us": "State Hospitals (DataSUS)"
 					},
 					"types": {
 						"go_hospitais_datasus": {

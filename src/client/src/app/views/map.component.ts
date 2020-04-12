@@ -737,9 +737,7 @@ export class MapComponent implements OnInit {
 
   zoomToCityOnTypesLayer(layer) {
 
-    console.log(layer)
-
-    if (layer.value == "casos_por_bairro_em_municipios_covid") {
+    if (layer.value == "casos_por_bairro_covid") {
       if (layer.timeSelected == "cd_geocmu = '52'") { }
       else {
 
@@ -763,11 +761,6 @@ export class MapComponent implements OnInit {
           this.infodata = null
         });
       }
-    }else if (layer.value == "doencas_respiratorias_2015_2019_covid_2")
-    {
-      layer.urlLegend = this.urls[0] + '?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=doencas_respiratorias_2015_2019_covid_2&COLUMN=' + layer.timeSelected + '&format=image/png';
-      
-      this.updateSourceLayer(layer)
     }
   }
 
@@ -1209,7 +1202,7 @@ export class MapComponent implements OnInit {
     return {
       version: '2.2.0',
       grids: [
-        this.returnUTFGRID('casos_por_bairro_em_municipios_covid', filter, '{x}+{y}+{z}')
+        this.returnUTFGRID('casos_por_bairro_covid', filter, '{x}+{y}+{z}')
       ]
     };
 
@@ -1364,7 +1357,7 @@ export class MapComponent implements OnInit {
         }
       }
 
-      if (bairros.selectedType == 'casos_por_bairro_em_municipios_covid') {
+      if (bairros.selectedType == 'casos_por_bairro_covid') {
         if (this.utfgridBairro) {
           let tileJSONBairro = this.getTileJSONBairros();
 

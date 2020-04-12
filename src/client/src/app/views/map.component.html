@@ -437,7 +437,7 @@
 					<div style="text-align:center;color:darkred"> <br> <strong>{{minireportText.click_more_municipio}} </strong></div>
 				</div>
 				<div *ngIf="infobairro && !clickable" class="card-body">
-					<p class="card-text">{{infobairro.nm_bai}}</p>
+					<p class="card-text">{{infobairro.nm}}</p>
 					<table>
 						<tbody>
 							<tr>
@@ -464,9 +464,13 @@
 					<div align="center" style="padding: 10px">
 						<table>
 							<tbody>
-								<tr>
+								<tr *ngIf="infomarker.horario">
 									<th>{{minireportText.label_horario_atendimento}} </th>
 									<td>{{infomarker.horario}} </td>
+								</tr>
+								<tr *ngIf="infomarker.telefone">
+									<th>{{minireportText.label_telefone}} </th>
+									<td>{{infomarker.telefone}} </td>
 								</tr>
 								<tr *ngIf="infomarker.leitos_clinica">
 									<th>{{minireportText.label_qnt_geral}} </th>

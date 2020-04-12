@@ -62,22 +62,22 @@ module.exports = function (app) {
             id: "casos_bairro",
             label: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["label"][language],
             visible: false,
-            selectedType: "casos_por_bairro_em_municipios_covid",
+            selectedType: "casos_por_bairro_covid",
             showTypes: true,
             types: [{
-              value: "casos_por_bairro_em_municipios_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_em_municipios_covid"]["view_value"][language],
+              value: "casos_por_bairro_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["view_value"][language],
               regionFilter: true,
               source: 'ows',
               opacity: 0.8,
               order: 3,
-              timeLabel: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_em_municipios_covid"]["timelabel"][language],
+              timeLabel: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["timelabel"][language],
               timeSelected: "cd_geocmu = '52'",
               timeHandler: "msfilter",
               times: [
                 {
                 value: "cd_geocmu = '52'",
-                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_em_municipios_covid"]["default_placeholder"][language]
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["default_placeholder"][language]
               },
               {
                 value: "cd_geocmu = '5208707'",
@@ -106,70 +106,113 @@ module.exports = function (app) {
             id: "doencas_respiratorias",
             label: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["label"][language],
             visible: false,
-            showTypes: true,
-            selectedType: "doencas_respiratorias_2015_2019_covid_2",
-            types: [{
-              value: "doencas_respiratorias_2015_2019_covid_2",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_covid"]["view_value"][language],
+            selectedType: "doencas_respiratorias_2015_2019_abril_covid",
+            types: [
+              {
+                value: "doencas_respiratorias_2015_2019_ano_total_covid_",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_ano_total_covid_"]["view_value"][language],
+                regionFilter: true,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              },
+              {
+              value: "doencas_respiratorias_2015_2019_janeiro_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_janeiro_covid"]["view_value"][language],
               regionFilter: true,
               source: 'ows',
               opacity: 0.8,
-              order: 3,
-              timeLabel: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_em_municipios_covid"]["timelabel"][language],
-              timeSelected: "1=1&COLUMN=abr_med",
-              timeHandler: "msfilter",
-              times: [
-                {
-                value: "1=1&COLUMN=jan_med",
-                Viewvalue: "Janeiro"
-              },
-              {
-                value: "1=1&COLUMN=fev_med",
-                Viewvalue: "Fevereiro"
-              },
-              {
-                value: "1=1&COLUMN=mar_med",
-                Viewvalue: "Março"
-              },
-              {
-                value: "1=1&COLUMN=abr_med",
-                Viewvalue: "Abril"
-              },
-              {
-                value: "1=1&COLUMN=mai_med",
-                Viewvalue: "Maio"
-              },
-              {
-                value: "1=1&COLUMN=jun_med",
-                Viewvalue: "Junho"
-              },
-              {
-                value: "1=1&COLUMN=jul_med",
-                Viewvalue: "Julho"
-              },
-              {
-                value: "1=1&COLUMN=ago_med",
-                Viewvalue: "Agosto"
-              },
-              {
-                value: "1=1&COLUMN=set_med",
-                Viewvalue: "Setembro"
-              },
-              {
-                value: "1=1&COLUMN=out_med",
-                Viewvalue: "Outubro"
-              },
-              {
-                value: "1=1&COLUMN=nov_med",
-                Viewvalue: "Novembro"
-              },
-              {
-                value: "1=1&COLUMN=dez_med",
-                Viewvalue: "Dezembro"
-              }
-
-              ]
-            }]
+              order: 3
+            },
+            {
+              value: "doencas_respiratorias_2015_2019_fevereiro_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_fevereiro_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "doencas_respiratorias_2015_2019_marco_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_marco_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "doencas_respiratorias_2015_2019_abril_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_abril_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "doencas_respiratorias_2015_2019_maio_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_maio_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "doencas_respiratorias_2015_2019_junho_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_junho_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "doencas_respiratorias_2015_2019_julho_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_julho_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "doencas_respiratorias_2015_2019_agosto_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_agosto_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "doencas_respiratorias_2015_2019_setembro_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_setembro_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "doencas_respiratorias_2015_2019_outubro_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_outubro_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "doencas_respiratorias_2015_2019_novembro_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_novembro_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "doencas_respiratorias_2015_2019_dezembro_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_dezembro_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+          ]
           }
           ]
         },
@@ -228,6 +271,22 @@ module.exports = function (app) {
                 source: 'ows',
                 opacity: 0.8,
                 order: 3
+              }]
+            },
+            {
+              id: "unidades_basicas",
+              label: languageJson["descriptor"]["servicos"]["layers"]["unidades_basicas"]["label"][language],
+              visible: false,
+              showTypes: true,
+              selectedType: "uni_basicas_goiania",
+              types: [{
+                value: "uni_basicas_goiania",
+                Viewvalue: languageJson["descriptor"]["servicos"]["layers"]["unidades_basicas"]["types"]["uni_basicas_goiania"]["view_value"][language],
+                url: 'service/map/marker?layer=uni_basicas_goiania&filter=1=1',
+                iconUrl: 'assets/markers/unidade_basica.png',
+                source: 'geojson',
+                opacity: 0.8,
+                order: 1
               }]
             },
             {
