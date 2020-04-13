@@ -407,7 +407,7 @@ font-size: 0.9em;
 
 .container-team{
 	margin: 15px;
-	column-count: 2;
+	/* column-count: 2; */
 }
 .team-section{
 	margin: 10px;
