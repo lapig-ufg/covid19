@@ -675,6 +675,9 @@ export class MapComponent implements OnInit {
         //   graphic.options.legend.labels.fontColor = '#fa1d00';
         // };
 
+        graphic.options.legend.onClick = function (event) {
+          return null;
+        };
       }
     }
     );
