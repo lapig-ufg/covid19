@@ -592,14 +592,18 @@ export class MapComponent implements OnInit {
 
         graphic.options.scales.xAxes = x;
 
-        graphic.options.legend.onHover = function (event) {
-          event.target.style.cursor = 'pointer';
-          graphic.options.legend.labels.fontColor = '#0335fc';
-        };
+        // graphic.options.legend.onHover = function (event) {
+        //   event.target.style.cursor = 'pointer';
+        //   graphic.options.legend.labels.fontColor = '#0335fc';
+        // };
 
-        graphic.options.legend.onLeave = function (event) {
-          event.target.style.cursor = 'default';
-          graphic.options.legend.labels.fontColor = '#fa1d00';
+        // graphic.options.legend.onLeave = function (event) {
+        //   event.target.style.cursor = 'default';
+        //   graphic.options.legend.labels.fontColor = '#fa1d00';
+        // };
+
+        graphic.options.legend.onClick = function (event) {
+          return null;
         };
 
         // graphic.options.tooltips.callbacks = {
@@ -661,15 +665,15 @@ export class MapComponent implements OnInit {
 
         graphic.options.scales.xAxes = x;
 
-        graphic.options.legend.onHover = function (event) {
-          event.target.style.cursor = 'pointer';
-          graphic.options.legend.labels.fontColor = '#0335fc';
-        };
+        // graphic.options.legend.onHover = function (event) {
+        //   event.target.style.cursor = 'pointer';
+        //   graphic.options.legend.labels.fontColor = '#0335fc';
+        // };
 
-        graphic.options.legend.onLeave = function (event) {
-          event.target.style.cursor = 'default';
-          graphic.options.legend.labels.fontColor = '#fa1d00';
-        };
+        // graphic.options.legend.onLeave = function (event) {
+        //   event.target.style.cursor = 'default';
+        //   graphic.options.legend.labels.fontColor = '#fa1d00';
+        // };
 
       }
     }
@@ -932,12 +936,15 @@ export class MapComponent implements OnInit {
         if (this.utfgridBairro) {
           this.utfgridBairro.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
             if (data) {
-              window.document.body.style.cursor = 'pointer';
+              // window.document.body.style.cursor = 'pointer';
 
               this.infobairro = data;
 
               if (this.infobairro.nm_bai == "") {
                 this.infobairro.nm_bai = this.minireportText.undisclosed_message;
+              }
+              if (this.infobairro.nm == "") {
+                this.infobairro.nm = this.minireportText.undisclosed_message;
               }
               // console.log(this.infobairro)
 
