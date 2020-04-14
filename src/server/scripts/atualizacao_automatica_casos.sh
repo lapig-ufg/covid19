@@ -4,6 +4,23 @@ BASEDIR='/STORAGE/ows-cache/layers'
 
 pip install gspread >> /dev/null
 
+pip3 install pydrive >> /dev/null
+
+#Step 0
+
+clear
+echo -n -e "Atualizando Planilhas Projections!"
+sleep 2
+
+wget 'https://covidgoias.ufg.br/service/indicators/projections?cd_geocmu=5211909&lang=pt-br%27' -O Jatai.txt
+
+wget 'https://covidgoias.ufg.br/service/indicators/projections?cd_geocmu=5218805&lang=pt-br%27' -O RioVerde.txt
+
+wget 'https://covidgoias.ufg.br/service/indicators/projections?cd_geocmu=5213103&lang=pt-br%27' -O Mineiros.txt
+
+python3 upload_googledrive.py
+
+
 #Step 1
 
 clear
@@ -24,7 +41,7 @@ clear
 echo -n -e "Planilha baixada com sucesso!"
 sleep 2
 
-Step 2
+#Step 2
 
 clear
 echo -n -e "Populando banco de dados!"
@@ -68,3 +85,7 @@ sleep 2
 clear
 fi
 
+clear
+echo -n -e "Rotina Concluida!"
+sleep 3
+clear
