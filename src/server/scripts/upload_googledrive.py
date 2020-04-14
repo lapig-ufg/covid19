@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #Imports the required libraries
 #Sources:https://www.programcreek.com/python/example/88814/pydrive.drive.GoogleDrive
 
