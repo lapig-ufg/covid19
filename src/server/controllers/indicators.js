@@ -149,7 +149,7 @@ module.exports = function (app) {
         disabled: false,
         options: {
           title: {
-            display: true,
+            display: false,
             text: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["text"][language],
             fontSize: 10,
             position: "bottom"
@@ -246,7 +246,7 @@ module.exports = function (app) {
         disabled: false,
         options: {
           title: {
-            display: true,
+            display: false,
             text: languageJson["charts_box"]["charts_box_projecoes"]["projections_go"]["text"][language],
             fontSize: 10,
             position: "bottom"

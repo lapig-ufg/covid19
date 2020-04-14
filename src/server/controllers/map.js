@@ -422,20 +422,20 @@ module.exports = function (app) {
                 order: 3
               }]
             },
-            {
-              id: "esgotos_domiclios",
-              label: languageJson["descriptor"]["geoinformacoes"]["layers"]["esgotos_domiclios"]["label"][language],
-              visible: false,
-              selectedType: "esgoto_domicilios_covid",
-              types: [{
-                value: "esgoto_domicilios_covid",
-                Viewvalue: languageJson["descriptor"]["geoinformacoes"]["layers"]["esgotos_domiclios"]["types"]["esgoto_domicilios_covid"]["view_value"][language],
-                regionFilter: false,
-                source: 'ows',
-                opacity: 0.8,
-                order: 3
-              }]
-            }
+            // {
+            //   id: "esgotos_domiclios",
+            //   label: languageJson["descriptor"]["geoinformacoes"]["layers"]["esgotos_domiclios"]["label"][language],
+            //   visible: false,
+            //   selectedType: "esgoto_domicilios_covid",
+            //   types: [{
+            //     value: "esgoto_domicilios_covid",
+            //     Viewvalue: languageJson["descriptor"]["geoinformacoes"]["layers"]["esgotos_domiclios"]["types"]["esgoto_domicilios_covid"]["view_value"][language],
+            //     regionFilter: false,
+            //     source: 'ows',
+            //     opacity: 0.8,
+            //     order: 3
+            //   }]
+            // }
           ]
         }
       ],

@@ -115,8 +115,8 @@
 					"en-us": "Deaths"
 				},
 				"label_previstos":{
-					"pt-br": "Projeção de Confirmados",
-					"en-us": "Confirmed future projections"
+					"pt-br": "Projeção",
+					"en-us": "Projections"
 				},
 				"not_cases":{
 					"pt-br": "Não foram feitas projeções para ",
