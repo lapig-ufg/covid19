@@ -776,12 +776,13 @@ export class MapComponent implements OnInit {
 
           let ob = result[0];
           this.updateRegion(ob);
-          this.handleInteraction()
+          this.handleInteraction();
           // let l = this.layersNames.find(element => element.id === 'urban_traffic');
           // this.changeVisibility(l, { checked: true });
           let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
           this.changeVisibility(p, { checked: false });
           this.infodata = null
+          this.zoomIn();
         });
       }
     }
