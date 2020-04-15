@@ -310,6 +310,10 @@ body {
 	background: #dd4646;
 }
 
+::ng-deep .mat-checkbox-layout .mat-checkbox-label {
+	white-space: normal;
+}
+
 .mat-drawer-backdrop.mat-drawer-shown {
 	background-color:transparent !important;
 	visibility: hidden !important;

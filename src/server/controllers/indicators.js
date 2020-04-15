@@ -441,8 +441,14 @@ module.exports = function (app) {
     var teamJson = languageJson["team"];
     var result = {};
 
-    result.title = teamJson.title[language];
-    result.data = [];
+    result.title          = teamJson.title[language];
+    result.info           = teamJson.info[language];
+    result.methodology_p1 = teamJson.methodology_p1[language];
+    result.methodology_p2 = teamJson.methodology_p2[language];
+    result.methodology_p3 = teamJson.methodology_p3[language];
+    result.contact        = teamJson.contact[language];
+    result.title_team     = teamJson.title_team[language];
+    result.data           = [];
 
     teamJson.data.forEach(function (elem, elmIndex) {
 

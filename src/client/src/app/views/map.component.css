@@ -1114,7 +1114,6 @@ mat-select {
 .container-ft p {
 	padding: 19px;
 	font-size: 1.1em;
-	;
 	text-align: justify;
 	text-indent: 4em;
 }
@@ -1232,23 +1231,20 @@ img[usemap], map area{
 	margin-right: 10px;
 }
 
-::ng-deep .mat-checkbox-layout .mat-checkbox-label {
-    white-space: normal;
-}
-
 .container-team{
 	margin: 15px;
-	column-count: 2;
+	text-align: center;
 }
 .team-section{
 	margin: 10px;
 	width: 100%;
+	padding-top: 15px;
 }
 
 .team-member a{
 	transition: 0.3s;
 	color: rgba(161, 19, 19, 0.75);
-	font-size: 1.5vh;
+	font-size: 1.7vh;
 }
 .team-member a:hover{
 	color: rgba(126, 53, 60, 0.75);
@@ -1277,15 +1273,34 @@ img[usemap], map area{
 	text-align: right;
 }
 
+.container-project {
+	text-align: center;
+	padding:30px;
+}
+
+.container-project h5 {
+	font-weight: bold;
+	font-size: 1.4em;
+}
+
+.container-project p {
+	font-size: 1.2em;
+	line-height: 30px;
+	text-align: justify;
+	text-indent: 2em;
+}
+
+.title-team{
+	padding: 20px;
+	text-align: center;
+	font-size: 2em;
+}
+
 mat-slider {
 	margin-left: 120px;
 	height: 20vh;
 }
 
-
-@media screen and (max-width: 1080px) {
-
-}
 
 @media screen and (max-width: 1050px) {
 
