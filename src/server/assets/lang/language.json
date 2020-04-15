@@ -824,6 +824,30 @@
 	},
 	"team": {
 		"title": {
+			"pt-br": "O Projeto",
+			"en-us": "The Project"
+		},
+		"info": {
+			"pt-br": "A plataforma Covid Goiás foi desenvolvida por uma equipe multidisciplinar de pesquisadores da Universidade Federal de Goiás (UFG). O objetivo da ferramenta é informar a população goiana sobre o avanço da doença e proporcionar aos agentes públicos, em nível municipal e estadual, um banco de dados georreferenciado para  subsidiar a tomada de decisões frente a esta pandemia.",
+			"en-us": "The Covid Goiás platform was developed by a multidisciplinary team of researchers from the Federal University of Goiás (UFG). The objective of the tool is to inform the population of Goiás about the progress of the disease and provide public agents, at the municipal and state level, with a georeferenced database to support decision-making in the face of this pandemic."
+		},
+		"methodology_p1": {
+			"pt-br": "Metodologia: os dados epidemiológicos para todo o Estado são de responsabilidade da Secretaria Estadual de Saúde (SES). Os dados referentes à Goiânia estão sob a responsabilidade da Secretaria Municipal de Saúde (Superintendência de Vigilância em Saúde).",
+			"en-us": "Methodology: epidemiological data for the entire state are the responsibility of the State Department of Health (SES). The data referring to Goiânia are under the responsibility of the Municipal Health Secretariat (Superintendence of Health Surveillance)."
+		},
+		"methodology_p2": {
+			"pt-br": "As atualizações na plataforma são diárias, geralmente ao final do dia, a partir do boletim divulgado pelos respectivos órgãos.",
+			"en-us": "Updates to the platform are daily, usually at the end of the day, from the bulletin released by the respective agencies."
+		},
+		"methodology_p3": {
+			"pt-br": "Um pequeno atraso na divulgação ou mesmo diferenças estatísticas podem ocorrer, em função de diferenças nos próprios boletins epidemiológicos.",
+			"en-us": "A small delay in disclosure or even statistical differences may occur, due to differences in the epidemiological bulletins themselves."
+		},
+		"contact": {
+			"pt-br": "Para dúvidas, comentários ou sugestões, favor entrar em contato pelo e-mail <a href=\"mailto:covidgoias@ufg.br?subject=Duvida&body=Escreva aqui suas dúvidas, comentários ou sugestões\" title=\"Contate a equipe do Covid Goiás\" >covidgoias@ufg.br</a>",
+			"en-us": "For questions, comments or suggestions, please contact us by e-mail <a href=\"mailto:covidgoias@ufg.br?subject=Questions&body=Write here if you have questions\" title=\"Contact to Covid Goiás\" >covidgoias@ufg.br</a>."
+		},
+		"title_team": {
 			"pt-br": "Equipe",
 			"en-us": "Team"
 		},
