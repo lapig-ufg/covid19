@@ -639,7 +639,6 @@ export class MapComponent implements OnInit {
       this.dataProjSeries = result;
 
       // console.log(this.dataProjSeries)
-
       for (let graphic of this.dataProjSeries.timeseries.chartResult) {
 
 
@@ -678,6 +677,20 @@ export class MapComponent implements OnInit {
         graphic.options.legend.onClick = function (event) {
           return null;
         };
+
+        graphic.options.tooltips.filter = function(tooltipItem, data){
+
+          var label = new Date(data.labels[tooltipItem.index]);
+          let compr = new Date(graphic.last_model_date)
+          
+          if( label >= compr){
+            return tooltipItem.datasetIndex === 0; 
+          } 
+          else{
+            return tooltipItem;
+          }
+        }
+
       }
     }
     );
@@ -692,11 +705,14 @@ export class MapComponent implements OnInit {
 
     this.http.get(statisticsURL).subscribe(res => {
       this.statistics_county = res
+      this.statistics_county.result.dias_duplicacao_confirmados = Math.round(this.statistics_county.result.dias_duplicacao_confirmados)
 
     });
 
 
   }
+
+  
 
   updateRegion(region) {
 

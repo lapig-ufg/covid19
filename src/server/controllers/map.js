@@ -449,11 +449,6 @@ module.exports = function (app) {
             visible: true
           },
           {
-            value: "estradas",
-            viewValue: languageJson["descriptor"]["basemaps"]["types"]["estradas"][language],
-            visible: false
-          },
-          {
             value: "mapbox",
             viewValue: languageJson["descriptor"]["basemaps"]["types"]["mapbox"][language],
             visible: false
@@ -462,12 +457,7 @@ module.exports = function (app) {
             value: "satelite",
             viewValue: languageJson["descriptor"]["basemaps"]["types"]["satelite"][language],
             visible: false
-          },
-          {
-            value: "relevo",
-            viewValue: languageJson["descriptor"]["basemaps"]["types"]["relevo"][language],
-            visible: false
-          },
+          }
 
         ]
       }],
