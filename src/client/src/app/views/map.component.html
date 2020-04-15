@@ -208,22 +208,22 @@
 				</div>
 			</div>
 
-<!--			<div class="slider" *ngIf="showSlider" >-->
-<!--				<h6>Histórico de casos dos <br> últimos {{dates.length}} dias </h6>-->
-<!--				<mat-slider-->
-<!--						#datesSlider-->
-<!--						vertical-->
-<!--						thumbLabel-->
-<!--						(input)="onInputChange($event)"-->
-<!--						[displayWith]="formatRateLabel(datesSlider.value)"-->
-<!--						color="warn"-->
-<!--						value="{{dates.length -1}}"-->
-<!--						tickInterval="1"-->
-<!--						min="{{'0'}}"-->
-<!--						max="{{dates.length -1}}"-->
-<!--				>-->
-<!--				</mat-slider>-->
-<!--			</div>-->
+			<div class="slider" *ngIf="showSlider" >
+				<h6>Histórico de casos dos <br> últimos {{dates.length}} dias </h6>
+				<mat-slider
+						#datesSlider
+						vertical
+						thumbLabel
+												(input)="onSliderChange($event)"
+						[displayWith]="formatRateLabel(datesSlider.value)"
+						color="warn"
+						value="{{dates.length -1}}"
+						tickInterval="1"
+						min="{{'0'}}"
+						max="{{dates.length -1}}"
+			>
+				</mat-slider>
+			</div>
 
 			<div *ngIf="showStatistics" id="positionCharts">
 				<div class="titleWindows">

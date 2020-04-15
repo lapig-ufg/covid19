@@ -208,6 +208,7 @@ export class MapComponent implements OnInit {
   showSlider:boolean;
 
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
+  selectedConfirmedDate: any;
 
   constructor(
     private http: HttpClient,
@@ -290,6 +291,8 @@ export class MapComponent implements OnInit {
     this.styleDefault = {
       'background-color': '#707070'
     };
+
+    this.selectedConfirmedDate = ''
 
     this.bntStyleENG = this.styleDefault;
     this.bntStylePOR = this.styleSelected;
@@ -783,6 +786,7 @@ export class MapComponent implements OnInit {
           this.changeVisibility(p, { checked: false });
           this.infodata = null
           this.zoomIn();
+          this.zoomIn();
         });
       }
     }
@@ -1009,7 +1013,7 @@ export class MapComponent implements OnInit {
         this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
           if (data) {
             // console.log(layerinfo, data)
-            if (layerinfo.selectedType == 'covid19_municipios_casos') {
+            if (layerinfo.selectedType == 'covid19_municipios_casos_2') {
               this.http.get(SEARCH_URL, { params: PARAMS.set('key', data.nome) }).subscribe(result => {
 
                 let ob = result[0];
@@ -1211,12 +1215,17 @@ export class MapComponent implements OnInit {
 
   private getTileJSON() {
 
-    let filter = true;
+    let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+
+    let layer = p.types.find(element => element.value === 'covid19_municipios_casos_2')
+    layer.layerfilter = "data = '" +this.selectedConfirmedDate+"'"
+
+    let filter = layer.layerfilter;
 
     return {
       version: '2.2.0',
       grids: [
-        this.returnUTFGRID('covid19_municipios_casos_utfgrid', filter, '{x}+{y}+{z}')
+        this.returnUTFGRID('covid19_municipios_casos_2', filter, '{x}+{y}+{z}')
       ]
     };
 
@@ -1293,6 +1302,8 @@ export class MapComponent implements OnInit {
 
       let layername = layer.value;
       if (layer.timeHandler == 'layername') { layername = layer.timeSelected; }
+
+      
 
       for (let url of this.urls) {
         result.push(url + '?layers=' + layername + msfilter + '&mode=tile&tile={x}+{y}+{z}' + '&tilemode=gmap' + '&map.imagetype=png');
@@ -1371,7 +1382,7 @@ export class MapComponent implements OnInit {
 
     if (covid.visible || bairros.visible) {
 
-      if (covid.selectedType == 'covid19_municipios_casos') {
+      if (covid.selectedType == 'covid19_municipios_casos_2') {
 
         if (this.utfgridsource) {
           let tileJSON = this.getTileJSON();
@@ -1789,8 +1800,22 @@ export class MapComponent implements OnInit {
     }
   };
 
-  onInputChange(event) {
-    console.log(this.dates[event.value].data_db);
+  onSliderChange(event) {
+
+    this.selectedConfirmedDate = this.dates[event.value].data_db
+
+    let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+    let layer = p.types.find(element => element.value === 'covid19_municipios_casos_2')
+    layer.layerfilter = "data = '" +this.dates[event.value].data_db+"'"
+
+    this.updateSourceLayer(layer);
+
+
+
+    // for (let url of this.urls) {
+    //   result.push(url + '?layers=' + layername + msfilter + '&mode=tile&tile={x}+{y}+{z}' + '&tilemode=gmap' + '&map.imagetype=png');
+    // }
+
   }
 
   ngOnInit() {
@@ -1824,7 +1849,7 @@ export class MapComponent implements OnInit {
               layerType.visible = layer.visible;
             }
 
-            if(layerType.value == 'covid19_municipios_casos' && layerType.visible == true){
+            if(layerType.value == 'covid19_municipios_casos_2' && layerType.visible == true){
               this.showSlider = true;
             }
 
