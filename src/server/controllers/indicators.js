@@ -258,7 +258,7 @@ module.exports = function (app) {
             },
             position: "bottom"
           },
-          tooltips: {},
+          tooltips: {mode: "index"},
           scales: {
             yAxes: [{
               scaleLabel: {

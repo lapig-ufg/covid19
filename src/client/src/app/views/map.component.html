@@ -69,14 +69,14 @@
 														</mat-form-field>
 														<span class="" *ngFor="let type of layer.types"
 															[hidden]="type.value != layer.selectedType">
-															<mat-form-field *ngIf="type.times">
+															<mat-form-field style="font-weight: bold;" *ngIf="type.times">
 																<mat-label>{{type.timeLabel}}</mat-label>
 																<mat-select (selectionChange)="zoomToCityOnTypesLayer(type)"
 																[(ngModel)]="type.timeSelected">
-																	<mat-option *ngFor="let time of type.times"
+																	<strong><mat-option  *ngFor="let time of type.times"
 																		[value]="time.value">
 																		{{time.Viewvalue}}
-																	</mat-option>
+																	</mat-option></strong>
 																</mat-select>
 															</mat-form-field>
 														</span>
