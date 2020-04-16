@@ -1255,13 +1255,13 @@ img[usemap], map area{
 }
 .slider{
 	position: absolute;
-	top: 20%;
-	right: 1%;
-	padding-top: 10px;
-	padding-left: 10px;
-	padding-right: 15px;
-	padding-bottom: 10px;
-	height: 28vh;
+	bottom: 3%;
+	left: 7%;
+	padding-top: 5px;
+	padding-left: 40px;
+	padding-right: 40px;
+	padding-bottom: 20px;
+	width: 30vw;
 	z-index: 1000000;
 	border-radius: 10px;
 	background-color: #584e4f8c;
@@ -1270,7 +1270,12 @@ img[usemap], map area{
 .slider h6{
 	color: white;
 	font-size: 1.5vh;
-	text-align: right;
+	text-align: left;
+}
+
+mat-slider {
+	width: 100%;
+	margin-top: 25px;
 }
 
 .container-project {
@@ -1298,11 +1303,6 @@ img[usemap], map area{
 	padding: 20px;
 	text-align: center;
 	font-size: 2em;
-}
-
-mat-slider {
-	margin-left: 120px;
-	height: 20vh;
 }
 
 

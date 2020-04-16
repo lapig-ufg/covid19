@@ -209,12 +209,11 @@
 			</div>
 
 			<div class="slider" *ngIf="showSlider" >
-				<h6>Histórico de casos dos <br> últimos {{dates.length}} dias </h6>
+				<h6>Histórico de casos dos últimos {{dates.length}} dias </h6>
 				<mat-slider
 						#datesSlider
-						vertical
 						thumbLabel
-												(input)="onSliderChange($event)"
+						(input)="onSliderChange($event)"
 						[displayWith]="formatRateLabel(datesSlider.value)"
 						color="warn"
 						value="{{dates.length -1}}"
