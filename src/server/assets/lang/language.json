@@ -83,8 +83,8 @@
 			},
 			"ranking_neighborhoods": {
 				"label": {
-					"pt-br": "Bairros",
-					"en-us": "Neighborhoods"
+					"pt-br": "Bairros de ",
+					"en-us": "Neighborhoods from "
 				},
 				"description": {
 					"pt-br": "Bairros com maiores número de casos de COVID-19: ",

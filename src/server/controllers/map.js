@@ -53,7 +53,7 @@ module.exports = function (app) {
               value: "covid19_municipios_casos",
               Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_covid_confirmados"]["types"]["covid19_municipios_casos"]["view_value"][language],
               regionFilter: false,
-              layerfilter: "data = (select max(data) from municipios_casos_2)",
+              layerfilter: "data = (select max(data) from municipios_casos)",
               source: 'ows',
               opacity: 0.8,
               order: 3
@@ -81,7 +81,7 @@ module.exports = function (app) {
                 Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["default_placeholder"][language]
               },
               {
-                value: "cd_geocmu = '5208707'",
+                value: "cd_geocmu = '5208707' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros)",
                 Viewvalue: "Goiânia"
               }
               ]

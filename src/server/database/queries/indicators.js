@@ -53,6 +53,33 @@ module.exports = function (app) {
 
   }
 
+  Query.neighborhoods = function (params) {
+
+    var filter = ""
+    var cd_geocmu = params['cd_geocmu']
+
+    var timefilter = params['timefilter']
+
+    if (cd_geocmu == 52) {
+      filter = "cd_geocmu = '52' AND data_ultima_atualizacao = " + timefilter
+    }
+    else {
+      filter = "cd_geocmu = '" + cd_geocmu + "' AND data_ultima_atualizacao = " + timefilter
+    }
+
+    return [
+      {
+        id: 'ranking_neighborhoods',
+        sql: "SELECT rank, nome, cd_geocmu as geocodigo, numpoints as confirmados, data_ultima_atualizacao FROM v_casos_bairros where numpoints > 0 AND " + filter
+      },
+      {
+        id: 'last_updated',
+        sql: "select max(data_ultima_atualizacao) from v_casos_bairros where numpoints > 0 AND " + filter
+      }
+    ]
+
+  }
+
   Query.projections = function (params) {
 
     var filter = ""
@@ -101,6 +128,10 @@ module.exports = function (app) {
       }
     ]
   }
+
+
+
+
   return Query;
 
 };

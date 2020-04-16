@@ -263,6 +263,35 @@
 									</div>
 								</p-tabPanel>
 
+								<p-tabPanel *ngIf="neighborhoodsCharts.show" [header]="neighborhoodsCharts.label" [cache]="true">
+									<p-scrollPanel [style]="{width: '100%', height: '38vh'}">
+										<p-table #dt [value]="neighborhoodsCharts.series" [columns]="neighborhoodsCharts.split" [exportFilename]="neighborhoodsCharts.filename">
+											<ng-template pTemplate="caption">
+												<div class="ui-helper-clearfix" style="text-align: left">
+													<button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="margin-right: 0.5em; color: #460202"></button>
+													<button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf('bairros')" class="ui-button-warning" style="margin-right: 0.5em; color: #460202"></button>
+													<button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('bairros')" style="margin-right: 0.5em;" class="ui-button-success" style="margin-right: 0.5em; color: #460202"></button>
+													<span style="text-align: right"> Atualizado em: {{neighborhoodsCharts.last_updated | date : 'dd/MM/yyyy'}}</span>
+												</div>
+											</ng-template>
+											<ng-template pTemplate="header" let-columns>
+												<tr align="center">
+													<th *ngFor="let col of columns">
+														{{col.header}}
+													</th>
+												</tr>
+											</ng-template>
+											<ng-template pTemplate="body" let-city let-columns="columns">
+												<tr align="center">
+													<td *ngFor="let col of columns">
+														{{city[col.field]}}
+													</td>
+												</tr>
+											</ng-template>
+										</p-table>
+									</p-scrollPanel>
+								</p-tabPanel>
+
 								<p-tabPanel [header]="chartResultCities.label" [cache]="true">
 									<p-scrollPanel [style]="{width: '100%', height: '38vh'}">
 										<p-table #dt [value]="chartResultCities.series" [columns]="chartResultCities.split" [exportFilename]="chartResultCities.filename">
@@ -291,33 +320,6 @@
 									</p-scrollPanel>
 								</p-tabPanel>
 
-								<p-tabPanel *ngIf="showNeighborhoodsCharts" [header]="neighborhoodsCharts.label" [cache]="true">
-									<p-scrollPanel [style]="{width: '100%', height: '38vh'}">
-										<p-table #dt [value]="neighborhoodsCharts.series" [columns]="neighborhoodsCharts.split" [exportFilename]="neighborhoodsCharts.filename">
-											<ng-template pTemplate="caption">
-												<div class="ui-helper-clearfix" style="text-align: left">
-													<button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="margin-right: 0.5em; color: #460202"></button>
-													<button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf('cities')" class="ui-button-warning" style="margin-right: 0.5em; color: #460202"></button>
-													<button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('cities')" style="margin-right: 0.5em;" class="ui-button-success" style="margin-right: 0.5em; color: #460202"></button>
-												</div>
-											</ng-template>
-											<ng-template pTemplate="header" let-columns>
-												<tr align="center">
-													<th *ngFor="let col of columns">
-														{{col.header}}
-													</th>
-												</tr>
-											</ng-template>
-											<ng-template pTemplate="body" let-city let-columns="columns">
-												<tr align="center">
-													<td *ngFor="let col of columns">
-														{{city[col.field]}}
-													</td>
-												</tr>
-											</ng-template>
-										</p-table>
-									</p-scrollPanel>
-								</p-tabPanel>
 
 								<p-tabPanel [header]="dataStates.label" id="tabGraficoLinhas">
 									<h6 style="text-align: center;">
@@ -484,7 +486,7 @@
 					<div style="text-align:center;color:darkred"> <br> <strong>{{minireportText.click_more_municipio}} </strong></div>
 				</div>
 				<div *ngIf="infobairro && !clickable" class="card-body">
-					<p class="card-text">{{infobairro.nm}}</p>
+					<p class="card-text">{{infobairro.nome}}</p>
 					<table>
 						<tbody>
 							<tr>
@@ -501,7 +503,7 @@
 							</tr>
 							<tr>
 								<th>{{minireportText.label_last_update}} </th>
-								<td>{{infobairro.data_ultim | date : 'dd/MM/yyyy'}}</td>
+								<td>{{infobairro.data_ultima_atualizacao | date : 'dd/MM/yyyy'}}</td>
 							</tr>
 						</tbody>
 					</table>

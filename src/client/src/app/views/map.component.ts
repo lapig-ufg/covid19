@@ -83,8 +83,7 @@ export class MapComponent implements OnInit {
   dataStates: any;
   dataCities: any;
   dataSource: any;
-  showNeighborhoodsCharts:any;
-  neighborhoodsCharts:any;
+  neighborhoodsCharts: any;
 
   chartResultCities: any;
   chartResultCitiesIllegalAPP: any;
@@ -114,8 +113,7 @@ export class MapComponent implements OnInit {
   urls: any;
   dataExtent: any;
 
-  cols: any[];
-
+selectedBairroTime: any;
   searching = false;
   searchFailed = false;
   msFilterRegion = '';
@@ -173,7 +171,7 @@ export class MapComponent implements OnInit {
   titlesLayerBox: any;
   minireportText: any;
   descriptorText: any;
-  controls:any;
+  controls: any;
 
   bntStylePOR: any;
   bntStyleENG: any;
@@ -208,9 +206,9 @@ export class MapComponent implements OnInit {
 
   msg: any;
   display: boolean;
-  team:any;
-  dates:any;
-  showSlider:boolean;
+  team: any;
+  dates: any;
+  showSlider: boolean;
 
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
   selectedConfirmedDate: any;
@@ -257,6 +255,8 @@ export class MapComponent implements OnInit {
 
     this.currentData = "";
 
+    this.neighborhoodsCharts = {}
+
     this.optionsStates = {};
     this.statistics_county = { result: {}, text: {} };
     this.valueRegion = '';
@@ -298,6 +298,7 @@ export class MapComponent implements OnInit {
     };
 
     this.selectedConfirmedDate = ''
+    this.selectedBairroTime = '(select max(data_ultima_atualizacao) from v_casos_bairros)'
 
     this.bntStyleENG = this.styleDefault;
     this.bntStylePOR = this.styleSelected;
@@ -327,7 +328,6 @@ export class MapComponent implements OnInit {
     this.getDates();
     this.showSlider = false;
 
-    this.showNeighborhoodsCharts = false;
 
   }
 
@@ -644,39 +644,39 @@ export class MapComponent implements OnInit {
       let properties = this.chartResultCities.properties.split('?');
 
       this.chartResultCities.split = [];
-      for( let i = 0; i < headers.length; i++)
-      {
+      for (let i = 0; i < headers.length; i++) {
         this.chartResultCities.split.push({
           header: headers[i],
           field: properties[i]
         })
       }
 
-      this.exportColumns = this.chartResultCities.split.map(col => ({title: col.header, dataKey: col.field}));
+      this.exportColumns = this.chartResultCities.split.map(col => ({ title: col.header, dataKey: col.field }));
 
-      console.log(this.chartResultCities)
+      // console.log(this.chartResultCities)
 
     });
 
 
-    let neighborhoodsUrl = '/service/indicators/neighborhoods' + this.getServiceParams();
+    let neighborhoodsUrl = '/service/indicators/neighborhoods' + this.getServiceParams() + '&timefilter=' +this.selectedBairroTime;
 
     this.http.get(neighborhoodsUrl).subscribe(citiesResult => {
       this.neighborhoodsCharts = citiesResult;
+
+      this.neighborhoodsCharts.label += this.selectRegion.nome 
 
       let headers = this.neighborhoodsCharts.title.split('?');
       let properties = this.neighborhoodsCharts.properties.split('?');
 
       this.neighborhoodsCharts.split = [];
-      for( let i = 0; i < headers.length; i++)
-      {
+      for (let i = 0; i < headers.length; i++) {
         this.neighborhoodsCharts.split.push({
           header: headers[i],
           field: properties[i]
         })
       }
 
-      this.exportColumns = this.neighborhoodsCharts.split.map(col => ({title: col.header, dataKey: col.field}));
+      this.exportColumns = this.neighborhoodsCharts.split.map(col => ({ title: col.header, dataKey: col.field }));
 
       console.log(this.neighborhoodsCharts)
 
@@ -728,15 +728,15 @@ export class MapComponent implements OnInit {
           return null;
         };
 
-        graphic.options.tooltips.filter = function(tooltipItem, data){
+        graphic.options.tooltips.filter = function (tooltipItem, data) {
 
           var label = new Date(data.labels[tooltipItem.index]);
           let compr = new Date(graphic.last_model_date)
-          
-          if( label >= compr){
-            return tooltipItem.datasetIndex === 0; 
-          } 
-          else{
+
+          if (label >= compr) {
+            return tooltipItem.datasetIndex === 0;
+          }
+          else {
             return tooltipItem;
           }
         }
@@ -766,33 +766,33 @@ export class MapComponent implements OnInit {
 
     let ob = [];
     let tablename = '';
-    if(table == "cities"){
+    if (table == "cities") {
       ob = this.chartResultCities.series;
       tablename = 'ranking_municipios'
     }
-    else{
+    else {
       // ob = this.chartResultBairros.series;
       tablename = 'ranking_bairros_' + this.selectRegion.nome
     }
 
     import("xlsx").then(xlsx => {
-        const worksheet = xlsx.utils.json_to_sheet(ob);
-        const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
-        const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-        this.saveAsExcelFile(excelBuffer, tablename);
+      const worksheet = xlsx.utils.json_to_sheet(ob);
+      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, tablename);
     });
-}
+  }
 
-saveAsExcelFile(buffer: any, fileName: string): void {
+  saveAsExcelFile(buffer: any, fileName: string): void {
     import("file-saver").then(FileSaver => {
-        let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-        let EXCEL_EXTENSION = '.xlsx';
-        const data: Blob = new Blob([buffer], {
-            type: EXCEL_TYPE
-        });
-        FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+      let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+      let EXCEL_EXTENSION = '.xlsx';
+      const data: Blob = new Blob([buffer], {
+        type: EXCEL_TYPE
+      });
+      FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
     });
-}
+  }
 
   updateRegion(region) {
 
@@ -1040,12 +1040,9 @@ saveAsExcelFile(buffer: any, fileName: string): void {
               // window.document.body.style.cursor = 'pointer';
 
               this.infobairro = data;
-
-              if (this.infobairro.nm_bai == "") {
-                this.infobairro.nm_bai = this.minireportText.undisclosed_message;
-              }
-              if (this.infobairro.nm == "") {
-                this.infobairro.nm = this.minireportText.undisclosed_message;
+              
+              if (this.infobairro.nome == "") {
+                this.infobairro.nome = this.minireportText.undisclosed_message;
               }
               // console.log(this.infobairro)
 
@@ -1295,7 +1292,13 @@ saveAsExcelFile(buffer: any, fileName: string): void {
     let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
 
     let layer = p.types.find(element => element.value === 'covid19_municipios_casos')
-    layer.layerfilter = "data = '" +this.selectedConfirmedDate+"'"
+
+
+    if (this.selectedConfirmedDate == '') {
+      layer.layerfilter = "data = (select max(data) from municipios_casos)"
+    } else {
+      layer.layerfilter = "data = '" + this.selectedConfirmedDate + "'"
+    }
 
     let filter = layer.layerfilter;
 
@@ -1310,7 +1313,7 @@ saveAsExcelFile(buffer: any, fileName: string): void {
 
   private getTileJSONBairros() {
 
-    let filter = "cd_geocmu='" + this.selectRegion.cd_geocmu + "'";
+    let filter = "cd_geocmu='" + this.selectRegion.cd_geocmu + "' AND data_ultima_atualizacao = " + this.selectedBairroTime;
 
     return {
       version: '2.2.0',
@@ -1380,7 +1383,7 @@ saveAsExcelFile(buffer: any, fileName: string): void {
       let layername = layer.value;
       if (layer.timeHandler == 'layername') { layername = layer.timeSelected; }
 
-      
+
 
       for (let url of this.urls) {
         result.push(url + '?layers=' + layername + msfilter + '&mode=tile&tile={x}+{y}+{z}' + '&tilemode=gmap' + '&map.imagetype=png');
@@ -1498,9 +1501,6 @@ saveAsExcelFile(buffer: any, fileName: string): void {
 
   changeVisibility(layer, e) {
 
-    layer.selectedType == "covid19_municipios_casos" ? this.showNeighborhoodsCharts = true : this.showNeighborhoodsCharts = false;
-
-    console.log("Layer ID", layer);
 
     for (let layerType of layer.types) {
       this.LayersTMS[layerType.value].setVisible(false);
@@ -1510,9 +1510,9 @@ saveAsExcelFile(buffer: any, fileName: string): void {
       layer.visible = e.checked;
     }
 
-    if(layer.id == 'casos_covid_confirmados'){
+    if (layer.id == 'casos_covid_confirmados') {
       this.showSlider = true;
-    }else{
+    } else {
       this.showSlider = false;
     }
 
@@ -1841,22 +1841,23 @@ saveAsExcelFile(buffer: any, fileName: string): void {
     let tablename = ''
     let ob = [];
 
-    if(table == 'cities'){
+    if (table == 'cities') {
       tablename = this.chartResultCities.filename
       ob = this.chartResultCities.series
     }
-    else{
-
+    else {
+      tablename = this.neighborhoodsCharts.filename
+      ob = this.neighborhoodsCharts.series
     }
 
     import("jspdf").then(jsPDF => {
-        import("jspdf-autotable").then(x => {
-            const doc = new jsPDF.default(0,0);
-            doc.autoTable(this.exportColumns, ob);
-            doc.save(tablename+this.selectRegion.nome+'.pdf');
-        })
+      import("jspdf-autotable").then(x => {
+        const doc = new jsPDF.default(0, 0);
+        doc.autoTable(this.exportColumns, ob);
+        doc.save(tablename + this.selectRegion.nome + '.pdf');
+      })
     })
-}
+  }
 
   handleRestrictedArea() {
 
@@ -1865,7 +1866,7 @@ saveAsExcelFile(buffer: any, fileName: string): void {
     dialogConfig.disableClose = false;
     dialogConfig.width = '40%';
     dialogConfig.id = "modal-restricted-area-access";
-    dialogConfig.data = {lang: this.language};
+    dialogConfig.data = { lang: this.language };
 
     let dialogRestrictedAreaAccess = this.dialog.open(RestrictedAreaAccessComponent, dialogConfig);
 
@@ -1896,7 +1897,7 @@ saveAsExcelFile(buffer: any, fileName: string): void {
 
   formatRateLabel = (v) => {
     return (value: number) => {
-      if(this.dates[value] != undefined){
+      if (this.dates[value] != undefined) {
         return this.dates[value].data_formatada;
       }
     }
@@ -1908,7 +1909,7 @@ saveAsExcelFile(buffer: any, fileName: string): void {
 
     let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
     let layer = p.types.find(element => element.value === 'covid19_municipios_casos')
-    layer.layerfilter = "data = '" +this.dates[event.value].data_db+"'"
+    layer.layerfilter = "data = '" + this.dates[event.value].data_db + "'"
 
     this.updateSourceLayer(layer);
 
@@ -1951,7 +1952,7 @@ saveAsExcelFile(buffer: any, fileName: string): void {
               layerType.visible = layer.visible;
             }
 
-            if(layerType.value == 'covid19_municipios_casos' && layerType.visible == true){
+            if (layerType.value == 'covid19_municipios_casos' && layerType.visible == true) {
               this.showSlider = true;
             }
 

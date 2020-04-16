@@ -229,7 +229,33 @@ module.exports = function (app) {
 
     var language = request.param('lang')
 
-    // var queryResult = request.queryResult['ranking_neighborhoods']
+    var queryResult = request.queryResult['ranking_neighborhoods']
+    var queryResultDate = request.queryResult['last_updated']
+
+    let show = false
+    if(queryResult.length > 0){
+      show = true
+
+      queryResult.map(function(item, i) {
+        if (i > 0) {
+            //Get our previous list item
+            var prevItem = queryResult[i - 1];
+            if (parseInt(prevItem.confirmados) == parseInt(item.confirmados)) {
+                //Same score = same rank
+                item.rank = prevItem.rank;
+            } else {
+                //Not the same score, give em the current iterated index + 1
+                item.rank = prevItem.rank + 1;
+            }
+        } else {
+            //First item takes the rank 1 spot
+            item.rank = 1;
+        }
+    
+        return item;
+    });
+
+    }
 
     var result = {
       label: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label"][language],
@@ -238,7 +264,10 @@ module.exports = function (app) {
       tooltip: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["tooltip_text"][language],
       properties: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["properties_name"][language],
       filename: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["filename"][language],
-      // series: queryResult
+      show: show,
+      last_updated: queryResultDate[0]['max'],
+      series: queryResult
+
     }
 
     response.send(result)
