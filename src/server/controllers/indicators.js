@@ -225,6 +225,27 @@ module.exports = function (app) {
 
   }
 
+  Controller.neighborhoods = function (request, response) {
+
+    var language = request.param('lang')
+
+    // var queryResult = request.queryResult['ranking_neighborhoods']
+
+    var result = {
+      label: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label"][language],
+      description: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["description"][language],
+      title: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["title"][language],
+      tooltip: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["tooltip_text"][language],
+      properties: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["properties_name"][language],
+      filename: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["filename"][language],
+      // series: queryResult
+    }
+
+    response.send(result)
+    response.end()
+
+  }
+
   Controller.projections = function (request, response) {
 
     var language = request.param('lang')

@@ -83,6 +83,9 @@ export class MapComponent implements OnInit {
   dataStates: any;
   dataCities: any;
   dataSource: any;
+  showNeighborhoodsCharts:any;
+  neighborhoodsCharts:any;
+
   chartResultCities: any;
   chartResultCitiesIllegalAPP: any;
   chartResultCitiesIllegalRL: any;
@@ -323,6 +326,9 @@ export class MapComponent implements OnInit {
     this.dates = [];
     this.getDates();
     this.showSlider = false;
+
+    this.showNeighborhoodsCharts = false;
+
   }
 
   search = (text$: Observable<string>) =>
@@ -649,6 +655,30 @@ export class MapComponent implements OnInit {
       this.exportColumns = this.chartResultCities.split.map(col => ({title: col.header, dataKey: col.field}));
 
       console.log(this.chartResultCities)
+
+    });
+
+
+    let neighborhoodsUrl = '/service/indicators/neighborhoods' + this.getServiceParams();
+
+    this.http.get(neighborhoodsUrl).subscribe(citiesResult => {
+      this.neighborhoodsCharts = citiesResult;
+
+      let headers = this.neighborhoodsCharts.title.split('?');
+      let properties = this.neighborhoodsCharts.properties.split('?');
+
+      this.neighborhoodsCharts.split = [];
+      for( let i = 0; i < headers.length; i++)
+      {
+        this.neighborhoodsCharts.split.push({
+          header: headers[i],
+          field: properties[i]
+        })
+      }
+
+      this.exportColumns = this.neighborhoodsCharts.split.map(col => ({title: col.header, dataKey: col.field}));
+
+      console.log(this.neighborhoodsCharts)
 
     });
 
@@ -1467,6 +1497,10 @@ saveAsExcelFile(buffer: any, fileName: string): void {
   }
 
   changeVisibility(layer, e) {
+
+    layer.selectedType == "covid19_municipios_casos" ? this.showNeighborhoodsCharts = true : this.showNeighborhoodsCharts = false;
+
+    console.log("Layer ID", layer);
 
     for (let layerType of layer.types) {
       this.LayersTMS[layerType.value].setVisible(false);

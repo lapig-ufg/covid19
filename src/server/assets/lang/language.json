@@ -81,6 +81,32 @@
 					"en-us": "municipality_cases_"
 				}
 			},
+			"ranking_neighborhoods": {
+				"label": {
+					"pt-br": "Bairros",
+					"en-us": "Neighborhoods"
+				},
+				"description": {
+					"pt-br": "Bairros com maiores número de casos de COVID-19: ",
+					"en-us": "Ranking of Neighborhoods with the highest cases of COVID-19:"
+				},
+				"title": {
+					"pt-br": "#?Bairros?Casos Confirmados",
+					"en-us": "#?Neighborhood?Confirmed Cases"
+				},
+				"tooltip_text": {
+					"pt-br": "Clique para visualizar no mapa",
+					"en-us": "Click to view on map"
+				},
+				"properties_name": {
+					"pt-br": "rank?nome?confirmados",
+					"en-us": "rank?nome?confirmados"
+				},
+				"filename":{
+					"pt-br": "casos_por_bairro_",
+					"en-us": "neighborhoods_cases_"
+				}
+			},
 			"charts_box_states": {
 				"label": {
 					"pt-br": "Estados",
