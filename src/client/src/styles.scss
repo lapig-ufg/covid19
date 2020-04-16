@@ -326,8 +326,13 @@ body {
 .mat-tab-body-content{
 	overflow-x: hidden!important;
 }
-.mat-slider-vertical .mat-slider-thumb-label-text {
-	padding-right: 135px;
+
+.mat-slider-ticks-container .mat-slider-ticks {
+	height: 7px !important;
+}
+
+.mat-slider-horizontal .mat-slider-thumb-label-text {
+	padding-top: 90px;
 	font-size: 1.5vh;
 }
 
