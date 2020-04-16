@@ -48,9 +48,9 @@ module.exports = function (app) {
             id: "casos_covid_confirmados",
             label: languageJson["descriptor"]["informacoes"]["layers"]["casos_covid_confirmados"]["label"][language],
             visible: true,
-            selectedType: "covid19_municipios_casos_2",
+            selectedType: "covid19_municipios_casos",
             types: [{
-              value: "covid19_municipios_casos_2",
+              value: "covid19_municipios_casos",
               Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_covid_confirmados"]["types"]["covid19_municipios_casos"]["view_value"][language],
               regionFilter: false,
               layerfilter: "data = (select max(data) from municipios_casos_2)",

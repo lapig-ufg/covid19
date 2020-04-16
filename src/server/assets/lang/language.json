@@ -824,8 +824,8 @@
 	},
 	"team": {
 		"title": {
-			"pt-br": "O Projeto",
-			"en-us": "The Project"
+			"pt-br": "Projeto",
+			"en-us": "Project"
 		},
 		"info": {
 			"pt-br": "A plataforma Covid Goiás foi desenvolvida por uma equipe multidisciplinar de pesquisadores da Universidade Federal de Goiás (UFG). O objetivo da ferramenta é informar a população goiana sobre o avanço da doença e proporcionar aos agentes públicos, em nível municipal e estadual, um banco de dados georreferenciado para  subsidiar a tomada de decisões frente a esta pandemia.",

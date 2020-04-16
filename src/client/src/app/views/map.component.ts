@@ -1013,7 +1013,7 @@ export class MapComponent implements OnInit {
         this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
           if (data) {
             // console.log(layerinfo, data)
-            if (layerinfo.selectedType == 'covid19_municipios_casos_2') {
+            if (layerinfo.selectedType == 'covid19_municipios_casos') {
               this.http.get(SEARCH_URL, { params: PARAMS.set('key', data.nome) }).subscribe(result => {
 
                 let ob = result[0];
@@ -1217,7 +1217,7 @@ export class MapComponent implements OnInit {
 
     let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
 
-    let layer = p.types.find(element => element.value === 'covid19_municipios_casos_2')
+    let layer = p.types.find(element => element.value === 'covid19_municipios_casos')
     layer.layerfilter = "data = '" +this.selectedConfirmedDate+"'"
 
     let filter = layer.layerfilter;
@@ -1225,7 +1225,7 @@ export class MapComponent implements OnInit {
     return {
       version: '2.2.0',
       grids: [
-        this.returnUTFGRID('covid19_municipios_casos_2', filter, '{x}+{y}+{z}')
+        this.returnUTFGRID('covid19_municipios_casos', filter, '{x}+{y}+{z}')
       ]
     };
 
@@ -1382,7 +1382,7 @@ export class MapComponent implements OnInit {
 
     if (covid.visible || bairros.visible) {
 
-      if (covid.selectedType == 'covid19_municipios_casos_2') {
+      if (covid.selectedType == 'covid19_municipios_casos') {
 
         if (this.utfgridsource) {
           let tileJSON = this.getTileJSON();
@@ -1805,7 +1805,7 @@ export class MapComponent implements OnInit {
     this.selectedConfirmedDate = this.dates[event.value].data_db
 
     let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
-    let layer = p.types.find(element => element.value === 'covid19_municipios_casos_2')
+    let layer = p.types.find(element => element.value === 'covid19_municipios_casos')
     layer.layerfilter = "data = '" +this.dates[event.value].data_db+"'"
 
     this.updateSourceLayer(layer);
@@ -1849,7 +1849,7 @@ export class MapComponent implements OnInit {
               layerType.visible = layer.visible;
             }
 
-            if(layerType.value == 'covid19_municipios_casos_2' && layerType.visible == true){
+            if(layerType.value == 'covid19_municipios_casos' && layerType.visible == true){
               this.showSlider = true;
             }
 
