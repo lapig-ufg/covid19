@@ -1253,22 +1253,23 @@ img[usemap], map area{
 .team-section h4{
 	font-size: 1.8vh;
 }
+
 .slider{
 	position: absolute;
 	bottom: 3%;
-	left: 7%;
+	left: 5%;
 	padding-top: 5px;
-	padding-left: 40px;
-	padding-right: 40px;
+	padding-left: 45px;
+	padding-right: 45px;
 	padding-bottom: 20px;
-	width: 30vw;
+	width: 45vw;
 	z-index: 1000000;
 	border-radius: 10px;
-	background-color: #584e4f8c;
+	background-color: #f9f6f69e;
 }
 
 .slider h6{
-	color: white;
+	color:  #a11313;;
 	font-size: 1.5vh;
 	text-align: left;
 }
