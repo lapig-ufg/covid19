@@ -74,7 +74,7 @@ module.exports = function (app) {
       },
       {
         id: 'last_updated',
-        sql: "select max(data_ultima_atualizacao) from v_casos_bairros where numpoints > 0 AND " + filter
+        sql: "select max(data_ultima_atualizacao) from v_casos_bairros where " + filter
       }
     ]
 

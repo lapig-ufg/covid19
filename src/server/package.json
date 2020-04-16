@@ -21,6 +21,7 @@
     "express-timeout": "^0.2.1",
     "filewalker": "^0.1.2",
     "generic-pool": "~2.0.4",
+    "helmet": "^3.22.0",
     "md5": "^2.2.1",
     "merge": "^1.2.1",
     "mu2": "~0.5.20",

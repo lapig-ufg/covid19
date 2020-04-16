@@ -15,7 +15,7 @@ var newView = "CREATE OR REPLACE VIEW municipios_casos AS SELECT m.*, p.estp_201
 FROM municipios m \
   INNER JOIN populacao p ON m.cd_geocmu = p.cd_geocmu \
   LEFT JOIN casos c ON m.cd_geocmu = c.cd_geocmu \
-WHERE m.cd_geocmu <> '52' AND c.data IS NULL OR c.data = "
+WHERE m.cd_geocmu <> '52'"
 
 fs.createReadStream(csvFilepath)
   .pipe(csv())
@@ -66,7 +66,7 @@ fs.createReadStream(csvFilepath)
 
         if (newLastDate != undefined) {
           await client.query(dropView)
-          await client.query(newView + "'" + newLastDate + "'")
+          // await client.query(newView + "'" + newLastDate + "'")
           console.log('View municipios_casos updated')
         }
 

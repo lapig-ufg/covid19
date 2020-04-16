@@ -425,7 +425,7 @@ selectedBairroTime: any;
       this.regionSource.addFeature(features[0]);
 
       var extent = features[0].getGeometry().getExtent();
-      map.getView().fit(extent, { duration: 1500 });
+      map.getView().fit(extent, { duration: 1000 });
 
       this.selectRegion.area_mun = extentResult["area_mun"];
     });
@@ -862,8 +862,8 @@ selectedBairroTime: any;
           let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
           this.changeVisibility(p, { checked: false });
           this.infodata = null
-          this.zoomIn();
-          this.zoomIn();
+
+          
         });
       }
     }
@@ -1036,7 +1036,7 @@ selectedBairroTime: any;
 
         if (this.utfgridBairro) {
           this.utfgridBairro.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
-            if (data) {
+            if (data && data.numpoints > 0) {
               // window.document.body.style.cursor = 'pointer';
 
               this.infobairro = data;

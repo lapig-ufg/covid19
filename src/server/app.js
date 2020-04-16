@@ -11,7 +11,8 @@ var express = require('express')
 , multer = require('multer')
 , session = require('express-session')
 , parseCookie = require('cookie-parser'),
-	cors = require('cors');
+	cors = require('cors'),
+	helmet = require('helmet');
 
 var app = express();
 var http = require('http').Server(app);
@@ -23,6 +24,7 @@ load('config.js', {'verbose': false})
 .into(app);
 
 app.use(cors());
+app.use(helmet());
 
 // app.use((req, res, next) => {
 // 	//Qual site tem permissão de realizar a conexão, no exemplo abaixo está o "*" indicando que qualquer site pode fazer a conexão
