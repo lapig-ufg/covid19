@@ -71,6 +71,14 @@
 				"tooltip_text": {
 					"pt-br": "Clique para visualizar no mapa",
 					"en-us": "Click to view on map"
+				},
+				"properties_name": {
+					"pt-br": "rank?nome?confirmados",
+					"en-us": "rank?nome?confirmados"
+				},
+				"filename":{
+					"pt-br": "casos_por_municipio_",
+					"en-us": "municipality_cases_"
 				}
 			},
 			"charts_box_states": {

@@ -215,6 +215,8 @@ module.exports = function (app) {
       description: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["description"][language],
       title: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["title"][language],
       tooltip: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["tooltip_text"][language],
+      properties: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["properties_name"][language],
+      filename: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["filename"][language],
       series: queryResult
     }
 

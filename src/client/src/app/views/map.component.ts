@@ -97,7 +97,7 @@ export class MapComponent implements OnInit {
   chartRegionScale: boolean;
 
   trafficgoogle: any;
-
+  exportColumns: any[];
   textOnDialog: any;
   mapbox: any;
   satelite: any;
@@ -110,6 +110,8 @@ export class MapComponent implements OnInit {
   regionFilterDefault: any;
   urls: any;
   dataExtent: any;
+
+  cols: any[];
 
   searching = false;
   searchFailed = false;
@@ -631,7 +633,22 @@ export class MapComponent implements OnInit {
 
     this.http.get(citiesUrl).subscribe(citiesResult => {
       this.chartResultCities = citiesResult;
-      this.chartResultCities.split = this.chartResultCities.title.split('?');
+
+      let headers = this.chartResultCities.title.split('?');
+      let properties = this.chartResultCities.properties.split('?');
+
+      this.chartResultCities.split = [];
+      for( let i = 0; i < headers.length; i++)
+      {
+        this.chartResultCities.split.push({
+          header: headers[i],
+          field: properties[i]
+        })
+      }
+
+      this.exportColumns = this.chartResultCities.split.map(col => ({title: col.header, dataKey: col.field}));
+
+      console.log(this.chartResultCities)
 
     });
 
@@ -715,7 +732,37 @@ export class MapComponent implements OnInit {
 
   }
 
-  
+  exportExcel(table) {
+
+    let ob = [];
+    let tablename = '';
+    if(table == "cities"){
+      ob = this.chartResultCities.series;
+      tablename = 'ranking_municipios'
+    }
+    else{
+      // ob = this.chartResultBairros.series;
+      tablename = 'ranking_bairros_' + this.selectRegion.nome
+    }
+
+    import("xlsx").then(xlsx => {
+        const worksheet = xlsx.utils.json_to_sheet(ob);
+        const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+        const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+        this.saveAsExcelFile(excelBuffer, tablename);
+    });
+}
+
+saveAsExcelFile(buffer: any, fileName: string): void {
+    import("file-saver").then(FileSaver => {
+        let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+        let EXCEL_EXTENSION = '.xlsx';
+        const data: Blob = new Blob([buffer], {
+            type: EXCEL_TYPE
+        });
+        FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    });
+}
 
   updateRegion(region) {
 
@@ -1756,6 +1803,27 @@ export class MapComponent implements OnInit {
     });
   }
 
+  exportPdf(table) {
+    let tablename = ''
+    let ob = [];
+
+    if(table == 'cities'){
+      tablename = this.chartResultCities.filename
+      ob = this.chartResultCities.series
+    }
+    else{
+
+    }
+
+    import("jspdf").then(jsPDF => {
+        import("jspdf-autotable").then(x => {
+            const doc = new jsPDF.default(0,0);
+            doc.autoTable(this.exportColumns, ob);
+            doc.save(tablename+this.selectRegion.nome+'.pdf');
+        })
+    })
+}
+
   handleRestrictedArea() {
 
     const dialogConfig = new MatDialogConfig();
@@ -1903,5 +1971,7 @@ export class MapComponent implements OnInit {
     if (window.innerWidth < 1024) {
       this.router.navigate(['/mobile']);
     }
+
+    // this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
   }
 }

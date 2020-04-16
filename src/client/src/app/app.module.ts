@@ -27,6 +27,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {ButtonModule} from 'primeng/button';
 
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
@@ -98,6 +99,7 @@ const ENTRY_COMPONENTS = [
     NgxGalleryModule,
     FieldsetModule,
     CardModule,
+    ButtonModule,
     LightboxModule,
     ScrollingModule,
     ScrollPanelModule,

@@ -43,7 +43,7 @@ module.exports = function (app) {
     return [
       {
         id: 'ranking_municipios',
-        sql: "SELECT nome, cd_geocmu, confirmados_total as confirmados, rank FROM v_ranking_municipios_go"
+        sql: "SELECT rank, nome, cd_geocmu as geocodigo, confirmados_total as confirmados FROM v_ranking_municipios_go"
       },
       {
         id: 'next',
