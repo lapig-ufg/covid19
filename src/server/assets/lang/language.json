@@ -850,9 +850,25 @@
 			"pt-br": "Dicas",
 			"en-us": "Tips"
 		},
+		"label_historic": {
+			"pt-br": "Histórico",
+			"en-us": "Historic"
+		},
 		"label_restricted_area": {
 			"pt-br": "Área Restrita",
 			"en-us": "Restricted Area"
+		},
+		"text_historic": {
+			"pt-br": "Histórico de casos dos últimos [dias] dias",
+			"en-us": "Case history for the past [dias] days"
+		},
+		"label_name": {
+			"pt-br": "Nome: ",
+			"en-us": "Name: "
+		},
+		"label_institution": {
+			"pt-br": "Instituição: ",
+			"en-us": "Institution: "
 		}
 
 	},

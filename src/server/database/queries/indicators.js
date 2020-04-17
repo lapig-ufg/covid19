@@ -74,7 +74,7 @@ module.exports = function (app) {
       },
       {
         id: 'last_updated',
-        sql: "select max(data_ultima_atualizacao) from v_casos_bairros where numpoints > 0 AND " + filter
+        sql: "select max(data_ultima_atualizacao) from v_casos_bairros where " + filter
       }
     ]
 
@@ -121,6 +121,20 @@ module.exports = function (app) {
       {
         id: 'dates',
         sql: " SELECT  to_char(max(data), 'DD/MM/YYYY') as data_formatada, to_char(max(data), 'YYYY-MM-DD') as data_db, to_char(max(data), 'DD/MM') as data_rotulo FROM casos GROUP BY data ORDER BY data; "
+      },
+      {
+        id: 'next',
+        sql: "select true"
+      }
+    ]
+  }
+
+  Query.datesNeighborhoods = function (params) {
+    return [
+
+      {
+        id: 'dates-neighborhoods',
+        sql: "SELECT  to_char(max(data_ultima_atualizacao), 'DD/MM/YYYY') as data_formatada, to_char(max(data_ultima_atualizacao), 'YYYY-MM-DD') as data_db, to_char(max(data_ultima_atualizacao), 'DD/MM') as data_rotulo FROM v_casos_bairros GROUP BY data_ultima_atualizacao ORDER BY data_ultima_atualizacao; "
       },
       {
         id: 'next',

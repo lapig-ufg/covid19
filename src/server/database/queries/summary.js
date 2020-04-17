@@ -11,8 +11,6 @@ module.exports = function (app) {
         var filter = ""
         var cd_geocmu = params['cd_geocmu']
 
-        console.log(cd_geocmu)
-
         if (cd_geocmu == 52) {
             filter = "cd_geocmu <> '52' AND cd_geocmu <> '5300108' "
         }

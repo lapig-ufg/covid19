@@ -146,8 +146,8 @@
 							coords="250,24,520,149" shape="rect">
 					</map>
 					<div *ngIf="restrictedArea" class="info-user">
-						<p>Nome: <strong>{{user.nomeresponsavel}}</strong> </p>
-						<p>Instituição: <strong>{{user.orgao}} </strong> </p>
+						<p> {{controls.label_name}} <strong>{{user.nomeresponsavel}}</strong> </p>
+						<p> {{controls.label_institution}} <strong>{{user.orgao}} </strong> </p>
 					</div>
 				</div>
 
@@ -202,6 +202,9 @@
 				<div [matTooltip]="controls.label_tips" [class]="'btn-layers'" (click)="openDialogAjuda()">
 					<img width="30" height="30" src="../../assets/img/tips.svg" [alt]="controls.label_tips">
 				</div>
+				<div [matTooltip]="controls.label_historic" [class]="showSlider ? 'btn-layers btn-layers-active' : 'btn-layers'" (click)="handleSlider()">
+					<img width="30" height="30" src="../../assets/img/history.svg" [alt]="controls.label_historic">
+				</div>
 				<div [matTooltip]="controls.label_restricted_area" [class]="'btn-layers'"
 					(click)="handleRestrictedArea()">
 					<img width="30" height="30" src="../../assets/img/restrictedArea.svg" [alt]="controls.label_restricted_area">
@@ -209,7 +212,7 @@
 			</div>
 
 			<div class="slider" *ngIf="showSlider" >
-				<h6>Histórico de casos dos últimos {{dates.length}} dias </h6>
+				<h6> {{controls.text_historic.replace('[dias]',dates.length)}}</h6>
 				<mat-slider
 						#datesSlider
 						thumbLabel
@@ -271,7 +274,7 @@
 													<button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="margin-right: 0.5em; color: #460202"></button>
 													<button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf('bairros')" class="ui-button-warning" style="margin-right: 0.5em; color: #460202"></button>
 													<button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('bairros')" style="margin-right: 0.5em;" class="ui-button-success" style="margin-right: 0.5em; color: #460202"></button>
-													<span style="text-align: right"> Atualizado em: {{neighborhoodsCharts.last_updated | date : 'dd/MM/yyyy'}}</span>
+													<span style="text-align: right"> {{minireportText.label_last_update}} {{neighborhoodsCharts.last_updated}}</span>
 												</div>
 											</ng-template>
 											<ng-template pTemplate="header" let-columns>
