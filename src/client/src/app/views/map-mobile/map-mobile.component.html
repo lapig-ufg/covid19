@@ -51,6 +51,11 @@
 									</div>
 							</div>
 					</div>
+					<div *ngIf="infobairro && !clickable" class="card-body">
+						<p class="card-text">{{infobairro.nome}}</p>
+						<p class="card-total"><b>Total de Confirmados:</b> {{infobairro.numpoints}}</p>
+						<p class="card-font">{{minireportText.label_fonte}} {{infobairro.fonte}}, {{minireportText.label_last_update}} {{infobairro.data_ultima_atualizacao | date : 'dd/MM/yyyy'}}</p>
+					</div>
 					<div class="layersConteudo">
 						<mat-accordion>
 							<div id="layer_dados">

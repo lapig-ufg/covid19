@@ -139,7 +139,16 @@ table tr td {
 } 
 .card-body p.card-text {
    background: #4e1010e7 !important; 
-    color: #fff !important;
+	color: #fff !important;
+}
+
+.card-total {
+	padding: 5px 10px;
+}
+
+.card-font {
+	font-size: 0.7rem; 
+	text-align: center
 }
 
 .ol-zoom-in,
@@ -167,11 +176,17 @@ table tr td {
 	padding-right: 3px;
 	font-size: 12px;
 	line-height: 1.5;
+	border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
 }
 
 .card-body {
-	padding: 3px;
 	font-size: 12px;
+	margin: 5px;
+	padding: 8px;
+	border-radius: 7px;
+	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
+	box-shadow: -1px 1px 10px 0px #7a2525;
 }
 
 #positionheaders {
