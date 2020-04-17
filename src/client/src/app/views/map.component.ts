@@ -665,6 +665,8 @@ selectedBairroTime: any;
 
       this.neighborhoodsCharts.label += this.selectRegion.nome 
 
+      this.neighborhoodsCharts.last_updated = this.datePipe.transform(new Date(this.neighborhoodsCharts.last_updated), 'dd/MM/yyyy');
+
       let headers = this.neighborhoodsCharts.title.split('?');
       let properties = this.neighborhoodsCharts.properties.split('?');
 
@@ -964,6 +966,8 @@ selectedBairroTime: any;
     });
 
     this.infoOverlay.setPosition(coordinate);
+
+    // console.log(feature)
 
     if (feature) {
       this.clickable = true

@@ -6,7 +6,6 @@ module.exports = function (app) {
 
   const config = app.config;
 
-
   var Controller = {};
   var Internal = {};
 
@@ -40,6 +39,16 @@ module.exports = function (app) {
   }
 
   function createDataSetTimeSeriesGO(labels, graphic, language) {
+
+    let hideobito = true;
+    graphic.forEach(function(item, i) {
+      if(parseInt(item.obitos) > 0)
+      {
+        hideobito = false
+      }
+  
+    })
+
     let data = {
       labels: graphic.map(element => formatDate(element.data, language)),
       datasets: [
@@ -69,15 +78,15 @@ module.exports = function (app) {
         //   spanGaps: true,
         //   hidden: true,
         // },
-        // {
-        //   label: labels.label_obitos,
-        //   data: graphic.map(element => parseInt(element.obitos)),
-        //   fill: false,
-        //   backgroundColor: '#000000',
-        //   borderColor: '#000000',
-        //   spanGaps: true,
-        //   hidden: true,
-        // }
+        {
+          label: labels.label_obitos,
+          data: graphic.map(element => parseInt(element.obitos)),
+          fill: false,
+          backgroundColor: '#000000',
+          borderColor: '#000000',
+          spanGaps: true,
+          hidden: hideobito,
+        }
       ]
     };
 
