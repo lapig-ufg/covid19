@@ -542,6 +542,12 @@ module.exports = function (app) {
     response.end()
   };
 
+  Controller.datesNeighborhoods = function (request, response) {
+    let dates = request.queryResult['dates-neighborhoods'];
+    response.send(dates);
+    response.end()
+  };
+
 
   return Controller;
 };

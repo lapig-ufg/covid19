@@ -129,6 +129,20 @@ module.exports = function (app) {
     ]
   }
 
+  Query.datesNeighborhoods = function (params) {
+    return [
+
+      {
+        id: 'dates-neighborhoods',
+        sql: "SELECT  to_char(max(data_ultima_atualizacao), 'DD/MM/YYYY') as data_formatada, to_char(max(data_ultima_atualizacao), 'YYYY-MM-DD') as data_db, to_char(max(data_ultima_atualizacao), 'DD/MM') as data_rotulo FROM v_casos_bairros GROUP BY data_ultima_atualizacao ORDER BY data_ultima_atualizacao; "
+      },
+      {
+        id: 'next',
+        sql: "select true"
+      }
+    ]
+  }
+
 
 
 

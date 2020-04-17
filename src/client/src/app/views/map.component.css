@@ -1244,7 +1244,7 @@ img[usemap], map area{
 .team-member a{
 	transition: 0.3s;
 	color: rgba(161, 19, 19, 0.75);
-	font-size: 1.7vh;
+	font-size: 18px;
 }
 .team-member a:hover{
 	color: rgba(126, 53, 60, 0.75);

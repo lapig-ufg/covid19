@@ -562,8 +562,8 @@ selectedBairroTime: any;
 
   }
 
-  getDates() {
-    let sourceUrl = '/service/indicators/dates' + this.getServiceParams();
+  getDates(url = '/service/indicators/dates') {
+    let sourceUrl = url + this.getServiceParams();
 
     this.http.get(sourceUrl).subscribe(result => {
       this.dates = result;
@@ -663,8 +663,8 @@ selectedBairroTime: any;
     this.http.get(neighborhoodsUrl).subscribe(citiesResult => {
       this.neighborhoodsCharts = citiesResult;
 
-      this.neighborhoodsCharts.label += this.selectRegion.nome 
-      
+      this.neighborhoodsCharts.label += this.selectRegion.nome
+
       let d = new Date(this.neighborhoodsCharts.last_updated)
 
       this.neighborhoodsCharts.last_updated = this.datePipe.transform(d.setDate(d.getDate() + 1), 'dd/MM/yyyy');
@@ -800,6 +800,7 @@ selectedBairroTime: any;
 
   updateRegion(region) {
 
+
     if (region == this.defaultRegion) {
       this.valueRegion = '';
       this.currentData = {
@@ -828,7 +829,13 @@ selectedBairroTime: any;
     this.valueRegion = region.nome;
 
     this.selectRegion = region;
-    this.selectRegion.nome = this.captalizeCity(this.selectRegion.nome)
+    this.selectRegion.nome = this.captalizeCity(this.selectRegion.nome);
+
+    if(this.selectRegion.cd_geocmu == '5208707'){
+      this.getDates('/service/indicators/datesNeighborhoods');
+    }else{
+      this.getDates();
+    }
 
     // if (this.isFilteredByCity) {
     //   this.msFilterRegion = ' cd_geocmu = \'' + this.selectRegion.cd_geocmu + '\'';
@@ -867,7 +874,7 @@ selectedBairroTime: any;
           this.changeVisibility(p, { checked: false });
           this.infodata = null
 
-          
+
         });
       }
     }
@@ -1320,7 +1327,6 @@ selectedBairroTime: any;
   private getTileJSONBairros() {
 
     let filter = "cd_geocmu='" + this.selectRegion.cd_geocmu + "' AND data_ultima_atualizacao = " + this.selectedBairroTime;
-
     return {
       version: '2.2.0',
       grids: [
@@ -1373,6 +1379,10 @@ selectedBairroTime: any;
     if (layer.source == 'ows') {
 
       let filters = [];
+
+      if(this.selectRegion.cd_geocmu == '5208707' && this.showSlider){
+        layer.timeSelected = "cd_geocmu = '5208707' AND " + layer.layerfilter;
+      }
 
       if (layer.timeHandler == 'msfilter' && layer.times) {
         filters.push(layer.timeSelected);
@@ -1508,18 +1518,13 @@ selectedBairroTime: any;
   changeVisibility(layer, e) {
 
 
+
     for (let layerType of layer.types) {
       this.LayersTMS[layerType.value].setVisible(false);
     }
 
     if (e != undefined) {
       layer.visible = e.checked;
-    }
-
-    if (layer.id == 'casos_covid_confirmados') {
-      this.showSlider = true;
-    } else {
-      this.showSlider = false;
     }
 
     if (layer.id == "casos_covid_confirmados" || layer.id == "casos_bairro") {
@@ -1835,7 +1840,8 @@ selectedBairroTime: any;
   openDialogAjuda() {
     let dialogRef = this.dialog.open(HelpComponent, {
       width: '90%',
-      height: '90%'
+      height: '90%',
+      data: {controls: this.controls}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -1904,7 +1910,7 @@ selectedBairroTime: any;
   formatRateLabel = (v) => {
     return (value: number) => {
       if (this.dates[value] != undefined) {
-        return this.dates[value].data_formatada;
+        return this.dates[value].data_rotulo;
       }
     }
   };
@@ -1913,11 +1919,24 @@ selectedBairroTime: any;
 
     this.selectedConfirmedDate = this.dates[event.value].data_db
 
-    let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
-    let layer = p.types.find(element => element.value === 'covid19_municipios_casos')
-    layer.layerfilter = "data = '" + this.dates[event.value].data_db + "'"
+    if(this.selectRegion.cd_geocmu == '5208707'){
 
-    this.updateSourceLayer(layer);
+      this.selectedBairroTime = "'" + this.dates[event.value].data_db + "'";
+      let p = this.layersNames.find(element => element.id === 'casos_bairro');
+      let layer = p.types.find(element => element.value === 'casos_por_bairro_covid')
+      layer.layerfilter = "data_ultima_atualizacao = '" + this.dates[event.value].data_db + "'"
+
+      this.updateSourceLayer(layer);
+
+    }else{
+      let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+      let layer = p.types.find(element => element.value === 'covid19_municipios_casos')
+      layer.layerfilter = "data = '" + this.dates[event.value].data_db + "'"
+
+      this.updateSourceLayer(layer);
+    }
+
+
 
 
 
@@ -1925,6 +1944,12 @@ selectedBairroTime: any;
     //   result.push(url + '?layers=' + layername + msfilter + '&mode=tile&tile={x}+{y}+{z}' + '&tilemode=gmap' + '&map.imagetype=png');
     // }
 
+  }
+
+  handleSlider(){
+    let lastDay = this.dates.length - 1;
+    this.showSlider = !this.showSlider;
+    this.onSliderChange({value: lastDay});
   }
 
   ngOnInit() {
@@ -1956,10 +1981,6 @@ selectedBairroTime: any;
             layerType.visible = false;
             if (layer.selectedType == layerType.value) {
               layerType.visible = layer.visible;
-            }
-
-            if (layerType.value == 'covid19_municipios_casos' && layerType.visible == true) {
-              this.showSlider = true;
             }
 
             this.layersTypes.push(layerType);
