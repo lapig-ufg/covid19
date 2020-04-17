@@ -1,6 +1,9 @@
 #!/bin/bash
 
-BASEDIR='/STORAGE/ows-cache/layers'
+BASESTORAGE='/STORAGE/ows-cache/layers'
+BASELOCAL='/APP/covid19/src/server/scripts'
+
+apt-get -y install pv 
 
 pip install gspread >> /dev/null
 
@@ -24,7 +27,7 @@ python3 upload_googledrive.py
 #Step 1
 
 clear
-echo -n -e "Baixando Planilha casos.csv!"
+echo -n -e "Baixando Planilhas!"
 sleep 2
 
 python2 download_planilha_casos.py
@@ -36,6 +39,8 @@ mv 163Agr2r4r4evn74SUkVojcdg-hq6urb0qcCMk5Pdknw-worksheet0.csv estados_casos.csv
 mv 1sMzwMlPThQ0-AVYeYAxjkPQ_0G82hOEyDDh-xTlaaf4-worksheet0.csv projecao_casos_go.csv
 
 mv 1LeLPLxMqJMiCq5VQLtjO_e7hPtXWmSZxs5t9-1lYAgU-worksheet0.csv estatisticas.csv
+
+mv 1l_3ZlgEBdd53BZFhGktgzvnuze7s3r0QGwVQomfo1eU-worksheet0.csv bairros_casos.csv 
 
 clear
 echo -n -e "Planilha baixada com sucesso!"
@@ -60,23 +65,33 @@ clear
 node atualiza_projecao.js
 sleep 2
 
-#Step 3
+# #Step 3
 
 clear
 echo -n -e "Excluindo Cache!"
 sleep 2
 
-if [[ -e "$BASEDIR/covid19_municipios_casos_utfgrid-tiles" ]] || [[ -e "$BASEDIR/covid19_municipios_casos-tiles" ]];then
+if [[ -e "$BASESTORAGE/covid19_municipios_casos_utfgrid-tiles" ]] || [[ -e "$BASESTORAGE/covid19_municipios_casos-tiles" ]];then
 
 clear
 echo "Os diretorios existem, apagando!"
 sleep 2
 
-cd $BASEDIR
+cd $BASESTORAGE
 
-rm -rfv covid19_municipios_casos_utfgrid-tiles/
+cd covid19_municipios_casos_utfgrid-tiles/
 
-rm -rfv covid19_municipios_casos-tiles/
+rm -rfv * | pv -l > clean-cache.log
+
+cd $BASESTORAGE
+
+cd covid19_municipios_casos-tiles/ 
+
+rm -rfv * | pv -l > clean-cache.log
+
+cd $BASELOCAL
+
+rm -rfv *.csv
 
 else
 clear
@@ -87,5 +102,3 @@ fi
 
 clear
 echo -n -e "Rotina Concluida!"
-sleep 3
-clear
