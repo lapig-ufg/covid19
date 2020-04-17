@@ -66,7 +66,7 @@ fs.createReadStream(csvFilepath)
 
         if (newLastDate != undefined) {
           await client.query(dropView)
-          // await client.query(newView + "'" + newLastDate + "'")
+          await client.query(newView)
           console.log('View municipios_casos updated')
         }
 
