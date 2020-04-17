@@ -12,7 +12,8 @@ var express = require('express')
 , session = require('express-session')
 , parseCookie = require('cookie-parser'),
 	cors = require('cors'),
-	helmet = require('helmet');
+	helmet = require('helmet')
+	frameguard = require('frameguard');
 
 var app = express();
 var http = require('http').Server(app);
@@ -24,9 +25,15 @@ load('config.js', {'verbose': false})
 .into(app);
 
 app.use(cors());
-app.use(helmet.frameguard({ 
-	action: 'allow-from',
-	domain: 'http://painel.postadorturbo.com/' }));
+// app.use(helmet.frameguard({ 
+// 	action: 'allow-from',
+// 	domain: 'http://painel.postadorturbo.com/' }));
+
+app.use(frameguard({
+		action: 'allow-from',
+	domain: 'http://painel.postadorturbo.com/' 
+}));
+
 
 // app.use((req, res, next) => {
 // 	//Qual site tem permissão de realizar a conexão, no exemplo abaixo está o "*" indicando que qualquer site pode fazer a conexão

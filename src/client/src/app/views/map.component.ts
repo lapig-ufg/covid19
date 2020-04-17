@@ -664,8 +664,10 @@ selectedBairroTime: any;
       this.neighborhoodsCharts = citiesResult;
 
       this.neighborhoodsCharts.label += this.selectRegion.nome 
+      
+      let d = new Date(this.neighborhoodsCharts.last_updated)
 
-      this.neighborhoodsCharts.last_updated = this.datePipe.transform(new Date(this.neighborhoodsCharts.last_updated), 'dd/MM/yyyy');
+      this.neighborhoodsCharts.last_updated = this.datePipe.transform(d.setDate(d.getDate() + 1), 'dd/MM/yyyy');
 
       let headers = this.neighborhoodsCharts.title.split('?');
       let properties = this.neighborhoodsCharts.properties.split('?');
@@ -680,7 +682,7 @@ selectedBairroTime: any;
 
       this.exportColumns = this.neighborhoodsCharts.split.map(col => ({ title: col.header, dataKey: col.field }));
 
-      console.log(this.neighborhoodsCharts)
+      // console.log(this.neighborhoodsCharts)
 
     });
 
