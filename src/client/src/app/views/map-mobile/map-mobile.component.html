@@ -44,11 +44,14 @@
 					<div id="map" class="dpat-ol-map">
 							<div class="controls">
 								<div [class]="'btn-zoom'" (click)="zoomIn()">
-										+
-									</div>
-									<div [class]="'btn-zoom'" (click)="zoomOut()">
-										-
-									</div>
+									+
+								</div>
+								<div [class]="'btn-zoom'" (click)="zoomOut()">
+									-
+								</div>
+								<div [class]="showSlider ? 'btn-zoom btn-zoom-active' : 'btn-zoom'" (click)="handleSlider()">
+									<img width="30" height="30" src="../../assets/img/history.svg" [alt]="controls.label_historic">
+								</div>
 							</div>
 					</div>
 					<div *ngIf="infobairro && !clickable" class="card-body">
@@ -56,6 +59,21 @@
 						<p class="card-total"><b>Total de Confirmados:</b> {{infobairro.numpoints}}</p>
 						<p class="card-font">{{minireportText.label_fonte}} {{infobairro.fonte}}, {{minireportText.label_last_update}} {{infobairro.data_ultima_atualizacao | date : 'dd/MM/yyyy'}}</p>
 					</div>
+					<div class="slider" *ngIf="showSlider" >
+							<h6> {{controls.text_historic.replace('[dias]',dates.length)}}</h6>
+							<mat-slider
+									#datesSlider
+									thumbLabel
+									(input)="onSliderChange($event)"
+									[displayWith]="formatRateLabel(datesSlider.value)"
+									color="warn"
+									value="{{dates.length -1}}"
+									tickInterval="1"
+									min="{{'0'}}"
+									max="{{dates.length -1}}"
+						>
+							</mat-slider>
+						</div>
 					<div class="layersConteudo">
 						<mat-accordion>
 							<div id="layer_dados">
@@ -256,13 +274,6 @@
 				</p-table>
 			</p-scrollPanel>
 		</mat-tab>  
-		<mat-tab  label = "Dicas" > 
-				<p-scrollPanel [style]="{width: '100%', height: '100%'}">
-					<div style="padding: 10px">
-						<img width="100%" src="../../../assets/img/ajuda_covid_mobile.png" />
-					</div>
-				</p-scrollPanel>
-		</mat-tab> 
 		<mat-tab  label = "Projeto" >
 				<p-scrollPanel [style]="{width: '100%', height: '100%'}">
 
@@ -286,5 +297,17 @@
 							</div>
 						</div>
 					</p-scrollPanel>
+		</mat-tab>
+		<mat-tab label="Tutorial">
+        <p-scrollPanel [style]="{padding: '20px 5px', width: '100%', height: '81vh'}">
+            <iframe width="100%" height="60%"  src="https://www.youtube.com/embed/pynvV0wuq2c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </p-scrollPanel>
+		</mat-tab>
+		<mat-tab  label = "Dicas" > 
+				<p-scrollPanel [style]="{width: '100%', height: '100%'}">
+					<div style="padding: 10px">
+						<img width="100%" src="../../../assets/img/ajuda_covid_mobile.png" />
+					</div>
+				</p-scrollPanel>
 		</mat-tab> 
 </mat-tab-group >

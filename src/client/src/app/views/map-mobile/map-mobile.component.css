@@ -96,7 +96,7 @@ body .ui-tabview .ui-tabview-panels {
 	overflow: hidden;
 	margin: 5px;
 	padding: 8px;
-	height: calc(50vh);
+	height: calc(51vh);
 	border-radius: 7px;
 	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
 	box-shadow: -1px 1px 10px 0px #7a2525;
@@ -397,33 +397,41 @@ font-size: 0.9em;
 .team-member a{
 	transition: 0.3s;
 	color: rgba(161, 19, 19, 0.75);
-	font-size: 1.7vh;
+	font-size: 2vh;
 }
 .team-member a:hover{
 	color: rgba(126, 53, 60, 0.75);
 }
 
 .team-section h4{
-	font-size: 1.8vh;
+	font-size: 2.8vh;
 }
+
 .slider{
-	position: absolute;
-	top: 20%;
-	right: 1%;
-	padding-top: 10px;
-	padding-left: 10px;
-	padding-right: 15px;
-	padding-bottom: 10px;
-	height: 28vh;
-	z-index: 1000000;
-	border-radius: 10px;
-	background-color: #584e4f8c;
+	/* position: absolute;
+	bottom: 3%;
+	left: 5%;
+	padding-top: 5px;
+	padding-left: 45px;
+	padding-right: 45px;
+	padding-bottom: 20px; */
+	overflow: hidden;
+	border-radius: 7px;
+	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
+	box-shadow: -1px 1px 10px 0px #7a2525;
 }
 
 .slider h6{
-	color: white;
-	font-size: 1.5vh;
-	text-align: right;
+	color:  #a11313;;
+	font-size: 2vh;
+	text-align: left;
+	text-align: center;
+	margin-left: 0px;
+}
+
+mat-slider {
+	width: 90%;
+	margin: 8px;
 }
 
 .nav-title-laudo {
@@ -982,6 +990,10 @@ mat-select {
 }
 
 .btn-layers-active .btn-zoom-active {
+	background-color: #dd4646;
+}
+
+.btn-zoom-active {
 	background-color: #dd4646;
 }
 
