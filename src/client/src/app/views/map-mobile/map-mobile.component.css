@@ -303,7 +303,7 @@ table tr td {
 
 .card-resumo {
 	position: relative;
-	margin: 3px;
+	margin: 0px 5px;
 	background-color: rgba(255, 255, 255, 0.93);
 	text-align: center;
 	width: 100%;
@@ -320,12 +320,11 @@ table tr td {
 	top: 0;
 	text-align: center;
 	border-radius: 7px;
-	color: white;
-	background-color: #dd4646;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
-	box-shadow: -1px 1px 10px 0px #7a2525;
+	color: black;
+	/* background-color: #dd4646; */
+	padding-bottom: 1px;
+	/* -webkit-box-shadow: -1px 1px 10px 0px #7a2525;
+	box-shadow: -1px 1px 10px 0px #7a2525; */
 }
 
 .resumo-subtitle-card p {
@@ -335,13 +334,19 @@ table tr td {
 }
 
 .resumo-subtitle {
-	font-size: 1em;
-	color: white;
+	font-size: 1.1em;
+	color: black;
 	margin-bottom: .2rem;
 }
 
+.resumo-subtitle-font {
+	padding: 4px 0px;
+    font-size: 0.6rem;
+    text-align: center;
+}
+
 .card-resumo-title {
-	font-size: 0.9em;
+	font-size: 0.7em;
 	/* padding: 2px; */
 	color: white;
 }
@@ -358,7 +363,7 @@ table tr td {
 
 .card-resumo h2{
 margin: 3px;
-font-size: 0.9em;
+font-size: 0.8em;
 }
 
 .container-project {
