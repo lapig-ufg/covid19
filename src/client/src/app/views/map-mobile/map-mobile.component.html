@@ -11,11 +11,11 @@
 <mat-tab-group id="tab-mobile" style="height: 89%"> 
 		<mat-tab label = "Mapa">
 			<p-scrollPanel [style]="{width: '100%', height: '100%'}">
-				<div style="padding: 6px;">
+				<div style="padding: 5px;">
 					<div class="container-resumo">
 							<div class="resumo-subtitle-card">
 								<h1 class="resumo-subtitle"> {{textSummary.title}} </h1>
-								<p> {{textSummary.last_update_label}} {{lastUpdate.data}}, {{textSummary.source_text}}</p>
+								<!-- <p> {{textSummary.last_update_label}} {{lastUpdate.data}}, {{textSummary.source_text}}</p> -->
 							</div>
 							<div class="resumo">
 								<div class="card-resumo">
@@ -40,17 +40,43 @@
 									Sair do Município
 								</div>
 							</div>
+							<div>
+								<p class="resumo-subtitle-font"> {{textSummary.last_update_label}} {{lastUpdate.data}}, {{textSummary.source_text}}</p>
+							</div>
 					</div>
 					<div id="map" class="dpat-ol-map">
 							<div class="controls">
 								<div [class]="'btn-zoom'" (click)="zoomIn()">
-										+
-									</div>
-									<div [class]="'btn-zoom'" (click)="zoomOut()">
-										-
-									</div>
+									+
+								</div>
+								<div [class]="'btn-zoom'" (click)="zoomOut()">
+									-
+								</div>
+								<div [class]="showSlider ? 'btn-zoom btn-zoom-active' : 'btn-zoom'" (click)="handleSlider()">
+									<img width="30" height="30" src="../../assets/img/history.svg" [alt]="controls.label_historic">
+								</div>
 							</div>
 					</div>
+					<div *ngIf="infobairro && !clickable" class="card-body">
+						<p class="card-text">{{infobairro.nome}}</p>
+						<p class="card-total"><b>Total de Confirmados:</b> {{infobairro.numpoints}}</p>
+						<p class="card-font">{{minireportText.label_fonte}} {{infobairro.fonte}}, {{minireportText.label_last_update}} {{infobairro.data_ultima_atualizacao | date : 'dd/MM/yyyy'}}</p>
+					</div>
+					<div class="slider" *ngIf="showSlider" >
+							<h6> {{controls.text_historic.replace('[dias]',dates.length)}}</h6>
+							<mat-slider
+									#datesSlider
+									thumbLabel
+									(input)="onSliderChange($event)"
+									[displayWith]="formatRateLabel(datesSlider.value)"
+									color="warn"
+									value="{{dates.length -1}}"
+									tickInterval="1"
+									min="{{'0'}}"
+									max="{{dates.length -1}}"
+						>
+							</mat-slider>
+						</div>
 					<div class="layersConteudo">
 						<mat-accordion>
 							<div id="layer_dados">
@@ -196,40 +222,61 @@
 						</ng-template>
 				</mat-tab>
 		</mat-tab>
-		<mat-tab  (click)="handleAnalytics('charts', 'dados_oficiais', 'Municípios')" label = "Municípios" >
-				<p-scrollPanel [style]="{width: '100%', height: '100%'}">
-					<p-table #dt [value]="chartResultCities.series" [columns]="chartResultCities.split" [exportFilename]="chartResultCities.filename">
-						<ng-template pTemplate="caption">
-							<div class="ui-helper-clearfix" style="text-align: left">
-								<!-- <button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="margin-right: 0.5em; color: #460202"></button> -->
-								<button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf('cities')" class="ui-button-warning" style="margin-right: 0.5em; color: #460202"></button>
-								<!-- <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('cities')" style="margin-right: 0.5em;" class="ui-button-success" style="margin-right: 0.5em; color: #460202"></button> -->
-							</div>
-						</ng-template>
-						<ng-template pTemplate="header" let-columns>
-							<tr align="center">
-								<th *ngFor="let col of columns">
-									{{col.header}}
-								</th>
-							</tr>
-						</ng-template>
-						<ng-template pTemplate="body" let-city let-columns="columns">
-							<tr align="center">
-								<td *ngFor="let col of columns">
-									{{city[col.field]}}
-								</td>
-							</tr>
-						</ng-template>
-					</p-table>
-				</p-scrollPanel>
-		</mat-tab>  
-		<mat-tab  label = "Dicas" > 
-				<p-scrollPanel [style]="{width: '100%', height: '100%'}">
-					<div style="padding: 10px">
-						<img width="100%" src="../../../assets/img/ajuda_covid_mobile.png" />
-					</div>
-				</p-scrollPanel>
+		<mat-tab *ngIf="neighborhoodsCharts.show" [label] = "neighborhoodsCharts.label" >
+			<p-scrollPanel [style]="{width: '100%', height: '98%'}">
+				<p-table #dt [value]="neighborhoodsCharts.series" [columns]="neighborhoodsCharts.split" [exportFilename]="neighborhoodsCharts.filename">
+					<ng-template pTemplate="caption">
+						<div class="ui-helper-clearfix" style="text-align: left">
+							<!-- <button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="margin-right: 0.5em; color: #460202"></button> -->
+							<button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf('bairros')" class="ui-button-warning" style="margin-right: 0.5em; color: #460202"></button>
+							<!-- <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('bairros')" style="margin-right: 0.5em;" class="ui-button-success" style="margin-right: 0.5em; color: #460202"></button> -->
+							<span style="text-align: right"> {{minireportText.label_last_update}} {{neighborhoodsCharts.last_updated}}</span>
+						</div>
+					</ng-template>
+					<ng-template pTemplate="header" let-columns>
+						<tr align="center">
+							<th *ngFor="let col of columns">
+								{{col.header}}
+							</th>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="body" let-city let-columns="columns">
+						<tr align="center">
+							<td *ngFor="let col of columns">
+								{{city[col.field]}}
+							</td>
+						</tr>
+					</ng-template>
+				</p-table>
+			</p-scrollPanel>
 		</mat-tab> 
+		<mat-tab  (click)="handleAnalytics('charts', 'dados_oficiais', 'Municípios')" label = "Municípios" >
+			<p-scrollPanel [style]="{width: '100%', height: '98%'}">
+				<p-table #dt [value]="chartResultCities.series" [columns]="chartResultCities.split" [exportFilename]="chartResultCities.filename">
+					<ng-template pTemplate="caption">
+						<div class="ui-helper-clearfix" style="text-align: left">
+							<!-- <button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="margin-right: 0.5em; color: #460202"></button> -->
+							<button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf('cities')" class="ui-button-warning" style="margin-right: 0.5em; color: #460202"></button>
+							<!-- <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('cities')" style="margin-right: 0.5em;" class="ui-button-success" style="margin-right: 0.5em; color: #460202"></button> -->
+						</div>
+					</ng-template>
+					<ng-template pTemplate="header" let-columns>
+						<tr align="center">
+							<th *ngFor="let col of columns">
+								{{col.header}}
+							</th>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="body" let-city let-columns="columns">
+						<tr align="center">
+							<td *ngFor="let col of columns">
+								{{city[col.field]}}
+							</td>
+						</tr>
+					</ng-template>
+				</p-table>
+			</p-scrollPanel>
+		</mat-tab>  
 		<mat-tab  label = "Projeto" >
 				<p-scrollPanel [style]="{width: '100%', height: '100%'}">
 
@@ -253,5 +300,17 @@
 							</div>
 						</div>
 					</p-scrollPanel>
+		</mat-tab>
+		<mat-tab label="Tutorial">
+        <p-scrollPanel [style]="{padding: '20px 5px', width: '100%', height: '81vh'}">
+            <iframe width="100%" height="60%"  src="https://www.youtube.com/embed/pynvV0wuq2c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </p-scrollPanel>
+		</mat-tab>
+		<mat-tab  label = "Dicas" > 
+				<p-scrollPanel [style]="{width: '100%', height: '100%'}">
+					<div style="padding: 10px">
+						<img width="100%" src="../../../assets/img/ajuda_covid_mobile.png" />
+					</div>
+				</p-scrollPanel>
 		</mat-tab> 
 </mat-tab-group >

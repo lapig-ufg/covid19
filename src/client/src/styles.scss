@@ -47,6 +47,17 @@ body {
 	white-space: initial;
 }
 
+#tab-mobile .mat-slider-horizontal .mat-slider-thumb-label-text {
+	padding-top: 90px;
+	font-size: 2.5vh;
+	color: black !important;
+}
+
+#tab-mobile .mat-slider-horizontal {
+	min-width: unset;
+	// height: 60px;
+}
+
 .mat-mini-fab {
 	width: 35px !important;
 	height: 35px !important;

@@ -96,7 +96,7 @@ body .ui-tabview .ui-tabview-panels {
 	overflow: hidden;
 	margin: 5px;
 	padding: 8px;
-	height: calc(50vh);
+	height: calc(51vh);
 	border-radius: 7px;
 	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
 	box-shadow: -1px 1px 10px 0px #7a2525;
@@ -139,7 +139,16 @@ table tr td {
 } 
 .card-body p.card-text {
    background: #4e1010e7 !important; 
-    color: #fff !important;
+	color: #fff !important;
+}
+
+.card-total {
+	padding: 5px 10px;
+}
+
+.card-font {
+	font-size: 0.7rem; 
+	text-align: center
 }
 
 .ol-zoom-in,
@@ -167,11 +176,17 @@ table tr td {
 	padding-right: 3px;
 	font-size: 12px;
 	line-height: 1.5;
+	border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
 }
 
 .card-body {
-	padding: 3px;
 	font-size: 12px;
+	margin: 5px;
+	padding: 8px;
+	border-radius: 7px;
+	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
+	box-shadow: -1px 1px 10px 0px #7a2525;
 }
 
 #positionheaders {
@@ -288,7 +303,7 @@ table tr td {
 
 .card-resumo {
 	position: relative;
-	margin: 3px;
+	margin: 0px 5px;
 	background-color: rgba(255, 255, 255, 0.93);
 	text-align: center;
 	width: 100%;
@@ -305,12 +320,11 @@ table tr td {
 	top: 0;
 	text-align: center;
 	border-radius: 7px;
-	color: white;
-	background-color: #dd4646;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
-	box-shadow: -1px 1px 10px 0px #7a2525;
+	color: black;
+	/* background-color: #dd4646; */
+	padding-bottom: 1px;
+	/* -webkit-box-shadow: -1px 1px 10px 0px #7a2525;
+	box-shadow: -1px 1px 10px 0px #7a2525; */
 }
 
 .resumo-subtitle-card p {
@@ -320,13 +334,19 @@ table tr td {
 }
 
 .resumo-subtitle {
-	font-size: 1em;
-	color: white;
+	font-size: 1.1em;
+	color: black;
 	margin-bottom: .2rem;
 }
 
+.resumo-subtitle-font {
+	padding: 4px 0px;
+    font-size: 0.6rem;
+    text-align: center;
+}
+
 .card-resumo-title {
-	font-size: 0.9em;
+	font-size: 0.7em;
 	/* padding: 2px; */
 	color: white;
 }
@@ -343,7 +363,7 @@ table tr td {
 
 .card-resumo h2{
 margin: 3px;
-font-size: 0.9em;
+font-size: 0.8em;
 }
 
 .container-project {
@@ -382,33 +402,41 @@ font-size: 0.9em;
 .team-member a{
 	transition: 0.3s;
 	color: rgba(161, 19, 19, 0.75);
-	font-size: 1.7vh;
+	font-size: 2vh;
 }
 .team-member a:hover{
 	color: rgba(126, 53, 60, 0.75);
 }
 
 .team-section h4{
-	font-size: 1.8vh;
+	font-size: 2.8vh;
 }
+
 .slider{
-	position: absolute;
-	top: 20%;
-	right: 1%;
-	padding-top: 10px;
-	padding-left: 10px;
-	padding-right: 15px;
-	padding-bottom: 10px;
-	height: 28vh;
-	z-index: 1000000;
-	border-radius: 10px;
-	background-color: #584e4f8c;
+	/* position: absolute;
+	bottom: 3%;
+	left: 5%;
+	padding-top: 5px;
+	padding-left: 45px;
+	padding-right: 45px;
+	padding-bottom: 20px; */
+	overflow: hidden;
+	border-radius: 7px;
+	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
+	box-shadow: -1px 1px 10px 0px #7a2525;
 }
 
 .slider h6{
-	color: white;
-	font-size: 1.5vh;
-	text-align: right;
+	color:  #a11313;;
+	font-size: 2vh;
+	text-align: left;
+	text-align: center;
+	margin-left: 0px;
+}
+
+mat-slider {
+	width: 90%;
+	margin: 8px;
 }
 
 .nav-title-laudo {
@@ -967,6 +995,10 @@ mat-select {
 }
 
 .btn-layers-active .btn-zoom-active {
+	background-color: #dd4646;
+}
+
+.btn-zoom-active {
 	background-color: #dd4646;
 }
 
