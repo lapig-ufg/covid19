@@ -1,7 +1,12 @@
 #!/usr/bin/env python2
 import csv, codecs, cStringIO
 import gspread
+import sys
 from oauth2client.service_account import ServiceAccountCredentials
+
+reload(sys)
+
+sys.setdefaultencoding('utf8')
 
 scope = ['https://spreadsheets.google.com/feeds']
 
