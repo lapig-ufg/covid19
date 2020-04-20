@@ -214,6 +214,62 @@ module.exports = function (app) {
               order: 3
             },
           ]
+          },
+          {
+            id: "casos_tuberculose",
+            label: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["label"][language],
+            visible: false,
+            selectedType: "casos_tuberculose_2019_covid",
+            types: [
+              {
+                value: "casos_tuberculose_2015_covid",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["types"]["casos_tuberculose_2015_covid"]["view_value"][language],
+                regionFilter: true,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              },
+              {
+              value: "casos_tuberculose_2016_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["types"]["casos_tuberculose_2016_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "casos_tuberculose_2017_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["types"]["casos_tuberculose_2017_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "casos_tuberculose_2018_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["types"]["casos_tuberculose_2018_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "casos_tuberculose_2019_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["types"]["casos_tuberculose_2019_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "casos_tuberculose_mediana_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["types"]["casos_tuberculose_mediana_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            }
+          ]
           }
           ]
         },

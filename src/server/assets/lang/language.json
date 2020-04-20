@@ -583,7 +583,52 @@
 								}
 							}
 					}
-				}
+				},
+				"casos_tuberculose": {
+					"label": {
+						"pt-br": "Mediana dos Casos de Tuberculose entre 2015 e 2019",
+						"en-us": "Median of Tuberculosis cases between 2015 and 2019"
+					},
+					"types": 
+						{
+							"casos_tuberculose_2015_covid": {
+								"view_value": {
+									"pt-br": "2015",
+									"en-us": "2015"
+								}
+							},
+							"casos_tuberculose_2016_covid": {
+								"view_value": {
+									"pt-br": "2016",
+									"en-us": "2016"
+								}
+							},
+							"casos_tuberculose_2017_covid": {
+								"view_value": {
+									"pt-br": "2017",
+									"en-us": "2017"
+								}
+							},
+							"casos_tuberculose_2018_covid": {
+								"view_value": {
+									"pt-br": "2018",
+									"en-us": "2018"
+								}
+							},
+							"casos_tuberculose_2019_covid": {
+								"view_value": {
+									"pt-br": "2019",
+									"en-us": "2019"
+								}
+							},
+							"casos_tuberculose_mediana_covid": {
+								"view_value": {
+									"pt-br": "Mediana entre 2015-2019",
+									"en-us": "Median between 2015-2019"
+								}
+							}
+						}
+					}
 			}
 		},
 		"servicos": {
