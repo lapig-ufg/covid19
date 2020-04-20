@@ -1,13 +1,16 @@
 #!/bin/bash
 
-BASESTORAGE='/STORAGE/ows-cache/layers'
-BASELOCAL='/APP/covid19/src/server/scripts'
+BASESTORAGE='/storage/ows-cache/layers'
+BASELOCAL='/data/containers/APP_COVID19/APP/covid19/src/server/scripts/'
+DATA=`date +%d-%m-%Y-%H.%M`
 
 apt-get -y install pv 
 
 pip install gspread >> /dev/null
 
 pip3 install pydrive >> /dev/null
+
+cd $BASELOCAL
 
 #Step 0
 
@@ -25,6 +28,7 @@ python3 upload_googledrive.py
 
 
 #Step 1
+cd $BASELOCAL
 
 clear
 echo -n -e "Baixando Planilhas!"
@@ -47,6 +51,7 @@ echo -n -e "Planilha baixada com sucesso!"
 sleep 2
 
 #Step 2
+cd $BASELOCAL
 
 clear
 echo -n -e "Populando banco de dados!"
@@ -81,17 +86,23 @@ cd $BASESTORAGE
 
 cd covid19_municipios_casos_utfgrid-tiles/
 
-rm -rfv * | pv -l > clean-cache.log
+rm -rfv * 
 
 cd $BASESTORAGE
 
 cd covid19_municipios_casos-tiles/ 
 
-rm -rfv * | pv -l > clean-cache.log
+rm -rfv * 
+
+clear
+echo "Apagando Rastros!"
+sleep 2
 
 cd $BASELOCAL
 
 rm -rfv *.csv
+
+rm -rfv Jatai.txt RioVerde.txt Mineiros.txt
 
 else
 clear
@@ -102,3 +113,7 @@ fi
 
 clear
 echo -n -e "Rotina Concluida!"
+
+cd $BASELOCAL
+
+echo "Rotina Concluida em $DATA" >> atualizacao_de_dados.log
