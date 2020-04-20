@@ -104,6 +104,20 @@ module.exports = function (app) {
             }]
           },
           {
+            id: "indice_vulnerabilidade",
+            label: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["label"][language],
+            visible: false,
+            selectedType: "indice_vunerabilidade_ao_covid",
+            types: [{
+              value: "indice_vunerabilidade_ao_covid",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            }]
+          },
+          {
             id: "doencas_respiratorias",
             label: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["label"][language],
             visible: false,

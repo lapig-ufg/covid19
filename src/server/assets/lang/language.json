@@ -475,6 +475,20 @@
 						}
 					}
 				},
+				"indice_vulnerabilidade":{
+					"label":{
+						"pt-br": "Índice de Vulnerabilidade ao COVID-19",
+						"en-us": "COVID-19 Vulnerability Index"
+					},
+					"types": {
+						"indice_vunerabilidade_ao_covid": {
+							"view_value": {
+								"pt-br": "Índice",
+								"en-us": "Index"
+							}
+						}
+					}
+				},
 				"casos_bairro": {
 					"label": {
 						"pt-br": "Casos confirmados por Bairros",
