@@ -87,6 +87,13 @@ ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd covid19_
 
 ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd covid19_municipios_casos-tiles/; rm -rfv *'
 
+else
+clear
+echo "Os diretorios nao existem!"
+sleep 2
+clear
+fi
+
 clear
 echo "Apagando Rastros!"
 sleep 2
@@ -96,13 +103,6 @@ cd $BASELOCAL
 rm -rfv *.csv
 
 rm -rfv Jatai.txt RioVerde.txt Mineiros.txt
-
-else
-clear
-echo "Os diretorios nao existem!"
-sleep 2
-clear
-fi
 
 clear
 echo -n -e "Rotina Concluida!"
