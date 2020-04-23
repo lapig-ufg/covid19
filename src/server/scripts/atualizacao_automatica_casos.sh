@@ -82,17 +82,10 @@ clear
 echo "Os diretorios existem, apagando!"
 sleep 2
 
-cd $BASESTORAGE
+ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd covid19_municipios_casos_utfgrid-tiles/; rm -rfv *'
 
-cd covid19_municipios_casos_utfgrid-tiles/
 
-rm -rfv * 
-
-cd $BASESTORAGE
-
-cd covid19_municipios_casos-tiles/ 
-
-rm -rfv * 
+ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd covid19_municipios_casos-tiles/; rm -rfv *'
 
 clear
 echo "Apagando Rastros!"
