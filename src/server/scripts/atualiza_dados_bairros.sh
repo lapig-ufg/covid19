@@ -1,7 +1,7 @@
 #!/bin/bash
 
-BASESTORAGE='/STORAGE/ows-cache/layers'
-BASELOCAL='/APP/covid19/src/server/scripts'
+BASESTORAGE='/storage/ows-cache/layers'
+BASELOCAL='/data/containers/APP_COVID19/APP/covid19/src/server/scripts/'
 
 #Script de Atualização de Casos por Bairros.
 
@@ -31,11 +31,21 @@ clear
 echo -n -e "Limpando Cache dos Dados!"
 sleep 2
 
-cd $BASESTORAGE
+if [[ -e "$BASESTORAGE/casos_por_bairro_covid-tiles" ]];then
 
-cd casos_por_bairro_covid-tiles/
+clear
+echo "Os diretorios existem, apagando!"
+sleep 2
 
-rm -rfv *
+ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd casos_por_bairro_covid-tiles/; rm -rfv *'
+
+else
+clear
+echo "Os diretorios nao existem!"
+sleep 2
+clear
+fi
+
 
 #Step 3
 
