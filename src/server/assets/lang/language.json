@@ -928,6 +928,14 @@
 		"label_institution": {
 			"pt-br": "Instituição: ",
 			"en-us": "Institution: "
+		},
+		"label_coronatransp": {
+			"pt-br": "Painel de Transparência - Coronatransp",
+			"en-us": "Transparency Panel - Coronatransp"
+		},
+		"label_contingency_plan": {
+			"pt-br": "Plano Estadual de Contingência",
+			"en-us": "State Contingency Plan"
 		}
 
 	},
