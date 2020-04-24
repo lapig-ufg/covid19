@@ -477,14 +477,50 @@
 				},
 				"indice_vulnerabilidade":{
 					"label":{
-						"pt-br": "Índice de Vulnerabilidade ao COVID-19",
-						"en-us": "COVID-19 Vulnerability Index"
+						"pt-br": "Vulnerabilidade ao COVID-19",
+						"en-us": "COVID-19 Vulnerability"
 					},
 					"types": {
 						"indice_vunerabilidade_ao_covid": {
 							"view_value": {
-								"pt-br": "Índice",
-								"en-us": "Index"
+								"pt-br": "Índice combinado",
+								"en-us": "Combined Index"
+							}
+						},
+						"indice_vunerabilidade_ao_covid_responsave": {
+							"view_value": {
+								"pt-br": "Responsável pela Família",
+								"en-us": "Responsible for the Family"
+							}
+						},
+						"indice_vunerabilidade_ao_covid_moradia": {
+							"view_value": {
+								"pt-br": "Moradia",
+								"en-us": "Home"
+							}
+						},
+						"indice_vunerabilidade_ao_covid_idosos": {
+							"view_value": {
+								"pt-br": "Infraestrutura dos Idosos",
+								"en-us": "Elderly Infrastructure"
+							}
+						},
+						"indice_vunerabilidade_ao_covid_infraestrutura": {
+							"view_value": {
+								"pt-br": "Infraestrutura",
+								"en-us": "Infrastructure"
+							}
+						},
+						"indice_vunerabilidade_ao_covid_educacao": {
+							"view_value": {
+								"pt-br": "Educação",
+								"en-us": "Education"
+							}
+						},
+						"indice_vunerabilidade_ao_covid_demografia": {
+							"view_value": {
+								"pt-br": "Demografia",
+								"en-us": "Demography"
 							}
 						}
 					}

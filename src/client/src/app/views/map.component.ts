@@ -102,7 +102,8 @@ export class MapComponent implements OnInit {
   chartRegionScale: boolean;
 
   trafficgoogle: any;
-  exportColumns: any[];
+  exportColumnsCities: any[];
+  exportColumnsBairros: any[];
   textOnDialog: any;
   mapbox: any;
   satelite: any;
@@ -639,7 +640,7 @@ selectedBairroTime: any;
     );
 
     let citiesUrl = '/service/indicators/cities' + this.getServiceParams();
-    this.exportColumns = [];
+    this.exportColumnsCities = [];
     this.http.get(citiesUrl).subscribe(citiesResult => {
       this.chartResultCities = citiesResult;
 
@@ -654,7 +655,7 @@ selectedBairroTime: any;
         })
       }
 
-      this.exportColumns = this.chartResultCities.split.map(col => ({ title: col.header, dataKey: col.field }));
+      this.exportColumnsCities = this.chartResultCities.split.map(col => ({ title: col.header, dataKey: col.field }));
 
       // console.log(this.chartResultCities)
 
@@ -662,7 +663,7 @@ selectedBairroTime: any;
 
 
     let neighborhoodsUrl = '/service/indicators/neighborhoods' + this.getServiceParams() + '&timefilter=' +this.selectedBairroTime;
-
+    this.exportColumnsBairros = [];
     this.http.get(neighborhoodsUrl).subscribe(citiesResult => {
       this.neighborhoodsCharts = citiesResult;
 
@@ -683,7 +684,7 @@ selectedBairroTime: any;
         })
       }
 
-      this.exportColumns = this.neighborhoodsCharts.split.map(col => ({ title: col.header, dataKey: col.field }));
+      this.exportColumnsBairros = this.neighborhoodsCharts.split.map(col => ({ title: col.header, dataKey: col.field }));
 
       // console.log(this.neighborhoodsCharts)
 
@@ -1855,14 +1856,17 @@ selectedBairroTime: any;
   exportPdf(table) {
     let tablename = ''
     let ob = [];
+    let titleTable = [];
 
     if (table == 'cities') {
       tablename = this.chartResultCities.filename
       ob = this.chartResultCities.series
+      titleTable = this.exportColumnsCities;
     }
     else {
       tablename = this.neighborhoodsCharts.filename
       ob = this.neighborhoodsCharts.series
+      titleTable = this.exportColumnsBairros;
     }
 
     import("jspdf").then(jsPDF => {
@@ -1915,7 +1919,7 @@ selectedBairroTime: any;
           startY: false //doc.autoTableEndPosY() + 60
         };
 
-          doc.autoTable(this.exportColumns, ob, options);
+          doc.autoTable(titleTable, ob, options);
 
         if (typeof doc.putTotalPages === 'function') {
           doc.putTotalPages(totalDePaginas);
@@ -2088,6 +2092,5 @@ selectedBairroTime: any;
       this.router.navigate(['/mobile']);
     }
 
-    // this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
   }
 }

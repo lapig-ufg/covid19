@@ -107,6 +107,7 @@ module.exports = function (app) {
             id: "indice_vulnerabilidade",
             label: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["label"][language],
             visible: false,
+            showTypes: true,
             selectedType: "indice_vunerabilidade_ao_covid",
             types: [{
               value: "indice_vunerabilidade_ao_covid",
@@ -115,7 +116,56 @@ module.exports = function (app) {
               source: 'ows',
               opacity: 0.8,
               order: 3
-            }]
+            },
+            {
+              value: "indice_vunerabilidade_ao_covid_responsave",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid_responsave"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "indice_vunerabilidade_ao_covid_moradia",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid_moradia"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "indice_vunerabilidade_ao_covid_idosos",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid_idosos"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "indice_vunerabilidade_ao_covid_infraestrutura",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid_infraestrutura"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "indice_vunerabilidade_ao_covid_educacao",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid_educacao"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            },
+            {
+              value: "indice_vunerabilidade_ao_covid_demografia",
+              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid_demografia"]["view_value"][language],
+              regionFilter: true,
+              source: 'ows',
+              opacity: 0.8,
+              order: 3
+            }
+          ]
           },
           {
             id: "doencas_respiratorias",
