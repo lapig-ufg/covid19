@@ -117,7 +117,7 @@ export class MapComponent implements OnInit {
   urls: any;
   dataExtent: any;
 
-selectedBairroTime: any;
+  selectedBairroTime: any;
   searching = false;
   searchFailed = false;
   msFilterRegion = '';
@@ -132,6 +132,8 @@ selectedBairroTime: any;
   statePreposition = [];
 
   statistics_county: any;
+
+  avoidMarkers = [];
 
   layersNames = [];
   layersTypes = [];
@@ -258,6 +260,8 @@ selectedBairroTime: any;
     this.controls = {};
 
     this.currentData = "";
+
+    this.avoidMarkers = ["go_hospitais_datasus", "vacinacao_gripe", "uni_basicas_goiania"];
 
     this.neighborhoodsCharts = {}
 
@@ -662,7 +666,7 @@ selectedBairroTime: any;
     });
 
 
-    let neighborhoodsUrl = '/service/indicators/neighborhoods' + this.getServiceParams() + '&timefilter=' +this.selectedBairroTime;
+    let neighborhoodsUrl = '/service/indicators/neighborhoods' + this.getServiceParams() + '&timefilter=' + this.selectedBairroTime;
     this.exportColumnsBairros = [];
     this.http.get(neighborhoodsUrl).subscribe(citiesResult => {
       this.neighborhoodsCharts = citiesResult;
@@ -835,9 +839,9 @@ selectedBairroTime: any;
     this.selectRegion = region;
     this.selectRegion.nome = this.captalizeCity(this.selectRegion.nome);
 
-    if(this.selectRegion.cd_geocmu == '5208707'){
+    if (this.selectRegion.cd_geocmu == '5208707') {
       this.getDates('/service/indicators/datesNeighborhoods');
-    }else{
+    } else {
       this.getDates();
     }
 
@@ -974,41 +978,45 @@ selectedBairroTime: any;
     let coordinate = this.map.getEventCoordinate(evt.originalEvent);
     let viewResolution = this.map.getView().getResolution();
 
+
+
     var feature = this.map.forEachFeatureAtPixel(evt.pixel, function (feature) {
       return feature;
     });
 
     this.infoOverlay.setPosition(coordinate);
 
-    // console.log(feature)
-
     if (feature) {
-      this.clickable = true
+
       var properties = feature.getProperties();
-      window.document.body.style.cursor = 'pointer';
 
-      if (properties['nome'] != undefined) {
-        this.clickableTitle = properties['nome']
+      if (this.avoidMarkers.includes(properties['source'])) {
+
+        this.clickable = true
+        window.document.body.style.cursor = 'pointer';
+
+        if (properties['nome'] != undefined) {
+          this.clickableTitle = properties['nome']
+        }
+
+        if (properties['source'] == "go_hospitais_datasus") {
+          if (properties['horario'] != undefined) {
+            this.infomarker.horario = properties['horario']
+          }
+          if (properties['leitos_cli'] != undefined) {
+            this.infomarker.leitos_clinica = parseInt(properties['leitos_cli'])
+          }
+          if (properties['leitos_uti'] != undefined) {
+            this.infomarker.leitos_uti = parseInt(properties['leitos_uti'])
+          }
+        }
+        else if (properties['source'] == "vacinacao_gripe") {
+          if (properties['horario'] != undefined) {
+            this.infomarker.horario = properties['horario']
+          }
+        }
+
       }
-
-      if (properties['source'] == "go_hospitais_datasus") {
-        if (properties['horario'] != undefined) {
-          this.infomarker.horario = properties['horario']
-        }
-        if (properties['leitos_cli'] != undefined) {
-          this.infomarker.leitos_clinica = parseInt(properties['leitos_cli'])
-        }
-        if (properties['leitos_uti'] != undefined) {
-          this.infomarker.leitos_uti = parseInt(properties['leitos_uti'])
-        }
-      }
-      else if (properties['source'] == "vacinacao_gripe") {
-        if (properties['horario'] != undefined) {
-          this.infomarker.horario = properties['horario']
-        }
-      }
-
-
     } else {
       this.clickableTitle = this.minireportText.label_clickable
       this.clickable = false
@@ -1057,7 +1065,7 @@ selectedBairroTime: any;
               // window.document.body.style.cursor = 'pointer';
 
               this.infobairro = data;
-              
+
               if (this.infobairro.nome == "") {
                 this.infobairro.nome = this.minireportText.undisclosed_message;
               }
@@ -1384,7 +1392,7 @@ selectedBairroTime: any;
 
       let filters = [];
 
-      if(this.selectRegion.cd_geocmu == '5208707' && this.showSlider){
+      if (this.selectRegion.cd_geocmu == '5208707' && this.showSlider) {
         layer.timeSelected = "cd_geocmu = '5208707' AND " + layer.layerfilter;
       }
 
@@ -1845,7 +1853,7 @@ selectedBairroTime: any;
     let dialogRef = this.dialog.open(HelpComponent, {
       width: '90%',
       height: '90%',
-      data: {controls: this.controls}
+      data: { controls: this.controls }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -1874,7 +1882,7 @@ selectedBairroTime: any;
         const doc = new jsPDF.default(0, 0);
         let totalDePaginas = "{total_pages_count_string}";
 
-        let header = function() {
+        let header = function () {
           let title = 'Casos confirmados'.toLocaleUpperCase()
           doc.setFontType('bold');
           doc.setFontSize(12);
@@ -1883,7 +1891,7 @@ selectedBairroTime: any;
           doc.addImage(logos.logoUFG, 'PNG', 156, 5, 40, 20);
         };
 
-        let footer = function() {
+        let footer = function () {
           var paginas = "Página " + doc.internal.getNumberOfPages();
           if (typeof doc.putTotalPages === 'function') {
             paginas = paginas + " de " + totalDePaginas;
@@ -1895,16 +1903,16 @@ selectedBairroTime: any;
           doc.setFontType('normal');
           doc.text(paginas, 175, doc.internal.pageSize.height - 10);
           doc.text("https://covidgoias.ufg.br", 15, doc.internal.pageSize.height - 10);
-          doc.text( moment().format('DD/MM/YYYY HH:mm:ss'), 90, doc.internal.pageSize.height - 10);
+          doc.text(moment().format('DD/MM/YYYY HH:mm:ss'), 90, doc.internal.pageSize.height - 10);
         };
 
         let options = {
 
           margin: {
-            top:30,
+            top: 30,
           },
 
-          didDrawPage: function(data) {
+          didDrawPage: function (data) {
             // Header
             header();
             // Footer
@@ -1919,7 +1927,7 @@ selectedBairroTime: any;
           startY: false //doc.autoTableEndPosY() + 60
         };
 
-          doc.autoTable(titleTable, ob, options);
+        doc.autoTable(titleTable, ob, options);
 
         if (typeof doc.putTotalPages === 'function') {
           doc.putTotalPages(totalDePaginas);
@@ -1977,7 +1985,7 @@ selectedBairroTime: any;
 
     this.selectedConfirmedDate = this.dates[event.value].data_db
 
-    if(this.selectRegion.cd_geocmu == '5208707'){
+    if (this.selectRegion.cd_geocmu == '5208707') {
 
       this.selectedBairroTime = "'" + this.dates[event.value].data_db + "'";
       let p = this.layersNames.find(element => element.id === 'casos_bairro');
@@ -1986,7 +1994,7 @@ selectedBairroTime: any;
 
       this.updateSourceLayer(layer);
 
-    }else{
+    } else {
       let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
       let layer = p.types.find(element => element.value === 'covid19_municipios_casos')
       layer.layerfilter = "data = '" + this.dates[event.value].data_db + "'"
@@ -2004,10 +2012,10 @@ selectedBairroTime: any;
 
   }
 
-  handleSlider(){
+  handleSlider() {
     let lastDay = this.dates.length - 1;
     this.showSlider = !this.showSlider;
-    this.onSliderChange({value: lastDay});
+    this.onSliderChange({ value: lastDay });
   }
 
   ngOnInit() {
