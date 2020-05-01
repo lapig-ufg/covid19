@@ -1862,18 +1862,18 @@ export class MapComponent implements OnInit {
   }
 
   exportPdf(table) {
-    let tablename = ''
+    let tablename = '';
     let ob = [];
     let titleTable = [];
 
     if (table == 'cities') {
-      tablename = this.chartResultCities.filename
-      ob = this.chartResultCities.series
+      tablename = this.chartResultCities.filename;
+      ob = this.chartResultCities.series;
       titleTable = this.exportColumnsCities;
     }
     else {
-      tablename = this.neighborhoodsCharts.filename
-      ob = this.neighborhoodsCharts.series
+      tablename = this.neighborhoodsCharts.filename;
+      ob = this.neighborhoodsCharts.series;
       titleTable = this.exportColumnsBairros;
     }
 
@@ -1886,8 +1886,14 @@ export class MapComponent implements OnInit {
           let title = 'Casos confirmados'.toLocaleUpperCase()
           doc.setFontType('bold');
           doc.setFontSize(12);
-          doc.text(85, 18, title);
+          doc.text(85, 35, title);
           doc.addImage(logos.logoCovid, 'PNG', 15, 5, 45, 20);
+
+          if (table == 'cities') {
+            doc.addImage(logos.logoSES, 'PNG', 80, 5, 55, 20);
+          }else{
+            doc.addImage(logos.logoPrefeituraGoiania, 'PNG', 85, 5, 45, 20);
+          }
           doc.addImage(logos.logoUFG, 'PNG', 156, 5, 40, 20);
         };
 
@@ -1900,16 +1906,22 @@ export class MapComponent implements OnInit {
           doc.setFontSize(9);
           doc.setFontType('normal');
 
+          if (table == 'cities') {
+            doc.text("Dados disponibilizados pela Secretaria de Estado da Saúde de Goiás", 60, doc.internal.pageSize.height - 10);
+          }else{
+            doc.text("Dados disponibilizados pela Secretaria Municipal de Saúde de Goiânia", 60, doc.internal.pageSize.height - 10);
+          }
+
           doc.setFontType('normal');
-          doc.text(paginas, 175, doc.internal.pageSize.height - 10);
-          doc.text("https://covidgoias.ufg.br", 15, doc.internal.pageSize.height - 10);
-          doc.text(moment().format('DD/MM/YYYY HH:mm:ss'), 90, doc.internal.pageSize.height - 10);
+          doc.text(paginas, 175, doc.internal.pageSize.height - 5);
+          doc.text("https://covidgoias.ufg.br", 15, doc.internal.pageSize.height - 5);
+          doc.text(moment().format('DD/MM/YYYY HH:mm:ss'), 90, doc.internal.pageSize.height - 5);
         };
 
         let options = {
 
           margin: {
-            top: 30,
+            top: 40,
           },
 
           didDrawPage: function (data) {

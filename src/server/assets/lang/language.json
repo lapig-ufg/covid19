@@ -65,8 +65,8 @@
 					"en-us": "Ranking of Municipalities with the highest cases of COVID-19:"
 				},
 				"title": {
-					"pt-br": "#?Município?Casos Confirmados",
-					"en-us": "#?Municipality?Confirmed Cases"
+					"pt-br": "Posição?Município?Casos Confirmados",
+					"en-us": "Position?Municipality?Confirmed Cases"
 				},
 				"tooltip_text": {
 					"pt-br": "Clique para visualizar no mapa",
@@ -91,8 +91,8 @@
 					"en-us": "Ranking of Neighborhoods with the highest cases of COVID-19:"
 				},
 				"title": {
-					"pt-br": "#?Bairros?Casos Confirmados",
-					"en-us": "#?Neighborhood?Confirmed Cases"
+					"pt-br": "Posição?Bairros?Casos Confirmados",
+					"en-us": "Position?Neighborhood?Confirmed Cases"
 				},
 				"tooltip_text": {
 					"pt-br": "Clique para visualizar no mapa",
