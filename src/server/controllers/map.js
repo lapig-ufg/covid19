@@ -81,8 +81,12 @@ module.exports = function (app) {
                 Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["default_placeholder"][language]
               },
               {
-                value: "cd_geocmu = '5208707' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros)",
+                value: "cd_geocmu = '5208707' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5208707')",
                 Viewvalue: "Goiânia"
+              },
+              {
+                value: "cd_geocmu = '5201405' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5201405')",
+                Viewvalue: "Aparecida de Goiânia"
               }
               ]
             }]
