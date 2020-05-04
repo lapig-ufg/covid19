@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'lapig-dpat'`, () => {
+  it(`should have as title 'lapig-covid19'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('lapig-dpat');
+    expect(app.title).toEqual('lapig-covid19');
   });
 
   it('should render title in a h1 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to lapig-dpat!');
+    expect(compiled.querySelector('h1').textContent).toContain('Welcome to lapig-covid19!');
   });
 });

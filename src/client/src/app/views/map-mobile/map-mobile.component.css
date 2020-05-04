@@ -70,7 +70,7 @@ hr {
 }
 
 
-.dpat-ol-div {
+.covid19-ol-div {
     padding: 0px;
 }
 
@@ -90,7 +90,7 @@ body .ui-tabview .ui-tabview-panels {
     padding: 0.3em;
 }
 
-.dpat-ol-map {
+.covid19-ol-map {
 	
 	/* 100% of the viewport height - navbar height */
 	overflow: hidden;
@@ -102,7 +102,7 @@ body .ui-tabview .ui-tabview-panels {
 	box-shadow: -1px 1px 10px 0px #7a2525;
 }
 
-.dpat-ol-map .ol-viewport canvas {
+.covid19-ol-map .ol-viewport canvas {
     /* position: fixed !important; */
     width: 100%;
     min-width: 80px;
@@ -581,7 +581,7 @@ h6 {
 .baseMap {
 	padding: 20px 10px 5px 30px
 }
-.logo-dpat {
+.logo-covid19 {
 	width:80%; 
 	object-fit: cover;
 }
@@ -940,7 +940,7 @@ mat-select {
 	flex: 1 1 auto;
 }
 
-.dpat-logo{
+.covid19-logo{
 	position: absolute;
 	display: flex;
 	justify-content: center;

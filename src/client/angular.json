@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "lapig-dpat": {
+    "lapig-covid19": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/lapig-dpat",
+            "outputPath": "dist/lapig-covid19",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -70,18 +70,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "lapig-dpat:build"
+            "browserTarget": "lapig-covid19:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "lapig-dpat:build:production"
+              "browserTarget": "lapig-covid19:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "lapig-dpat:build"
+            "browserTarget": "lapig-covid19:build"
           }
         },
         "test": {
@@ -116,7 +116,7 @@
         }
       }
     },
-    "lapig-dpat-e2e": {
+    "lapig-covid19-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -125,11 +125,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "lapig-dpat:serve"
+            "devServerTarget": "lapig-covid19:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "lapig-dpat:serve:production"
+              "devServerTarget": "lapig-covid19:serve:production"
             }
           }
         },
@@ -145,5 +145,5 @@
       }
     }
   },
-  "defaultProject": "lapig-dpat"
+  "defaultProject": "lapig-covid19"
 }
