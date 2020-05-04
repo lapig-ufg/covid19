@@ -2,7 +2,7 @@ var appRoot = require('app-root-path');
 
 module.exports = function (app) {
 
-	var appProducao = '/STORAGE/dpat-files';
+	var appProducao = '/STORAGE/covid19-files';
 
 	var config = {
 		"appRoot": appRoot,
@@ -13,7 +13,7 @@ module.exports = function (app) {
 		"tmp": appRoot + "/tmp/",
 		"fieldDataDir": appRoot + '/media/campo/',
 		"uploadDataDir": appRoot + "/uploads/",
-		"downloadDataDir": appProducao + "/download-dpat/",
+		"downloadDataDir": appProducao + "/download-covid19/",
 		"pg": {
 			// "user": 'postgres',
 			"user": 'covid19',
@@ -46,10 +46,10 @@ module.exports = function (app) {
 			"port": 5432,
 			"debug": true
 		}
-		config["clientDir"] = appRoot + "/../client/dist/lapig-dpat/"
+		config["clientDir"] = appRoot + "/../client/dist/lapig-covid19/"
 		config["ows_host"] = "https://ows.lapig.iesa.ufg.br"
-		config["fieldDataDir"] = appProducao + "/campo-dpat/"
-		config["uploadDataDir"] = appProducao + "/upload-dpat/"
+		config["fieldDataDir"] = appProducao + "/campo-covid19/"
+		config["uploadDataDir"] = appProducao + "/upload-covid19/"
 
 	}
 	

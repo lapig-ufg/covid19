@@ -1,3 +1,3 @@
 #!/bin/bash
 
-NODE_ENV=dev always app-dpat-cluster.js
+NODE_ENV=dev always app-covid19-cluster.js

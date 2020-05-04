@@ -1,2 +1,2 @@
 #!/bin/bash
-kill $(pgrep -f "node app-dpat-cluster.js")
+kill $(pgrep -f "node app-covid19-cluster.js")

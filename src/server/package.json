@@ -1,5 +1,5 @@
 {
-  "name": "dpat",
+  "name": "covid19",
   "version": "0.1.0",
   "description": "Deforestation Polygon Assessment Tool",
   "main": "app.js",
