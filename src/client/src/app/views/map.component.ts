@@ -831,6 +831,8 @@ export class MapComponent implements OnInit {
     this.selectRegion = region;
     this.selectRegion.nome = this.captalizeCity(this.selectRegion.nome);
 
+    this.selectedBairroTime = "(select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '" + this.selectRegion.cd_geocmu + "')"
+
     if (this.selectRegion.cd_geocmu == '5208707') {
       this.getDates('/service/indicators/datesNeighborhoods');
     } else {
@@ -852,15 +854,13 @@ export class MapComponent implements OnInit {
   zoomToCityOnTypesLayer(layer) {
 
     if (layer.value == "casos_por_bairro_covid") {
-      if (layer.timeSelected == "cd_geocmu = '52'") { 
+      if (layer.timeSelected == "cd_geocmu = '52'") {
         this.selectedBairroTime = "(select max(data_ultima_atualizacao) from v_casos_bairros)"
       }
       else {
 
-        console.log("laaaaayer " , layer)
+        // console.log("laaaaayer ", layer)
 
-
-        this.selectedBairroTime = "(select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '" + this.selectRegion.cd_geocmu +"')"
         let tmp
 
         if (layer['times']) {
@@ -873,12 +873,17 @@ export class MapComponent implements OnInit {
 
           let ob = result[0];
           this.updateRegion(ob);
+
+          // this.selectedBairroTime = "(select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '" + this.selectRegion.cd_geocmu +"')"
+
+
           this.handleInteraction();
           // let l = this.layersNames.find(element => element.id === 'urban_traffic');
           // this.changeVisibility(l, { checked: true });
           let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
           this.changeVisibility(p, { checked: false });
           this.infodata = null
+
 
 
         });
@@ -1109,18 +1114,45 @@ export class MapComponent implements OnInit {
 
         this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
           if (data) {
-            // console.log(layerinfo, data)
+            // console.log("data", data)
             if (layerinfo.selectedType == 'covid19_municipios_casos') {
-              this.http.get(SEARCH_URL, { params: PARAMS.set('key', data.nome) }).subscribe(result => {
 
-                let ob = result[0];
-                this.updateRegion(ob);
-                let l = this.layersNames.find(element => element.id === 'urban_traffic');
-                this.changeVisibility(l, { checked: true });
-                let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
-                this.changeVisibility(p, { checked: false });
-                this.infodata = null
-              });
+              let achou = false
+              for (let layer of this.layersTypes) {
+                if (layer.value == "casos_por_bairro_covid") {
+                  for (let time of layer.times) {
+                    let str = time.value + ""
+                    if (str.includes(data.cd_geocmu)) {
+                      layer.timeSelected = time.value
+                      achou = true
+                    }
+                  }
+                }
+              }
+
+              if (achou) {
+                let bairro = this.layersNames.find(element => element.id === 'casos_bairro');
+                let tipo = bairro.types.find(element => element.value === 'casos_por_bairro_covid')
+
+                this.changeVisibility(bairro, { checked: true });
+                this.zoomToCityOnTypesLayer(tipo)
+              
+              } else {
+
+                this.http.get(SEARCH_URL, { params: PARAMS.set('key', data.nome) }).subscribe(result => {
+
+                  let ob = result[0];
+                  this.updateRegion(ob);
+                  let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+                  this.changeVisibility(p, { checked: false });
+
+                  let urban_traffic = this.layersNames.find(element => element.id === 'urban_traffic');
+                  this.changeVisibility(urban_traffic, { checked: true });
+
+                  this.handleInteraction();
+                  this.infodata = null
+                });
+              }
             }
 
           }
@@ -1337,7 +1369,6 @@ export class MapComponent implements OnInit {
   private getTileJSONBairros() {
 
     let filter = "cd_geocmu='" + this.selectRegion.cd_geocmu + "' AND data_ultima_atualizacao = " + this.selectedBairroTime;
-    console.log(filter)
     return {
       version: '2.2.0',
       grids: [
@@ -1410,9 +1441,6 @@ export class MapComponent implements OnInit {
       let layername = layer.value;
       if (layer.timeHandler == 'layername') { layername = layer.timeSelected; }
 
-      if(layer.value=="casos_por_bairro_covid"){
-        console.log(layer)
-      }
       for (let url of this.urls) {
         result.push(url + '?layers=' + layername + msfilter + '&mode=tile&tile={x}+{y}+{z}' + '&tilemode=gmap' + '&map.imagetype=png');
       }
@@ -1528,8 +1556,6 @@ export class MapComponent implements OnInit {
   }
 
   changeVisibility(layer, e) {
-
-
 
     for (let layerType of layer.types) {
       this.LayersTMS[layerType.value].setVisible(false);
@@ -1891,7 +1917,7 @@ export class MapComponent implements OnInit {
 
           if (table == 'cities') {
             doc.addImage(logos.logoSES, 'PNG', 80, 5, 55, 20);
-          }else{
+          } else {
             doc.addImage(logos.logoPrefeituraGoiania, 'PNG', 85, 5, 45, 20);
           }
           doc.addImage(logos.logoUFG, 'PNG', 156, 5, 40, 20);
@@ -1908,7 +1934,7 @@ export class MapComponent implements OnInit {
 
           if (table == 'cities') {
             doc.text("Dados disponibilizados pela Secretaria de Estado da Saúde de Goiás", 60, doc.internal.pageSize.height - 10);
-          }else{
+          } else {
             doc.text("Dados disponibilizados pela Secretaria Municipal de Saúde de Goiânia", 60, doc.internal.pageSize.height - 10);
           }
 
