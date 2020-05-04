@@ -30,36 +30,47 @@ fs.createReadStream(csvFilepath)
         await client.query('BEGIN')
 
         var newLastDate = undefined
+        var control = {
+          cd_geocmu: undefined,
+          lastDate : undefined
+        };
+        var lastDateResul = undefined;
+        var lastDate = undefined;
 
         for (i in csvRows) {
           var row = csvRows[i]
           var rowDate = new Date(row.data_atualizacao)
+          if(control.cd_geocmu == undefined || control.cd_geocmu != row.cd_geocmu)
+          {
+            control.cd_geocmu = row.cd_geocmu
+            var rowCdGEO = [row.cd_geocmu]
+            lastDateResul = await client.query(lastDateQuery, rowCdGEO)
+            control.lastDate = new Date(formatDate(lastDateResul.rows[0]['last_date']))
 
-          var rowCdGEO = [row.cd_geocmu]
-
-          var lastDateResul = await client.query(lastDateQuery, rowCdGEO)
-          var lastDate = new Date(formatDate(lastDateResul.rows[0]['last_date']))
+            console.log("entrou - ", control.cd_geocmu)
+          }
 
 
-          console.log("laaaaaaast date - ", lastDate.getTime(), " comp - ", rowDate.getTime())
+
+          // console.log("laaaaaaast date - ", lastDate.getTime(), " comp - ", rowDate.getTime())
 
           // if (lastDate === null || lastDate.getTime() === rowDate.getTime()) {
 
-          if (lastDate === null) {
+          if (control.lastDate === null) {
 
             var rowValues = [row.id_bairro, row.cd_geocmu, row.nome_bairro, row.numpoints, row.fonte, row.data_atualizacao]
             const res = await client.query(insertRow, rowValues)
-            console.log('new element ' + row.nome_bairro + ' inserted.')
+            console.log('new element ' + row.nome_bairro + ' (' + row.fonte+') inserted.')
 
           } else {
 
-            if (rowDate > lastDate) {
+            if (rowDate > control.lastDate) {
 
               var rowValues = [row.id_bairro, row.cd_geocmu, row.nome_bairro, row.numpoints, row.fonte, row.data_atualizacao]
               const res = await client.query(insertRow, rowValues)
-              console.log('update ' + row.nome_bairro + ' inserted.')
+              console.log('update ' + row.nome_bairro + ' (' + row.fonte+') inserted.')
             } else {
-              console.log('Duplicated register ignored.')
+              console.log('Duplicated '+ row.nome_bairro + ' (' + row.fonte+') register ignored.')
             }
 
             if (newLastDate == undefined || new Date(newLastDate).getTime() < rowDate.getTime()) {
