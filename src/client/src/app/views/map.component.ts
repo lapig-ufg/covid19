@@ -1888,9 +1888,11 @@ export class MapComponent implements OnInit {
   }
 
   exportPdf(table) {
+    let self = this;
     let tablename = '';
     let ob = [];
     let titleTable = [];
+    let dataFrom = self.selectRegion.nome;
 
     if (table == 'cities') {
       tablename = this.chartResultCities.filename;
@@ -1918,7 +1920,12 @@ export class MapComponent implements OnInit {
           if (table == 'cities') {
             doc.addImage(logos.logoSES, 'PNG', 80, 5, 55, 20);
           } else {
-            doc.addImage(logos.logoPrefeituraGoiania, 'PNG', 85, 5, 45, 20);
+            if(self.selectRegion.cd_geocmu == "5208707"){
+              doc.addImage(logos.logoPrefeituraGoiania, 'PNG', 85, 5, 45, 20);
+            }else{
+              doc.addImage(logos.logoPrefeituraAparecida, 'PNG', 85, 5, 45, 20);
+            }
+
           }
           doc.addImage(logos.logoUFG, 'PNG', 156, 5, 40, 20);
         };
@@ -1935,7 +1942,12 @@ export class MapComponent implements OnInit {
           if (table == 'cities') {
             doc.text("Dados disponibilizados pela Secretaria de Estado da Saúde de Goiás", 60, doc.internal.pageSize.height - 10);
           } else {
-            doc.text("Dados disponibilizados pela Secretaria Municipal de Saúde de Goiânia", 60, doc.internal.pageSize.height - 10);
+            if(self.selectRegion.cd_geocmu == "5208707"){
+              doc.text("Dados disponibilizados pela Secretaria Municipal de Saúde de Goiânia", 60, doc.internal.pageSize.height - 10);
+            }else{
+              doc.text("Dados disponibilizados pela Secretaria Municipal de Saúde de Aparecida de Goiânia", 48, doc.internal.pageSize.height - 10);
+            }
+
           }
 
           doc.setFontType('normal');
