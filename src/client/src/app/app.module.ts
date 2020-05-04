@@ -30,7 +30,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {ButtonModule} from 'primeng/button';
 
 import { DropdownModule } from 'primeng/dropdown';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { LOCALE_ID } from '@angular/core';
 import { MAT_LABEL_GLOBAL_OPTIONS } from '@angular/material/core';
@@ -65,6 +65,7 @@ import { MapMobileComponent, DialogMobile } from './views/map-mobile/map-mobile.
 import { HelpComponent } from './views/help/help.component';
 import { RestrictedAreaAccessComponent } from './views/restricted-area-access/restricted-area-access.component';
 import { RestrictedAreaFormComponent } from './views/restricted-area-form/restricted-area-form.component';
+import { NoCacheHeadersInterceptor } from './interceptors/no-cache-headers-interceptor.interceptor';
 
 registerLocaleData(localePt);
 
@@ -145,7 +146,12 @@ const ENTRY_COMPONENTS = [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: {float: 'always'} },
     DatePipe,
-    GoogleAnalyticsService
+    GoogleAnalyticsService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: NoCacheHeadersInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent],
 
