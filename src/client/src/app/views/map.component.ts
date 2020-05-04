@@ -351,15 +351,50 @@ export class MapComponent implements OnInit {
   formatter = (x: { text: string }) => x.text;
 
   onCityRowSelect(event) {
-    let name = event.data.name;
 
-    this.http.get(SEARCH_URL, { params: PARAMS.set('key', name) }).subscribe(result => {
-      let ob = result[0];
+    let name = event.data.nome;
+    let cod = event.data.geocodigo;
 
-      this.currentData = ob.text;
-      this.updateRegion(ob);
+   
+    let achou = false
+    for (let layer of this.layersTypes) {
+      if (layer.value == "casos_por_bairro_covid") {
+        for (let time of layer.times) {
+          let str = time.value + ""
+          if (str.includes(cod)) {
+            layer.timeSelected = time.value
+            achou = true
+          }
+        }
+      }
+    }
 
-    });
+    if (achou) {
+      let bairro = this.layersNames.find(element => element.id === 'casos_bairro');
+      let tipo = bairro.types.find(element => element.value === 'casos_por_bairro_covid')
+
+      this.changeVisibility(bairro, { checked: true });
+      this.zoomToCityOnTypesLayer(tipo)
+    
+    } else {
+
+      this.http.get(SEARCH_URL, { params: PARAMS.set('key', name) }).subscribe(result => {
+
+        let ob = result[0];
+        this.updateRegion(ob);
+        let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+        this.changeVisibility(p, { checked: false });
+
+        let urban_traffic = this.layersNames.find(element => element.id === 'urban_traffic');
+        this.changeVisibility(urban_traffic, { checked: true });
+
+        this.handleInteraction();
+        this.infodata = null
+      });
+    }
+
+
+
   }
 
   private selectedTimeFromLayerType(layerName) {
@@ -850,6 +885,7 @@ export class MapComponent implements OnInit {
     this.updateSummary();
     this.googleAnalyticsService.eventEmitter("updateRegion", "search_box", this.valueRegion);
   }
+
 
   zoomToCityOnTypesLayer(layer) {
 
