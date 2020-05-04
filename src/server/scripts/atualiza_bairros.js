@@ -50,8 +50,6 @@ fs.createReadStream(csvFilepath)
             console.log("entrou - ", control.cd_geocmu)
           }
 
-
-
           // console.log("laaaaaaast date - ", lastDate.getTime(), " comp - ", rowDate.getTime())
 
           // if (lastDate === null || lastDate.getTime() === rowDate.getTime()) {
