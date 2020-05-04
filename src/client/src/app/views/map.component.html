@@ -295,7 +295,7 @@
 									</p-scrollPanel>
 								</p-tabPanel>
 
-								<p-tabPanel [header]="chartResultCities.label" [cache]="true">
+								<p-tabPanel [header]="chartResultCities.label">
 									<p-scrollPanel [style]="{width: '100%', height: '38vh'}">
 										<p-table #dt [value]="chartResultCities.series" [columns]="chartResultCities.split" [exportFilename]="chartResultCities.filename"
 										selectionMode="single" (onRowSelect)="onCityRowSelect($event)">
