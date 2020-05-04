@@ -91,8 +91,6 @@ export class MapComponent implements OnInit {
   chartResultCities: any;
   chartResultCitiesIllegalAPP: any;
   chartResultCitiesIllegalRL: any;
-  desmatInfo: any;
-
   optionsStates: any
   textSummary: any
 
@@ -288,12 +286,6 @@ export class MapComponent implements OnInit {
     this.descriptor = {
       groups: []
     };
-
-    this.desmatInfo = {
-      value: 'year=2019',
-      Viewvalue: '2018/2019',
-      year: 2019
-    };
     this.datePipe = new DatePipe('pt-BR');
     this.language = 'pt-br';
 
@@ -306,7 +298,7 @@ export class MapComponent implements OnInit {
     };
 
     this.selectedConfirmedDate = ''
-    this.selectedBairroTime = '(select max(data_ultima_atualizacao) from v_casos_bairros)'
+    this.selectedBairroTime = "(select max(data_ultima_atualizacao) from v_casos_bairros)"
 
     this.bntStyleENG = this.styleDefault;
     this.bntStylePOR = this.styleSelected;
@@ -860,9 +852,15 @@ export class MapComponent implements OnInit {
   zoomToCityOnTypesLayer(layer) {
 
     if (layer.value == "casos_por_bairro_covid") {
-      if (layer.timeSelected == "cd_geocmu = '52'") { }
+      if (layer.timeSelected == "cd_geocmu = '52'") { 
+        this.selectedBairroTime = "(select max(data_ultima_atualizacao) from v_casos_bairros)"
+      }
       else {
 
+        console.log("laaaaayer " , layer)
+
+
+        this.selectedBairroTime = "(select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '" + this.selectRegion.cd_geocmu +"')"
         let tmp
 
         if (layer['times']) {
@@ -1069,7 +1067,7 @@ export class MapComponent implements OnInit {
               if (this.infobairro.nome == "") {
                 this.infobairro.nome = this.minireportText.undisclosed_message;
               }
-              console.log(this.infobairro)
+              // console.log(this.infobairro)
 
             } else {
               window.document.body.style.cursor = 'auto';
@@ -1339,6 +1337,7 @@ export class MapComponent implements OnInit {
   private getTileJSONBairros() {
 
     let filter = "cd_geocmu='" + this.selectRegion.cd_geocmu + "' AND data_ultima_atualizacao = " + this.selectedBairroTime;
+    console.log(filter)
     return {
       version: '2.2.0',
       grids: [
@@ -1411,8 +1410,9 @@ export class MapComponent implements OnInit {
       let layername = layer.value;
       if (layer.timeHandler == 'layername') { layername = layer.timeSelected; }
 
-
-
+      if(layer.value=="casos_por_bairro_covid"){
+        console.log(layer)
+      }
       for (let url of this.urls) {
         result.push(url + '?layers=' + layername + msfilter + '&mode=tile&tile={x}+{y}+{z}' + '&tilemode=gmap' + '&map.imagetype=png');
       }
@@ -2013,10 +2013,6 @@ export class MapComponent implements OnInit {
 
       this.updateSourceLayer(layer);
     }
-
-
-
-
 
     // for (let url of this.urls) {
     //   result.push(url + '?layers=' + layername + msfilter + '&mode=tile&tile={x}+{y}+{z}' + '&tilemode=gmap' + '&map.imagetype=png');
