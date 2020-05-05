@@ -916,6 +916,22 @@
 				"municipios_goias": {
 					"pt-br": "Municípios",
 					"en-us": "Municipality"
+				},
+				"mesoregioes_goias": {
+					"pt-br": "Mesoregiões de Goiás",
+					"en-us": "Mesoregions of Goiás"
+				},
+				"microregioes_goias": {
+					"pt-br": "Microrregiões de Goiás",
+					"en-us": "Microregions of Goiás"
+				},
+				"regioes_gyn_completo": {
+					"pt-br": "Regiões de Goiânia",
+					"en-us": "Regions of Goiânia"
+				},
+				"regiao_metro_goiania": {
+					"pt-br": "Região Metropolitana de Goiânia",
+					"en-us": "Metropolitan Region of Goiânia"
 				}
 			}
 		}
