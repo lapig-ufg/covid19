@@ -1,33 +1,36 @@
-var appRoot = require('app-root-path');
+var appRoot   = require('app-root-path');
+const dotenv  = require('dotenv');
+
+const result = dotenv.config();
+if (result.error) {
+    throw result.error;
+}
+const { parsed: env} = result;
 
 module.exports = function (app) {
 
-
     var config = {
         "pg": {
-            // "user": 'postgres',
-            "user": 'covid19',
-            "host": '172.18.0.4',
-            "database": 'covid19',
-            "password": 'covid19123',
-            "port": 5432,
-            "debug": true
+            "user": env.PG_USER,
+            "host": env.PG_HOST,
+            "database": env.PG_DATABASE,
+            "password": env.PG_PASSWORD,
+            "port": env.PG_PORT,
+            "debug": env.PG_DEBUG
         }
     }
 
 
     if (process.env.NODE_ENV == 'prod') {
         config["pg"] = {
-            "user": 'covid19',
-            "host": '172.18.0.4',
-            "database": 'covid19',
-            "password": 'covid19123',
-            "port": 5432,
-            "debug": true
+            "user": env.PG_USER,
+            "host": env.PG_HOST,
+            "database": env.PG_DATABASE,
+            "password": env.PG_PASSWORD,
+            "port": env.PG_PORT,
+            "debug": env.PG_DEBUG
         }
     }
-
-
     return config;
 
 }

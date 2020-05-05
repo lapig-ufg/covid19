@@ -13,6 +13,7 @@
     "cors": "^2.8.5",
     "csv-parse": "^4.8.8",
     "csv-parser": "^2.3.2",
+    "dotenv": "^8.2.0",
     "ejs": "*",
     "express": "^4.17.1",
     "express-load": "^1.1.14",

@@ -308,7 +308,4 @@ fabric.properties
 # End of https://www.gitignore.io/api/node,angular,eclipse,webstorm,visualstudiocode
 src/server/scripts/casos.csv
 src/server/scripts/casos.csv
-
-
-src/client/package-lock.json
-src/server/package-lock.json
+src/server/.env
