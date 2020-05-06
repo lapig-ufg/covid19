@@ -1109,7 +1109,6 @@ export class MapComponent implements OnInit {
               if (this.infobairro.nome == "") {
                 this.infobairro.nome = this.minireportText.undisclosed_message;
               }
-              // console.log(this.infobairro)
 
             } else {
               window.document.body.style.cursor = 'auto';
@@ -1405,7 +1404,7 @@ export class MapComponent implements OnInit {
 
   private getTileJSONBairros() {
 
-    let filter = "cd_geocmu='" + this.selectRegion.cd_geocmu + "' AND data_ultima_atualizacao = '" + this.selectedBairroTime + "'";
+    let filter = "cd_geocmu='" + this.selectRegion.cd_geocmu + "' AND data_ultima_atualizacao = " + this.selectedBairroTime ;
     return {
       version: '2.2.0',
       grids: [
