@@ -44,6 +44,7 @@ import { RestrictedAreaFormComponent } from "./restricted-area-form/restricted-a
 import * as moment from 'moment';
 
 import logos from './logos';
+import {BedsComponent} from "./beds/beds.component";
 
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
@@ -1924,6 +1925,17 @@ export class MapComponent implements OnInit {
     });
   }
 
+  openDialogBeds(){
+    let dialogRef = this.dialog.open(BedsComponent, {
+      width: '90%',
+      height: '90%',
+      data: { controls: this.controls }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+    });
+  }
   exportPdf(table) {
     let self = this;
     let language = this.language;

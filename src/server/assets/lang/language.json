@@ -988,6 +988,10 @@
 		"label_contingency_plan": {
 			"pt-br": "Plano Estadual de Contingência",
 			"en-us": "State Contingency Plan"
+		},
+		"icu_beds": {
+			"pt-br": "Leitos de UTI em Goiás",
+			"en-us": "ICU beds in Goiás"
 		}
 
 	},

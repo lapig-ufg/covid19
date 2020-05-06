@@ -188,6 +188,10 @@
 					<img width="30" height="30" src="../../assets/img/btn_layers.svg" [alt]="controls.label_layers">
 				</div>
 
+				<div [matTooltip]="controls.icu_beds" [class]="'btn-layers'"  (click)="openDialogBeds()">
+					<img width="30" height="30" src="../../assets/img/leito.svg"  [alt]="controls.icu_beds">
+				</div>
+
 				<div [matTooltip]="controls.label_statistics"
 					[class]="showStatistics ? 'btn-layers btn-layers-active' : 'btn-layers'"
 					(click)="showStatistics = !showStatistics">

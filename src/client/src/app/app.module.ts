@@ -66,6 +66,7 @@ import { HelpComponent } from './views/help/help.component';
 import { RestrictedAreaAccessComponent } from './views/restricted-area-access/restricted-area-access.component';
 import { RestrictedAreaFormComponent } from './views/restricted-area-form/restricted-area-form.component';
 import { NoCacheHeadersInterceptor } from './interceptors/no-cache-headers-interceptor.interceptor';
+import { BedsComponent } from './views/beds/beds.component';
 
 registerLocaleData(localePt);
 
@@ -77,7 +78,8 @@ const ENTRY_COMPONENTS = [
   DialogMobile,
   HelpComponent,
   RestrictedAreaAccessComponent,
-  RestrictedAreaFormComponent
+  RestrictedAreaFormComponent,
+  BedsComponent
 ];
 
 @NgModule({
@@ -91,7 +93,8 @@ const ENTRY_COMPONENTS = [
     DialogMobile,
     HelpComponent,
     RestrictedAreaAccessComponent,
-    RestrictedAreaFormComponent
+    RestrictedAreaFormComponent,
+    BedsComponent
   ],
   imports: [
     TabViewModule,
