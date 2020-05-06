@@ -18,7 +18,7 @@ module.exports = function (app) {
             "port": env.PG_PORT,
             "debug": env.PG_DEBUG
         }
-    }
+    };
 
 
     if (process.env.NODE_ENV == 'prod') {
