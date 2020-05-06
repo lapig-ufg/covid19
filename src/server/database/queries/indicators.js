@@ -130,11 +130,21 @@ module.exports = function (app) {
   }
 
   Query.datesNeighborhoods = function (params) {
+    var filter = ""
+    var cd_geocmu = params['cd_geocmu']
+
+    if (cd_geocmu != 52 && cd_geocmu != undefined) {
+      filter = "  WHERE cd_geocmu = '"+cd_geocmu+"' "
+    }
+    else {
+      filter = " "
+    }
+    console.log("log: ",filter);
     return [
 
       {
         id: 'dates-neighborhoods',
-        sql: "SELECT  to_char(max(data_ultima_atualizacao), 'DD/MM/YYYY') as data_formatada, to_char(max(data_ultima_atualizacao), 'YYYY-MM-DD') as data_db, to_char(max(data_ultima_atualizacao), 'DD/MM') as data_rotulo FROM v_casos_bairros GROUP BY data_ultima_atualizacao ORDER BY data_ultima_atualizacao; "
+        sql: "SELECT  to_char(max(data_ultima_atualizacao), 'DD/MM/YYYY') as data_formatada, to_char(max(data_ultima_atualizacao), 'YYYY-MM-DD') as data_db, to_char(max(data_ultima_atualizacao), 'DD/MM') as data_rotulo FROM v_casos_bairros "+filter+" GROUP BY data_ultima_atualizacao ORDER BY data_ultima_atualizacao; "
       },
       {
         id: 'next',

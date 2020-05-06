@@ -168,7 +168,7 @@
 					<div *ngIf="!isFilteredByCity" class="card-resumo">
 						<div class="card-resumo-title recuperado" title="Titulo">{{textSummary.suspects_label}}
 						</div>
-						<h2>{{summary.suspeitos}}</h2>
+						<h2>{{summary.suspeitos  | number }}</h2>
 					</div>
 					<div class="card-resumo">
 						<div class="card-resumo-title obitos" title="Titulo">{{textSummary.deaths_label}}</div>

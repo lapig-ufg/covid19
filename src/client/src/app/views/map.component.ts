@@ -598,6 +598,7 @@ export class MapComponent implements OnInit {
   }
 
   getDates(url = '/service/indicators/dates') {
+
     let sourceUrl = url + this.getServiceParams();
 
     this.http.get(sourceUrl).subscribe(result => {
@@ -868,7 +869,7 @@ export class MapComponent implements OnInit {
 
     this.selectedBairroTime = "(select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '" + this.selectRegion.cd_geocmu + "')"
 
-    if (this.selectRegion.cd_geocmu == '5208707') {
+    if (this.selectRegion.cd_geocmu != '52') {
       this.getDates('/service/indicators/datesNeighborhoods');
     } else {
       this.getDates();
@@ -1404,7 +1405,7 @@ export class MapComponent implements OnInit {
 
   private getTileJSONBairros() {
 
-    let filter = "cd_geocmu='" + this.selectRegion.cd_geocmu + "' AND data_ultima_atualizacao = " + this.selectedBairroTime;
+    let filter = "cd_geocmu='" + this.selectRegion.cd_geocmu + "' AND data_ultima_atualizacao = '" + this.selectedBairroTime + "'";
     return {
       version: '2.2.0',
       grids: [
@@ -1500,6 +1501,7 @@ export class MapComponent implements OnInit {
     this.handleInteraction();
 
     let source_layers = this.LayersTMS[layer.value].getSource();
+
     if (layer.source != 'geojson') {
       source_layers.setUrls(this.parseUrls(layer));
       source_layers.refresh();
@@ -1925,10 +1927,10 @@ export class MapComponent implements OnInit {
 
   exportPdf(table) {
     let self = this;
+    let language = this.language;
     let tablename = '';
     let ob = [];
     let titleTable = [];
-    let dataFrom = self.selectRegion.nome;
 
     if (table == 'cities') {
       tablename = this.chartResultCities.filename;
@@ -1947,44 +1949,35 @@ export class MapComponent implements OnInit {
         let totalDePaginas = "{total_pages_count_string}";
 
         let header = function () {
-          let title = 'Casos confirmados'.toLocaleUpperCase()
+          let title = logos.title[language].toLocaleUpperCase()
           doc.setFontType('bold');
           doc.setFontSize(12);
-          doc.text(85, 35, title);
+          doc.text(logos.title.left, logos.title.top, title);
           doc.addImage(logos.logoCovid, 'PNG', 15, 5, 45, 20);
 
-          if (table == 'cities') {
-            doc.addImage(logos.logoSES, 'PNG', 80, 5, 55, 20);
-          } else {
-            if(self.selectRegion.cd_geocmu == "5208707"){
-              doc.addImage(logos.logoPrefeituraGoiania, 'PNG', 85, 5, 45, 20);
-            }else{
-              doc.addImage(logos.logoPrefeituraAparecida, 'PNG', 85, 5, 45, 20);
-            }
+          doc.addImage(
+              logos[self.selectRegion.cd_geocmu].logo.img,
+              'PNG',
+              logos[self.selectRegion.cd_geocmu].logo.left,
+              logos[self.selectRegion.cd_geocmu].logo.top,
+              logos[self.selectRegion.cd_geocmu].logo.width,
+              logos[self.selectRegion.cd_geocmu].logo.height
+          );
 
-          }
           doc.addImage(logos.logoUFG, 'PNG', 156, 5, 40, 20);
+
         };
 
         let footer = function () {
-          var paginas = "Página " + doc.internal.getNumberOfPages();
+          var paginas = logos.page.title[language] + doc.internal.getNumberOfPages();
           if (typeof doc.putTotalPages === 'function') {
-            paginas = paginas + " de " + totalDePaginas;
+            paginas = paginas + logos.page.of[language] + totalDePaginas;
           }
 
           doc.setFontSize(9);
           doc.setFontType('normal');
 
-          if (table == 'cities') {
-            doc.text("Dados disponibilizados pela Secretaria de Estado da Saúde de Goiás", 60, doc.internal.pageSize.height - 10);
-          } else {
-            if(self.selectRegion.cd_geocmu == "5208707"){
-              doc.text("Dados disponibilizados pela Secretaria Municipal de Saúde de Goiânia", 60, doc.internal.pageSize.height - 10);
-            }else{
-              doc.text("Dados disponibilizados pela Secretaria Municipal de Saúde de Aparecida de Goiânia", 48, doc.internal.pageSize.height - 10);
-            }
-
-          }
+          doc.text(logos[self.selectRegion.cd_geocmu].footer.text[language], logos[self.selectRegion.cd_geocmu].footer.left, doc.internal.pageSize.height - 10);
 
           doc.setFontType('normal');
           doc.text(paginas, 175, doc.internal.pageSize.height - 5);
@@ -2071,13 +2064,12 @@ export class MapComponent implements OnInit {
 
     this.selectedConfirmedDate = this.dates[event.value].data_db
 
-    if (this.selectRegion.cd_geocmu == '5208707') {
+    if (this.selectRegion.cd_geocmu != '52') {
 
       this.selectedBairroTime = "'" + this.dates[event.value].data_db + "'";
       let p = this.layersNames.find(element => element.id === 'casos_bairro');
-      let layer = p.types.find(element => element.value === 'casos_por_bairro_covid')
-      layer.layerfilter = "data_ultima_atualizacao = '" + this.dates[event.value].data_db + "'"
-
+      let layer = p.types.find(element => element.value === 'casos_por_bairro_covid');
+      layer.layerfilter = "data_ultima_atualizacao = '" + this.dates[event.value].data_db + "'";
       this.updateSourceLayer(layer);
 
     } else {
