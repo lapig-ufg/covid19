@@ -81,12 +81,16 @@ module.exports = function (app) {
                 Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["default_placeholder"][language]
               },
               {
-                value: "cd_geocmu='5208707' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5208707')",
-                Viewvalue: "Goiânia"
-              },
-              {
                 value: "cd_geocmu='5201405' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5201405')",
                 Viewvalue: "Aparecida de Goiânia"
+              },
+              {
+                value: "cd_geocmu='5300108' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5300108')",
+                Viewvalue: "Brasília"
+              },
+              {
+                value: "cd_geocmu='5208707' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5208707')",
+                Viewvalue: "Goiânia"
               }
               ]
             }]
@@ -593,6 +597,38 @@ module.exports = function (app) {
             value: "municipios_goias",
             Viewvalue: languageJson["descriptor"]["limits"]["types"]["municipios_goias"][language],
             visible: true,
+            layer_limits: true,
+            source: 'ows',
+            opacity: 1
+          },
+          {
+            value: "mesoregioes_goias",
+            Viewvalue: languageJson["descriptor"]["limits"]["types"]["mesoregioes_goias"][language],
+            visible: false,
+            layer_limits: true,
+            source: 'ows',
+            opacity: 1
+          },
+          {
+            value: "microregioes_goias",
+            Viewvalue: languageJson["descriptor"]["limits"]["types"]["microregioes_goias"][language],
+            visible: false,
+            layer_limits: true,
+            source: 'ows',
+            opacity: 1
+          },
+          // {
+          //   value: "regioes_gyn_completo",
+          //   Viewvalue: languageJson["descriptor"]["limits"]["types"]["regioes_gyn_completo"][language],
+          //   visible: false,
+          //   layer_limits: true,
+          //   source: 'ows',
+          //   opacity: 1
+          // },
+          {
+            value: "regiao_metro_goiania",
+            Viewvalue: languageJson["descriptor"]["limits"]["types"]["regiao_metro_goiania"][language],
+            visible: false,
             layer_limits: true,
             source: 'ows',
             opacity: 1
