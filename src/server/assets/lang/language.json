@@ -477,7 +477,7 @@
 				},
 				"indice_vulnerabilidade":{
 					"label":{
-						"pt-br": "Vulnerabilidade ao COVID-19",
+						"pt-br": "Vulnerabilidade à COVID-19",
 						"en-us": "COVID-19 Vulnerability"
 					},
 					"types": {
@@ -918,12 +918,12 @@
 					"en-us": "Municipality"
 				},
 				"mesoregioes_goias": {
-					"pt-br": "Mesoregiões de Goiás",
-					"en-us": "Mesoregions of Goiás"
+					"pt-br": "Mesorregiões de Goiás",
+					"en-us": "Mesorregions of Goiás"
 				},
 				"microregioes_goias": {
 					"pt-br": "Microrregiões de Goiás",
-					"en-us": "Microregions of Goiás"
+					"en-us": "Microrregions of Goiás"
 				},
 				"regioes_gyn_completo": {
 					"pt-br": "Regiões de Goiânia",

@@ -1459,14 +1459,22 @@ export class MapComponent implements OnInit {
 
       let filters = [];
 
-      if (this.selectRegion.cd_geocmu == '5208707' && this.showSlider) {
-        layer.timeSelected = "cd_geocmu = '5208707' AND " + layer.layerfilter;
+      if (this.selectRegion.cd_geocmu != '52' && this.showSlider) {
+        layer.timeSelected = "cd_geocmu = '"+this.selectRegion.cd_geocmu+"' AND " + layer.layerfilter;
       }
 
-      if (layer.timeHandler == 'msfilter' && layer.times) {
-        filters.push(layer.timeSelected);
+      // if (layer.timeHandler == 'msfilter' && layer.times) {
+      //   filters.push(layer.timeSelected);
+      // }
+
+      if (layer.layerfilter) {
+        filters.push(layer.layerfilter);
+      }else{
+        if(layer.timeHandler == 'msfilter' && layer.times){
+          filters.push(layer.timeSelected);
+        }
       }
-      if (layer.layerfilter) { filters.push(layer.layerfilter); }
+
       if (this.regionFilterDefault != "") { filters.push(this.regionFilterDefault); }
       if (layer.regionFilter && this.msFilterRegion) {
         filters.push(this.msFilterRegion);
@@ -2080,7 +2088,9 @@ export class MapComponent implements OnInit {
       this.selectedBairroTime = "'" + this.dates[event.value].data_db + "'";
       let p = this.layersNames.find(element => element.id === 'casos_bairro');
       let layer = p.types.find(element => element.value === 'casos_por_bairro_covid');
-      layer.layerfilter = "data_ultima_atualizacao = '" + this.dates[event.value].data_db + "'";
+      layer.layerfilter = " cd_geocmu= '"+this.selectRegion.cd_geocmu+"' AND data_ultima_atualizacao = '" + this.dates[event.value].data_db + "'";
+
+      console.log("LAYER", layer);
       this.updateSourceLayer(layer);
 
     } else {
