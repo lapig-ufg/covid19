@@ -299,35 +299,35 @@
 									</p-scrollPanel>
 								</p-tabPanel>
 
-								<p-tabPanel [header]="chartResultCities.label">
-									<p-scrollPanel [style]="{width: '100%', height: '38vh'}">
-										<p-table #dt [value]="chartResultCities.series" [columns]="chartResultCities.split" [exportFilename]="chartResultCities.filename"
-										selectionMode="single" (onRowSelect)="onCityRowSelect($event)">
-											<ng-template pTemplate="caption">
+<!--								<p-tabPanel [header]="chartResultCities.label">-->
+<!--									<p-scrollPanel [style]="{width: '100%', height: '38vh'}">-->
+<!--										<p-table #dt [value]="chartResultCities.series" [columns]="chartResultCities.split" [exportFilename]="chartResultCities.filename"-->
+<!--										selectionMode="single" (onRowSelect)="onCityRowSelect($event)">-->
+<!--											<ng-template pTemplate="caption">-->
 <!--												<div class="ui-helper-clearfix" style="text-align: left">-->
 <!--													<button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="margin-right: 0.5em; color: #460202"></button>-->
 <!--													<button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf('cities')" class="ui-button-warning" style="margin-right: 0.5em; color: #460202"></button>-->
 <!--													<button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('cities')" style="margin-right: 0.5em;" class="ui-button-success" style="margin-right: 0.5em; color: #460202"></button>-->
 <!--												</div>-->
-											</ng-template>
-											<ng-template pTemplate="header" let-columns>
-												<tr align="center">
-													<th *ngFor="let col of columns">
-														{{col.header}}
-													</th>
-												</tr>
-											</ng-template>
-											<ng-template pTemplate="body" let-city let-columns="columns">
-												<tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
-												tooltipPosition="bottom" life="3000" align="center">
-													<td *ngFor="let col of columns">
-														{{city[col.field]}}
-													</td>
-												</tr>
-											</ng-template>
-										</p-table>
-									</p-scrollPanel>
-								</p-tabPanel>
+<!--											</ng-template>-->
+<!--											<ng-template pTemplate="header" let-columns>-->
+<!--												<tr align="center">-->
+<!--													<th *ngFor="let col of columns">-->
+<!--														{{col.header}}-->
+<!--													</th>-->
+<!--												</tr>-->
+<!--											</ng-template>-->
+<!--											<ng-template pTemplate="body" let-city let-columns="columns">-->
+<!--												<tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"-->
+<!--												tooltipPosition="bottom" life="3000" align="center">-->
+<!--													<td *ngFor="let col of columns">-->
+<!--														{{city[col.field]}}-->
+<!--													</td>-->
+<!--												</tr>-->
+<!--											</ng-template>-->
+<!--										</p-table>-->
+<!--									</p-scrollPanel>-->
+<!--								</p-tabPanel>-->
 
 
 								<p-tabPanel [header]="dataStates.label" id="tabGraficoLinhas">
