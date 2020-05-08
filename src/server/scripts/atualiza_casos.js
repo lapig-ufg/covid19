@@ -48,6 +48,18 @@ fs.createReadStream(csvFilepath)
             if (row.confirmados == '') row.confirmados = null
             if (row.suspeitos == '') row.suspeitos = null
             if (row.obitos == '') row.obitos = null
+            if (row.masculino == '') row.masculino = null
+            if (row.feminino == '') row.feminino = null
+            if (row.menor10 == '') row.menor10 = null
+            if (row.de10a14 == '') row.de10a14 = null
+            if (row.de15a19 == '') row.de15a19 = null
+            if (row.de20a29 == '') row.de20a29 = null
+            if (row.de30a39 == '') row.de30a39 = null
+            if (row.de40a49 == '') row.de40a49 = null
+            if (row.de50a59 == '') row.de50a59 = null
+            if (row.de60a69 == '') row.de60a69 = null
+            if (row.de70a79 == '') row.de70a79 = null
+            if (row.maior80 == '') row.maior80 = null
 
 
             var rowValues = [row.cd_geocmu, row.data, row.confirmados, row.suspeitos, row.obitos, row.masculino, row.feminino, row.menor10, row.de10a14, row.de15a19, row.de20a29, row.de30a39, row.de40a49, row.de50a59, row.de60a69, row.de70a79, row.maior80]
