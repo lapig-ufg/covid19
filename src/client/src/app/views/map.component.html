@@ -163,7 +163,7 @@
 					<div class="card-resumo">
 						<div class="card-resumo-title confirmado" title="Titulo">{{textSummary.confirmed_label}}
 						</div>
-						<h2>{{summary.confirmados}}</h2>
+						<h2>{{summary.confirmados  | number }}</h2>
 					</div>
 					<div *ngIf="!isFilteredByCity" class="card-resumo">
 						<div class="card-resumo-title recuperado" title="Titulo">{{textSummary.suspects_label}}
@@ -172,7 +172,7 @@
 					</div>
 					<div class="card-resumo">
 						<div class="card-resumo-title obitos" title="Titulo">{{textSummary.deaths_label}}</div>
-						<h2>{{summary.obitos}}</h2>
+						<h2>{{summary.obitos  | number }}</h2>
 					</div>
 				</div>
 			</div>
@@ -309,7 +309,7 @@
 													<button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="margin-right: 0.5em; color: #460202"></button>
 													<button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf('cities')" class="ui-button-warning" style="margin-right: 0.5em; color: #460202"></button>
 													<button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('cities')" style="margin-right: 0.5em;" class="ui-button-success" style="margin-right: 0.5em; color: #460202"></button>
-													<a class="nota" href="https://www.ufg.br/n/126975-nota-sobre-atualizacao-na-plataforma-covid-goias">Nota sobre o dado divulgado no dia 08/05/2020.</a>
+													<a target="_blank" class="nota" href="https://www.ufg.br/n/126975-nota-sobre-atualizacao-na-plataforma-covid-goias">Nota sobre o dado divulgado no dia 08/05/2020.</a>
 												</div>
 											</ng-template>
 											<ng-template pTemplate="header" let-columns>
