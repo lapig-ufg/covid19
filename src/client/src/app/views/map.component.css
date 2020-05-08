@@ -1306,6 +1306,14 @@ mat-slider {
 	font-size: 2em;
 }
 
+.nota{
+	font-size: 14px;
+	font-weight: normal;
+	text-align: left;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
 
 @media screen and (max-width: 1050px) {
 

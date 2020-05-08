@@ -38,8 +38,8 @@ export default {
         footer:{
             left: 60,
             text:{
-                "pt-br": "",
-                "en-us": ""
+                "pt-br": "Dados disponibilizados pela Secretaria de Estado da Saúde de Goiás.",
+                "en-us": "Data provided by the Goiás State Department of Health."
             }
         },
         logo:{

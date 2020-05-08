@@ -994,8 +994,8 @@
 			"en-us": "ICU beds in Goiás"
 		},
 		"playlist_msg": {
-			"pt-br": "Clique no botão ao lado de Copiar Link para visualizar outros tutoriais.",
-			"en-us": "Clique no botão ao lado de Copiar Link para visualizar outros tutoriais."
+			"pt-br": "Clique no botão ao lado de <strong>Copiar Link</strong> para visualizar outros tutoriais.",
+			"en-us": "Click the button next to <strong>Copy Link</strong> to view other tutorials."
 		}
 
 	},
