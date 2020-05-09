@@ -270,7 +270,7 @@
 									</div>
 								</p-tabPanel>
 
-								<p-tabPanel *ngIf="neighborhoodsCharts.show" [header]="neighborhoodsCharts.label" [cache]="true">
+								<p-tabPanel *ngIf="neighborhoodsCharts.show" [header]="neighborhoodsCharts.label">
 									<p-scrollPanel [style]="{width: '100%', height: '38vh'}">
 										<p-table #dt [value]="neighborhoodsCharts.series" [columns]="neighborhoodsCharts.split" [exportFilename]="neighborhoodsCharts.filename">
 											<ng-template pTemplate="caption">
