@@ -425,7 +425,7 @@
 									<p-tabView>
 										<p-tabPanel [header]="selectRegion.nome"
 											*ngFor="let dat of dataProjSeries.timeseries.chartResult; let i = index"
-											[selected]="i == 0" [cache]="true">
+											[selected]="i == 0">
 											<div>
 												<p style="font-weight: bold; text-align: center;">{{ dat.text }}</p>
 												<p-chart [ngStyle]="{'overflow-x': hidden}" *ngIf="dat.type"
