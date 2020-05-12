@@ -427,7 +427,7 @@ class Update {
 
                 tabela.push({
                     cd_geocmu: item.cd_geocmu,
-                    data: moment().format('YYYY-MM-DD HH:mm:ss'),
+                    data: moment().format('YYYY-MM-DD HH:mm'),
                     confirmados: item.confirmados,
                     obitos: obitos == undefined ? 0 : obitos.obitos,
                     feminino: feminino == undefined ? 0 : feminino.qtde,
@@ -464,7 +464,7 @@ class Update {
 
             tabela.push({
                 cd_geocmu: 111,
-                data: moment().format('YYYY-MM-DD HH:mm:ss'),
+                data: moment().format('YYYY-MM-DD HH:mm'),
                 confirmados: suspeitos,
                 obitos: 0,
                 feminino: 0,
@@ -496,7 +496,7 @@ class Update {
 
             tabela.push({
                 cd_geocmu: 5300108,
-                data: moment().format('YYYY-MM-DD HH:mm:ss'),
+                data: moment().format('YYYY-MM-DD HH:mm'),
                 confirmados: df.confirmados,
                 obitos: df.obitos,
                 feminino: 0,

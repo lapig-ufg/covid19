@@ -1,4 +1,4 @@
-const Update = require('./update-new');
+const Update = require('./update');
 const update = new Update();
 
 update.up(foo);

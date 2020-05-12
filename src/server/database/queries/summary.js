@@ -24,11 +24,11 @@ module.exports = function (app) {
         return [
             {
                 id: 'resumed_indicators',
-                sql: "SELECT SUM(confirmados) as confirmados, SUM(suspeitos) as suspeitos, SUM(obitos) as obitos FROM casos WHERE data = (SELECT MAX(data) FROM casos) AND " + filter +"",
+                sql: "SELECT SUM(confirmados) as confirmados, SUM(suspeitos) as suspeitos, SUM(obitos) as obitos FROM casos WHERE data = (select max(data) from casos) AND " + filter +"",
             },
             {
                 id: 'last_update',
-                sql: "select to_char(max(data), 'DD/MM/YYYY') as data from casos;"
+                sql: "select to_char(max(data), 'DD/MM/YYYY HH24:MI') as data from casos;"
             }
         ]
     }

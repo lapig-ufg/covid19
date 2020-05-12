@@ -53,7 +53,7 @@ module.exports = function (app) {
               value: "covid19_municipios_casos",
               Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_covid_confirmados"]["types"]["covid19_municipios_casos"]["view_value"][language],
               regionFilter: false,
-              layerfilter: "data = (select max(data) from municipios_casos)",
+              layerfilter: "data = (select max(data) from casos)",
               source: 'ows',
               opacity: 0.8,
               order: 3

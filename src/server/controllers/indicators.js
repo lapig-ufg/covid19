@@ -2,6 +2,8 @@ var fs = require('fs');
 const req = require('request');
 var languageJson = require('../assets/lang/language.json');
 
+const rp = require("request-promise");
+
 module.exports = function (app) {
 
   const config = app.config;
@@ -219,6 +221,30 @@ module.exports = function (app) {
 
     var queryResult = request.queryResult['ranking_municipios']
 
+    if(queryResult.length > 0){
+
+      queryResult.map(function(item, i) {
+        
+        if (i > 0) {
+            //Get our previous list item
+            var prevItem = queryResult[i - 1];
+            if (parseInt(prevItem.confirmados) == parseInt(item.confirmados)) {
+                //Same score = same rank
+                item.rank = prevItem.rank;
+            } else {
+                //Not the same score, give em the current iterated index + 1
+                item.rank = prevItem.rank + 1;
+            }
+        } else {
+            //First item takes the rank 1 spot
+            item.rank = 1;
+        }
+    
+        return item;
+    });
+
+  }
+
     var result = {
       label: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["label"][language],
       description: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["description"][language],
@@ -379,19 +405,28 @@ module.exports = function (app) {
     response.end();
   };
 
-  Controller.states = function (request, response) {
+  Controller.states = async function (request, response) {
 
 
     var language = request.param('lang')
-    var queryResult = request.queryResult
+
+
+        let web = await rp('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalEstado');
+
+        let bd = JSON.parse(web);
+
+        console.log(bd)
+
+
+    var queryResult = bd
 
     var qResult = [];
 
     queryResult.forEach(function (row) {
 
       qResult.push({
-        uf: row['uf'],
-        total_casos: row['total_casos']
+        uf: row['nome'],
+        total_casos: row['casosAcumulado']
       })
 
     })

@@ -43,7 +43,7 @@ module.exports = function (app) {
     return [
       {
         id: 'ranking_municipios',
-        sql: "SELECT rank, nome, cd_geocmu as geocodigo, confirmados_total as confirmados FROM v_ranking_municipios_go"
+        sql: "select 0 as rank, m.nome, c.cd_geocmu as geocodigo, c.confirmados from casos c inner join municipios m on m.cd_geocmu = c.cd_geocmu where c.cd_geocmu <> '5300108' and data = (select max(data) from casos) and c.confirmados > 0 order by c.confirmados desc"
       },
       {
         id: 'next',
@@ -120,7 +120,7 @@ module.exports = function (app) {
 
       {
         id: 'dates',
-        sql: " SELECT  to_char(max(data), 'DD/MM/YYYY') as data_formatada, to_char(max(data), 'YYYY-MM-DD') as data_db, to_char(max(data), 'DD/MM') as data_rotulo FROM casos GROUP BY data ORDER BY data; "
+        sql: " SELECT  to_char(max(data), 'DD/MM/YYYY') as data_formatada, to_char(max(data), 'YYYY-MM-DD') as data_db, to_char(max(date_trunc('day', data)), 'DD/MM') as data_rotulo FROM casos GROUP BY data ORDER BY data; "
       },
       {
         id: 'next',

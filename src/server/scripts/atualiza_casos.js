@@ -17,12 +17,12 @@ FROM municipios m \
   LEFT JOIN casos c ON m.cd_geocmu = c.cd_geocmu \
 WHERE m.cd_geocmu <> '52'"
 
-// fs.createReadStream(csvFilepath)
-//   .pipe(csv())
-//   .on('data', (row) => {
-//     csvRows.push(row)
-//   })
-//   .on('end', () => {
+fs.createReadStream(csvFilepath)
+  .pipe(csv())
+  .on('data', (row) => {
+    csvRows.push(row)
+  })
+  .on('end', () => {
 
     (async () => {
 

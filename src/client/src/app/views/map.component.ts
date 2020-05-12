@@ -1387,9 +1387,9 @@ export class MapComponent implements OnInit {
 
 
     if (this.selectedConfirmedDate == '') {
-      layer.layerfilter = "data = (select max(data) from municipios_casos)"
+      layer.layerfilter = "data = (select max(data) from casos)"
     } else {
-      layer.layerfilter = "data = '" + this.selectedConfirmedDate + "'"
+      layer.layerfilter = "date_trunc('day',data) = '" + this.selectedConfirmedDate + "'"
     }
 
     let filter = layer.layerfilter;
@@ -2083,6 +2083,8 @@ export class MapComponent implements OnInit {
 
     this.selectedConfirmedDate = this.dates[event.value].data_db
 
+    console.log(this.selectedConfirmedDate)
+
     if (this.selectRegion.cd_geocmu != '52') {
 
       this.selectedBairroTime = "'" + this.dates[event.value].data_db + "'";
@@ -2090,13 +2092,13 @@ export class MapComponent implements OnInit {
       let layer = p.types.find(element => element.value === 'casos_por_bairro_covid');
       layer.layerfilter = " cd_geocmu= '"+this.selectRegion.cd_geocmu+"' AND data_ultima_atualizacao = '" + this.dates[event.value].data_db + "'";
 
-      console.log("LAYER", layer);
+      // console.log("LAYER", layer);
       this.updateSourceLayer(layer);
 
     } else {
       let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
       let layer = p.types.find(element => element.value === 'covid19_municipios_casos')
-      layer.layerfilter = "data = '" + this.dates[event.value].data_db + "'"
+      layer.layerfilter = "date_trunc('day', data) = '" + this.dates[event.value].data_db + "'"
 
       this.updateSourceLayer(layer);
     }

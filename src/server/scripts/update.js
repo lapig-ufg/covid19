@@ -5,8 +5,6 @@ const fs = require("fs");
 const moment = require("moment");
 
 
-
-
 class Update {
     getConfimadosSES() {
 
@@ -91,7 +89,7 @@ class Update {
             conn = new Connection("csv:///confirmados.csv?headers=true&overwriteOnExecute=true");
 
             let queryConfimdos = "SELECT"
-                + " municipio, codigo_ibge as cd_geocmu, "
+                + " codigo_ibge as cd_geocmu, municipio, "
                 + " COUNT(codigo_ibge) as confirmados, "
                 + " data_notificacao "
                 + " GROUP BY codigo_ibge ORDER BY codigo_ibge ";
@@ -216,7 +214,7 @@ class Update {
             statement = conn.prepareStatement(queryMaior80);
             faixaEtaria.maior80 = await statement.query();
 
-            return { confirmados, genero, faixaEtaria };
+            return {confirmados, genero, faixaEtaria};
 
         } catch (reason) {
             console.log(reason);
@@ -363,7 +361,7 @@ class Update {
             statement = conn.prepareStatement(queryMaior80);
             faixaEtaria.maior80 = await statement.query();
 
-            return { confirmados, genero, faixaEtaria };
+            return {confirmados, genero, faixaEtaria};
         } catch (reason) {
             console.log(reason);
         } finally {
@@ -394,7 +392,7 @@ class Update {
         let self = this;
 
         setTimeout(async function () {
-            let casos = await self.getCasos();
+            let casos     = await self.getCasos();
             let varObitos = await self.getObitos();
 
             casos.confirmados.forEach(function (item, indice) {
@@ -413,10 +411,25 @@ class Update {
                 let de70a79 = self.findElement(casos.faixaEtaria.de70a79, 'cd_geocmu', item.cd_geocmu);
                 let maior80 = self.findElement(casos.faixaEtaria.maior80, 'cd_geocmu', item.cd_geocmu);
 
+                let feminino_obitos = self.findElement(varObitos.genero.fem, 'cd_geocmu', item.cd_geocmu);
+                let masculino_obitos = self.findElement(varObitos.genero.mas, 'cd_geocmu', item.cd_geocmu);
+                let obitos_obitos = self.findElement(varObitos.confirmados, 'cd_geocmu', item.cd_geocmu);
+                let menor10_obitos = self.findElement(varObitos.faixaEtaria.menor10, 'cd_geocmu', item.cd_geocmu);
+                let de10a14_obitos = self.findElement(varObitos.faixaEtaria.de10a14, 'cd_geocmu', item.cd_geocmu);
+                let de15a19_obitos = self.findElement(varObitos.faixaEtaria.de15a19, 'cd_geocmu', item.cd_geocmu);
+                let de20a29_obitos = self.findElement(varObitos.faixaEtaria.de20a29, 'cd_geocmu', item.cd_geocmu);
+                let de30a39_obitos = self.findElement(varObitos.faixaEtaria.de30a39, 'cd_geocmu', item.cd_geocmu);
+                let de40a49_obitos = self.findElement(varObitos.faixaEtaria.de40a49, 'cd_geocmu', item.cd_geocmu);
+                let de50a59_obitos = self.findElement(varObitos.faixaEtaria.de50a59, 'cd_geocmu', item.cd_geocmu);
+                let de60a69_obitos = self.findElement(varObitos.faixaEtaria.de60a69, 'cd_geocmu', item.cd_geocmu);
+                let de70a79_obitos = self.findElement(varObitos.faixaEtaria.de70a79, 'cd_geocmu', item.cd_geocmu);
+                let maior80_obitos = self.findElement(varObitos.faixaEtaria.maior80, 'cd_geocmu', item.cd_geocmu);
+
                 tabela.push({
                     cd_geocmu: item.cd_geocmu,
-                    data: moment().format('YYYY-MM-DD HH:mm:ss'),
+                    data: moment().format('YYYY-MM-DD HH:mm'),
                     confirmados: item.confirmados,
+                    suspeitos: 0,
                     obitos: obitos == undefined ? 0 : obitos.obitos,
                     feminino: feminino == undefined ? 0 : feminino.qtde,
                     masculino: masculino == undefined ? 0 : masculino.qtde,
@@ -430,6 +443,19 @@ class Update {
                     de60a69: de60a69 == undefined ? 0 : de60a69.qtde,
                     de70a79: de70a79 == undefined ? 0 : de70a79.qtde,
                     maior80: maior80 == undefined ? 0 : maior80.qtde,
+                    feminino_obitos: feminino_obitos == undefined ? 0 : feminino_obitos.qtde,
+                    masculino_obitos: masculino_obitos == undefined ? 0 : masculino_obitos.qtde,
+                    menor10_obitos: menor10_obitos == undefined ? 0 : menor10_obitos.qtde,
+                    de10a14_obitos: de10a14_obitos == undefined ? 0 : de10a14_obitos.qtde,
+                    de15a19_obitos: de15a19_obitos == undefined ? 0 : de15a19_obitos.qtde,
+                    de20a29_obitos: de20a29_obitos == undefined ? 0 : de20a29_obitos.qtde,
+                    de30a39_obitos: de30a39_obitos == undefined ? 0 : de30a39_obitos.qtde,
+                    de40a49_obitos: de40a49_obitos == undefined ? 0 : de40a49_obitos.qtde,
+                    de50a59_obitos: de50a59_obitos == undefined ? 0 : de50a59_obitos.qtde,
+                    de60a69_obitos: de60a69_obitos == undefined ? 0 : de60a69_obitos.qtde,
+                    de70a79_obitos: de70a79_obitos == undefined ? 0 : de70a79_obitos.qtde,
+                    maior80_obitos: maior80_obitos == undefined ? 0 : maior80_obitos.qtde,
+                    municipio: item.municipio
                 });
 
             });
@@ -439,8 +465,9 @@ class Update {
 
             tabela.push({
                 cd_geocmu: 111,
-                data: moment().format('YYYY-MM-DD HH:mm:ss'),
-                confirmados: suspeitos,
+                data: moment().format('YYYY-MM-DD HH:mm'),
+                confirmados:0,
+                suspeitos: suspeitos,
                 obitos: 0,
                 feminino: 0,
                 masculino: 0,
@@ -453,13 +480,27 @@ class Update {
                 de50a59: 0,
                 de60a69: 0,
                 de70a79: 0,
-                maior80: 0
+                maior80: 0,
+                feminino_obitos: 0,
+                masculino_obitos: 0,
+                menor10_obitos: 0,
+                de10a14_obitos: 0,
+                de15a19_obitos: 0,
+                de20a29_obitos: 0,
+                de30a39_obitos:0,
+                de40a49_obitos: 0,
+                de50a59_obitos: 0,
+                de60a69_obitos: 0,
+                de70a79_obitos: 0,
+                maior80_obitos:0,
+                municipio: 'SUSPEITOS'
             });
 
             tabela.push({
                 cd_geocmu: 5300108,
-                data: moment().format('YYYY-MM-DD HH:mm:ss'),
+                data: moment().format('YYYY-MM-DD HH:mm'),
                 confirmados: df.confirmados,
+                suspeitos: 0,
                 obitos: df.obitos,
                 feminino: 0,
                 masculino: 0,
@@ -472,7 +513,20 @@ class Update {
                 de50a59: 0,
                 de60a69: 0,
                 de70a79: 0,
-                maior80: 0
+                maior80: 0,
+                feminino_obitos: 0,
+                masculino_obitos: 0,
+                menor10_obitos: 0,
+                de10a14_obitos: 0,
+                de15a19_obitos: 0,
+                de20a29_obitos: 0,
+                de30a39_obitos:0,
+                de40a49_obitos: 0,
+                de50a59_obitos: 0,
+                de60a69_obitos: 0,
+                de70a79_obitos: 0,
+                maior80_obitos:0,
+                municipio: 'BRASÍLIA'
             });
 
             callback(tabela);
