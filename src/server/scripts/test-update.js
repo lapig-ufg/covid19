@@ -95,6 +95,8 @@ function foo(dados) {
             // }
   
           }
+
+          
           console.log('last update: ', lastDate)
   
           // if (newLastDate != undefined) {
