@@ -125,8 +125,8 @@
 					"en-us": "Total cases: "
 				},
 				"label_total":{
-					"pt-br": "Total bairros com casos: ",
-					"en-us": "Total neighborhoods with cases: "
+					"pt-br": "Total de bairros com casos: ",
+					"en-us": "Total of neighborhoods with cases: "
 				}
 			},
 			"charts_box_states": {
