@@ -302,6 +302,10 @@
 			"pt-br": "Casos no ? de ",
 			"en-us": "Cases in the ? of "
 		},
+		"title_brasil":{
+			"pt-br": "Casos no Brasil",
+			"en-us": "Cases in the Brazil"
+		},
 		"last_update_label":{
 			"pt-br": "Última atualização em: ",
 			"en-us": "Last updated on: "
@@ -309,6 +313,10 @@
 		"source_text":{
 			"pt-br": "Fonte: Secretaria de Saúde do Estado de Goiás",
 			"en-us": "Source: Secretary of Health in the State of Goiás "
+		},
+		"source_text_brasil":{
+			"pt-br": "Fonte: Ministério da Saúde do Brasil",
+			"en-us": "Source: Ministry of Health of Brazil "
 		},
 		"confirmed_label":{
 			"pt-br": "Confirmados",
@@ -321,6 +329,10 @@
 		"deaths_label":{
 			"pt-br": "Óbitos",
 			"en-us": "Deaths"
+		},
+		"lethality_label":{
+			"pt-br": "Letalidade",
+			"en-us": "Lethality"
 		}
 	},
 	"layer_box": {
@@ -562,7 +574,7 @@
 						"pt-br": "Mediana do nº de internações causadas por doenças respiratórias (2015-2019)",
 						"en-us": "Median number of hospitalizations caused by respiratory diseases (2015-2019)"
 					},
-					"types": 
+					"types":
 						{
 							"doencas_respiratorias_2015_2019_ano_total_covid_": {
 								"view_value": {
@@ -649,7 +661,7 @@
 						"pt-br": "Mediana dos Casos de Tuberculose entre 2015 e 2019",
 						"en-us": "Median of Tuberculosis cases between 2015 and 2019"
 					},
-					"types": 
+					"types":
 						{
 							"casos_tuberculose_2015_covid": {
 								"view_value": {
@@ -1006,6 +1018,10 @@
 		"playlist_msg": {
 			"pt-br": "Clique no botão ao lado de <strong>Copiar Link</strong> para visualizar outros tutoriais.",
 			"en-us": "Click the button next to <strong>Copy Link</strong> to view other tutorials."
+		},
+		"cartography": {
+			"pt-br": "Cartografia da Covid-19",
+			"en-us": "Covid-19 Cartography"
 		}
 
 	},

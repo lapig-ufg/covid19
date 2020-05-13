@@ -809,13 +809,13 @@ mat-select {
 }
 
 ::ng-deep .panel-layers .ui-scrollpanel-wrapper {
-    border-right: 9px solid #f4f4f4; 
+    border-right: 9px solid #f4f4f4;
 }
 
 ::ng-deep .panel-layers .ui-scrollpanel-bar {
-    background-color: #d21919; 
-    opacity: 1; 
-    transition: background-color .3s; 
+    background-color: #d21919;
+    opacity: 1;
+    transition: background-color .3s;
 }
 
 ::ng-deep .panel-layers .ui-scrollpanel-bar:hover {
@@ -1134,8 +1134,9 @@ mat-select {
 	top: 2%;
 	right: 0.7%;
 	z-index: 2200000;
-	width: 24%;
+	width: 30%;
 }
+
 
 .resumo {
 	display: flex;
@@ -1198,10 +1199,70 @@ mat-select {
 	background-color: rgba(0, 0, 0, 0.91);
 }
 
+.letalidade {
+	background-color: rgba(161, 19, 19, 0.91);
+}
+
 .card-resumo h2 {
 	margin: 4px;
 	padding-top: 5px;
-	font-size: 2em;
+	font-size: 1.4rem;
+}
+
+.container-resumo-brasil {
+	position: absolute;
+	top: 2%;
+	right: 27%;
+	z-index: 2200000;
+	width:22%;
+}
+
+.resumo-subtitle-brasil {
+	font-size: 1.5rem;
+	color: #484848;
+}
+
+.resumo-cards-brasil{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+.resumo-cards-brasil mat-card{
+	margin: 10px;
+}
+
+.card-resumo-brasil {
+	position: relative;
+	margin: 8px;
+	background-color: rgba(255, 255, 255, 0.93);
+	text-align: center;
+	width: 100%;
+	overflow: hidden;
+	border-radius: 8px;
+	-webkit-box-shadow: -1px 1px 10px 0px #707070;
+	box-shadow: -1px 1px 10px 0px #707070;
+
+}
+
+
+.resumo-subtitle-card-brasil {
+	display: block;
+	position: relative;
+	top: 0;
+	text-align: center;
+	border-radius: 8px;
+	color: #484848;
+	background-color: white;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-right: 7px;
+	margin-left: 6px;
+	-webkit-box-shadow: -1px 1px 10px 0px #707070;
+	box-shadow: -1px 1px 10px 0px #707070;
+}
+
+.resumo-subtitle-card-brasil p {
+	text-align: center;
+	font-size: 1em;
 }
 
 img[usemap], map area{

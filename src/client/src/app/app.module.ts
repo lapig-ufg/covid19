@@ -28,6 +28,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {ButtonModule} from 'primeng/button';
+import {MatGridListModule} from '@angular/material/grid-list';
+
 
 import { DropdownModule } from 'primeng/dropdown';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -58,7 +60,6 @@ import { MetadataComponent } from './views/metadata/metadata.component';
 import { GoogleAnalyticsService } from  './services/google-analytics.service'
 
 import { NgxMaskModule, IConfig } from 'ngx-mask'
-
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MapMobileComponent, DialogMobile } from './views/map-mobile/map-mobile.component';
@@ -137,6 +138,7 @@ const ENTRY_COMPONENTS = [
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    MatGridListModule,
     ReactiveFormsModule,
     RouterModule,
     NgbModule,

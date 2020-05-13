@@ -161,21 +161,49 @@
 				</div>
 				<div class="resumo">
 					<div class="card-resumo">
-						<div class="card-resumo-title confirmado" title="Titulo">{{textSummary.confirmed_label}}
+						<div class="card-resumo-title confirmado" [title]="textSummary.confirmed_label" >{{textSummary.confirmed_label}}
 						</div>
 						<h2>{{summary.confirmados  | number }}</h2>
 					</div>
 					<div *ngIf="!isFilteredByCity" class="card-resumo">
-						<div class="card-resumo-title recuperado" title="Titulo">{{textSummary.suspects_label}}
+						<div class="card-resumo-title recuperado"  [title]="textSummary.lethality_label" >{{textSummary.suspects_label}}
 						</div>
 						<h2>{{summary.suspeitos  | number }}</h2>
 					</div>
 					<div class="card-resumo">
-						<div class="card-resumo-title obitos" title="Titulo">{{textSummary.deaths_label}}</div>
+						<div class="card-resumo-title obitos" [title]="textSummary.deaths_label" >{{textSummary.deaths_label}}</div>
 						<h2>{{summary.obitos  | number }}</h2>
+					</div>
+
+					<div *ngIf="!isFilteredByCity" class="card-resumo">
+						<div class="card-resumo-title letalidade"  [title]="textSummary.lethality_label" >{{textSummary.lethality_label}}</div>
+						<h2>{{(summary.obitos / summary.confirmados) * 100  | number:'1.0-1' }}%</h2>
 					</div>
 				</div>
 			</div>
+
+<!--			<div class="container-resumo-brasil">-->
+<!--				<div class="resumo-subtitle-card-brasil">-->
+<!--					<h1 class="resumo-subtitle-brasil"> {{textSummary.title_brasil}} </h1>-->
+
+<!--					<div class="resumo-cards-brasil">-->
+<!--						<mat-card>-->
+
+<!--						</mat-card>-->
+<!--						<mat-card>-->
+
+<!--						</mat-card>-->
+<!--						<mat-card>-->
+
+<!--						</mat-card>-->
+<!--						<mat-card>-->
+
+<!--						</mat-card>-->
+<!--					</div>-->
+<!--					<p> {{textSummary.last_update_label}} {{lastUpdate.data}}</p>-->
+<!--					<p> {{textSummary.source_text_brasil}}</p>-->
+<!--				</div>-->
+<!--			</div>-->
 
 			<div class="controls">
 				<div [matTooltip]="controls.label_close_mun" *ngIf="this.selectRegion != this.defaultRegion"
@@ -484,7 +512,7 @@
 			<!-- [ngStyle]="{'visibility': (infodata || clickable) || infobairro ? 'visible' : 'hidden'}"> -->
 			<!-- [ngStyle]="{'visibility': infodata  ? 'visible' : (infobairro ? 'visible' : (clickable ? 'visible' : 'hidden'))}"> -->
 
-			<div id="map-info" class="card" 
+			<div id="map-info" class="card"
 			[ngStyle]="{'visibility': infodata  ? 'visible' : (infobairro ? 'visible' : (clickable ? 'visible' : 'hidden'))}">
 				<div *ngIf="infodata && !clickable" class="card-body">
 					<p class="card-text">{{infodata.nome}} - {{infodata.uf}}</p>

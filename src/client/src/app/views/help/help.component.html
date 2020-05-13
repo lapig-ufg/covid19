@@ -23,5 +23,15 @@
             <iframe width="100%" [height]="innerHeigth" src="https://www.youtube.com/embed/videoseries?list=PLK9Mq2s_J-1liwV1sTG3M8nuHBuN9lIfj" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </p-scrollPanel>
     </mat-tab>
+
+    <mat-tab [label]="controls.cartography">
+        <p-scrollPanel [style]="{padding: '20px', width: '100%', height: '81vh'}">
+            <div class="pdfs">
+                <iframe width="100%" height="500px" src="../../../assets/documentos/Covid-19_Introdução.pdf" frameborder="0"  allowfullscreen></iframe>
+                <iframe width="100%" height="500px" src="../../../assets/documentos/Covid-19_Seção_1.pdf" frameborder="0"  allowfullscreen></iframe>
+                <iframe width="100%" height="500px" src="../../../assets/documentos/Covid-19_Seção_2.pdf" frameborder="0"  allowfullscreen></iframe>
+            </div>
+        </p-scrollPanel>
+    </mat-tab>
 </mat-tab-group>
 

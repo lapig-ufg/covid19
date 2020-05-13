@@ -361,7 +361,7 @@ export class MapComponent implements OnInit {
     let name = event.data.nome;
     let cod = event.data.geocodigo;
 
-   
+
     let achou = false
     for (let layer of this.layersTypes) {
       if (layer.value == "casos_por_bairro_covid") {
@@ -381,7 +381,7 @@ export class MapComponent implements OnInit {
 
       this.changeVisibility(bairro, { checked: true });
       this.zoomToCityOnTypesLayer(tipo)
-    
+
     } else {
 
       this.http.get(SEARCH_URL, { params: PARAMS.set('key', name) }).subscribe(result => {
@@ -677,7 +677,7 @@ export class MapComponent implements OnInit {
           callbacks: {
             label: function(tooltipItem, data) {
                 var label = data.datasets[tooltipItem.datasetIndex].label || '';
-  
+
                 if (label) {
                     label += ': ';
                 }
@@ -1245,7 +1245,7 @@ export class MapComponent implements OnInit {
 
                 this.changeVisibility(bairro, { checked: true });
                 this.zoomToCityOnTypesLayer(tipo)
-              
+
               } else {
 
                 this.http.get(SEARCH_URL, { params: PARAMS.set('key', data.nome) }).subscribe(result => {
