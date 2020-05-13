@@ -384,8 +384,8 @@ class Update {
     async up(callback) {
 
         (async () => {
-            await this.getConfimadosSES();
-            await this.getObitosSES();
+            // await this.getConfimadosSES();
+            // await this.getObitosSES();
         })().catch(e => console.error(e.stack))
 
         let tabela = [];

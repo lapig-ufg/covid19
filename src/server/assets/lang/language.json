@@ -117,8 +117,8 @@
 					"en-us": "neighborhoods_cases_"
 				},
 				"label_sms":{
-					"pt-br": "Bairros com casos confirmados pela Secretaria Municipal de Saúde de [city] em [date]",
-					"en-us": "Neighborhoods with cases confirmed by the Municipal Health Department of [city] on [date]"
+					"pt-br": "Dados divulgados pela Secretaria Municipal de Saúde de [city] em [date]",
+					"en-us": "Data released by the Municipal Health Department of [city] on [date]"
 				},
 				"label_confirmed":{
 					"pt-br": "Total de casos: ",

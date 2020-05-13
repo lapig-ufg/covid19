@@ -79,7 +79,7 @@ function foo(dados) {
               if (row.de60a69_obitos == '') row.de60a69_obitos = null
               if (row.de70a79_obitos == '') row.de70a79_obitos = null
               if (row.maior80_obitos == '') row.maior80_obitos = null
-  
+
   
               var rowValues = [row.cd_geocmu, row.data, row.confirmados, row.suspeitos, row.obitos, row.masculino, row.feminino, 
                 row.menor10, row.de10a14, row.de15a19, row.de20a29, row.de30a39, 
