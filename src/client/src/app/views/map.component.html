@@ -153,12 +153,40 @@
 
 			</div>
 
+			<div *ngIf="!isFilteredByCity" class="container-resumo-brasil">
+				<div class="resumo-subtitle-card-brasil">
+					<h1 class="resumo-subtitle-brasil"> {{textSummary.title_brasil}} </h1>
+					<p> {{textSummary.last_update_label}} {{dataMS.last_update}}</p>
+					<p> {{textSummary.source_text_brasil}}</p>
+				</div>
+
+				<div class="resumo">
+					<div class="card-resumo">
+						<div *ngIf="!isFilteredByCity" class="card-resumo-title confirmado" [title]="textSummary.confirmed_label" >{{textSummary.confirmed_label}}
+						</div>
+						<h2>{{dataMS.confirmados | number}}</h2>
+					</div>
+
+					<div *ngIf="!isFilteredByCity" class="card-resumo">
+						<div class="card-resumo-title obitos"  [title]="textSummary.lethality_label" >{{textSummary.deaths_label}}
+						</div>
+						<h2>{{dataMS.obitos | number}}</h2>
+					</div>
+
+					<div *ngIf="!isFilteredByCity" class="card-resumo">
+						<div class="card-resumo-title letalidade"  [title]="textSummary.lethality_label" >{{textSummary.lethality_label}}</div>
+						<h2>{{dataMS.letalidade}}%</h2>
+					</div>
+				</div>
+			</div>
+
 			<div class="container-resumo">
 				<div class="resumo-subtitle-card">
 					<h1 class="resumo-subtitle"> {{textSummary.title}} </h1>
 					<p> {{textSummary.last_update_label}} {{lastUpdate.data}}</p>
 					<p> {{textSummary.source_text}}</p>
 				</div>
+
 				<div class="resumo">
 					<div class="card-resumo">
 						<div class="card-resumo-title confirmado" [title]="textSummary.confirmed_label" >{{textSummary.confirmed_label}}
@@ -182,29 +210,6 @@
 				</div>
 			</div>
 
-<!--			<div class="container-resumo-brasil">-->
-<!--				<div class="resumo-subtitle-card-brasil">-->
-<!--					<h1 class="resumo-subtitle-brasil"> {{textSummary.title_brasil}} </h1>-->
-
-<!--					<div class="resumo-cards-brasil">-->
-<!--						<mat-card>-->
-
-<!--						</mat-card>-->
-<!--						<mat-card>-->
-
-<!--						</mat-card>-->
-<!--						<mat-card>-->
-
-<!--						</mat-card>-->
-<!--						<mat-card>-->
-
-<!--						</mat-card>-->
-<!--					</div>-->
-<!--					<p> {{textSummary.last_update_label}} {{lastUpdate.data}}</p>-->
-<!--					<p> {{textSummary.source_text_brasil}}</p>-->
-<!--				</div>-->
-<!--			</div>-->
-
 			<div class="controls">
 				<div [matTooltip]="controls.label_close_mun" *ngIf="this.selectRegion != this.defaultRegion"
 					[class]="'btn-layers'" (click)="updateRegion(defaultRegion)">
@@ -217,7 +222,7 @@
 				</div>
 
 				<div [matTooltip]="controls.icu_beds" [class]="'btn-layers'"  (click)="openDialogBeds()">
-					<img width="30" height="30" src="../../assets/img/leito.svg"  [alt]="controls.icu_beds">
+					<img width="30" height="30" src="../../assets/img/goias.svg"  [alt]="controls.icu_beds">
 				</div>
 
 				<div [matTooltip]="controls.label_statistics"
@@ -231,7 +236,7 @@
 				<div [matTooltip]="controls.label_zoomout" [class]="'btn-layers'"  (click)="zoomOut()">
 					<img width="30" height="30" src="../../assets/img/menos.svg"  [alt]="controls.label_zoomout" >
 				</div>
-				<div [matTooltip]="controls.label_tips" [class]="'btn-layers'" (click)="openDialogAjuda()">
+				<div [matTooltip]="controls.label_tips_legend" [class]="'btn-layers'" (click)="openDialogAjuda()">
 					<img width="30" height="30" src="../../assets/img/tips.svg" [alt]="controls.label_tips">
 				</div>
 				<div [matTooltip]="controls.label_historic" [class]="showSlider ? 'btn-layers btn-layers-active' : 'btn-layers'" (click)="handleSlider()">
@@ -300,13 +305,20 @@
 
 								<p-tabPanel *ngIf="neighborhoodsCharts.show" [header]="neighborhoodsCharts.label">
 									<p-scrollPanel [style]="{width: '100%', height: '38vh'}">
+
+										<div class="resumo-neigh">{{neighborhoodsCharts.label_sms}}.</div>
+										<div class="resumo-totais">
+											<div class="total"> {{neighborhoodsCharts.label_total }} <strong>{{ neighborhoodsCharts.total_neighborhoods}}</strong> </div>
+											<div class="total"> {{neighborhoodsCharts.label_confirmed }} <strong> {{neighborhoodsCharts.total_confirmados}} </strong></div>
+										</div>
+
 										<p-table #dt [value]="neighborhoodsCharts.series" [columns]="neighborhoodsCharts.split" [exportFilename]="neighborhoodsCharts.filename">
 											<ng-template pTemplate="caption">
 												<div class="ui-helper-clearfix" style="text-align: left">
 													<button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="margin-right: 0.5em; color: #460202"></button>
 													<button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf('bairros')" class="ui-button-warning" style="margin-right: 0.5em; color: #460202"></button>
 													<button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('bairros')" style="margin-right: 0.5em;" class="ui-button-success" style="margin-right: 0.5em; color: #460202"></button>
-													<span style="text-align: right"> {{minireportText.label_last_update}} {{neighborhoodsCharts.last_updated}}</span>
+<!--													<span style="text-align: right"> {{minireportText.label_last_update}} {{neighborhoodsCharts.last_updated}}</span>-->
 												</div>
 											</ng-template>
 											<ng-template pTemplate="header" let-columns>
@@ -349,7 +361,7 @@
 											</ng-template>
 											<ng-template pTemplate="body" let-city let-columns="columns">
 												<tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
-												tooltipPosition="bottom" life="3000" align="center">
+												tooltipPosition="bottom" align="center">
 													<td *ngFor="let col of columns">
 														{{city[col.field]}}
 													</td>

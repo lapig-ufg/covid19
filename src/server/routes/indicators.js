@@ -2,7 +2,7 @@ module.exports = function (app) {
 
 	var dataInjector = app.middleware.dataInjector;
 	var indicators = app.controllers.indicators;
-	
+
 	app.get('/service/indicators/timeseries', dataInjector, indicators.timeseries);
 	app.get('/service/indicators/cities', dataInjector, indicators.cities);
 	app.get('/service/indicators/neighborhoods', dataInjector, indicators.neighborhoods);
@@ -14,4 +14,5 @@ module.exports = function (app) {
 	app.get('/service/indicators/datesNeighborhoods', dataInjector, indicators.datesNeighborhoods);
 	app.get('/service/indicators/team', indicators.team);
 	app.get('/service/indicators/brasil', indicators.brasil);
+	app.get('/service/indicators/summaryBrasil', indicators.summaryBrasil);
 }
