@@ -13,7 +13,7 @@ var pool = new Pool(config['pg'])
 const lastDateQuery = 'SELECT max(id) as last_id, max(data) AS last_date FROM casos'
 const insertRow = 'INSERT INTO casos(cd_geocmu, data, confirmados, suspeitos, obitos, masculino, feminino,menor10, de10a14,	de15a19,	de20a29,	de30a39	,de40a49,	de50a59,	de60a69	,de70a79,	maior80, municipio ) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18) RETURNING id'
 const insertObitos = 'INSERT INTO obitos_stats(cd_geocmu, data, obitos, masculino, feminino,menor10, de10a14,	de15a19,	de20a29,	de30a39	,de40a49,	de50a59,	de60a69	,de70a79,	maior80 , municipio) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16) RETURNING gid'
-const updateCdGeo = 'update casos set cd_geocmu = m.cd_geocmu from municipios m where casos.cd_geocmu = SUBSTRING (m.cd_geocmu FROM 1 FOR 6)'
+const updateCdGeo = 'update casos set cd_geocmu = m.cd_geocmu from municipios m where casos.cd_geocmu = SUBSTRING (m.cd_geocmu FROM 1 FOR 6) and data = (select max(data) from casos)'
 
 
 const update = new Update();
