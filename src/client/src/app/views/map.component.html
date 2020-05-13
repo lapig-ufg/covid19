@@ -290,7 +290,6 @@
 										<p style="font-weight: bold; text-align: center;">
 											{{ dataSeries.timeseries.chartResult[0]?.text }}</p>
 										<p-chart [ngStyle]="{'overflow-x': hidden}"
-											*ngIf="dataSeries.timeseries.chartResult[0]?.type"
 											[type]="dataSeries.timeseries.chartResult[0]?.type"
 											[data]="dataSeries.timeseries.chartResult[0]?.dataResult"
 											[options]="dataSeries.timeseries.chartResult[0]?.options">
