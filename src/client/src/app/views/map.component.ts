@@ -86,6 +86,8 @@ export class MapComponent implements OnInit {
   dataProjSeries: any;
   dataStates: any;
   dataCities: any;
+  dataBrasil: any;
+  optionsBrasil: any;
   dataSource: any;
   neighborhoodsCharts: any;
 
@@ -303,6 +305,9 @@ export class MapComponent implements OnInit {
 
     this.bntStyleENG = this.styleDefault;
     this.bntStylePOR = this.styleSelected;
+
+    this.optionsBrasil = {};
+    this.dataBrasil = {};
 
     this.updateCharts();
     this.chartRegionScale = true;
@@ -667,6 +672,22 @@ export class MapComponent implements OnInit {
         //   // }
         // };
 
+        graphic.options.tooltips = {
+          mode: 'index',
+          callbacks: {
+            label: function(tooltipItem, data) {
+                var label = data.datasets[tooltipItem.datasetIndex].label || '';
+  
+                if (label) {
+                    label += ': ';
+                }
+                label += tooltipItem.yLabel.toLocaleString('de-DE')
+                // label += Math.round(tooltipItem.yLabel * 100) / 100;
+                return label;
+            }
+        }
+        };
+
       }
 
     }
@@ -769,18 +790,18 @@ export class MapComponent implements OnInit {
           return null;
         };
 
-        graphic.options.tooltips.filter = function (tooltipItem, data) {
+        // graphic.options.tooltips.filter = function (tooltipItem, data) {
 
-          var label = new Date(data.labels[tooltipItem.index]);
-          let compr = new Date(graphic.last_model_date)
+        //   var label = new Date(data.labels[tooltipItem.index]);
+        //   let compr = new Date(graphic.last_model_date)
 
-          if (label >= compr) {
-            return tooltipItem.datasetIndex === 0;
-          }
-          else {
-            return tooltipItem;
-          }
-        }
+        //   if (label >= compr) {
+        //     return tooltipItem.datasetIndex === 0;
+        //   }
+        //   else {
+        //     return tooltipItem;
+        //   }
+        // }
 
       }
     }
@@ -797,8 +818,59 @@ export class MapComponent implements OnInit {
     this.http.get(statisticsURL).subscribe(res => {
       this.statistics_county = res
       this.statistics_county.result.dias_duplicacao_confirmados = Math.round(this.statistics_county.result.dias_duplicacao_confirmados)
+    });
+
+    let brasilURL = '/service/indicators/brasil' + this.getServiceParams();
+    this.http.get(brasilURL).subscribe(brasilResult => {
+      this.dataBrasil = brasilResult
+      this.optionsBrasil =  this.dataBrasil.options.options;
+
+      let y = [{
+        ticks: {
+          beginAtZero: true,
+          autoskip: true,
+          autoSkipPadding: 25,
+          callback: function (value) {
+            return value.toLocaleString('de-DE');
+          }
+        }
+      }]
+
+      this.optionsBrasil.scales.yAxes = y;
+
+      let x = [{
+        ticks: {
+          autoskip: false,
+          autoSkipPadding: 20
+        }
+      }]
+
+      this.optionsBrasil.scales.xAxes = x;
+
+
+      this.optionsBrasil.legend.onClick = function (event) {
+        return null;
+      };
+
+      this.optionsBrasil.tooltips = {
+        mode: 'index',
+        callbacks: {
+          label: function(tooltipItem, data) {
+              var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+              if (label) {
+                  label += ': ';
+              }
+              label += tooltipItem.yLabel.toLocaleString('de-DE')
+              // label += Math.round(tooltipItem.yLabel * 100) / 100;
+              return label;
+          }
+      }
+      };
 
     });
+
+
 
 
   }
@@ -2082,8 +2154,6 @@ export class MapComponent implements OnInit {
   onSliderChange(event) {
 
     this.selectedConfirmedDate = this.dates[event.value].data_db
-
-    console.log(this.selectedConfirmedDate)
 
     if (this.selectRegion.cd_geocmu != '52') {
 

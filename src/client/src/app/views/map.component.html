@@ -340,6 +340,20 @@
 									</p-chart>
 								</p-tabPanel>
 
+								<p-tabPanel [header]="dataBrasil?.label">
+
+									<div *ngIf="dataBrasil?.show">
+										<p style="font-weight: bold; text-align: center;">
+											{{ dataBrasil.title }}</p>
+										<p-chart [ngStyle]="{'overflow-x': hidden}"
+											*ngIf="dataBrasil?.show"
+											[type]="dataBrasil?.options.type"
+											[data]="dataBrasil?.dataset"
+											[options]="optionsBrasil">
+										</p-chart>
+									</div>
+								</p-tabPanel>
+
 							</p-tabView>
 						</mat-tab>
 

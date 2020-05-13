@@ -17,6 +17,16 @@
 				"pt-br": "Não existem casos confirmados em ",
 				"en-us": "There are no confirmed cases in"
 			},
+			"brasil":{
+				"title": {
+					"pt-br": "Dados do Ministério da Saúde do Brasil",
+					"en-us": "Data from the Ministry of Health of Brazil"
+				},
+				"label": {
+					"pt-br": "Brasil",
+					"en-us": "Brazil"
+				}
+			},
 			"timeseries_go":{
 				"title": {
 					"pt-br": "Dados da Secretaria de Saúde do Estado de Goiás",
@@ -117,8 +127,8 @@
 					"en-us": "Deforested Area"
 				},
 				"description": {
-					"pt-br": "Comparação do número de casos em diferentes Estados",
-					"en-us": "Comparison of the number of cases in different States"
+					"pt-br": "Comparação do número de casos em diferentes Estados (Ministério da Saúde do Brasil)",
+					"en-us": "Comparison of the number of cases in different States (Ministry of Health of Brazil)"
 				},
 				"label_confirmados":{
 					"pt-br": "Confirmados",

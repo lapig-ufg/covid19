@@ -13,4 +13,5 @@ module.exports = function (app) {
 	app.get('/service/indicators/dates', dataInjector, indicators.dates);
 	app.get('/service/indicators/datesNeighborhoods', dataInjector, indicators.datesNeighborhoods);
 	app.get('/service/indicators/team', indicators.team);
+	app.get('/service/indicators/brasil', indicators.brasil);
 }

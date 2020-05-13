@@ -125,7 +125,6 @@ module.exports = function (app) {
     return data;
   }
 
-
   Controller.timeseries = function (request, response) {
     var language = request.param('lang')
     var chartResult = [
@@ -177,7 +176,6 @@ module.exports = function (app) {
             yAxes: [],
             xAxes: []
           }
-
         }
       }
 
@@ -405,19 +403,90 @@ module.exports = function (app) {
     response.end();
   };
 
-  Controller.states = async function (request, response) {
 
-
+  Controller.brasil = async function (request, response) {
     var language = request.param('lang')
 
 
-        let web = await rp('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalEstado');
+    let web = await rp('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalCasos');
 
-        let bd = JSON.parse(web);
+    let bd = JSON.parse(web);
 
-        console.log(bd)
+    let casos = bd['dias'];
+
+    var t = {
+
+      label_confirmados: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["label_confirmados"][language],
+      label_obitos: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["label_obitos"][language],
+      borderDashRef: [5, 5],
+      type: "line",
+      pointStyle: "rect",
+      disabled: false,
+      options: {
+        title: {
+          display: false,
+          text: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["text"][language],
+          fontSize: 10,
+          position: "bottom"
+        },
+        legend: {
+          labels: {
+            usePointStyle: true,
+            fontColor: "#85560c"
+          },
+          position: "bottom"
+        },
+        tooltips: {},
+        scales: {
+          yAxes: [],
+          xAxes: []
+        }
+
+      }
+    }
+
+    let data = {
+      labels: casos.map(element => element._id+"/2020"),
+      datasets: [
+        {
+          label: t.label_confirmados,
+          data: casos.map(element => parseInt(element.casosAcumulado)),
+          fill: false,
+          backgroundColor: '#e83225',
+          borderColor: '#e83225',
+          spanGaps: true,
+        },
+        {
+          label: t.label_obitos,
+          data: casos.map(element => parseInt(element.obitosAcumulado)),
+          fill: false,
+          backgroundColor: '#000000',
+          borderColor: '#000000',
+          spanGaps: true,
+          // hidden: hideobito,
+        }
+      ]
+    };
+
+    let finalResult = {
+      label: languageJson["charts_box"]["charts_box_dados_oficiais"]["brasil"]["label"][language],
+      dataset: data,
+      options: t,
+      show: true,
+      title: languageJson["charts_box"]["charts_box_dados_oficiais"]["brasil"]["title"][language]
+    };
+
+    response.send(finalResult);
+    response.end();
+
+  }
 
 
+  Controller.states = async function (request, response) {
+    var language = request.param('lang')
+
+    let web = await rp('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalEstado');
+    let bd = JSON.parse(web);
     var queryResult = bd
 
     var qResult = [];
