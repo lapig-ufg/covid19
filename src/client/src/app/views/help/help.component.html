@@ -1,4 +1,3 @@
-
 <mat-tab-group>
     <mat-tab [label]="controls.label_tips">
         <p-scrollPanel [style]="{padding: '20px', width: '100%', height: '81vh'}">
@@ -7,23 +6,6 @@
             </div>
         </p-scrollPanel>
     </mat-tab>
-    <mat-tab [label]="controls.label_coronatransp">
-        <p-scrollPanel [style]="{padding: '20px', width: '100%', height: '81vh'}">
-            <iframe width="100%" [height]="innerHeigth" src="https://app.powerbi.com/view?r=eyJrIjoiNjM2MjQ2YTItMDQ0Mi00NmY0LTljYjEtNTExMTFlNDA5ZjYzIiwidCI6IjE4MzNkNDljLTQzZGItNGRmYy1hNDE3LWJjMDk4YjE0OGQ2MSJ9" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </p-scrollPanel>
-    </mat-tab>
-    <mat-tab [label]="controls.label_contingency_plan">
-        <p-scrollPanel [style]="{padding: '20px', width: '100%', height: '81vh'}">
-            <iframe width="100%" [height]="innerHeigth" src="../../../assets/documentos/Plano_Estadual_de_Contingência.pdf" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </p-scrollPanel>
-    </mat-tab>
-    <mat-tab label="Tutorial">
-        <p-scrollPanel [style]="{padding: '20px', width: '100%', height: '81vh'}">
-            <h5 class="playlist-msg" [innerHTML]="controls.playlist_msg"></h5>
-            <iframe width="100%" [height]="innerHeigth" src="https://www.youtube.com/embed/videoseries?list=PLK9Mq2s_J-1liwV1sTG3M8nuHBuN9lIfj" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </p-scrollPanel>
-    </mat-tab>
-
     <mat-tab [label]="controls.cartography">
         <p-scrollPanel [style]="{padding: '20px', width: '100%', height: '81vh'}">
             <div class="pdfs">
@@ -33,5 +15,22 @@
             </div>
         </p-scrollPanel>
     </mat-tab>
+<!--    <mat-tab [label]="controls.label_coronatransp">-->
+<!--        <p-scrollPanel [style]="{padding: '20px', width: '100%', height: '81vh'}">-->
+<!--            <iframe width="100%" [height]="innerHeigth" src="https://app.powerbi.com/view?r=eyJrIjoiNjM2MjQ2YTItMDQ0Mi00NmY0LTljYjEtNTExMTFlNDA5ZjYzIiwidCI6IjE4MzNkNDljLTQzZGItNGRmYy1hNDE3LWJjMDk4YjE0OGQ2MSJ9" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
+<!--        </p-scrollPanel>-->
+<!--    </mat-tab>-->
+<!--    <mat-tab [label]="controls.label_contingency_plan">-->
+<!--        <p-scrollPanel [style]="{padding: '20px', width: '100%', height: '81vh'}">-->
+<!--            <iframe width="100%" [height]="innerHeigth" src="../../../assets/documentos/Plano_Estadual_de_Contingência.pdf" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
+<!--        </p-scrollPanel>-->
+<!--    </mat-tab>-->
+    <mat-tab [label]="controls.playlist">
+        <p-scrollPanel [style]="{padding: '20px', width: '100%', height: '81vh'}">
+            <h5 class="playlist-msg" [innerHTML]="controls.playlist_msg"></h5>
+            <iframe width="100%" [height]="innerHeigth" src="https://www.youtube.com/embed/videoseries?list=PLK9Mq2s_J-1liwV1sTG3M8nuHBuN9lIfj" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </p-scrollPanel>
+    </mat-tab>
+
 </mat-tab-group>
 

@@ -1,5 +1,6 @@
 var fs = require('fs');
 const req = require('request');
+const moment = require('moment');
 var languageJson = require('../assets/lang/language.json');
 
 const rp = require("request-promise");
@@ -48,7 +49,7 @@ module.exports = function (app) {
       {
         hideobito = false
       }
-  
+
     })
 
     let data = {
@@ -222,7 +223,7 @@ module.exports = function (app) {
     if(queryResult.length > 0){
 
       queryResult.map(function(item, i) {
-        
+
         if (i > 0) {
             //Get our previous list item
             var prevItem = queryResult[i - 1];
@@ -237,7 +238,7 @@ module.exports = function (app) {
             //First item takes the rank 1 spot
             item.rank = 1;
         }
-    
+
         return item;
     });
 
@@ -267,27 +268,42 @@ module.exports = function (app) {
 
     let show = false
     if(queryResult.length > 0){
-      show = true
+        show = true
 
-      queryResult.map(function(item, i) {
-        if (i > 0) {
-            //Get our previous list item
-            var prevItem = queryResult[i - 1];
-            if (parseInt(prevItem.confirmados) == parseInt(item.confirmados)) {
-                //Same score = same rank
-                item.rank = prevItem.rank;
-            } else {
-                //Not the same score, give em the current iterated index + 1
-                item.rank = prevItem.rank + 1;
-            }
-        } else {
-            //First item takes the rank 1 spot
-            item.rank = 1;
-        }
-    
-        return item;
-    });
+        queryResult.map(function(item, i) {
+          if (i > 0) {
+              //Get our previous list item
+              var prevItem = queryResult[i - 1];
+              if (parseInt(prevItem.confirmados) == parseInt(item.confirmados)) {
+                  //Same score = same rank
+                  item.rank = prevItem.rank;
+              } else {
+                  //Not the same score, give em the current iterated index + 1
+                  item.rank = prevItem.rank + 1;
+              }
+          } else {
+              //First item takes the rank 1 spot
+              item.rank = 1;
+          }
 
+          return item;
+      });
+
+    }
+
+    let total_confirmados = 0;
+    let data_ultima_atualizacao = null;
+    if(Array.isArray(queryResult)){
+      if(queryResult.length > 0){
+        queryResult.forEach(function (item, index) {
+          total_confirmados+= item.confirmados;
+          data_ultima_atualizacao = item.data_ultima_atualizacao;
+        });
+      }else{
+        total_confirmados = null;
+      }
+    }else{
+      total_confirmados = null;
     }
 
     var result = {
@@ -297,10 +313,15 @@ module.exports = function (app) {
       tooltip: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["tooltip_text"][language],
       properties: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["properties_name"][language],
       filename: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["filename"][language],
+      label_sms: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label_sms"][language],
+      label_confirmed: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label_confirmed"][language],
+      label_total: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label_total"][language],
       show: show,
+      total_neighborhoods: Array.isArray(queryResult) ? queryResult.length: null,
+      total_confirmados: total_confirmados,
       last_updated: queryResultDate[0]['max'],
+      data_ultima_atualizacao: moment(data_ultima_atualizacao).format( "DD/MM/YYYY"),
       series: queryResult
-
     }
 
     response.send(result)
@@ -481,6 +502,34 @@ module.exports = function (app) {
 
   }
 
+  Controller.summaryBrasil = async function (request, response) {
+
+    let requestLastUpdate = {
+      headers: {
+        'x-parse-application-id':'unAFkcaNDeXajurGB7LChj8SgQYS2ptm'
+      },
+      uri: 'https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalGeral',
+      method: 'GET'
+    };
+
+    let lastUpdate = await rp(requestLastUpdate);
+    let casos = await rp('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalGeralApi');
+
+    let lastUpdateJson = JSON.parse(lastUpdate);
+    let casosJson = JSON.parse(casos);
+
+    let result = {
+      last_update: lastUpdateJson.results[0].dt_atualizacao,
+      confirmados: casosJson.confirmados.total,
+      obitos: casosJson.obitos.total,
+      letalidade: casosJson.obitos.letalidade
+    };
+    response.send(result);
+    response.end();
+
+  }
+
+
 
   Controller.states = async function (request, response) {
     var language = request.param('lang')
@@ -586,9 +635,9 @@ module.exports = function (app) {
     })
 
     let texts = {
-      title: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["title"][language], 
-      total_dias: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["total_dias"][language], 
-      media_novos_casos_3dias: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["media_novos_casos_3dias"][language], 
+      title: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["title"][language],
+      total_dias: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["total_dias"][language],
+      media_novos_casos_3dias: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["media_novos_casos_3dias"][language],
       dias_duplicacao_confirmados: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["dias_duplicacao_confirmados"][language]
     }
 
