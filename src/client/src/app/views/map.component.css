@@ -1386,7 +1386,7 @@ mat-slider {
 .resumo-neigh{
 	text-align: center;
 	font-weight: bold;
-	font-size: 1em;
+	font-size: .98em;
 	margin: 10px;
 }
 
@@ -1419,10 +1419,13 @@ mat-slider {
 
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1400px) {
 
 	.container-resumo-brasil {
-		width: 26%;
+		width: 32%;
+	}
+	.container-resumo {
+		width: 32%;
 	}
 
 }
