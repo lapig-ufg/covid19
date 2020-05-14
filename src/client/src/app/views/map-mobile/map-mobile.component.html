@@ -21,16 +21,16 @@
 								<div class="card-resumo">
 									<div class="card-resumo-title confirmado" title="Titulo">{{textSummary.confirmed_label}}
 									</div>
-									<h2>{{summary.confirmados}}</h2>
+									<h2>{{summary.confirmados | number }}</h2>
 								</div>
 								<div *ngIf="!isFilteredByCity" class="card-resumo">
 									<div class="card-resumo-title recuperado" title="Titulo">{{textSummary.suspects_label}}
 									</div>
-									<h2>{{summary.suspeitos}}</h2>
+									<h2>{{summary.suspeitos | number }}</h2>
 								</div>
 								<div class="card-resumo">
 									<div class="card-resumo-title obitos" title="Titulo">{{textSummary.deaths_label}}</div>
-									<h2>{{summary.obitos}}</h2>
+									<h2>{{summary.obitos | number }}</h2>
 								</div>
 								<div *ngIf="!isFilteredByCity" class="card-resumo">
 									<div class="card-resumo-title letalidade"  [title]="textSummary.lethality_label" >{{textSummary.lethality_label}}</div>
@@ -293,7 +293,14 @@
 					</ng-template>
 				</p-table>
 			</p-scrollPanel>
-		</mat-tab>  
+		</mat-tab>
+		<mat-tab label="Leitos UTI">
+			<!-- <p-scrollPanel [style]="{width: '100%', height: '100%'}"> -->
+					<div style="height: 85vh; position: inherit; padding: 10px">
+							<iframe width="100%" height="100%" src="https://extranet.saude.go.gov.br/pentaho/api/repos/:mapa_de_leitos:paineis:painel.wcdf/generatedContent#mapadeleitosPage" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					</div>
+			<!-- </p-scrollPanel> -->
+	</mat-tab>
 		<mat-tab  label = "Projeto" >
 				<p-scrollPanel [style]="{width: '100%', height: '100%'}">
 
@@ -318,7 +325,7 @@
 						</div>
 					</p-scrollPanel>
 		</mat-tab>
-		<mat-tab label="Tutorial">
+		<mat-tab label="Tutoriais">
 				<p-scrollPanel [style]="{padding: '20px 5px', width: '100%', height: '81vh'}">
 					<h6 class="playlist-msg" style="text-align: center" [innerHTML]="controls.playlist_msg"></h6>
 					<iframe width="100%" height="60%" src="https://www.youtube.com/embed/videoseries?list=PLK9Mq2s_J-1liwV1sTG3M8nuHBuN9lIfj" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
