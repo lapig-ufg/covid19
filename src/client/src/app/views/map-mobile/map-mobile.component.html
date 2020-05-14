@@ -8,7 +8,7 @@
 		</div>
 	</div>
 </nav>
-<mat-tab-group id="tab-mobile" style="height: 89%"> 
+<mat-tab-group id="tab-mobile" style="height: 89%">
 		<mat-tab label = "Mapa">
 			<p-scrollPanel [style]="{width: '100%', height: '100%'}">
 				<div style="padding: 5px;">
@@ -97,14 +97,14 @@
 								<span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
 								<div class="invalid-feedback" *ngIf="searchFailed">
 									{{titlesLayerBox.search_failed}}</div>
-	
+
 								<div *ngFor="let groups of descriptor.groups" style="margin-bottom: 10px">
 									<mat-expansion-panel [expanded]=groups.group_expanded>
 										<mat-expansion-panel-header [collapsedHeight]="'40px'"
 											[expandedHeight]="'40px'" class="expansion-header-layer">
 											<h5 class="expansion-layer"><b>{{groups.label}}</b></h5>
 										</mat-expansion-panel-header>
-	
+
 										<div class="layersContent" *ngFor="let layer of groups.layers">
 											<div style="display: flex">
 												<mat-checkbox class="example-margin"
@@ -156,8 +156,8 @@
 					</div>
 				</div>
 			</p-scrollPanel>
-		</mat-tab> 
-		<mat-tab  label = "Gráficos" > 
+		</mat-tab>
+		<mat-tab  label = "Gráficos" >
 				<mat-tab label="{{dataSeries.timeseries.label}}" >
 					<ng-template matTabContent>
 							<p-scrollPanel [style]="{width: '100%', height: '100vh'}" >
@@ -189,7 +189,7 @@
 												<p *ngIf="statistics_county.result.media_novos_casos_3dias != -1"><b>{{statistics_county.text.media_novos_casos_3dias}}</b> {{statistics_county.result.media_novos_casos_3dias}}</p>
 												<p *ngIf="statistics_county.result.dias_duplicacao_confirmados != -1"><b>{{statistics_county.text.dias_duplicacao_confirmados}}</b> {{statistics_county.result.dias_duplicacao_confirmados | number:'1.0-3'}}</p>
 											</div>
-		
+
 											<h5 *ngIf="!dataProjSeries.timeseries.chartResult[0]?.show" style="text-align: center;">
 												<br>
 												<br>
@@ -197,7 +197,7 @@
 												<br>
 												<br>
 											</h5>
-		
+
 											<div *ngIf="dataProjSeries.timeseries.chartResult[0]?.show">
 												<p style="font-weight: bold; text-align: end;">
 													{{dataProjSeries.timeseries.last_updated}}  {{dataProjSeries.timeseries.chartResult[0]?.last_model_date | date : 'dd/MM/yyyy'}}</p>
@@ -271,9 +271,17 @@
 					</ng-template>
 				</p-table>
 			</p-scrollPanel>
-		</mat-tab> 
+		</mat-tab>
 		<mat-tab  (click)="handleAnalytics('charts', 'dados_oficiais', 'Municípios')" label = "Municípios" >
 			<p-scrollPanel [style]="{width: '100%', height: '98%'}">
+				<div class="resumo-neigh">{{chartResultCities.label_ses}} {{lastUpdate.data}}.</div>
+				<div class="resumo-totais">
+					<div class="total"> {{chartResultCities.label_total_ses }} <strong>{{ chartResultCities.total_cities | number}}</strong> </div>
+					<div class="total"> {{chartResultCities.label_confirmed_ses }} <strong> {{chartResultCities.total_confirmados | number}} </strong></div>
+				</div>
+
+				<div *ngIf="(summary.confirmados - chartResultCities.total_confirmados) > 0" style="margin: 10px; text-align: center!important;" > {{chartResultCities.label_without_city }} <strong> {{(summary.confirmados - chartResultCities.total_confirmados) | number}} </strong></div>
+
 				<p-table #dt [value]="chartResultCities.series" [columns]="chartResultCities.split" [exportFilename]="chartResultCities.filename">
 					<ng-template pTemplate="caption">
 						<div class="ui-helper-clearfix" style="text-align: left">
@@ -336,11 +344,11 @@
 					<iframe width="100%" height="60%" src="https://www.youtube.com/embed/videoseries?list=PLK9Mq2s_J-1liwV1sTG3M8nuHBuN9lIfj" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 			</p-scrollPanel>
 		</mat-tab>
-		<mat-tab  label = "Dicas" > 
+		<mat-tab  label = "Dicas" >
 				<p-scrollPanel [style]="{width: '100%', height: '100%'}">
 					<div style="padding: 10px">
 						<img width="100%" src="../../../assets/img/ajuda_covid_mobile.png" />
 					</div>
 				</p-scrollPanel>
-		</mat-tab> 
+		</mat-tab>
 </mat-tab-group >
