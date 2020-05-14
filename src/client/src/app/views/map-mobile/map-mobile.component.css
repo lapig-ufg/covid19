@@ -392,6 +392,29 @@ font-size: 0.8em;
 	font-size: 2em;
 }
 
+.nota{
+	font-size: 14px;
+	font-weight: normal;
+	text-align: left;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.resumo-neigh{
+	text-align: center;
+	font-weight: bold;
+	font-size: 1em;
+	margin: 8px;
+	color: #333333;
+}
+
+.resumo-totais{
+	display: grid;
+	/* grid-template-columns: 1fr 1fr; */
+	text-align: center;
+	margin: 8px	;
+}
+
 .container-team{
 	margin: 15px;
 	text-align: center;

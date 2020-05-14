@@ -243,6 +243,19 @@ module.exports = function (app) {
     });
 
   }
+    let total_confirmados = 0;
+    let data_ultima_atualizacao = null;
+    if(Array.isArray(queryResult)){
+      if(queryResult.length > 0){
+        queryResult.forEach(function (item, index) {
+          total_confirmados+= item.confirmados;
+        });
+      }else{
+        total_confirmados = null;
+      }
+    }else{
+      total_confirmados = null;
+    }
 
     var result = {
       label: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["label"][language],
@@ -251,7 +264,13 @@ module.exports = function (app) {
       tooltip: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["tooltip_text"][language],
       properties: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["properties_name"][language],
       filename: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["filename"][language],
-      series: queryResult
+      series: queryResult,
+      total_cities: Array.isArray(queryResult) ? queryResult.length: null,
+      total_confirmados: total_confirmados,
+      label_ses: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["label_ses"][language],
+      label_confirmed_ses: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["label_confirmed_ses"][language],
+      label_total_ses: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["label_total_ses"][language],
+      label_without_city: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["label_without_city"][language],
     }
 
     response.send(result)

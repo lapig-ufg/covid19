@@ -6,6 +6,11 @@
             </div>
         </p-scrollPanel>
     </mat-tab>
+    <mat-tab [label]="controls.inform_goiania">
+        <p-scrollPanel [style]="{padding: '20px', width: '100%', height: '81vh'}">
+            <iframe width="100%" [height]="innerHeigth" src="https://saude.goiania.go.gov.br/goiania-contra-o-coronavirus/informe-epidemiologico-covid-19/" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </p-scrollPanel>
+    </mat-tab>
     <mat-tab [label]="controls.cartography">
         <p-scrollPanel [style]="{padding: '20px', width: '100%', height: '81vh'}">
             <div class="pdfs">

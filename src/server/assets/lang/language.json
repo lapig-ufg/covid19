@@ -89,6 +89,22 @@
 				"filename":{
 					"pt-br": "casos_por_municipio_",
 					"en-us": "municipality_cases_"
+				},
+				"label_ses":{
+					"pt-br": "Dados divulgados pela Secretaria de Estado da Saúde de Goiás em ",
+					"en-us": "Data released by the Goiás State Department of Health on "
+				},
+				"label_confirmed_ses":{
+					"pt-br": "Total de casos: ",
+					"en-us": "Total cases: "
+				},
+				"label_total_ses":{
+					"pt-br": "Total de municípios com casos: ",
+					"en-us": "Total municipalities with cases: "
+				},
+				"label_without_city":{
+					"pt-br": "Casos sem identificação do município de residência: ",
+					"en-us": "Cases without identification of the municipality of residence: "
 				}
 			},
 			"ranking_neighborhoods": {
@@ -1050,6 +1066,10 @@
 		"cartography": {
 			"pt-br": "Cartografia da Covid-19",
 			"en-us": "Covid-19 Cartography"
+		},
+		"inform_goiania": {
+			"pt-br": "Informe Epidemiológico COVID-19 de Goiânia",
+			"en-us": "COVID-19 Epidemiological Report from Goiânia"
 		}
 
 	},
