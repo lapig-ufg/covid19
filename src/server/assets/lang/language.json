@@ -115,6 +115,18 @@
 				"filename":{
 					"pt-br": "casos_por_bairro_",
 					"en-us": "neighborhoods_cases_"
+				},
+				"label_sms":{
+					"pt-br": "Dados divulgados pela Secretaria Municipal de Saúde de [city] em [date]",
+					"en-us": "Data released by the Municipal Health Department of [city] on [date]"
+				},
+				"label_confirmed":{
+					"pt-br": "Total de casos: ",
+					"en-us": "Total cases: "
+				},
+				"label_total":{
+					"pt-br": "Total de bairros com casos: ",
+					"en-us": "Total of neighborhoods with cases: "
 				}
 			},
 			"charts_box_states": {
@@ -307,7 +319,7 @@
 			"en-us": "Cases in the Brazil"
 		},
 		"last_update_label":{
-			"pt-br": "Última atualização em: ",
+			"pt-br": "Ùltima atualização em: ",
 			"en-us": "Last updated on: "
 		},
 		"source_text":{
@@ -979,6 +991,10 @@
 			"pt-br": "Menos Zoom",
 			"en-us": "Zoom Out"
 		},
+		"label_tips_legend": {
+			"pt-br": "Dicas e Tutoriais",
+			"en-us": "Tips and Tutorials"
+		},
 		"label_tips": {
 			"pt-br": "Dicas",
 			"en-us": "Tips"
@@ -1014,6 +1030,18 @@
 		"icu_beds": {
 			"pt-br": "Leitos de UTI em Goiás",
 			"en-us": "ICU beds in Goiás"
+		},
+		"icu_beds_label": {
+			"pt-br": "Portais de Goiás",
+			"en-us": "Portals of Goiás"
+		},
+		"portal_ses_label": {
+			"pt-br": "Portal COVID-19 da SES-GO",
+			"en-us": "COVID-19 portal of SES-GO"
+		},
+		"playlist": {
+			"pt-br": "Tutoriais",
+			"en-us": "Tutorials"
 		},
 		"playlist_msg": {
 			"pt-br": "Clique no botão ao lado de <strong>Copiar Link</strong> para visualizar outros tutoriais.",

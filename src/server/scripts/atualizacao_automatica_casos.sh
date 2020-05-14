@@ -36,9 +36,9 @@ sleep 2
 
 python2 download_planilha_casos.py
 
-mv 1mlyQIUbGKB2J3UIQrCPxAORaY5HYAPlMgY61IMCu4JY-worksheet0.csv casos.csv
+rm -rfv 1mlyQIUbGKB2J3UIQrCPxAORaY5HYAPlMgY61IMCu4JY-worksheet0.csv 
 
-mv 163Agr2r4r4evn74SUkVojcdg-hq6urb0qcCMk5Pdknw-worksheet0.csv estados_casos.csv
+rm -rfv 163Agr2r4r4evn74SUkVojcdg-hq6urb0qcCMk5Pdknw-worksheet0.csv 
 
 mv 1sMzwMlPThQ0-AVYeYAxjkPQ_0G82hOEyDDh-xTlaaf4-worksheet0.csv projecao_casos_go.csv
 
@@ -58,10 +58,7 @@ echo -n -e "Populando banco de dados!"
 sleep 2
 
 clear
-node atualiza_casos.js
-sleep 2
-clear
-node atualiza_estados_casos.js
+node atualiza_casos_municipios.js
 sleep 2
 clear
 node atualiza_estatisticas.js

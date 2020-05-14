@@ -43,6 +43,7 @@ import { RestrictedAreaAccessComponent } from "./restricted-area-access/restrict
 import { RestrictedAreaFormComponent } from "./restricted-area-form/restricted-area-form.component";
 import * as moment from 'moment';
 
+
 import logos from './logos';
 import {BedsComponent} from "./beds/beds.component";
 
@@ -217,6 +218,8 @@ export class MapComponent implements OnInit {
   dates: any;
   showSlider: boolean;
 
+  dataMS:any;
+
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
   selectedConfirmedDate: any;
 
@@ -334,7 +337,8 @@ export class MapComponent implements OnInit {
     this.getDates();
     this.showSlider = false;
 
-
+    this.dataMS = {};
+    this.getDataMS();
   }
 
   search = (text$: Observable<string>) =>
@@ -613,6 +617,12 @@ export class MapComponent implements OnInit {
 
   }
 
+  getDataMS() {
+    this.http.get('/service/indicators/summaryBrasil').subscribe(result => {
+      this.dataMS = result;
+    });
+  }
+
   private updateCharts() {
 
     let timeseriesUrl = '/service/indicators/timeseries' + this.getServiceParams();
@@ -722,6 +732,9 @@ export class MapComponent implements OnInit {
       this.neighborhoodsCharts = citiesResult;
 
       this.neighborhoodsCharts.label += this.selectRegion.nome
+
+      this.neighborhoodsCharts.label_sms = this.neighborhoodsCharts.label_sms.replace('[city]', this.selectRegion.nome);
+      this.neighborhoodsCharts.label_sms = this.neighborhoodsCharts.label_sms.replace('[date]', this.neighborhoodsCharts.data_ultima_atualizacao);
 
       let d = new Date(this.neighborhoodsCharts.last_updated)
 
