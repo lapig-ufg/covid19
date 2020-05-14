@@ -32,6 +32,10 @@
 									<div class="card-resumo-title obitos" title="Titulo">{{textSummary.deaths_label}}</div>
 									<h2>{{summary.obitos}}</h2>
 								</div>
+								<div *ngIf="!isFilteredByCity" class="card-resumo">
+									<div class="card-resumo-title letalidade"  [title]="textSummary.lethality_label" >{{textSummary.lethality_label}}</div>
+									<h2>{{(summary.obitos / summary.confirmados) * 100  | number:'1.0-1' }}%</h2>
+								</div>
 							</div>
 							<div class="resumo" *ngIf="this.selectRegion != this.defaultRegion" style="padding-bottom: 5px; padding-top: 5px;">
 								<div matTooltip="Sair do Município"
@@ -170,7 +174,7 @@
 											<p style="font-weight: bold; text-align: center;">
 												{{ dataSeries.timeseries.chartResult[0]?.text }}</p>
 											<p-chart [ngStyle]="{'overflow-x': hidden}"
-											height="37vh"
+											height="40vh"
 												*ngIf="dataSeries.timeseries.chartResult[0]?.type"
 												[type]="dataSeries.timeseries.chartResult[0]?.type"
 												[data]="dataSeries.timeseries.chartResult[0]?.dataResult"
@@ -198,7 +202,7 @@
 												<p style="font-weight: bold; text-align: end;">
 													{{dataProjSeries.timeseries.last_updated}}  {{dataProjSeries.timeseries.chartResult[0]?.last_model_date | date : 'dd/MM/yyyy'}}</p>
 												<p-chart [ngStyle]="{'overflow-x': hidden}"
-													height="37vh"
+													height="30vh"
 													*ngIf="dataProjSeries.timeseries.chartResult[0]?.type"
 													[type]="dataProjSeries.timeseries.chartResult[0]?.type"
 													[data]="dataProjSeries.timeseries.chartResult[0]?.dataResult"
@@ -212,6 +216,19 @@
 										</h6>
 										<p-chart type="bar" height="36.5vh" [data]="dataStates" [options]="optionsStates">
 										</p-chart>
+									</p-tabPanel>
+									<p-tabPanel [header]="dataBrasil?.label">
+										<div *ngIf="dataBrasil?.show">
+											<p style="font-weight: bold; text-align: center;">
+												{{ dataBrasil.title }}</p>
+											<p-chart [ngStyle]="{'overflow-x': hidden}"
+												*ngIf="dataBrasil?.show"
+												height="40vh"
+												[type]="dataBrasil?.options.type"
+												[data]="dataBrasil?.dataset"
+												[options]="optionsBrasil">
+											</p-chart>
+										</div>
 									</p-tabPanel>
 									<div>
 										<button mat-raised-button style="background-color: #7e1116; margin-bottom: 10px;" (click)="openDialog()">Fontes</button>
@@ -302,9 +319,10 @@
 					</p-scrollPanel>
 		</mat-tab>
 		<mat-tab label="Tutorial">
-        <p-scrollPanel [style]="{padding: '20px 5px', width: '100%', height: '81vh'}">
-            <iframe width="100%" height="60%"  src="https://www.youtube.com/embed/pynvV0wuq2c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </p-scrollPanel>
+				<p-scrollPanel [style]="{padding: '20px 5px', width: '100%', height: '81vh'}">
+					<h6 class="playlist-msg" style="text-align: center" [innerHTML]="controls.playlist_msg"></h6>
+					<iframe width="100%" height="60%" src="https://www.youtube.com/embed/videoseries?list=PLK9Mq2s_J-1liwV1sTG3M8nuHBuN9lIfj" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			</p-scrollPanel>
 		</mat-tab>
 		<mat-tab  label = "Dicas" > 
 				<p-scrollPanel [style]="{width: '100%', height: '100%'}">
