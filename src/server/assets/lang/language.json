@@ -103,8 +103,8 @@
 					"en-us": "Total municipalities with cases: "
 				},
 				"label_without_city":{
-					"pt-br": "Casos sem identificação do município de residência: ",
-					"en-us": "Cases without identification of the municipality of residence: "
+					"pt-br": "No. de casos sem identificação do município: ",
+					"en-us": "Number of cases without identification of the municipality: "
 				}
 			},
 			"ranking_neighborhoods": {

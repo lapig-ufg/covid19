@@ -311,10 +311,10 @@
 											<div class="total"> {{neighborhoodsCharts.label_confirmed }} <strong> {{neighborhoodsCharts.total_confirmados}} </strong></div>
 										</div>
 
-										<p-table #dt [value]="neighborhoodsCharts.series" [columns]="neighborhoodsCharts.split" [exportFilename]="neighborhoodsCharts.filename">
+										<p-table #dtNeighborhoodsCharts [value]="neighborhoodsCharts.series" [columns]="neighborhoodsCharts.split" [exportFilename]="neighborhoodsCharts.filename">
 											<ng-template pTemplate="caption">
 												<div class="ui-helper-clearfix" style="text-align: left">
-													<button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="margin-right: 0.5em; color: #460202"></button>
+													<button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dtNeighborhoodsCharts.exportCSV()" style="margin-right: 0.5em; color: #460202"></button>
 													<button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf('bairros')" class="ui-button-warning" style="margin-right: 0.5em; color: #460202"></button>
 													<button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('bairros')" style="margin-right: 0.5em;" class="ui-button-success" style="margin-right: 0.5em; color: #460202"></button>
 <!--													<span style="text-align: right"> {{minireportText.label_last_update}} {{neighborhoodsCharts.last_updated}}</span>-->
@@ -348,11 +348,11 @@
 										</div>
 										<div *ngIf="(summary.confirmados - chartResultCities.total_confirmados) > 0" style="margin: 10px; text-align: center!important;" > {{chartResultCities.label_without_city }} <strong> {{(summary.confirmados - chartResultCities.total_confirmados) | number}} </strong></div>
 
-										<p-table #dt [value]="chartResultCities.series" [columns]="chartResultCities.split" [exportFilename]="chartResultCities.filename"
+										<p-table #dtChartResultCities [value]="chartResultCities.series" [columns]="chartResultCities.split" [exportFilename]="chartResultCities.filename"
 										selectionMode="single" (onRowSelect)="onCityRowSelect($event)">
 											<ng-template pTemplate="caption">
 												<div class="ui-helper-clearfix" style="text-align: left">
-													<button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="margin-right: 0.5em; color: #460202"></button>
+													<button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dtChartResultCities.exportCSV()" style="margin-right: 0.5em; color: #460202"></button>
 													<button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf('cities')" class="ui-button-warning" style="margin-right: 0.5em; color: #460202"></button>
 													<button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('cities')" style="margin-right: 0.5em;" class="ui-button-success" style="margin-right: 0.5em; color: #460202"></button>
 <!--													<a target="_blank" class="nota" href="https://www.ufg.br/n/126975-nota-sobre-atualizacao-na-plataforma-covid-goias">Nota sobre o dado divulgado no dia 08/05/2020.</a>-->

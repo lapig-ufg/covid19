@@ -43,7 +43,6 @@ import { RestrictedAreaAccessComponent } from "./restricted-area-access/restrict
 import { RestrictedAreaFormComponent } from "./restricted-area-form/restricted-area-form.component";
 import * as moment from 'moment';
 
-
 import logos from './logos';
 import {BedsComponent} from "./beds/beds.component";
 
@@ -706,6 +705,7 @@ export class MapComponent implements OnInit {
     let citiesUrl = '/service/indicators/cities' + this.getServiceParams();
     this.exportColumnsCities = [];
     this.http.get(citiesUrl).subscribe(citiesResult => {
+
       this.chartResultCities = citiesResult;
 
       let headers = this.chartResultCities.title.split('?');
@@ -729,6 +729,7 @@ export class MapComponent implements OnInit {
     let neighborhoodsUrl = '/service/indicators/neighborhoods' + this.getServiceParams() + '&timefilter=' + this.selectedBairroTime;
     this.exportColumnsBairros = [];
     this.http.get(neighborhoodsUrl).subscribe(citiesResult => {
+
       this.neighborhoodsCharts = citiesResult;
 
       this.neighborhoodsCharts.label += this.selectRegion.nome
@@ -2199,7 +2200,6 @@ export class MapComponent implements OnInit {
   }
 
   ngOnInit() {
-
     let descriptorURL = '/service/map/descriptor' + this.getServiceParams();
 
     this.http.get(descriptorURL).subscribe(result => {
