@@ -45,6 +45,7 @@ import * as moment from 'moment';
 
 import logos from './logos';
 import {BedsComponent} from "./beds/beds.component";
+import {NoteComponent} from "./note/note.component";
 
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
@@ -215,8 +216,12 @@ export class MapComponent implements OnInit {
   display: boolean;
   team: any;
   dates: any;
+  datesProjections: any;
   showSlider: boolean;
-
+  showProjections:boolean;
+  projectionsLayers:any;
+  selectedProjectionLayer:any;
+  labelProjections:any;
   dataMS:any;
 
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
@@ -335,7 +340,17 @@ export class MapComponent implements OnInit {
     this.dates = [];
     this.getDates();
     this.showSlider = false;
-
+    this.datesProjections = [];
+    this.showProjections = false;
+    this.projectionsLayers = [
+      {label: 'Confirmados', value: 'projecao_luisa_confirmados'},
+      {label: 'Recuperados', value: 'projecao_luisa_recuperados'},
+      {label: 'Infectados', value: 'projecao_luisa_infectados'},
+      {label: 'Hospitalizados', value: 'projecao_luisa_hospitalizados'}
+    ];
+    this.selectedProjectionLayer = 'projecao_luisa_confirmados';
+    this.labelProjections = 'Confirmados';
+    this.getDatesProjections();
     this.dataMS = {};
     this.getDataMS();
   }
@@ -616,6 +631,16 @@ export class MapComponent implements OnInit {
 
   }
 
+  getDatesProjections(url = '/service/indicators/datesProjections') {
+
+    let sourceUrl = url + this.getServiceParams();
+
+    this.http.get(sourceUrl).subscribe(result => {
+      this.datesProjections = result;
+    });
+
+  }
+
   getDataMS() {
     this.http.get('/service/indicators/summaryBrasil').subscribe(result => {
       this.dataMS = result;
@@ -721,7 +746,7 @@ export class MapComponent implements OnInit {
 
       this.exportColumnsCities = this.chartResultCities.split.map(col => ({ title: col.header, dataKey: col.field }));
 
-      // console.log(this.chartResultCities)
+      console.log("DATA SRC", this.chartResultCities)
 
     });
 
@@ -1866,29 +1891,10 @@ export class MapComponent implements OnInit {
     return _metadata;
   }
 
-  openDialogMetadata(layer) {
-
-    let metadata = [];
-    let self = this;
-
-    if (layer.hasOwnProperty('metadata')) {
-      metadata = this.getMetadata(layer.metadata);
-    } else {
-      let selectedType = layer.selectedType;
-      layer.types.forEach(function (type) {
-        if (type.value == selectedType) {
-          metadata = self.getMetadata(type.metadata);
-        }
-      });
-    }
-
-    let dialogRef = this.dialog.open(MetadataComponent, {
-      width: '130vh',
-      data: { metadata }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log('The dialog was closed');
+  openInfo() {
+    let dialogRef = this.dialog.open(NoteComponent, {
+        width: '80%',
+        data: { note:this.controls.note }
     });
   }
 
@@ -2165,6 +2171,30 @@ export class MapComponent implements OnInit {
     }
   };
 
+  formatRateLabelProjections = (v) => {
+    return (value: number) => {
+      if (this.datesProjections[value] != undefined) {
+        return this.datesProjections[value].data_rotulo;
+      }
+    }
+  };
+
+  onProjectionsChange(event) {
+    let lay = this.projectionsLayers.find(element => element.value === this.selectedProjectionLayer);
+    this.labelProjections = this.controls.text_projections.replace('[weeks]',this.datesProjections.length).replace('[layer]', lay.label.toLowerCase());
+
+    if(isNaN(event.value)){
+      event.value = 0;
+    }
+
+    let p = this.layersNames.find(element => element.id === 'projecoes_luisa');
+    p.selectedType = this.selectedProjectionLayer;
+    let layer = p.types.find(element => element.value === p.selectedType);
+    layer.layerfilter = "data = '" + this.datesProjections[event.value].data_db + "'"
+
+    // console.log("LAYER", layer);
+    this.updateSourceLayer(layer);
+  }
   onSliderChange(event) {
 
     this.selectedConfirmedDate = this.dates[event.value].data_db
@@ -2197,6 +2227,38 @@ export class MapComponent implements OnInit {
     let lastDay = this.dates.length - 1;
     this.showSlider = !this.showSlider;
     this.onSliderChange({ value: lastDay });
+  }
+
+  handleProjections() {
+
+    let lay = this.projectionsLayers.find(element => element.value === this.selectedProjectionLayer);
+    this.labelProjections = this.controls.text_projections.replace('[weeks]',this.datesProjections.length).replace('[layer]', lay.label.toLowerCase());
+
+    this.showProjections = !this.showProjections;
+    let self = this;
+
+    if(this.showProjections){
+      // let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+      // this.changeVisibility(p, { checked: false });
+
+      this.layersNames.forEach(function (item) {
+        self.changeVisibility(item, { checked: false });
+      });
+
+      let y = this.layersNames.find(element => element.id === 'projecoes_luisa');
+      this.changeVisibility(y, { checked: true });
+      this.onProjectionsChange({ value: 0 });
+
+    }else{
+
+      this.layersNames.forEach(function (item) {
+        self.changeVisibility(item, { checked: false });
+      });
+
+      let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+      this.changeVisibility(p, { checked: true });
+    }
+
   }
 
   ngOnInit() {

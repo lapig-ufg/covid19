@@ -139,7 +139,6 @@ module.exports = function (app) {
     else {
       filter = " "
     }
-    console.log("log: ",filter);
     return [
 
       {
@@ -153,9 +152,25 @@ module.exports = function (app) {
     ]
   }
 
+  Query.datesProjections = function (params) {
+    return [
 
-
-
+      {
+        id: 'dates-projections',
+        sql: "SELECT \n" +
+            "\tto_char(date_trunc('week', data), 'DD/MM/YYYY') as data_formatada,\n" +
+            "\tto_char(date_trunc('week', data), 'YYYY-MM-DD') as data_db,\n" +
+            "\tto_char(date_trunc('week', data), 'DD/MM') as data_rotulo\n" +
+            "FROM projecao_casos_mapa_luisa\n" +
+            "WHERE data >= NOW() \n" +
+            "GROUP BY date_trunc('week', data) ORDER BY date_trunc('week', data);"
+      },
+      {
+        id: 'next',
+        sql: "select true"
+      }
+    ]
+  }
   return Query;
 
 };

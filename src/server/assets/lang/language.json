@@ -1027,6 +1027,10 @@
 			"pt-br": "Histórico de casos dos últimos [dias] dias",
 			"en-us": "Case history for the past [dias] days"
 		},
+		"text_projections": {
+			"pt-br": "Projeções de [layer] para as próximos [weeks] semanas",
+			"en-us": "[Layer] projections for the next [weeks] weeks"
+		},
 		"label_name": {
 			"pt-br": "Nome: ",
 			"en-us": "Name: "
@@ -1070,6 +1074,18 @@
 		"inform_goiania": {
 			"pt-br": "Informe Epidemiológico COVID-19 de Goiânia",
 			"en-us": "COVID-19 Epidemiological Report from Goiânia"
+		},
+		"note": {
+			"pt-br": "Os dados podem diferir conforme investigação das Vigilâncias Epidemiológicas Municipais e atualização das fichas de notificações pelos municípios nos sistemas oficiais. Por este motivo, poderá haver diferenças temporárias entre os dados apresentados pelas Secretarias Municipais de Saúde (SMS) e da Secretaria Estadual de Saúde (SES) do Estado de Goiás.",
+			"en-us": "The data may differ according to the investigation of the Municipal Epidemiological Surveillance and update of the notification forms by the municipalities in the official systems. For this reason, there may be temporary differences between the data presented by the Municipal Health Secretariats (SMS) and the State Health Secretariat (SES) of the State of Goiás."
+		},
+		"projections_layer":{
+			"pt-br": "Dado",
+			"en-us": "Data"
+		},
+		"label_projections": {
+			"pt-br": "Projeções",
+			"en-us": "Projections"
 		}
 
 	},
