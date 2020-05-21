@@ -379,30 +379,6 @@
 											<tr mat-row *matRowDef="let row; columns: displayedColumnsNeighbor;"></tr>
 										</table>
 
-<!--										<p-table #dtNeighborhoodsCharts [value]="neighborhoodsCharts.series" [columns]="neighborhoodsCharts.split" [exportFilename]="neighborhoodsCharts.filename">-->
-<!--											<ng-template pTemplate="caption">-->
-<!--												<div class="ui-helper-clearfix" style="text-align: left">-->
-<!--													<button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dtNeighborhoodsCharts.exportCSV()" style="margin-right: 0.5em; color: #460202"></button>-->
-<!--													<button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf('bairros')" class="ui-button-warning" style="margin-right: 0.5em; color: #460202"></button>-->
-<!--													<button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('bairros')" style="margin-right: 0.5em;" class="ui-button-success" style="margin-right: 0.5em; color: #460202"></button>-->
-<!--&lt;!&ndash;													<span style="text-align: right"> {{minireportText.label_last_update}} {{neighborhoodsCharts.last_updated}}</span>&ndash;&gt;-->
-<!--												</div>-->
-<!--											</ng-template>-->
-<!--											<ng-template pTemplate="header" let-columns>-->
-<!--												<tr align="center">-->
-<!--													<th *ngFor="let col of columns">-->
-<!--														{{col.header}}-->
-<!--													</th>-->
-<!--												</tr>-->
-<!--											</ng-template>-->
-<!--											<ng-template pTemplate="body" let-city let-columns="columns">-->
-<!--												<tr align="center">-->
-<!--													<td *ngFor="let col of columns">-->
-<!--														{{city[col.field]}}-->
-<!--													</td>-->
-<!--												</tr>-->
-<!--											</ng-template>-->
-<!--										</p-table>-->
 									</p-scrollPanel>
 								</p-tabPanel>
 
@@ -421,34 +397,6 @@
 											<button mat-raised-button color="primary" (click)="exportPdf('cities')">PDF</button>
 											<button mat-raised-button color="accent" (click)="exportExcel('cities')">EXCEL</button>
 										</div>
-
-										<p-table #dtChartResultCities [value]="chartResultCities.series" [columns]="chartResultCities.split" [exportFilename]="chartResultCities.filename"
-										selectionMode="single" (onRowSelect)="onCityRowSelect($event)">
-											<ng-template pTemplate="caption">
-												<div class="ui-helper-clearfix" style="text-align: left">
-													<button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dtChartResultCities.exportCSV()" style="margin-right: 0.5em; color: #460202"></button>
-													<button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf('cities')" class="ui-button-warning" style="margin-right: 0.5em; color: #460202"></button>
-													<button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('cities')" style="margin-right: 0.5em;" class="ui-button-success" style="margin-right: 0.5em; color: #460202"></button>
-<!--													<a target="_blank" class="nota" href="https://www.ufg.br/n/126975-nota-sobre-atualizacao-na-plataforma-covid-goias">Nota sobre o dado divulgado no dia 08/05/2020.</a>-->
-													<p-button icon="fa fa-refresh" iconPos="left" (click)="refreshTable()"></p-button>
-											</div>
-											</ng-template>
-											<ng-template pTemplate="header" let-columns>
-												<tr align="center">
-													<th *ngFor="let col of columns">
-														{{col.header}}
-													</th>
-												</tr>
-											</ng-template>
-											<ng-template pTemplate="body" let-city let-columns="columns">
-												<tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
-												tooltipPosition="bottom" align="center">
-													<td *ngFor="let col of columns">
-														{{city[col.field]}}
-													</td>
-												</tr>
-											</ng-template>
-										</p-table>
 
 										<table style="width: 97% !important; margin-left: 2% !important; margin-right: 2% !important;"  mat-table [dataSource]="dataSourceCities" class="mat-elevation-z8">
 											<ng-container matColumnDef="rank">
@@ -470,34 +418,6 @@
 											<tr mat-header-row *matHeaderRowDef="displayedColumnsCities"></tr>
 											<tr mat-row *matRowDef="let row; columns: displayedColumnsCities;"></tr>
 										</table>
-
-
-<!--										<p-table #dtChartResultCities [value]="chartResultCities.series" [columns]="chartResultCities.split" [exportFilename]="chartResultCities.filename"-->
-<!--										selectionMode="single" (onRowSelect)="onCityRowSelect($event)">-->
-<!--											<ng-template pTemplate="caption">-->
-<!--												<div class="ui-helper-clearfix" style="text-align: left">-->
-<!--													<button type="button" pButton icon="pi pi-file-o" iconPos="left" label="CSV" (click)="dtChartResultCities.exportCSV()" style="margin-right: 0.5em; color: #460202"></button>-->
-<!--													<button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf('cities')" class="ui-button-warning" style="margin-right: 0.5em; color: #460202"></button>-->
-<!--													<button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('cities')" style="margin-right: 0.5em;" class="ui-button-success" style="margin-right: 0.5em; color: #460202"></button>-->
-<!--&lt;!&ndash;													<a target="_blank" class="nota" href="https://www.ufg.br/n/126975-nota-sobre-atualizacao-na-plataforma-covid-goias">Nota sobre o dado divulgado no dia 08/05/2020.</a>&ndash;&gt;-->
-<!--												</div>-->
-<!--											</ng-template>-->
-<!--											<ng-template pTemplate="header" let-columns>-->
-<!--												<tr align="center">-->
-<!--													<th *ngFor="let col of columns">-->
-<!--														{{col.header}}-->
-<!--													</th>-->
-<!--												</tr>-->
-<!--											</ng-template>-->
-<!--											<ng-template pTemplate="body" let-city let-columns="columns">-->
-<!--												<tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"-->
-<!--												tooltipPosition="bottom" align="center">-->
-<!--													<td *ngFor="let col of columns">-->
-<!--														{{city[col.field]}}-->
-<!--													</td>-->
-<!--												</tr>-->
-<!--											</ng-template>-->
-<!--										</p-table>-->
 
 									</p-scrollPanel>
 								</p-tabPanel>
