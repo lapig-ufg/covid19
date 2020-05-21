@@ -1060,7 +1060,7 @@
 			"en-us": "Case history for the past [dias] days"
 		},
 		"text_projections": {
-			"pt-br": "Projeções de [layer] para as próximos [weeks] semanas",
+			"pt-br": "Projeções de [layer] para as próximas [weeks] semanas",
 			"en-us": "[Layer] projections for the next [weeks] weeks"
 		},
 		"label_name": {
