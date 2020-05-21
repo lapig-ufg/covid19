@@ -312,9 +312,11 @@ module.exports = function (app) {
 
     let total_confirmados = 0;
     let data_ultima_atualizacao = null;
+    let fonte = null;
     if(Array.isArray(queryResult)){
       if(queryResult.length > 0){
         queryResult.forEach(function (item, index) {
+          fonte = item.fonte;
           total_confirmados+= item.confirmados;
           data_ultima_atualizacao = item.data_ultima_atualizacao;
         });
@@ -339,10 +341,10 @@ module.exports = function (app) {
       total_neighborhoods: Array.isArray(queryResult) ? queryResult.length: null,
       total_confirmados: total_confirmados,
       last_updated: queryResultDate[0]['max'],
+      fonte: fonte,
       data_ultima_atualizacao: moment(data_ultima_atualizacao).format( "DD/MM/YYYY"),
       series: queryResult
     }
-
     response.send(result)
     response.end()
 
@@ -643,7 +645,7 @@ module.exports = function (app) {
 
     var queryResultLuisa = request.queryResult['estatisticas_luisa']
 
-    
+
     var res = {
       total_dias: queryResult[0]['total_dias'],
       media_novos_casos_3dias: queryResult[0]['media_novos_casos_3dias'],
@@ -653,7 +655,7 @@ module.exports = function (app) {
       n_total_infectadados_pico: queryResultLuisa[0]['n_total_infectadados_pico'],
       taxa_crescimento: queryResultLuisa[0]['taxa_crescimento']
     }
-    
+
     let texts = {
       title: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["title"][language],
       total_dias: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["total_dias"][language],

@@ -44,7 +44,7 @@ import { RestrictedAreaAccessComponent } from "./restricted-area-access/restrict
 import { RestrictedAreaFormComponent } from "./restricted-area-form/restricted-area-form.component";
 import * as moment from 'moment';
 
-import { Table } from 'primeng/table'; 
+import { Table } from 'primeng/table';
 
 import logos from './logos';
 import {BedsComponent} from "./beds/beds.component";
@@ -481,7 +481,7 @@ export class MapComponent implements OnInit {
 
         this.exportColumnsCities = this.chartResultCities.split.map(col => ({ title: col.header, dataKey: col.field }));
 
-        this.dt.reset(); 
+        this.dt.reset();
     });
   }
 
@@ -806,6 +806,12 @@ export class MapComponent implements OnInit {
       }
 
       this.exportColumnsCities = this.chartResultCities.split.map(col => ({ title: col.header, dataKey: col.field }));
+      if (this.language == 'pt-br') {
+        this.chartResultCities.label_ses = this.chartResultCities.label_ses.replace('[source]', 'Secretaria de Estado da Saúde de Goiás')
+      }
+      else {
+        this.chartResultCities.label_ses = this.chartResultCities.label_ses.replace('[source]', ' Goiás State Department of Health')
+      }
 
       this.dataSourceCities = this.chartResultCities.series;
       this.displayedColumnsCities = ["rank", "nome", "confirmados"]
@@ -819,20 +825,26 @@ export class MapComponent implements OnInit {
 
       this.neighborhoodsCharts = citiesResult;
 
-     
-
       if(this.selectRegion.cd_geocmu == '5300108')
       {
-        this.neighborhoodsCharts.label += "Distrito Federal"
+
+        if (this.language == 'pt-br') {
+          this.neighborhoodsCharts.label += "Distrito Federal"
+          this.neighborhoodsCharts.label_sms = this.neighborhoodsCharts.label_sms.replace('de', '');
+          this.neighborhoodsCharts.label = this.neighborhoodsCharts.label.replace('de', 'do').replace('Bairros', 'Regioões administrativas');
+        }
+        else {
+          this.neighborhoodsCharts.label += "Federal Disctrict"
+        }
       }
       else{
         this.neighborhoodsCharts.label += this.selectRegion.nome
       }
 
-      this.neighborhoodsCharts.label_sms = this.neighborhoodsCharts.label_sms.replace('[city]', this.selectRegion.nome);
+      this.neighborhoodsCharts.label_sms = this.neighborhoodsCharts.label_sms.replace('[source]', this.neighborhoodsCharts.fonte);
       this.neighborhoodsCharts.label_sms = this.neighborhoodsCharts.label_sms.replace('[date]', this.neighborhoodsCharts.data_ultima_atualizacao);
 
-      let d = new Date(this.neighborhoodsCharts.last_updated)
+      let d = new Date(this.neighborhoodsCharts.last_updated);
 
       this.neighborhoodsCharts.last_updated = this.datePipe.transform(d.setDate(d.getDate() + 1), 'dd/MM/yyyy');
 
@@ -1852,8 +1864,8 @@ export class MapComponent implements OnInit {
       this.utfgridlayerProjecao.setVisible(false);
     }
 
-    
-    
+
+
     // if (covid.visible ) {
 
     //   if (covid.selectedType == 'covid19_municipios_casos') {
@@ -1888,7 +1900,7 @@ export class MapComponent implements OnInit {
     //   }
     // }
     // else if (this.utfgridBairro) {
-     
+
     //   this.utfgridlayerBairro.setVisible(false);
     // }
 
@@ -2406,13 +2418,13 @@ export class MapComponent implements OnInit {
       self.changeVisibility(item, { checked: false });
     });
 
-    
+
     let p = this.layersNames.find(element => element.id === 'projecoes_luisa');
     p.selectedType = this.selectedProjectionLayer;
     let layer = p.types.find(element => element.value === p.selectedType);
     layer.layerfilter = "data = '" + this.datesProjections[event.value].data_db + "'"
     this.urlLegendProjections = layer.urlLegend;
-    
+
     this.changeVisibility(p, { checked: true });
 
     this.updateSourceLayer(layer);
