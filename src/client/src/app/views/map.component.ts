@@ -812,7 +812,16 @@ export class MapComponent implements OnInit {
       else {
         this.chartResultCities.label_ses = this.chartResultCities.label_ses.replace('[source]', ' Goiás State Department of Health')
       }
-
+      let self = this;
+      this.chartResultCities.series.forEach(function (item, index) {
+        if(item.confirmados > 0 && item.confirmados < 10){
+          self.chartResultCities.series[index].confirmados = "000" + item.confirmados;
+        }else if(item.confirmados >= 10 && item.confirmados <= 99){
+          self.chartResultCities.series[index].confirmados = "00" + item.confirmados;
+        }else if(item.confirmados >= 100 && item.confirmados <= 999){
+          self.chartResultCities.series[index].confirmados = "0" + item.confirmados;
+        }
+      });
       this.dataSourceCities = this.chartResultCities.series;
       this.displayedColumnsCities = ["rank", "nome", "confirmados"]
 
@@ -831,7 +840,7 @@ export class MapComponent implements OnInit {
         if (this.language == 'pt-br') {
           this.neighborhoodsCharts.label += "Distrito Federal"
           this.neighborhoodsCharts.label_sms = this.neighborhoodsCharts.label_sms.replace('de', '');
-          this.neighborhoodsCharts.label = this.neighborhoodsCharts.label.replace('de', 'do').replace('Bairros', 'Regioões administrativas');
+          this.neighborhoodsCharts.label = this.neighborhoodsCharts.label.replace('de', 'do').replace('Bairros', 'Regiões Administrativas');
         }
         else {
           this.neighborhoodsCharts.label += "Federal Disctrict"
@@ -860,6 +869,14 @@ export class MapComponent implements OnInit {
       }
 
       this.exportColumnsBairros = this.neighborhoodsCharts.split.map(col => ({ title: col.header, dataKey: col.field }));
+      let self = this;
+      this.neighborhoodsCharts.series.forEach(function (item, index) {
+        if(item.confirmados > 0 && item.confirmados < 10){
+          self.neighborhoodsCharts.series[index].confirmados = "00" + item.confirmados;
+        }else if(item.confirmados >= 10 && item.confirmados <= 99){
+          self.neighborhoodsCharts.series[index].confirmados = "0" + item.confirmados;
+        }
+      });
 
       this.dataSourceNeighbor = this.neighborhoodsCharts.series;
       this.displayedColumnsNeighbor = ["rank", "nome", "confirmados"]
@@ -941,7 +958,6 @@ export class MapComponent implements OnInit {
       this.statistics_county = res
       this.statistics_county.result.dias_duplicacao_confirmados = Math.round(this.statistics_county.result.dias_duplicacao_confirmados)
 
-      console.log("STats - ", this.statistics_county)
     });
 
     let brasilURL = '/service/indicators/brasil' + this.getServiceParams();
@@ -1336,8 +1352,6 @@ export class MapComponent implements OnInit {
                 this.infoprojecao.nome = this.minireportText.undisclosed_message;
               }
 
-              console.log("p " , data)
-
             } else {
               window.document.body.style.cursor = 'auto';
               this.infoprojecao = null;
@@ -1657,8 +1671,6 @@ export class MapComponent implements OnInit {
 
     let p = this.layersNames.find(element => element.id === 'projecoes_luisa');
     let layer = p.types.find(element => element.value === p.selectedType);
-
-    console.log(p)
 
     return {
       version: '2.2.0',
@@ -2401,8 +2413,6 @@ export class MapComponent implements OnInit {
   };
 
   onProjectionsChange(event) {
-
-    console.log("event- " , event)
 
     let lay = this.projectionsLayers.find(element => element.value === this.selectedProjectionLayer);
     this.labelProjections = this.controls.text_projections

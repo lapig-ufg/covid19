@@ -317,3 +317,4 @@ src/server/scripts/estatisticas.csv
 src/server/scripts/projecao_casos_go_luisa.csv
 src/server/scripts/projecao_casos_go.csv
 src/server/scripts/recuperados.csv
+src/server/download-covid19
