@@ -1168,3 +1168,11 @@ mat-select {
 .layersConteudo .mat-tab-body-wrapper{
 	padding: 10px;
 }
+
+.export-table{
+	margin: 10px;
+}
+
+.export-table button{
+	margin-right: 10px;
+}

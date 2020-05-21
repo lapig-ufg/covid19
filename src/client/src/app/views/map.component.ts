@@ -36,6 +36,7 @@ import MultiPolygon from 'ol/geom/MultiPolygon';
 import { defaults as defaultControls, Control, Attribution } from 'ol/control';
 import { Router } from '@angular/router';
 import { google } from "google-maps";
+import { DataSource } from '@angular/cdk/table';
 
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
 import { HelpComponent } from "./help/help.component";
@@ -48,6 +49,7 @@ import { Table } from 'primeng/table';
 import logos from './logos';
 import {BedsComponent} from "./beds/beds.component";
 import {NoteComponent} from "./note/note.component";
+import {MatTableDataSource} from "@angular/material/table";
 
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
@@ -55,6 +57,12 @@ let PARAMS = new HttpParams({
     format: 'json'
   }
 });
+
+export interface TableElement {
+  rank: number;
+  nome: number;
+  confirmados: number;
+}
 
 @Injectable()
 export class SearchService {
@@ -78,6 +86,8 @@ export class SearchService {
   styleUrls: ['./map.component.css']
 
 })
+
+
 export class MapComponent implements OnInit {
 
   @ViewChild(Table, { static: false }) dt: Table;
@@ -226,8 +236,16 @@ export class MapComponent implements OnInit {
   showProjections:boolean;
   projectionsLayers:any;
   selectedProjectionLayer:any;
+  urlLegendProjections:string
   labelProjections:any;
   dataMS:any;
+
+  dataSourceNeighbor:TableElement[];
+  displayedColumnsNeighbor = [];
+
+
+  dataSourceCities:TableElement[];
+  displayedColumnsCities = [];
 
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
   selectedConfirmedDate: any;
@@ -603,8 +621,7 @@ export class MapComponent implements OnInit {
         else {
           tmp = "State"
         }
-      }
-      else {
+      } else {
         if (this.language == 'pt-br') {
           tmp = "Município"
         }
@@ -612,7 +629,19 @@ export class MapComponent implements OnInit {
           tmp = "Municipality"
         }
       }
-      this.textSummary.title = sp[0] + tmp + sp[1] + this.selectRegion.nome
+      if(this.selectRegion.cd_geocmu == '5300108'){
+        let tmp;
+        if (this.language == 'pt-br') {
+          tmp = "Distrito Federal"
+        }
+        else {
+          tmp = "Federal Disctrict"
+        }
+        this.textSummary.title = sp[0] + tmp
+      } else{
+        this.textSummary.title = sp[0] + tmp + sp[1] + this.selectRegion.nome
+      }
+
     });
 
 
@@ -778,7 +807,8 @@ export class MapComponent implements OnInit {
 
       this.exportColumnsCities = this.chartResultCities.split.map(col => ({ title: col.header, dataKey: col.field }));
 
-      console.log("DATA SRC", this.chartResultCities)
+      this.dataSourceCities = this.chartResultCities.series;
+      this.displayedColumnsCities = ["rank", "nome", "confirmados"]
 
     });
 
@@ -819,7 +849,8 @@ export class MapComponent implements OnInit {
 
       this.exportColumnsBairros = this.neighborhoodsCharts.split.map(col => ({ title: col.header, dataKey: col.field }));
 
-      // console.log(this.neighborhoodsCharts)
+      this.dataSourceNeighbor = this.neighborhoodsCharts.series;
+      this.displayedColumnsNeighbor = ["rank", "nome", "confirmados"]
 
     });
 
@@ -2139,7 +2170,18 @@ export class MapComponent implements OnInit {
           tmp = "Municipality"
         }
       }
-      this.textSummary.title = sp[0] + tmp + sp[1] + this.selectRegion.nome
+      if(this.selectRegion.cd_geocmu == '5300108'){
+        let tmp;
+        if (this.language == 'pt-br') {
+          tmp = "Distrito Federal"
+        }
+        else {
+          tmp = "Federal Disctrict"
+        }
+        this.textSummary.title = sp[0] + tmp
+      } else{
+        this.textSummary.title = sp[0] + tmp + sp[1] + this.selectRegion.nome
+      }
 
     });
 
@@ -2348,18 +2390,27 @@ export class MapComponent implements OnInit {
 
   onProjectionsChange(event) {
     let lay = this.projectionsLayers.find(element => element.value === this.selectedProjectionLayer);
-    this.labelProjections = this.controls.text_projections.replace('[weeks]',this.datesProjections.length).replace('[layer]', lay.label.toLowerCase());
+    this.labelProjections = this.controls.text_projections
+                                         .replace('[weeks]',this.datesProjections.length)
+                                         .replace('[layer]', lay.label.toLowerCase());
 
     if(isNaN(event.value)){
       event.value = 0;
     }
 
+    let self = this;
+    this.layersNames.forEach(function (item) {
+      self.changeVisibility(item, { checked: false });
+    });
+
     let p = this.layersNames.find(element => element.id === 'projecoes_luisa');
+    this.changeVisibility(p, { checked: true });
+
+
     p.selectedType = this.selectedProjectionLayer;
     let layer = p.types.find(element => element.value === p.selectedType);
     layer.layerfilter = "data = '" + this.datesProjections[event.value].data_db + "'"
-
-    // console.log("LAYER", layer);
+    this.urlLegendProjections = layer.urlLegend;
     this.updateSourceLayer(layer);
   }
   onSliderChange(event) {
@@ -2403,19 +2454,15 @@ export class MapComponent implements OnInit {
 
     this.showProjections = !this.showProjections;
     let self = this;
+    this.layersNames.forEach(function (item) {
+      self.changeVisibility(item, { checked: false });
+    });
+
+    let y = this.layersNames.find(element => element.id === 'projecoes_luisa');
+    this.changeVisibility(y, { checked: true });
 
     if(this.showProjections){
-      // let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
-      // this.changeVisibility(p, { checked: false });
-
-      this.layersNames.forEach(function (item) {
-        self.changeVisibility(item, { checked: false });
-      });
-
-      let y = this.layersNames.find(element => element.id === 'projecoes_luisa');
-      this.changeVisibility(y, { checked: true });
       this.onProjectionsChange({ value: 0 });
-
     }else{
 
       this.layersNames.forEach(function (item) {

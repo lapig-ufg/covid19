@@ -58,7 +58,7 @@ import { SpinnerImgComponent } from './views/spinner-img/spinner-img.component';
 import { FileUploadComponent } from './views/file-upload/file-upload.component';
 import { MetadataComponent } from './views/metadata/metadata.component';
 import { GoogleAnalyticsService } from  './services/google-analytics.service'
-
+import { MatTableModule } from '@angular/material'
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -137,6 +137,7 @@ const ENTRY_COMPONENTS = [
     MatFormFieldModule,
     MatSnackBarModule,
     MatAutocompleteModule,
+    MatTableModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,

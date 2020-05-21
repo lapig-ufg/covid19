@@ -1340,12 +1340,12 @@ img[usemap], map area{
 .projections{
 	position: absolute;
 	bottom: 3%;
-	left: 5%;
+	left: 9%;
 	padding-top: 5px;
 	padding-left: 45px;
 	padding-right: 45px;
 	padding-bottom: 20px;
-	width: 45vw;
+	width: 47vw;
 	z-index: 1000000;
 	border-radius: 10px;
 	background-color: #f9f6f69e;
@@ -1442,6 +1442,22 @@ mat-slider {
 	color: #fcd635;
 }
 
+.export-table{
+	margin: 10px;
+}
+
+.export-table button{
+	margin-right: 12px;
+}
+
+.legend-projections{
+	padding: 4px;
+	background-color: #5151515e;
+	border-radius: 10px;
+}
+.legend-projections img{
+	max-width: 100%;
+}
 @media screen and (max-width: 1050px) {
 
 }
