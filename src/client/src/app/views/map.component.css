@@ -1337,7 +1337,37 @@ img[usemap], map area{
 	background-color: #f9f6f69e;
 }
 
+.projections{
+	position: absolute;
+	bottom: 3%;
+	left: 5%;
+	padding-top: 5px;
+	padding-left: 45px;
+	padding-right: 45px;
+	padding-bottom: 20px;
+	width: 45vw;
+	z-index: 1000000;
+	border-radius: 10px;
+	background-color: #f9f6f69e;
+}
+
+.projections-header{
+	display: flex;
+}
+
+.projections-header mat-form-field{
+	margin-top: 5px;
+	margin-right: 45px;
+}
+
+
 .slider h6{
+	color:  #a11313;;
+	font-size: 1.5vh;
+	text-align: left;
+}
+
+.projections h6{
 	color:  #a11313;;
 	font-size: 1.5vh;
 	text-align: left;
@@ -1397,6 +1427,20 @@ mat-slider {
 	margin: 10px	;
 }
 
+.zoom {
+	position: absolute;
+	left: 30px;
+	top: 20%;
+	z-index: 100000;
+	padding: 8px;
+	border-radius: 10px;
+	background-color:#823333;
+}
+
+.zoom button{
+	margin: 3px;
+	color: #fcd635;
+}
 
 @media screen and (max-width: 1050px) {
 

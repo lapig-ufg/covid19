@@ -720,6 +720,11 @@ module.exports = function (app) {
     response.end()
   };
 
+  Controller.datesProjections = function (request, response) {
+    let dates = request.queryResult['dates-projections'];
+    response.send(dates);
+    response.end()
+  };
 
   return Controller;
 };

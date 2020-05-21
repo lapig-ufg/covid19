@@ -96,6 +96,52 @@ module.exports = function (app) {
             }]
           },
           {
+            id: "projecoes_luisa",
+            label: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["label"][language],
+            visible: false,
+            showLayer: false,
+            selectedType: "projecao_luisa_confirmados",
+            showTypes: true,
+            types: [
+              {
+                value: "projecao_luisa_confirmados",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["view_value"][language],
+                layerfilter: "data = (select max(data) from v_projecao_luisa)",
+                regionFilter: false,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3,
+              },
+              {
+                value: "projecao_luisa_recuperados",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["view_value"][language],
+                layerfilter: "data = (select max(data) from v_projecao_luisa)",
+                regionFilter: false,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3,
+              },
+              {
+                value: "projecao_luisa_infectados",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["view_value"][language],
+                layerfilter: "data = (select max(data) from v_projecao_luisa)",
+                regionFilter: false,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3,
+              },
+              {
+                value: "projecao_luisa_hospitalizados",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["view_value"][language],
+                layerfilter: "data = (select max(data) from v_projecao_luisa)",
+                regionFilter: false,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3,
+              }
+            ]
+          },
+          {
             id: "urban_traffic",
             label: languageJson["descriptor"]["informacoes"]["layers"]["urban_traffic"]["label"][language],
             visible: false,
