@@ -91,8 +91,8 @@
 					"en-us": "municipality_cases_"
 				},
 				"label_ses":{
-					"pt-br": "Dados divulgados pela Secretaria de Estado da Saúde de Goiás em ",
-					"en-us": "Data released by the Goiás State Department of Health on "
+					"pt-br": "Dados divulgados pela [source] em ",
+					"en-us": "Data released by the [source] on "
 				},
 				"label_confirmed_ses":{
 					"pt-br": "Total de casos: ",
@@ -133,8 +133,8 @@
 					"en-us": "neighborhoods_cases_"
 				},
 				"label_sms":{
-					"pt-br": "Dados divulgados pela Secretaria Municipal de Saúde de [city] em [date]",
-					"en-us": "Data released by the Municipal Health Department of [city] on [date]"
+					"pt-br": "Dados divulgados pela [source] em [date]",
+					"en-us": "Data released by [source] on [date]"
 				},
 				"label_confirmed":{
 					"pt-br": "Total de casos: ",
