@@ -19,7 +19,7 @@ module.exports = function (app) {
 		"tmp": appRoot + env.TMP,
 		"fieldDataDir": appRoot + env.FIELD_DATA_DIR,
 		"uploadDataDir": appRoot + env.UPLOAD_DATA_DIR,
-		"downloadDataDir": appProducao + env.DOWNLOAD_DATA_DIR,
+		 "downloadDataDir": appRoot + env.DOWNLOAD_DATA_DIR,
 		"pg": {
 			"user": env.PG_USER,
 			"host": env.PG_HOST,
@@ -48,7 +48,8 @@ module.exports = function (app) {
 		config["clientDir"] = appRoot +  env.CLIENT_DIR;
 		config["ows_host"] =  env.OWS_HOST;
 		config["fieldDataDir"] = appProducao +  env.FIELD_DATA_DIR;
-		config["uploadDataDir"] = appProducao +  env.UPLOAD_DATA_DIR
+		config["uploadDataDir"] = appProducao +  env.UPLOAD_DATA_DIR;
+		config["downloadDataDir"] = appProducao + env.DOWNLOAD_DATA_DIR
 
 	}
 

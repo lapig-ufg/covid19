@@ -641,27 +641,31 @@ module.exports = function (app) {
 
     var queryResult = request.queryResult['estatisticas_municipios']
 
-    var qResult = []
+    var queryResultLuisa = request.queryResult['estatisticas_luisa']
 
-    queryResult.forEach(function (row) {
-
-      qResult.push({
-        total_dias: row['total_dias'],
-        media_novos_casos_3dias: row['media_novos_casos_3dias'],
-        dias_duplicacao_confirmados: row['dias_duplicacao_confirmados']
-      })
-
-    })
-
+    
+    var res = {
+      total_dias: queryResult[0]['total_dias'],
+      media_novos_casos_3dias: queryResult[0]['media_novos_casos_3dias'],
+      dias_duplicacao_confirmados: queryResult[0]['dias_duplicacao_confirmados'],
+      data_pico_infectados_incidencia: queryResultLuisa[0]['data_pico_infectados_incidencia'],
+      data_pico_infectados_acumudado: queryResultLuisa[0]['data_pico_infectados_acumudado'],
+      n_total_infectadados_pico: queryResultLuisa[0]['n_total_infectadados_pico'],
+      taxa_crescimento: queryResultLuisa[0]['taxa_crescimento']
+    }
+    
     let texts = {
       title: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["title"][language],
       total_dias: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["total_dias"][language],
       media_novos_casos_3dias: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["media_novos_casos_3dias"][language],
-      dias_duplicacao_confirmados: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["dias_duplicacao_confirmados"][language]
+      dias_duplicacao_confirmados: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["dias_duplicacao_confirmados"][language],
+      taxa_crescimento: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["taxa_crescimento"][language],
+      n_total_infectadados_pico: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["n_total_infectadados_pico"][language],
+      data_pico_infectados_acumudado: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["data_pico_infectados_acumudado"][language]
     }
 
     response.send({
-      result: qResult[0],
+      result: res,
       text: texts
     }
       );

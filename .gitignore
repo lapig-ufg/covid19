@@ -312,3 +312,4 @@ src/server/scripts/casos.csv
 
 #src/client/package-lock.json
 #src/server/package-lock.json
+src/server/scripts/estatisticas_luisa.csv

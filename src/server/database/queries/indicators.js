@@ -102,6 +102,7 @@ module.exports = function (app) {
   }
   Query.statistics = function (params) {
     var cd_geocmu = params['cd_geocmu']
+
     return [
 
       {
@@ -109,8 +110,8 @@ module.exports = function (app) {
         sql: "select cd_geocmu, total_dias, media_novos_casos_3dias, dias_duplicacao_confirmados from estatisticas where cd_geocmu = '" + cd_geocmu +"'"
       },
       {
-        id: 'next',
-        sql: "select true"
+        id: 'estatisticas_luisa',
+        sql: "select data_pico_infectados_acumudado, data_pico_infectados_incidencia, taxa_crescimento, n_total_infectadados_pico , cd_geocmu from estatisticas_luisa where cd_geocmu = '" + cd_geocmu +"'"
       }
     ]
   }

@@ -224,6 +224,18 @@
 					"dias_duplicacao_confirmados":{
 						"pt-br": "Quantidade de dias até duplicação de casos confirmados: ",
 						"en-us": "Number of days until duplication of confirmed cases: "
+					},
+					"taxa_crescimento":{
+						"pt-br": "Taxa de Crescimento: ",
+						"en-us": "Growth rate: "
+					},
+					"n_total_infectadados_pico":{
+						"pt-br": "Nº de infectados durante o pico: ",
+						"en-us": "No. of infected during peak: "
+					},
+					"data_pico_infectados_acumudado":{
+						"pt-br": "Data prevista para o pico de infecção: ",
+						"en-us": "Expected peak infection date: "
 					}
 				}
 			}
@@ -267,6 +279,26 @@
 		"confirmed_cases": {
 			"pt-br": "Quantidade de Casos Confirmados:",
 			"en-us": "Number of Confirmed Cases:"
+		},
+		"recovered_cases": {
+			"pt-br": "Quantidade de Casos Recuperados:",
+			"en-us": "Number of Recovered Cases:"
+		},
+		"infectados_cases": {
+			"pt-br": "Quantidade de Infectados:",
+			"en-us": "Number of Infected Cases:"
+		},
+		"hospital_cases": {
+			"pt-br": "Quantidade de Hospitalizados:",
+			"en-us": "Number of Hospital Cases:"
+		},
+		"leitos_cases": {
+			"pt-br": "Quantidade de Leitos:",
+			"en-us": "Number of beds:"
+		},
+		"projection_message": {
+			"pt-br": "Projeções realizadas para: ",
+			"en-us": "Projections Computed for:"
 		},
 		"not_computed_message": {
 			"pt-br": "Não Computada",

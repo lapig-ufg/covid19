@@ -163,14 +163,15 @@ export class MapComponent implements OnInit {
   infodata: any;
   infomarker: any;
   infobairro: any;
+  infoprojecao: any;
   infodataMunicipio: any;
   fieldPointsStop: any;
   utfgridsource: UTFGrid;
   utfgridlayer: OlTileLayer;
   utfgridBairro: UTFGrid;
   utfgridlayerBairro: OlTileLayer;
-  utfgridmunicipio: UTFGrid;
-  utfgridlayerMunicipio: OlTileLayer;
+  utfgridProjecao: UTFGrid;
+  utfgridlayerProjecao: OlTileLayer;
   infoOverlay: Overlay;
   datePipe: DatePipe;
   dataForDialog = {} as any;
@@ -258,6 +259,7 @@ export class MapComponent implements OnInit {
 
     this.infomarker = {};
     this.infobairro = {};
+    this.infoprojecao = {};
 
     this.defaultRegion = {
       nome: 'Goiás',
@@ -787,7 +789,15 @@ export class MapComponent implements OnInit {
 
       this.neighborhoodsCharts = citiesResult;
 
-      this.neighborhoodsCharts.label += this.selectRegion.nome
+     
+
+      if(this.selectRegion.cd_geocmu == '5300108')
+      {
+        this.neighborhoodsCharts.label += "Distrito Federal"
+      }
+      else{
+        this.neighborhoodsCharts.label += this.selectRegion.nome
+      }
 
       this.neighborhoodsCharts.label_sms = this.neighborhoodsCharts.label_sms.replace('[city]', this.selectRegion.nome);
       this.neighborhoodsCharts.label_sms = this.neighborhoodsCharts.label_sms.replace('[date]', this.neighborhoodsCharts.data_ultima_atualizacao);
@@ -887,6 +897,8 @@ export class MapComponent implements OnInit {
     this.http.get(statisticsURL).subscribe(res => {
       this.statistics_county = res
       this.statistics_county.result.dias_duplicacao_confirmados = Math.round(this.statistics_county.result.dias_duplicacao_confirmados)
+
+      console.log("STats - ", this.statistics_county)
     });
 
     let brasilURL = '/service/indicators/brasil' + this.getServiceParams();
@@ -1264,6 +1276,38 @@ export class MapComponent implements OnInit {
       } else {
         this.infobairro = null;
       }
+
+      let projecao = this.layersNames.find(element => element.id === 'projecoes_luisa');
+      if (projecao.visible) {
+
+        let zoom = this.map.getView().getZoom();
+
+        if (this.utfgridProjecao) {
+          this.utfgridProjecao.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+            if (data) {
+              // window.document.body.style.cursor = 'pointer';
+
+              this.infoprojecao = data;
+
+              if (this.infoprojecao.nome == "") {
+                this.infoprojecao.nome = this.minireportText.undisclosed_message;
+              }
+
+              console.log("p " , data)
+
+            } else {
+              window.document.body.style.cursor = 'auto';
+              this.infoprojecao = null;
+            }
+
+          }.bind(this)
+          );
+        }
+      } else {
+        this.infoprojecao = null;
+      }
+
+
     }
 
   }
@@ -1515,8 +1559,18 @@ export class MapComponent implements OnInit {
       source: this.utfgridBairro
     });
 
+
+    this.utfgridProjecao = new UTFGrid({
+      tileJSON: this.getTileJSONProjecao()
+    });
+
+    this.utfgridlayerProjecao = new OlTileLayer({
+      source: this.utfgridProjecao
+    });
+
     this.layers.push(this.utfgridlayer);
     this.layers.push(this.utfgridlayerBairro)
+    this.layers.push(this.utfgridlayerProjecao)
 
     this.layers = this.layers.concat(olLayers.reverse());
   }
@@ -1552,6 +1606,21 @@ export class MapComponent implements OnInit {
       version: '2.2.0',
       grids: [
         this.returnUTFGRID('casos_por_bairro_covid', filter, '{x}+{y}+{z}')
+      ]
+    };
+  }
+
+  private getTileJSONProjecao() {
+
+    let p = this.layersNames.find(element => element.id === 'projecoes_luisa');
+    let layer = p.types.find(element => element.value === p.selectedType);
+
+    console.log(p)
+
+    return {
+      version: '2.2.0',
+      grids: [
+        this.returnUTFGRID(p.selectedType, layer.layerfilter, '{x}+{y}+{z}')
       ]
     };
 
@@ -1703,9 +1772,12 @@ export class MapComponent implements OnInit {
 
     let covid = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
     let bairros = this.layersNames.find(element => element.id === 'casos_bairro');
+    let projecao = this.layersNames.find(element => element.id === 'projecoes_luisa');
 
-    if (covid.visible || bairros.visible) {
 
+
+    if(covid.visible || bairros.visible || projecao.visible)
+    {
       if (covid.selectedType == 'covid19_municipios_casos') {
 
         if (this.utfgridsource) {
@@ -1731,11 +1803,79 @@ export class MapComponent implements OnInit {
         }
       }
 
+      if (this.utfgridProjecao) {
+        let tileJSONProjecao = this.getTileJSONProjecao();
 
-    } else if (this.utfgridsource && this.utfgridBairro) {
+        this.utfgridProjecao.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONProjecao.grids, this.utfgridProjecao.tileGrid);
+        this.utfgridProjecao.tileJSON = tileJSONProjecao;
+        this.utfgridProjecao.refresh();
+
+        this.utfgridlayerProjecao.setVisible(true);
+      }
+
+
+    }else if (this.utfgridsource && this.utfgridBairro && this.utfgridProjecao)
+    {
       this.utfgridlayer.setVisible(false);
       this.utfgridlayerBairro.setVisible(false);
+      this.utfgridlayerProjecao.setVisible(false);
     }
+
+    
+    
+    // if (covid.visible ) {
+
+    //   if (covid.selectedType == 'covid19_municipios_casos') {
+
+    //     if (this.utfgridsource) {
+    //       let tileJSON = this.getTileJSON();
+
+    //       this.utfgridsource.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridsource.tileGrid);
+    //       this.utfgridsource.tileJSON = tileJSON;
+    //       this.utfgridsource.refresh();
+
+    //       this.utfgridlayer.setVisible(true);
+    //     }
+    //   }
+    // }
+    // else if (this.utfgridsource){
+    //   this.utfgridlayer.setVisible(false);
+    // }
+
+    // if(bairros.visible){
+
+    //   if (bairros.selectedType == 'casos_por_bairro_covid') {
+    //     if (this.utfgridBairro) {
+    //       let tileJSONBairro = this.getTileJSONBairros();
+
+    //       this.utfgridBairro.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONBairro.grids, this.utfgridBairro.tileGrid);
+    //       this.utfgridBairro.tileJSON = tileJSONBairro;
+    //       this.utfgridBairro.refresh();
+
+    //       this.utfgridlayerBairro.setVisible(true);
+    //     }
+    //   }
+    // }
+    // else if (this.utfgridBairro) {
+     
+    //   this.utfgridlayerBairro.setVisible(false);
+    // }
+
+    // if(projecao.visible){
+
+    //     if (this.utfgridProjecao) {
+    //       let tileJSONProjecao = this.getTileJSONProjecao();
+
+    //       this.utfgridProjecao.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONProjecao.grids, this.utfgridProjecao.tileGrid);
+    //       this.utfgridProjecao.tileJSON = tileJSONProjecao;
+    //       this.utfgridProjecao.refresh();
+
+    //       this.utfgridlayerProjecao.setVisible(true);
+    //     }
+    // }
+    // else if (this.utfgridProjecao) {
+    //   this.utfgridlayerProjecao.setVisible(false);
+    // }
 
 
 
@@ -1759,10 +1899,6 @@ export class MapComponent implements OnInit {
       }
     }
 
-    // if(layer.id == "casos_bairro")
-    // {
-    //   this.zoomToCityOnTypesLayer(layer)
-    // }
     this.LayersTMS[layer.selectedType].setVisible(layer.visible);
     // this.updateSummary();
     this.googleAnalyticsService.eventEmitter("changeVisibility", "camadaDado", layer.label);

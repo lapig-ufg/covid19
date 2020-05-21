@@ -410,39 +410,6 @@
 											</ng-template>
 										</p-table>
 
-<!--										<table mat-table [dataSource]="chartResultCities.series" class="mat-elevation-z8">-->
-
-<!--											&lt;!&ndash;- Note that these columns can be defined in any order.-->
-<!--                                                  The actual rendered columns are set as a property on the row definition" &ndash;&gt;-->
-
-<!--											&lt;!&ndash; Position Column &ndash;&gt;-->
-<!--											<ng-container matColumnDef="position">-->
-<!--												<th mat-header-cell *matHeaderCellDef> No. </th>-->
-<!--												<td mat-cell *matCellDef="let element"> {{element.position}} </td>-->
-<!--											</ng-container>-->
-
-<!--											&lt;!&ndash; Name Column &ndash;&gt;-->
-<!--											<ng-container matColumnDef="name">-->
-<!--												<th mat-header-cell *matHeaderCellDef> Name </th>-->
-<!--												<td mat-cell *matCellDef="let element"> {{element.name}} </td>-->
-<!--											</ng-container>-->
-
-<!--											&lt;!&ndash; Weight Column &ndash;&gt;-->
-<!--											<ng-container matColumnDef="weight">-->
-<!--												<th mat-header-cell *matHeaderCellDef> Weight </th>-->
-<!--												<td mat-cell *matCellDef="let element"> {{element.weight}} </td>-->
-<!--											</ng-container>-->
-
-<!--											&lt;!&ndash; Symbol Column &ndash;&gt;-->
-<!--											<ng-container matColumnDef="symbol">-->
-<!--												<th mat-header-cell *matHeaderCellDef> Symbol </th>-->
-<!--												<td mat-cell *matCellDef="let element"> {{element.symbol}} </td>-->
-<!--											</ng-container>-->
-
-<!--											<tr mat-header-row *matHeaderRowDef="displayedColumnsTableCities"></tr>-->
-<!--											<tr mat-row *matRowDef="let row; columns: displayedColumnsTableCities;"></tr>-->
-<!--										</table>-->
-
 									</p-scrollPanel>
 								</p-tabPanel>
 
@@ -475,6 +442,7 @@
 						<mat-tab label="{{dataProjSeries.timeseries.label}}">
 							<p-tabView>
 								<p-tabPanel [header]="selectRegion.nome">
+								<p-scrollPanel [style]="{width: '100%', height: '50vh'}">
 
 									<h5 *ngIf="!dataProjSeries.timeseries.chartResult[0]?.show" style="text-align: center;">
 										<br>
@@ -490,7 +458,14 @@
 										<p><b>{{statistics_county.text.total_dias}}</b> {{statistics_county.result.total_dias}}</p>
 										<p *ngIf="statistics_county.result.media_novos_casos_3dias != -1"><b>{{statistics_county.text.media_novos_casos_3dias}}</b> {{statistics_county.result.media_novos_casos_3dias}}</p>
 										<p *ngIf="statistics_county.result.dias_duplicacao_confirmados != -1"><b>{{statistics_county.text.dias_duplicacao_confirmados}}</b> {{statistics_county.result.dias_duplicacao_confirmados | number:'1.0-3'}}</p>
+										<p *ngIf="statistics_county.result.taxa_crescimento != ''"><b>{{statistics_county.text.taxa_crescimento}}</b> {{statistics_county.result.taxa_crescimento | number:'1.0-2'}}</p>
+										<p *ngIf="statistics_county.result.n_total_infectadados_pico != ''"><b>{{statistics_county.text.n_total_infectadados_pico}}</b> {{statistics_county.result.n_total_infectadados_pico | number }}</p>
+										<!-- <p *ngIf="statistics_county.result.data_pico_infectados_incidencia != ''"><b>{{statistics_county.text.data_pico_infectados_incidencia}}</b> {{statistics_county.result.data_pico_infectados_incidencia | date : 'dd/MM/yyyy' }}</p> -->
+										<p *ngIf="statistics_county.result.data_pico_infectados_acumudado != ''"><b>{{statistics_county.text.data_pico_infectados_acumudado}}</b> {{statistics_county.result.data_pico_infectados_acumudado | date : 'dd/MM/yyyy' }}</p>
+										
 										<br>
+									
+									
 									</div>
 
 									<div *ngIf="dataProjSeries.timeseries.chartResult[0]?.show">
@@ -504,6 +479,7 @@
 										</p-chart>
 									</div>
 									<div style="height: 30vh"></div>
+								</p-scrollPanel>
 								</p-tabPanel>
 							</p-tabView>
 						</mat-tab>
@@ -549,50 +525,6 @@
 
 					</mat-tab-group>
 
-					<!-- <mat-tab label="{{dataProjSeries.timeseries.label}}">
-								<ng-template matTabContent>
-									<p-tabView>
-										<p-tabPanel [header]="selectRegion.nome"
-											*ngFor="let dat of dataProjSeries.timeseries.chartResult; let i = index"
-											[selected]="i == 0">
-											<div>
-												<p style="font-weight: bold; text-align: center;">{{ dat.text }}</p>
-												<p-chart [ngStyle]="{'overflow-x': hidden}" *ngIf="dat.type"
-													[type]="dat.type" [data]="dat.dataResult" [options]="dat.options">
-												</p-chart>
-											</div>
-										</p-tabPanel>
-									</p-tabView>
-								</ng-template>
-						</mat-tab>  -->
-
-					<!--				<div id="positionLegend" class="control-layers" cdkDrag>-->
-					<!--					<div [class]="collapseLegends ? 'titleWindows radius-bottom' : 'titleWindows'" >-->
-
-					<!--						<div>{{titlesLayerBox.legendTitle}}</div>-->
-
-					<!--						<div class="space"></div>-->
-
-					<!--						<button class="btn-colapse" mat-mini-fab (click)="collapseLegends = !collapseLegends" [attr.aria-expanded]="!collapseLegends" >-->
-					<!--							<mat-icon> {{collapseLegends ? 'expand_less' : 'expand_more'}}</mat-icon>-->
-					<!--						</button>-->
-					<!--					</div>-->
-
-					<!--					<div [ngbCollapse]="collapseLegends" class="legendasConteudo">-->
-					<!--						<div class="legends"  *ngFor="let layer of layersNames">-->
-					<!--							<mat-expansion-panel [expanded]="layer.visible" >-->
-					<!--								<mat-expansion-panel-header  [collapsedHeight]="'40px'" [expandedHeight]="'40px'"-->
-					<!--															 class="expansion-header-layer" *ngIf="layer.visible">-->
-					<!--									{{layer.label}}-->
-					<!--								</mat-expansion-panel-header>-->
-					<!--								<div *ngFor="let type of layer.types">-->
-					<!--									<img *ngIf="layer.selectedType === type.value" [src]="type.urlLegend">-->
-					<!--								</div>-->
-
-					<!--							</mat-expansion-panel>-->
-					<!--						</div>-->
-					<!--					</div>-->
-					<!--				</div>-->
 				</div>
 
 			</div>
@@ -600,7 +532,7 @@
 			<!-- [ngStyle]="{'visibility': infodata  ? 'visible' : (infobairro ? 'visible' : (clickable ? 'visible' : 'hidden'))}"> -->
 
 			<div id="map-info" class="card"
-			[ngStyle]="{'visibility': infodata  ? 'visible' : (infobairro ? 'visible' : (clickable ? 'visible' : 'hidden'))}">
+			[ngStyle]="{'visibility': infodata  ? 'visible' : (infobairro ? 'visible' : (infoprojecao ? 'visible' : (clickable ? 'visible' : 'hidden')))}">
 				<div *ngIf="infodata && !clickable" class="card-body">
 					<p class="card-text">{{infodata.nome}} - {{infodata.uf}}</p>
 					<table>
@@ -648,6 +580,46 @@
 							<tr>
 								<th>{{minireportText.label_last_update}} </th>
 								<td>{{infobairro.data_ultima_atualizacao | date : 'dd/MM/yyyy'}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div *ngIf="infoprojecao && !clickable" class="card-body">
+					<p class="card-text">{{infoprojecao.nome}} - {{infoprojecao.uf}}</p>
+					<table>
+						<tbody>
+							<tr>
+								<th>{{minireportText.qtd_population}} </th>
+								<td>{{infoprojecao.pop_2019 | number:'1.0-0' }} </td>
+							</tr>
+							<tr>
+								<th style="color:darkred">{{minireportText.projection_message}} </th>
+								<td style="color:darkred">{{infoprojecao.data | date : 'dd/MM/yyyy'}}</td>
+							</tr>
+							
+							<tr>
+								<th>{{minireportText.confirmed_cases}} </th>
+								<td>{{infoprojecao.confirmados}}</td>
+							</tr>
+							<tr>
+								<th>{{minireportText.recovered_cases}} </th>
+								<td>{{infoprojecao.recuperados}}</td>
+							</tr>
+							<tr>
+								<th>{{minireportText.infectados_cases}} </th>
+								<td>{{infoprojecao.infectados}}</td>
+							</tr>
+							<tr>
+								<th>{{minireportText.hospital_cases}} </th>
+								<td>{{infoprojecao.hospitalizados}}</td>
+							</tr>
+							<tr>
+								<th>{{minireportText.leitos_cases}} </th>
+								<td>{{infoprojecao.leitos}}</td>
+							</tr>
+							<tr>
+								<th>{{minireportText.label_last_update}} </th>
+								<td>{{infoprojecao.data_atualizacao | date : 'dd/MM/yyyy'}}</td>
 							</tr>
 						</tbody>
 					</table>
