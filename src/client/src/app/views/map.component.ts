@@ -43,6 +43,8 @@ import { RestrictedAreaAccessComponent } from "./restricted-area-access/restrict
 import { RestrictedAreaFormComponent } from "./restricted-area-form/restricted-area-form.component";
 import * as moment from 'moment';
 
+import { Table } from 'primeng/table'; 
+
 import logos from './logos';
 import {BedsComponent} from "./beds/beds.component";
 
@@ -76,6 +78,8 @@ export class SearchService {
 
 })
 export class MapComponent implements OnInit {
+
+  @ViewChild(Table, { static: false }) dt: Table;
   map: OlMap;
   layers: Array<TileWMS>;
   tileGrid: TileGrid;
@@ -418,6 +422,32 @@ export class MapComponent implements OnInit {
     }
 
     return undefined;
+  }
+
+  private refreshTable()
+  {
+
+      let citiesUrl = '/service/indicators/cities' + this.getServiceParams();
+      this.exportColumnsCities = [];
+      this.http.get(citiesUrl).subscribe(citiesResult => {
+
+        this.chartResultCities = citiesResult;
+
+        let headers = this.chartResultCities.title.split('?');
+        let properties = this.chartResultCities.properties.split('?');
+
+        this.chartResultCities.split = [];
+        for (let i = 0; i < headers.length; i++) {
+          this.chartResultCities.split.push({
+            header: headers[i],
+            field: properties[i]
+          })
+        }
+
+        this.exportColumnsCities = this.chartResultCities.split.map(col => ({ title: col.header, dataKey: col.field }));
+
+        this.dt.reset(); 
+    });
   }
 
   private getServiceParams() {
@@ -973,6 +1003,7 @@ export class MapComponent implements OnInit {
     this.updateSummary();
     this.googleAnalyticsService.eventEmitter("updateRegion", "search_box", this.valueRegion);
   }
+
 
 
   zoomToCityOnTypesLayer(layer) {

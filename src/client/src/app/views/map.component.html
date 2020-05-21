@@ -356,7 +356,8 @@
 													<button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf('cities')" class="ui-button-warning" style="margin-right: 0.5em; color: #460202"></button>
 													<button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel('cities')" style="margin-right: 0.5em;" class="ui-button-success" style="margin-right: 0.5em; color: #460202"></button>
 <!--													<a target="_blank" class="nota" href="https://www.ufg.br/n/126975-nota-sobre-atualizacao-na-plataforma-covid-goias">Nota sobre o dado divulgado no dia 08/05/2020.</a>-->
-												</div>
+													<p-button icon="fa fa-refresh" iconPos="left" (click)="refreshTable()"></p-button>	
+											</div>
 											</ng-template>
 											<ng-template pTemplate="header" let-columns>
 												<tr align="center">

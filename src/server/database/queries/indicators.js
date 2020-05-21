@@ -139,7 +139,6 @@ module.exports = function (app) {
     else {
       filter = " "
     }
-    console.log("log: ",filter);
     return [
 
       {
