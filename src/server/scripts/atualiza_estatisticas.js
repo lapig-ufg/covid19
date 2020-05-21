@@ -42,7 +42,7 @@ fs.createReadStream(csvFilepath)
                     }
 
 					/* for initial population*/
-					var rowValues = [row.cd_geocmu, row.nome, row.data_inicial, row.total_dias, row.confirmados,row.confirmado_inicial, row.confirmados_novos, row.media_novos_casos_3dias,row.taxa_crescimento_confirmados,row.dias_duplicacao_confirmados] 
+					var rowValues = [row.cd_geocmu, row.municipios, row.data_inicial, row.total_dias, row.confirmados,row.confirmado_inicial, row.confirmados_novos, row.media_novos_casos_3dias,row.taxa_crescimento_confirmados,row.dias_duplicacao_confirmados] 
 					const res = await client.query(insertRow, rowValues)
 
 					// if (rowDate > lastDate ) {
@@ -54,7 +54,7 @@ fs.createReadStream(csvFilepath)
 
 					// 	var rowValues = [row.tipo, row.ordem_dia, row.data, row.codigo_municipio, row.municipios, row.total_casos] 
 					// 	const res = await client.query(insertRow, rowValues)
-						console.log(res.rowCount + ' inserted.')
+						console.log(row.municipios + ' inserted.')
 					// } else  {
 					// 	console.log('Duplicated register ignored.')
 					// }

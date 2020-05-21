@@ -70,7 +70,7 @@ module.exports = function (app) {
     return [
       {
         id: 'ranking_neighborhoods',
-        sql: "SELECT rank, nome, cd_geocmu as geocodigo, numpoints as confirmados, data_ultima_atualizacao FROM v_casos_bairros where numpoints > 0 AND " + filter
+        sql: "SELECT rank, nome, cd_geocmu as geocodigo, numpoints as confirmados, data_ultima_atualizacao, fonte FROM v_casos_bairros where numpoints > 0 AND " + filter
       },
       {
         id: 'last_updated',

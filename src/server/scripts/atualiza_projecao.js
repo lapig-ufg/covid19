@@ -50,7 +50,7 @@ fs.createReadStream(csvFilepath)
 
 					// 	var rowValues = [row.tipo, row.ordem_dia, row.data, row.codigo_municipio, row.municipios, row.total_casos] 
 					// 	const res = await client.query(insertRow, rowValues)
-						console.log(res.rowCount + ' inserted.')
+						console.log(row.municipios + ' inserted.')
 					// } else  {
 					// 	console.log('Duplicated register ignored.')
 					// }
