@@ -63,6 +63,10 @@
 				"label_obitos":{
 					"pt-br": "Óbitos",
 					"en-us": "Deaths"
+				},
+				"label_recuperados":{
+					"pt-br": "Recuperados",
+					"en-us": "Recovered"
 				}
 			},
 			"ranking_municipios": {

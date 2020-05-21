@@ -43,11 +43,20 @@ module.exports = function (app) {
 
   function createDataSetTimeSeriesGO(labels, graphic, language) {
 
+
+    console.log(graphic)
+
     let hideobito = true;
-    graphic.forEach(function(item, i) {
-      if(parseInt(item.obitos) > 0)
-      {
+    let hiderecuperados = true;
+    graphic.forEach(function (item, i) {
+      if (parseInt(item.obitos) > 0) {
         hideobito = false
+      }
+
+      if (item.nome == "GOIÂNIA") {
+        if (parseInt(item.recuperados) > 0) {
+          hiderecuperados = false
+        }
       }
 
     })
@@ -72,15 +81,15 @@ module.exports = function (app) {
         //   spanGaps: true,
         //   hidden: true,
         // },
-        // {
-        //   label: labels.label_descartados,
-        //   data: graphic.map(element => parseInt(element.descartados)),
-        //   fill: false,
-        //   backgroundColor: '#1e24c9',
-        //   borderColor: '#1e24c9',
-        //   spanGaps: true,
-        //   hidden: true,
-        // },
+        {
+          label: labels.label_recuperados,
+          data: graphic.map(element => parseInt(element.recuperados)),
+          fill: false,
+          backgroundColor: '#0959db',
+          borderColor: '#0959db',
+          spanGaps: true,
+          hidden: hiderecuperados,
+        },
         {
           label: labels.label_obitos,
           data: graphic.map(element => parseInt(element.obitos)),
@@ -138,6 +147,7 @@ module.exports = function (app) {
         label_suspeitos: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["label_suspeitos"][language],
         label_descartados: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["label_descartados"][language],
         label_obitos: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["label_obitos"][language],
+        label_recuperados: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["label_recuperados"][language],
         borderDashRef: [5, 5],
         getText: function (chart) {
           // var label = chart['indicators'][0]["label"]
@@ -220,40 +230,40 @@ module.exports = function (app) {
 
     var queryResult = request.queryResult['ranking_municipios']
 
-    if(queryResult.length > 0){
+    if (queryResult.length > 0) {
 
-      queryResult.map(function(item, i) {
+      queryResult.map(function (item, i) {
 
         if (i > 0) {
-            //Get our previous list item
-            var prevItem = queryResult[i - 1];
-            if (parseInt(prevItem.confirmados) == parseInt(item.confirmados)) {
-                //Same score = same rank
-                item.rank = prevItem.rank;
-            } else {
-                //Not the same score, give em the current iterated index + 1
-                item.rank = prevItem.rank + 1;
-            }
+          //Get our previous list item
+          var prevItem = queryResult[i - 1];
+          if (parseInt(prevItem.confirmados) == parseInt(item.confirmados)) {
+            //Same score = same rank
+            item.rank = prevItem.rank;
+          } else {
+            //Not the same score, give em the current iterated index + 1
+            item.rank = prevItem.rank + 1;
+          }
         } else {
-            //First item takes the rank 1 spot
-            item.rank = 1;
+          //First item takes the rank 1 spot
+          item.rank = 1;
         }
 
         return item;
-    });
+      });
 
-  }
+    }
     let total_confirmados = 0;
     let data_ultima_atualizacao = null;
-    if(Array.isArray(queryResult)){
-      if(queryResult.length > 0){
+    if (Array.isArray(queryResult)) {
+      if (queryResult.length > 0) {
         queryResult.forEach(function (item, index) {
-          total_confirmados+= item.confirmados;
+          total_confirmados += item.confirmados;
         });
-      }else{
+      } else {
         total_confirmados = null;
       }
-    }else{
+    } else {
       total_confirmados = null;
     }
 
@@ -265,7 +275,7 @@ module.exports = function (app) {
       properties: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["properties_name"][language],
       filename: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["filename"][language],
       series: queryResult,
-      total_cities: Array.isArray(queryResult) ? queryResult.length: null,
+      total_cities: Array.isArray(queryResult) ? queryResult.length : null,
       total_confirmados: total_confirmados,
       label_ses: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["label_ses"][language],
       label_confirmed_ses: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_municipios"]["label_confirmed_ses"][language],
@@ -286,26 +296,26 @@ module.exports = function (app) {
     var queryResultDate = request.queryResult['last_updated']
 
     let show = false
-    if(queryResult.length > 0){
-        show = true
+    if (queryResult.length > 0) {
+      show = true
 
-        queryResult.map(function(item, i) {
-          if (i > 0) {
-              //Get our previous list item
-              var prevItem = queryResult[i - 1];
-              if (parseInt(prevItem.confirmados) == parseInt(item.confirmados)) {
-                  //Same score = same rank
-                  item.rank = prevItem.rank;
-              } else {
-                  //Not the same score, give em the current iterated index + 1
-                  item.rank = prevItem.rank + 1;
-              }
+      queryResult.map(function (item, i) {
+        if (i > 0) {
+          //Get our previous list item
+          var prevItem = queryResult[i - 1];
+          if (parseInt(prevItem.confirmados) == parseInt(item.confirmados)) {
+            //Same score = same rank
+            item.rank = prevItem.rank;
           } else {
-              //First item takes the rank 1 spot
-              item.rank = 1;
+            //Not the same score, give em the current iterated index + 1
+            item.rank = prevItem.rank + 1;
           }
+        } else {
+          //First item takes the rank 1 spot
+          item.rank = 1;
+        }
 
-          return item;
+        return item;
       });
 
     }
@@ -313,17 +323,17 @@ module.exports = function (app) {
     let total_confirmados = 0;
     let data_ultima_atualizacao = null;
     let fonte = null;
-    if(Array.isArray(queryResult)){
-      if(queryResult.length > 0){
+    if (Array.isArray(queryResult)) {
+      if (queryResult.length > 0) {
         queryResult.forEach(function (item, index) {
           fonte = item.fonte;
-          total_confirmados+= item.confirmados;
+          total_confirmados += item.confirmados;
           data_ultima_atualizacao = item.data_ultima_atualizacao;
         });
-      }else{
+      } else {
         total_confirmados = null;
       }
-    }else{
+    } else {
       total_confirmados = null;
     }
 
@@ -338,11 +348,11 @@ module.exports = function (app) {
       label_confirmed: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label_confirmed"][language],
       label_total: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label_total"][language],
       show: show,
-      total_neighborhoods: Array.isArray(queryResult) ? queryResult.length: null,
+      total_neighborhoods: Array.isArray(queryResult) ? queryResult.length : null,
       total_confirmados: total_confirmados,
       last_updated: queryResultDate[0]['max'],
       fonte: fonte,
-      data_ultima_atualizacao: moment(data_ultima_atualizacao).format( "DD/MM/YYYY"),
+      data_ultima_atualizacao: moment(data_ultima_atualizacao).format("DD/MM/YYYY"),
       series: queryResult
     }
     response.send(result)
@@ -385,7 +395,7 @@ module.exports = function (app) {
             },
             position: "bottom"
           },
-          tooltips: {mode: "index"},
+          tooltips: { mode: "index" },
           scales: {
             yAxes: [{
               scaleLabel: {
@@ -418,10 +428,10 @@ module.exports = function (app) {
 
               qFinal.push(item)
               if (item.tipo == 'Obs') {
-                  conf.push(item)
+                conf.push(item)
               }
             });
-            chart["last_model_date"] = qFinal[0]['last_model_date']
+          chart["last_model_date"] = qFinal[0]['last_model_date']
         }
         chart["dataResult"] = createProjectionsGO(chart, qFinal, conf, language);
       }
@@ -488,7 +498,7 @@ module.exports = function (app) {
     }
 
     let data = {
-      labels: casos.map(element => element._id+"/2020"),
+      labels: casos.map(element => element._id + "/2020"),
       datasets: [
         {
           label: t.label_confirmados,
@@ -527,7 +537,7 @@ module.exports = function (app) {
 
     let requestLastUpdate = {
       headers: {
-        'x-parse-application-id':'unAFkcaNDeXajurGB7LChj8SgQYS2ptm'
+        'x-parse-application-id': 'unAFkcaNDeXajurGB7LChj8SgQYS2ptm'
       },
       uri: 'https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalGeral',
       method: 'GET'
@@ -670,7 +680,7 @@ module.exports = function (app) {
       result: res,
       text: texts
     }
-      );
+    );
     response.end();
   }
 
@@ -680,14 +690,14 @@ module.exports = function (app) {
     var teamJson = languageJson["team"];
     var result = {};
 
-    result.title          = teamJson.title[language];
-    result.info           = teamJson.info[language];
+    result.title = teamJson.title[language];
+    result.info = teamJson.info[language];
     result.methodology_p1 = teamJson.methodology_p1[language];
     result.methodology_p2 = teamJson.methodology_p2[language];
     result.methodology_p3 = teamJson.methodology_p3[language];
-    result.contact        = teamJson.contact[language];
-    result.title_team     = teamJson.title_team[language];
-    result.data           = [];
+    result.contact = teamJson.contact[language];
+    result.title_team = teamJson.title_team[language];
+    result.data = [];
 
     teamJson.data.forEach(function (elem, elmIndex) {
 
@@ -695,16 +705,16 @@ module.exports = function (app) {
 
       teamJson.data[elmIndex].members.forEach(function (member, index) {
         membersLang.push(
-            {
-              nome: teamJson.data[elmIndex].members[index].nome,
-              link: teamJson.data[elmIndex].members[index].link,
-              description: teamJson.data[elmIndex].members[index].description[language]
-            }
+          {
+            nome: teamJson.data[elmIndex].members[index].nome,
+            link: teamJson.data[elmIndex].members[index].link,
+            description: teamJson.data[elmIndex].members[index].description[language]
+          }
         );
       });
 
       result.data.push({
-        title:   teamJson.data[elmIndex].title[language],
+        title: teamJson.data[elmIndex].title[language],
         members: membersLang
       });
     });
