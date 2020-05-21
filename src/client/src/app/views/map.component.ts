@@ -2389,6 +2389,9 @@ export class MapComponent implements OnInit {
   };
 
   onProjectionsChange(event) {
+
+    console.log("event- " , event)
+
     let lay = this.projectionsLayers.find(element => element.value === this.selectedProjectionLayer);
     this.labelProjections = this.controls.text_projections
                                          .replace('[weeks]',this.datesProjections.length)
@@ -2403,14 +2406,15 @@ export class MapComponent implements OnInit {
       self.changeVisibility(item, { checked: false });
     });
 
+    
     let p = this.layersNames.find(element => element.id === 'projecoes_luisa');
-    this.changeVisibility(p, { checked: true });
-
-
     p.selectedType = this.selectedProjectionLayer;
     let layer = p.types.find(element => element.value === p.selectedType);
     layer.layerfilter = "data = '" + this.datesProjections[event.value].data_db + "'"
     this.urlLegendProjections = layer.urlLegend;
+    
+    this.changeVisibility(p, { checked: true });
+
     this.updateSourceLayer(layer);
   }
   onSliderChange(event) {
