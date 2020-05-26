@@ -50,6 +50,7 @@ import logos from './logos';
 import {BedsComponent} from "./beds/beds.component";
 import {NoteComponent} from "./note/note.component";
 import {MatTableDataSource} from "@angular/material/table";
+import {ProjectionsComponent} from "./projections/projections.component";
 
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
@@ -2120,6 +2121,12 @@ export class MapComponent implements OnInit {
     });
   }
 
+  openInfoProjections() {
+    let dialogRef = this.dialog.open(ProjectionsComponent, {
+      width: '80%',
+      data: {}
+    });
+  }
   downloadCSV(layer) {
 
     let selected = {

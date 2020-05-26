@@ -289,6 +289,9 @@
 								max="{{datesProjections.length -1}}"
 						>
 						</mat-slider>
+						<button (click)="openInfoProjections()" style="position: absolute; right: 7%; top: 12%;" classs="btn-info" mat-icon-button>
+							<mat-icon>info</mat-icon>
+						</button>
 					</div>
 					<div class="col-3 vertical-center mt-3">
 						<p-dropdown  (onChange)="onProjectionsChange($event)" [options]="projectionsLayers" [(ngModel)]="selectedProjectionLayer"></p-dropdown>
