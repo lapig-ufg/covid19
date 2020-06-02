@@ -59,6 +59,9 @@
 								<div [class]="showSlider ? 'btn-zoom btn-zoom-active' : 'btn-zoom'" (click)="handleSlider()">
 									<img width="30" height="30" src="../../assets/img/history.svg" [alt]="controls.label_historic">
 								</div>
+								<div [class]="showProjections ? 'btn-zoom btn-zoom-active' : 'btn-zoom'" (click)="handleProjections()">
+									<img width="27" height="27" src="../../assets/img/projections.svg" [alt]="controls.label_projections">
+								</div>
 							</div>
 					</div>
 					<div *ngIf="infobairro && !clickable" class="card-body">
@@ -67,20 +70,95 @@
 						<p class="card-font">{{minireportText.label_fonte}} {{infobairro.fonte}}, {{minireportText.label_last_update}} {{infobairro.data_ultima_atualizacao | date : 'dd/MM/yyyy'}}</p>
 					</div>
 					<div class="slider" *ngIf="showSlider" >
-							<h6> {{controls.text_historic.replace('[dias]',dates.length)}}</h6>
-							<mat-slider
-									#datesSlider
-									thumbLabel
-									(input)="onSliderChange($event)"
-									[displayWith]="formatRateLabel(datesSlider.value)"
-									color="warn"
-									value="{{dates.length -1}}"
-									tickInterval="1"
-									min="{{'0'}}"
-									max="{{dates.length -1}}"
+						<h6> {{controls.text_historic.replace('[dias]',dates.length)}}</h6>
+						<mat-slider
+								#datesSlider
+								thumbLabel
+								(input)="onSliderChange($event)"
+								[displayWith]="formatRateLabel(datesSlider.value)"
+								color="warn"
+								value="{{dates.length -1}}"
+								tickInterval="1"
+								min="{{'0'}}"
+								max="{{dates.length -1}}"
 						>
-							</mat-slider>
+						</mat-slider>
+						<p style="padding: 5px 10px; text-align: justify; font-size: 10px; line-height: 1.6">*Acesse a plataforma no computador para uma melhor experiência de visualização, acesso a outros dados e funcionalidades.</p>
+					</div>
+					<div class="slider projections" *ngIf="showProjections" >
+						<h6>{{this.labelProjections}}</h6>
+						<div class="row ju" style="padding: 15px 2px">
+							<div class="col-12">
+								<mat-slider
+										#projections
+										thumbLabel
+										(input)="onProjectionsChange($event)"
+										[displayWith]="formatRateLabelProjections(projections.value)"
+										color="warn"
+										value="{{0}}"
+										tickInterval="1"
+										min="{{'0'}}"
+										max="{{datesProjections.length -1}}"
+								>
+								</mat-slider>
+							</div>
 						</div>
+						<div class="row">
+							<div class="col-10">
+								<p-dropdown  (onChange)="onProjectionsChange($event)" [options]="projectionsLayers" [(ngModel)]="selectedProjectionLayer"></p-dropdown>
+							</div>
+							<div class="col-2">
+								<button (click)="openInfoProjections()" style="width: 100%; right: 4px; height: 100%" mat-icon-button>
+									<mat-icon>info</mat-icon>
+								</button>
+							</div>
+						</div>
+						<div class="mt-1"></div>
+						<div class="legend-projections">
+							<img [src]="urlLegendProjections" alt="legend">
+						</div>
+						<p style="padding: 5px 10px; text-align: justify; font-size: 10px; line-height: 1.6">*Acesse a plataforma no computador para uma melhor experiência de visualização, acesso a outros dados e funcionalidades.</p>
+						<div *ngIf="infoprojecao && !clickable" class="card-body">
+							<p class="card-text">{{infoprojecao.nome}} - {{infoprojecao.uf}}</p>
+							<table>
+								<tbody>
+									<tr>
+										<th>{{minireportText.qtd_population}} </th>
+										<td>{{infoprojecao.pop_2019 | number:'1.0-0' }} </td>
+									</tr>
+									<tr>
+										<th style="color:darkred">{{minireportText.projection_message}} </th>
+										<td style="color:darkred">{{infoprojecao.data | date:'dd/MM/yyyy'}}</td>
+									</tr>
+		
+									<tr>
+										<th>{{minireportText.confirmed_cases}} </th>
+										<td>{{infoprojecao.confirmados}}</td>
+									</tr>
+									<tr>
+										<th>{{minireportText.recovered_cases}} </th>
+										<td>{{infoprojecao.recuperados}}</td>
+									</tr>
+									<tr>
+										<th>{{minireportText.infectados_cases}} </th>
+										<td>{{infoprojecao.infectados}}</td>
+									</tr>
+									<tr>
+										<th>{{minireportText.hospital_cases}} </th>
+										<td>{{infoprojecao.hospitalizados}}</td>
+									</tr>
+									<tr>
+										<th>{{minireportText.leitos_cases}} </th>
+										<td>{{infoprojecao.leitos}}</td>
+									</tr>
+									<tr>
+										<th>{{minireportText.label_last_update}} </th>
+										<td>{{infoprojecao.data_atualizacao | date : 'dd/MM/yyyy'}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
 					<div class="layersConteudo">
 						<mat-accordion>
 							<div id="layer_dados">
@@ -251,7 +329,7 @@
 
 				<div class="export-table">
 					<button mat-raised-button color="primary" (click)="exportPdf('bairros')">PDF</button>
-					<button mat-raised-button color="accent" (click)="exportExcel('bairros')">EXCEL</button>
+					<!-- <button mat-raised-button color="accent" (click)="exportExcel('bairros')">EXCEL</button> -->
 					<button (click)="openInfo()" mat-raised-button color="primary">INFO</button>
 				</div>
 
@@ -293,7 +371,7 @@
 
 				<div class="export-table">
 					<button mat-raised-button color="primary" (click)="exportPdf('cities')">PDF</button>
-					<button mat-raised-button color="accent" (click)="exportExcel('cities')">EXCEL</button>
+					<!-- <button mat-raised-button color="accent" (click)="exportExcel('cities')">EXCEL</button> -->
 				</div>
 
 				<table style="width: 97% !important; margin-left: 2%!important; margin-right: 2% !important;"  mat-table [dataSource]="dataSourceCities" class="mat-elevation-z8">

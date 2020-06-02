@@ -96,7 +96,7 @@ body .ui-tabview .ui-tabview-panels {
 	overflow: hidden;
 	margin: 5px;
 	padding: 8px;
-	height: calc(51vh);
+	height: calc(52vh);
 	border-radius: 7px;
 	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
 	box-shadow: -1px 1px 10px 0px #7a2525;
@@ -446,22 +446,53 @@ font-size: 0.8em;
 	padding-left: 45px;
 	padding-right: 45px;
 	padding-bottom: 20px; */
-	overflow: hidden;
+	padding: 15px;
+	margin-bottom: 10px;
 	border-radius: 7px;
 	-webkit-box-shadow: -1px 1px 10px 0px #7a2525;
 	box-shadow: -1px 1px 10px 0px #7a2525;
 }
 
 .slider h6{
-	color:  #a11313;;
+	color:  #a11313;
 	font-size: 2vh;
-	text-align: left;
 	text-align: center;
 	margin-left: 0px;
 }
 
+.projections h6{
+	color:  #a11313;
+	font-size: 2vh;
+	text-align: center;
+}
+
+.projections{
+	/* position: absolute; */
+	bottom: 3%;
+	left: 9%;
+	/* padding: 15px; */
+	/* width: 47vw; */
+	z-index: 1000000;
+	border-radius: 10px;
+	background-color: #f9f6f69e;
+}
+
+.projections-header{
+	display: flex;
+}
+
+.projections-header mat-form-field{
+	margin-top: 5px;
+	margin-right: 45px;
+}
+
 mat-slider {
 	width: 90%;
+	margin: 8px;
+}
+
+#projections mat-slider {
+	width: 100%;
 	margin: 8px;
 }
 
@@ -984,7 +1015,7 @@ mat-select {
 
 .controls {
 	position: absolute;
-	left: 15px;
+	left: 10px;
 	/* top: 18%; */
 	z-index: 100000;
 	padding: 5px 14px;
@@ -994,13 +1025,13 @@ mat-select {
 
 .btn-zoom {
 	cursor: pointer;
-	padding: 6px 6px;
-	margin-bottom: 8px;
+	padding: 3px;
+	margin-bottom: 5px;
 	background-color: #823333;
 	border-radius: 10px;
 	transition: 0.3s;
 	color: white;
-	font-size: 3em;
+	font-size: 2.5em;
 	text-align: center;
 	align-self: center;
 }
@@ -1175,4 +1206,13 @@ mat-select {
 
 .export-table button{
 	margin-right: 10px;
+}
+
+.legend-projections{
+	padding: 4px;
+	background-color: #5151515e;
+	border-radius: 10px;
+}
+.legend-projections img{
+	max-width: 100%;
 }
