@@ -565,17 +565,19 @@ module.exports = function (app) {
   Controller.states = async function (request, response) {
     var language = request.param('lang')
 
-    let web = await rp('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalEstado');
+    // let web = await rp('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalEstado');
+    let web = await rp('https://brasil.io/api/dataset/covid19/caso/data/?format=json&is_last=True&place_type=state');
+
     let bd = JSON.parse(web);
-    var queryResult = bd
+    var queryResult = bd.results
 
     var qResult = [];
 
     queryResult.forEach(function (row) {
 
       qResult.push({
-        uf: row['nome'],
-        total_casos: row['casosAcumulado']
+        uf: row['state'],
+        total_casos: row['confirmed']
       })
 
     })
