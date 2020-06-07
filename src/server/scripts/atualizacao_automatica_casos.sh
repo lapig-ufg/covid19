@@ -62,17 +62,17 @@ echo -n -e "Populando banco de dados!"
 sleep 2
 
 clear
-node atualiza_casos_municipios.js
+node atualiza_casos_municipios.js > atualiza_casos_municipios.log
 sleep 2
 clear
-node atualiza_estatisticas.js
+node atualiza_estatisticas.js > atualiza_estatisticas.log
 sleep 2
 clear
-node atualiza_projecao.js
+node atualiza_projecao.js > atualiza_projecao.log
 sleep 2
 
 clear
-node update_recuperados.js
+node update_recuperados.js > update_recuperados.log
 sleep 2
 
 clear
