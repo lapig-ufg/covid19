@@ -30,6 +30,9 @@ docid3 = "1LeLPLxMqJMiCq5VQLtjO_e7hPtXWmSZxs5t9-1lYAgU"
 #casos_por_bairro_em_municipios
 docid4 = "1l_3ZlgEBdd53BZFhGktgzvnuze7s3r0QGwVQomfo1eU"
 
+#recuperados
+docid5 = "1fO70w9OI1sbRiyHmD9HQZiG_Wa7vqrwpgSigeHRMAD4"
+
 class UnicodeWriter:
     """
     A CSV writer which will write rows to CSV file "f",
@@ -101,6 +104,15 @@ client = gspread.authorize(credentials)
 spreadsheet = client.open_by_key(docid4)
 for i, worksheet in enumerate(spreadsheet.worksheets()):
     filename = docid4 + '-worksheet' + str(i) + '.csv'
+    with open(filename, 'wb') as f:
+        writer = UnicodeWriter(f)
+        writer.writerows(worksheet.get_all_values())
+
+#Spreadsheet download function6
+client = gspread.authorize(credentials)
+spreadsheet = client.open_by_key(docid5)
+for i, worksheet in enumerate(spreadsheet.worksheets()):
+    filename = docid5 + '-worksheet' + str(i) + '.csv'
     with open(filename, 'wb') as f:
         writer = UnicodeWriter(f)
         writer.writerows(worksheet.get_all_values())

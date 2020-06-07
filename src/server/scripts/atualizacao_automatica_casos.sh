@@ -5,7 +5,7 @@ BASELOCAL='/data/containers/APP_COVID19/APP/covid19/src/server/scripts/'
 DATA=`date +%d-%m-%Y-%H.%M`
 DATA02=`date +%d-%m-%Y`
 
-apt-get -y install pv 
+apt-get -y install pv
 
 pip install gspread >> /dev/null
 
@@ -37,15 +37,17 @@ sleep 2
 
 python2 download_planilha_casos.py
 
-rm -rfv 1mlyQIUbGKB2J3UIQrCPxAORaY5HYAPlMgY61IMCu4JY-worksheet0.csv 
+rm -rfv 1mlyQIUbGKB2J3UIQrCPxAORaY5HYAPlMgY61IMCu4JY-worksheet0.csv
 
-rm -rfv 163Agr2r4r4evn74SUkVojcdg-hq6urb0qcCMk5Pdknw-worksheet0.csv 
+rm -rfv 163Agr2r4r4evn74SUkVojcdg-hq6urb0qcCMk5Pdknw-worksheet0.csv
 
 mv 1sMzwMlPThQ0-AVYeYAxjkPQ_0G82hOEyDDh-xTlaaf4-worksheet0.csv projecao_casos_go.csv
 
 mv 1LeLPLxMqJMiCq5VQLtjO_e7hPtXWmSZxs5t9-1lYAgU-worksheet0.csv estatisticas.csv
 
-mv 1l_3ZlgEBdd53BZFhGktgzvnuze7s3r0QGwVQomfo1eU-worksheet0.csv bairros_casos.csv 
+mv 1l_3ZlgEBdd53BZFhGktgzvnuze7s3r0QGwVQomfo1eU-worksheet0.csv bairros_casos.csv
+
+mv 1fO70w9OI1sbRiyHmD9HQZiG_Wa7vqrwpgSigeHRMAD4-worksheet0.csv recuperados.csv
 
 
 clear
@@ -69,6 +71,9 @@ clear
 node atualiza_projecao.js
 sleep 2
 
+clear
+node update_recuperados.js
+sleep 2
 
 clear
 echo -n -e "Guardando Backup no GoogleDrive!"
