@@ -535,29 +535,19 @@ module.exports = function (app) {
 
   Controller.summaryBrasil = async function (request, response) {
 
-    let requestLastUpdate = {
-      headers: {
-        'x-parse-application-id': 'unAFkcaNDeXajurGB7LChj8SgQYS2ptm'
-      },
-      uri: 'https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalGeral',
-      method: 'GET'
-    };
+    let casos = await rp('https://brasil.io/covid19/cities/cases/');
 
-    let lastUpdate = await rp(requestLastUpdate);
-    let casos = await rp('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalGeralApi');
-
-    let lastUpdateJson = JSON.parse(lastUpdate);
     let casosJson = JSON.parse(casos);
+    let summary = casosJson.total;
 
     let result = {
-      last_update: lastUpdateJson.results[0].dt_atualizacao,
-      confirmados: casosJson.confirmados.total,
-      obitos: casosJson.obitos.total,
-      letalidade: casosJson.obitos.letalidade
+      last_update: moment(summary.date).format("DD/MM/YYYY"),
+      confirmados: summary.confirmed,
+      obitos: summary.deaths
     };
+
     response.send(result);
     response.end();
-
   }
 
 
@@ -570,6 +560,18 @@ module.exports = function (app) {
 
     let bd = JSON.parse(web);
     var queryResult = bd.results
+
+    let compare = function( a, b ) {
+      if ( a.confirmed < b.confirmed ){
+        return 1;
+      }
+      if ( a.confirmed > b.confirmed ){
+        return -1;
+      }
+      return 0;
+    }
+
+    queryResult.sort( compare );
 
     var qResult = [];
 
