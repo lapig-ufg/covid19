@@ -53,14 +53,16 @@ class Update {
     async getSuspeitos() {
         var propertiesObject = { dataAccessId: 'DSBigNumberSuspeitos' };
         let url = 'https://extranet.saude.go.gov.br/pentaho/plugin/cda/api/doQuery?path=/coronavirus/paineis/painel.cda';
-
         let suspeitos = null;
 
-        let response = await rp({ url: url, qs: propertiesObject });
+        try {
+            let response = await rp({ url: url, qs: propertiesObject });
 
-        let bd = JSON.parse(response);
-        suspeitos = bd.resultset[0][0];
-
+            let bd = JSON.parse(response);
+            suspeitos = bd.resultset[0][0];
+        }catch (e) {
+            console.log(e)
+        }
         return suspeitos
     }
 
@@ -68,14 +70,17 @@ class Update {
 
         let df = {};
 
-        let response = await rp('https://brasil.io/api/dataset/covid19/caso/data/?format=json&is_last=True&place_type=state');
+        try {
+            let response = await rp('https://brasil.io/api/dataset/covid19/caso/data/?format=json&is_last=True&place_type=state');
 
-        let bd = JSON.parse(response);
-        let ob = this.findElement(bd.results, 'state', 'DF');
+            let bd = JSON.parse(response);
+            let ob = this.findElement(bd.results, 'state', 'DF');
 
-        df.confirmados = ob.confirmed;
-        df.obitos = ob.deaths;
-
+            df.confirmados = ob.confirmed;
+            df.obitos = ob.deaths;
+        }catch (e) {
+            console.log(e)
+        }
         return df;
     }
 
