@@ -32,17 +32,37 @@ fs.createReadStream(csvFilepath)
 				for (i in csvRows) {
 					var row = csvRows[i]
                     var rowDate = new Date(row.data)
-                    
-                    if(row.taxa_crescimento_confirmados == "NA"){
+
+                    if(row.taxa_crescimento_confirmados == "NA" || row.taxa_crescimento_confirmados == ""){
                         row.taxa_crescimento_confirmados = -1
                     }
 
-                    if(row.dias_duplicacao_confirmados == "NA"){
+                    if(row.dias_duplicacao_confirmados == "NA" || row.dias_duplicacao_confirmados == ""){
                         row.dias_duplicacao_confirmados = -1
                     }
 
+					if(row.total_dias == "NA" || row.total_dias == ""){
+						row.total_dias = -1
+					}
+
+					if(row.confirmado_inicial == "NA" || row.confirmado_inicial == ""){
+						row.confirmado_inicial = -1
+					}
+
+					if(row.confirmados == "NA" || row.confirmados == ""){
+						row.confirmados = -1
+					}
+
+					if(row.confirmados_novos == "NA" || row.confirmados_novos == ""){
+						row.confirmados_novos = -1
+					}
+
+					if(row.media_novos_casos_3dias == "NA" || row.media_novos_casos_3dias == ""){
+						row.media_novos_casos_3dias = -1
+					}
+
 					/* for initial population*/
-					var rowValues = [row.cd_geocmu, row.municipios, row.data_inicial, row.total_dias, row.confirmados,row.confirmado_inicial, row.confirmados_novos, row.media_novos_casos_3dias,row.taxa_crescimento_confirmados,row.dias_duplicacao_confirmados] 
+					var rowValues = [row.cd_geocmu, row.municipios, row.data_inicial, row.total_dias, row.confirmados,row.confirmado_inicial, row.confirmados_novos, row.media_novos_casos_3dias,row.taxa_crescimento_confirmados,row.dias_duplicacao_confirmados]
 					const res = await client.query(insertRow, rowValues)
 
 					// if (rowDate > lastDate ) {
@@ -52,7 +72,7 @@ fs.createReadStream(csvFilepath)
                     //     }
 
 
-					// 	var rowValues = [row.tipo, row.ordem_dia, row.data, row.codigo_municipio, row.municipios, row.total_casos] 
+					// 	var rowValues = [row.tipo, row.ordem_dia, row.data, row.codigo_municipio, row.municipios, row.total_casos]
 					// 	const res = await client.query(insertRow, rowValues)
 						console.log(row.municipios + ' inserted.')
 					// } else  {
