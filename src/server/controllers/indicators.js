@@ -431,7 +431,7 @@ module.exports = function (app) {
                 conf.push(item)
               }
             });
-          chart["last_model_date"] = qFinal[0]['last_model_date']
+          chart["last_model_date"] = moment(qFinal[0]['last_model_date']).format("DD/MM/YYYY")
         }
         chart["dataResult"] = createProjectionsGO(chart, qFinal, conf, language);
       }

@@ -33,7 +33,7 @@ import { MetadataComponent } from './metadata/metadata.component';
 import CropFilter from 'ol-ext/filter/Crop';
 import MaskFilter from 'ol-ext/filter/Mask';
 import MultiPolygon from 'ol/geom/MultiPolygon';
-import { defaults as defaultControls, Control, Attribution } from 'ol/control';
+import { defaults as defaultControls, Control, Attribution} from 'ol/control';
 import { Router } from '@angular/router';
 import { google } from "google-maps";
 import { DataSource } from '@angular/cdk/table';
@@ -51,6 +51,8 @@ import {BedsComponent} from "./beds/beds.component";
 import {NoteComponent} from "./note/note.component";
 import {MatTableDataSource} from "@angular/material/table";
 import { saveAs } from 'file-saver';
+import html2canvas from 'html2canvas';
+import * as jsPDF from 'jspdf';
 import {ProjectionsComponent} from "./projections/projections.component";
 
 let SEARCH_URL = '/service/map/search';
@@ -250,6 +252,7 @@ export class MapComponent implements OnInit {
   displayedColumnsCities = [];
 
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
+  @ViewChild("map", { static: false }) mpref: ElementRef;
   selectedConfirmedDate: any;
 
   constructor(
@@ -259,7 +262,8 @@ export class MapComponent implements OnInit {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     public googleAnalyticsService: GoogleAnalyticsService,
-    private router: Router
+    private router: Router,
+    private elementRef : ElementRef
   ) {
 
     this.projection = OlProj.get('EPSG:900913');
@@ -2159,6 +2163,55 @@ export class MapComponent implements OnInit {
     } else {
       this.downloadSHP(layer);
     }
+  }
+
+  printViewMap(){
+    var pdf = new jsPDF('landscape', undefined, format);
+    var dims = {
+      a0: [1189, 841],
+      a1: [841, 594],
+      a2: [594, 420],
+      a3: [420, 297],
+      a4: [297, 210],
+      a5: [210, 148]
+    };
+
+    var format = 'a4';
+    var resolution = 72;
+    var dim = dims[format];
+    var width = Math.round(dim[0] * resolution / 25.4);
+    var height = Math.round(dim[1] * resolution / 25.4);
+    var size = this.map.getSize();
+    var viewResolution = this.map.getView().getResolution();
+
+    var mapCanvas = document.createElement('canvas');
+    mapCanvas.width = size[0];
+    mapCanvas.height = size[1];
+    // var mapContext = mapCanvas.getContext('2d');
+    // Array.prototype.forEach.call(this.mpref.nativeElement.querySelectorAll('.ol-viewport canvas'), function(canvas) {
+    //   if (canvas.width > 0) {
+    //     var opacity = canvas.parentNode.style.opacity;
+    //     mapContext.globalAlpha = opacity === '' ? 1 : Number(opacity);
+    //     var transform = canvas.style.transform;
+    //     // Get the transform parameters from the style's transform matrix
+    //     var matrix = transform.match(/^matrix\(([^\(]*)\)$/)[1].split(',').map(Number);
+    //     // Apply the transform to the export map context
+    //     CanvasRenderingContext2D.prototype.setTransform.apply(mapContext, matrix);
+    //     mapContext.drawImage(canvas, 0, 0);
+    //   }
+    // });
+    let self = this;
+    html2canvas(this.mpref.nativeElement.querySelectorAll('.ol-viewport canvas')[0]).then(canvas => {
+      var imgData = mapCanvas.toDataURL("image/png");
+      pdf.addImage(canvas, 'PNG', 0, 0, dim[0], dim[1]);
+      pdf.save('map.pdf');
+    });
+
+    // pdf.addImage(mapCanvas.toDataURL('image/png'), 'PNG', 0, 0, dim[0], dim[1]);
+    // pdf.save('map.pdf');
+    // Reset original map size
+    this.map.setSize(size);
+    this.map.getView().setResolution(viewResolution);
   }
 
   private updateSummary() {

@@ -1126,6 +1126,10 @@
 		"label_btn_download": {
 			"pt-br": "Baixe a série histórica dos casos confirmados e de óbitos.",
 			"en-us": "Download a historical series of confirmed cases and deaths."
+		},
+		"label_print_map": {
+			"pt-br": "Imprimir mapa",
+			"en-us": "Print map"
 		}
 
 	},
