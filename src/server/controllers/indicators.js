@@ -563,6 +563,7 @@ module.exports = function (app) {
     let result = {
       last_update: lastUpdateJson.results[0].dt_atualizacao,
       confirmados: casosJson.confirmados.total,
+      recuperados: casosJson.confirmados.recuperados,
       obitos: casosJson.obitos.total,
       letalidade: casosJson.obitos.letalidade
     };

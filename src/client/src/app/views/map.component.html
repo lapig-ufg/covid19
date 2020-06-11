@@ -164,6 +164,12 @@
 
 				<div class="resumo">
 					<div class="card-resumo">
+						<div *ngIf="!isFilteredByCity" class="card-resumo-title recup" [title]="textSummary.confirmed_recovered" >{{textSummary.confirmed_recovered}}
+						</div>
+						<h2>{{dataMS.recuperados | number}}</h2>
+					</div>
+
+					<div class="card-resumo">
 						<div *ngIf="!isFilteredByCity" class="card-resumo-title confirmado" [title]="textSummary.confirmed_label" >{{textSummary.confirmed_label}}
 						</div>
 						<h2>{{dataMS.confirmados | number}}</h2>

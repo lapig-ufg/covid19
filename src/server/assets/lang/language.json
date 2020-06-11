@@ -386,6 +386,10 @@
 			"pt-br": "Confirmados",
 			"en-us": "Confirmed"
 		},
+		"confirmed_recovered":{
+			"pt-br": "Recuperados",
+			"en-us": "Recovered"
+		},
 		"suspects_label":{
 			"pt-br": "Suspeitos",
 			"en-us": "Suspects"
