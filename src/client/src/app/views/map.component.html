@@ -158,7 +158,8 @@
 			<div *ngIf="!isFilteredByCity" class="container-resumo-brasil">
 				<div class="resumo-subtitle-card-brasil">
 					<h1 class="resumo-subtitle-brasil"> {{textSummary.title_brasil}} </h1>
-					<p> {{textSummary.last_update_label}} {{dataMS.last_update}}  {{textSummary.source_text_brasil}}</p>
+					<p> {{textSummary.last_update_label}} {{dataMS.last_update}}</p>
+					<p> {{textSummary.source_text_brasil}}</p>
 				</div>
 
 				<div class="resumo">
@@ -176,7 +177,7 @@
 
 					<div *ngIf="!isFilteredByCity" class="card-resumo">
 						<div class="card-resumo-title letalidade"  [title]="textSummary.lethality_label" >{{textSummary.lethality_label}}</div>
-						<h2>{{(dataMS.obitos / dataMS.confirmados) * 100  | number:'1.0-1' }}%</h2>
+						<h2>{{dataMS.letalidade}}%</h2>
 					</div>
 				</div>
 			</div>
@@ -441,19 +442,19 @@
 									</p-chart>
 								</p-tabPanel>
 
-<!--								<p-tabPanel [header]="dataBrasil?.label">-->
+								<p-tabPanel [header]="dataBrasil?.label">
 
-<!--									<div *ngIf="dataBrasil?.show">-->
-<!--										<p style="font-weight: bold; text-align: center;">-->
-<!--											{{ dataBrasil.title }}</p>-->
-<!--										<p-chart [ngStyle]="{'overflow-x': hidden}"-->
-<!--											*ngIf="dataBrasil?.show"-->
-<!--											[type]="dataBrasil?.options.type"-->
-<!--											[data]="dataBrasil?.dataset"-->
-<!--											[options]="optionsBrasil">-->
-<!--										</p-chart>-->
-<!--									</div>-->
-<!--								</p-tabPanel>-->
+									<div *ngIf="dataBrasil?.show">
+										<p style="font-weight: bold; text-align: center;">
+											{{ dataBrasil.title }}</p>
+										<p-chart [ngStyle]="{'overflow-x': hidden}"
+											*ngIf="dataBrasil?.show"
+											[type]="dataBrasil?.options.type"
+											[data]="dataBrasil?.dataset"
+											[options]="optionsBrasil">
+										</p-chart>
+									</div>
+								</p-tabPanel>
 
 							</p-tabView>
 						</mat-tab>

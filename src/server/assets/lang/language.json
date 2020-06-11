@@ -159,8 +159,8 @@
 					"en-us": "Deforested Area"
 				},
 				"description": {
-					"pt-br": "Comparação do número de casos em diferentes Estados (Brasil.IO)",
-					"en-us": "Comparison of the number of cases in different States (Brasil.IO)"
+					"pt-br": "Comparação do número de casos em diferentes Estados (Ministério da Saúde do Brasil)",
+					"en-us": "Comparison of the number of cases in different States (Ministry of Health of Brazil)"
 				},
 				"label_confirmados":{
 					"pt-br": "Confirmados",
@@ -379,8 +379,8 @@
 			"en-us": "Source: Secretary of Health in the State of Goiás "
 		},
 		"source_text_brasil":{
-			"pt-br": "Fonte: Brasil.IO",
-			"en-us": "Source: Brasil.IO"
+			"pt-br": "Fonte: Ministério da Saúde do Brasil",
+			"en-us": "Source: Ministry of Health of Brazil"
 		},
 		"confirmed_label":{
 			"pt-br": "Confirmados",

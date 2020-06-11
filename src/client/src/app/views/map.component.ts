@@ -966,55 +966,55 @@ export class MapComponent implements OnInit {
 
     });
 
-    // let brasilURL = '/service/indicators/brasil' + this.getServiceParams();
-    // this.http.get(brasilURL).subscribe(brasilResult => {
-    //   this.dataBrasil = brasilResult
-    //   this.optionsBrasil =  this.dataBrasil.options.options;
-    //
-    //   let y = [{
-    //     ticks: {
-    //       beginAtZero: true,
-    //       autoskip: true,
-    //       autoSkipPadding: 25,
-    //       callback: function (value) {
-    //         return value.toLocaleString('de-DE');
-    //       }
-    //     }
-    //   }]
-    //
-    //   this.optionsBrasil.scales.yAxes = y;
-    //
-    //   let x = [{
-    //     ticks: {
-    //       autoskip: false,
-    //       autoSkipPadding: 20
-    //     }
-    //   }]
-    //
-    //   this.optionsBrasil.scales.xAxes = x;
-    //
-    //
-    //   this.optionsBrasil.legend.onClick = function (event) {
-    //     return null;
-    //   };
-    //
-    //   this.optionsBrasil.tooltips = {
-    //     mode: 'index',
-    //     callbacks: {
-    //       label: function(tooltipItem, data) {
-    //           var label = data.datasets[tooltipItem.datasetIndex].label || '';
-    //
-    //           if (label) {
-    //               label += ': ';
-    //           }
-    //           label += tooltipItem.yLabel.toLocaleString('de-DE')
-    //           // label += Math.round(tooltipItem.yLabel * 100) / 100;
-    //           return label;
-    //       }
-    //   }
-    //   };
-    //
-    // });
+    let brasilURL = '/service/indicators/brasil' + this.getServiceParams();
+    this.http.get(brasilURL).subscribe(brasilResult => {
+      this.dataBrasil = brasilResult
+      this.optionsBrasil =  this.dataBrasil.options.options;
+
+      let y = [{
+        ticks: {
+          beginAtZero: true,
+          autoskip: true,
+          autoSkipPadding: 25,
+          callback: function (value) {
+            return value.toLocaleString('de-DE');
+          }
+        }
+      }]
+
+      this.optionsBrasil.scales.yAxes = y;
+
+      let x = [{
+        ticks: {
+          autoskip: false,
+          autoSkipPadding: 20
+        }
+      }]
+
+      this.optionsBrasil.scales.xAxes = x;
+
+
+      this.optionsBrasil.legend.onClick = function (event) {
+        return null;
+      };
+
+      this.optionsBrasil.tooltips = {
+        mode: 'index',
+        callbacks: {
+          label: function(tooltipItem, data) {
+              var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+              if (label) {
+                  label += ': ';
+              }
+              label += tooltipItem.yLabel.toLocaleString('de-DE')
+              // label += Math.round(tooltipItem.yLabel * 100) / 100;
+              return label;
+          }
+      }
+      };
+
+    });
 
 
 

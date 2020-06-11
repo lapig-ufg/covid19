@@ -71,13 +71,20 @@ class Update {
         let df = {};
 
         try {
-            let response = await rp('https://brasil.io/api/dataset/covid19/caso/data/?format=json&is_last=True&place_type=state');
+            // let response = await rp('https://brasil.io/api/dataset/covid19/caso/data/?format=json&is_last=True&place_type=state');
+            //
+            // let bd = JSON.parse(response);
+            // let ob = this.findElement(bd.results, 'state', 'DF');
+            //
+            // df.confirmados = ob.confirmed;
+            // df.obitos = ob.deaths;
+
+            let response = await rp('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalEstado');
 
             let bd = JSON.parse(response);
-            let ob = this.findElement(bd.results, 'state', 'DF');
-
-            df.confirmados = ob.confirmed;
-            df.obitos = ob.deaths;
+            let ob = this.findElement(bd, '_id', 'DF');
+            df.confirmados = ob.casosAcumulado;
+            df.obitos = ob.obitosAcumulado;
         }catch (e) {
             console.log(e)
         }

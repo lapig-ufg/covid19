@@ -531,57 +531,94 @@ module.exports = function (app) {
     response.send(finalResult);
     response.end();
 
-  }
+  };
 
   Controller.summaryBrasil = async function (request, response) {
 
-    let casos = await rp('https://brasil.io/covid19/cities/cases/');
+    // let casos = await rp('https://brasil.io/covid19/cities/cases/');
+    //
+    // let casosJson = JSON.parse(casos);
+    // let summary = casosJson.total;
+    //
+    // let result = {
+    //   last_update: moment(summary.date).format("DD/MM/YYYY"),
+    //   confirmados: summary.confirmed,
+    //   obitos: summary.deaths
+    // };
 
+    let requestLastUpdate = {
+      headers: {
+        'x-parse-application-id':'unAFkcaNDeXajurGB7LChj8SgQYS2ptm'
+      },
+      uri: 'https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalGeral',
+      method: 'GET'
+    };
+
+    let lastUpdate = await rp(requestLastUpdate);
+    let casos = await rp('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalGeralApi');
+
+    let lastUpdateJson = JSON.parse(lastUpdate);
     let casosJson = JSON.parse(casos);
-    let summary = casosJson.total;
 
     let result = {
-      last_update: moment(summary.date).format("DD/MM/YYYY"),
-      confirmados: summary.confirmed,
-      obitos: summary.deaths
+      last_update: lastUpdateJson.results[0].dt_atualizacao,
+      confirmados: casosJson.confirmados.total,
+      obitos: casosJson.obitos.total,
+      letalidade: casosJson.obitos.letalidade
     };
 
     response.send(result);
     response.end();
-  }
+  };
 
 
 
   Controller.states = async function (request, response) {
     var language = request.param('lang')
+    //
+    // // let web = await rp('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalEstado');
+    // let web = await rp('https://brasil.io/api/dataset/covid19/caso/data/?format=json&is_last=True&place_type=state');
+    //
+    // let bd = JSON.parse(web);
+    // var queryResult = bd.results
+    //
+    // let compare = function( a, b ) {
+    //   if ( a.confirmed < b.confirmed ){
+    //     return 1;
+    //   }
+    //   if ( a.confirmed > b.confirmed ){
+    //     return -1;
+    //   }
+    //   return 0;
+    // }
+    //
+    // queryResult.sort( compare );
+    //
+    // var qResult = [];
+    //
+    // queryResult.forEach(function (row) {
+    //
+    //   qResult.push({
+    //     uf: row['state'],
+    //     total_casos: row['confirmed']
+    //   })
+    //
+    // })
 
-    // let web = await rp('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalEstado');
-    let web = await rp('https://brasil.io/api/dataset/covid19/caso/data/?format=json&is_last=True&place_type=state');
+
+    let web = await rp('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalEstado');
 
     let bd = JSON.parse(web);
-    var queryResult = bd.results
-
-    let compare = function( a, b ) {
-      if ( a.confirmed < b.confirmed ){
-        return 1;
-      }
-      if ( a.confirmed > b.confirmed ){
-        return -1;
-      }
-      return 0;
-    }
-
-    queryResult.sort( compare );
+    var queryResult = bd
 
     var qResult = [];
 
     queryResult.forEach(function (row) {
 
       qResult.push({
-        uf: row['state'],
-        total_casos: row['confirmed']
+        uf: row['nome'],
+        total_casos: row['casosAcumulado']
       })
-
     })
 
     var regionResult = [];
