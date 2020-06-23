@@ -62,17 +62,17 @@ echo -n -e "Populando banco de dados!"
 sleep 2
 
 clear
-node atualiza_casos_municipios.js > atualiza_casos_municipios.log
+node atualiza_casos_municipios.js > /logs/atualiza_casos_municipios.log
 sleep 2
 clear
-node atualiza_estatisticas.js > atualiza_estatisticas.log
+node atualiza_estatisticas.js > /logs/atualiza_estatisticas.log
 sleep 2
 clear
-node atualiza_projecao.js > atualiza_projecao.log
+node atualiza_projecao.js > /logs/atualiza_projecao.log
 sleep 2
 
 clear
-node update_recuperados.js > update_recuperados.log
+node update_recuperados.js > /logs/update_recuperados.log
 sleep 2
 
 clear
@@ -89,7 +89,7 @@ clear
 echo -n -e "Excluindo Cache!"
 sleep 2
 
-if [[ -e "$BASESTORAGE/covid19_municipios_casos_utfgrid-tiles" ]] || [[ -e "$BASESTORAGE/covid19_municipios_casos-tiles" ]];then
+if [[ -e "$BASESTORAGE/covid19_municipios_casos_utfgrid-tiles" ]] || [[ -e "$BASESTORAGE/covid19_municipios_casos-tiles" ]] || [[ -e "$BASESTORAGE/projecao_luisa_confirmados-tiles" ]] || [[ -e "$BASESTORAGE/projecao_luisa_hospitalizados-tiles" ]] || [[ -e "$BASESTORAGE/projecao_luisa_infectados-tiles" ]] || [[ -e "$BASESTORAGE/projecao_luisa_recuperados-tiles" ]];then
 
 clear
 echo "Os diretorios existem, apagando!"
@@ -97,8 +97,15 @@ sleep 2
 
 ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd covid19_municipios_casos_utfgrid-tiles/; rm -rfv *'
 
-
 ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd covid19_municipios_casos-tiles/; rm -rfv *'
+
+ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd projecao_luisa_confirmados-tiles/; rm -rfv *'
+
+ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd projecao_luisa_hospitalizados-tiles/; rm -rfv *'
+
+ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd projecao_luisa_infectados-tiles/; rm -rfv *'
+
+ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd projecao_luisa_recuperados-tiles/; rm -rfv *'
 
 else
 clear
