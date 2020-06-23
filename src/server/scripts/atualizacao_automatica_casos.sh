@@ -127,4 +127,4 @@ echo -n -e "Rotina Concluida!"
 
 cd $BASELOCAL
 
-echo "Rotina Concluida em $DATA" >> atualizacao_de_dados.log
+echo "Rotina Concluida em $DATA" >> /logs/atualizacao_de_dados.log
