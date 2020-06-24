@@ -49,6 +49,10 @@ mv 1l_3ZlgEBdd53BZFhGktgzvnuze7s3r0QGwVQomfo1eU-worksheet0.csv bairros_casos.csv
 
 mv 1fO70w9OI1sbRiyHmD9HQZiG_Wa7vqrwpgSigeHRMAD4-worksheet0.csv recuperados.csv
 
+mv 1ELlIaPqgSZubGQOJy1pXVQa60Az9YfjAfPZ1UeiKseY-worksheet0.csv estatisticas_luisa.csv
+
+mv 1x9zk22gE8p8suaqfdtm3rPLGHvxEIN8mMCU2Mn7XTkI-worksheet0.csv projecao_casos_go_luisa.csv
+
 
 clear
 echo -n -e "Planilha baixada com sucesso!"
@@ -61,27 +65,32 @@ clear
 echo -n -e "Populando banco de dados!"
 sleep 2
 
+# clear
+# node atualiza_casos_municipios.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_casos_municipios.log
+# sleep 2
+# clear
+# node atualiza_estatisticas.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_estatisticas.log
+# sleep 2
+# clear
+# node atualiza_projecao.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_projecao.log
+# sleep 2
+# clear
+# node update_recuperados.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/update_recuperados.log
+# sleep 2
 clear
-node atualiza_casos_municipios.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_casos_municipios.log
+node atualiza_projecao_luisa.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_projecao_luisa.log
 sleep 2
 clear
-node atualiza_estatisticas.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_estatisticas.log
+node atualiza_estatisticas_luisa.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_estatisticas_luisa.log
 sleep 2
 clear
-node atualiza_projecao.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_projecao.log
-sleep 2
 
-clear
-node update_recuperados.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/update_recuperados.log
-sleep 2
+# echo -n -e "Guardando Backup no GoogleDrive!"
+# sleep 2
 
-clear
-echo -n -e "Guardando Backup no GoogleDrive!"
-sleep 2
-
-mv obitos.csv obitos-$DATA02.csv
-mv confirmados.csv  confirmados-$DATA02.csv
-python3 Upload_Backup_Planilhas.py
+# mv obitos.csv obitos-$DATA02.csv
+# mv confirmados.csv  confirmados-$DATA02.csv
+# python3 Upload_Backup_Planilhas.py
 
 #Step 3
 
