@@ -62,17 +62,17 @@ echo -n -e "Populando banco de dados!"
 sleep 2
 
 clear
-node atualiza_casos_municipios.js > /logs/atualiza_casos_municipios.log
+node atualiza_casos_municipios.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_casos_municipios.log
 sleep 2
 clear
-node atualiza_estatisticas.js > /logs/atualiza_estatisticas.log
+node atualiza_estatisticas.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_estatisticas.log
 sleep 2
 clear
-node atualiza_projecao.js > /logs/atualiza_projecao.log
+node atualiza_projecao.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_projecao.log
 sleep 2
 
 clear
-node update_recuperados.js > /logs/update_recuperados.log
+node update_recuperados.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/update_recuperados.log
 sleep 2
 
 clear
@@ -127,4 +127,4 @@ echo -n -e "Rotina Concluida!"
 
 cd $BASELOCAL
 
-echo "Rotina Concluida em $DATA" >> /logs/atualizacao_de_dados.log
+echo "Rotina Concluida em $DATA" >> /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
