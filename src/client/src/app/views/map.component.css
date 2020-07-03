@@ -1132,7 +1132,7 @@ mat-select {
 .container-resumo {
 	position: absolute;
 	top: 2%;
-	right: 0.7%;
+	right: 36%;
 	z-index: 2200000;
 	width: 30%;
 }
@@ -1209,15 +1209,15 @@ mat-select {
 .card-resumo h2 {
 	margin: 4px;
 	padding-top: 5px;
-	font-size: 1.4rem;
+	font-size: 1.15rem;
 }
 
 .container-resumo-brasil {
 	position: absolute;
 	top: 2%;
-	right: 31%;
+	right: 1%;
 	z-index: 2200000;
-	width: 26%;
+	width: 31%;
 }
 
 .resumo-subtitle-brasil {
@@ -1485,10 +1485,10 @@ mat-slider {
 @media screen and (max-width: 1400px) {
 
 	.container-resumo-brasil {
-		width: 32%;
+		width: 34%;
 	}
 	.container-resumo {
-		width: 32%;
+		width: 30%;
 	}
 
 }

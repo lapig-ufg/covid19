@@ -784,6 +784,11 @@ module.exports = function (app) {
     response.end()
   };
 
+  Controller.covidBio = async function (request, response) {
+    let pageCovid = await rp('http://covid.bio.br/');
+    response.send({page: pageCovid});
+    response.end();
+  };
   return Controller;
 };
 

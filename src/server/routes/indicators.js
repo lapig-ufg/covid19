@@ -16,4 +16,5 @@ module.exports = function (app) {
 	app.get('/service/indicators/brasil', indicators.brasil);
 	app.get('/service/indicators/summaryBrasil', indicators.summaryBrasil);
 	app.get('/service/indicators/datesProjections', dataInjector, indicators.datesProjections);
+	app.get('/service/indicators/covidBio', indicators.covidBio);
 }

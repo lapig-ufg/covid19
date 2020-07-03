@@ -51,9 +51,14 @@ import {BedsComponent} from "./beds/beds.component";
 import {NoteComponent} from "./note/note.component";
 import {MatTableDataSource} from "@angular/material/table";
 import { saveAs } from 'file-saver';
-import html2canvas from 'html2canvas';
 import * as jsPDF from 'jspdf';
 import {ProjectionsComponent} from "./projections/projections.component";
+
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+declare let html2canvas: any;
 
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
@@ -2128,7 +2133,8 @@ export class MapComponent implements OnInit {
 
   openInfoProjections() {
     let dialogRef = this.dialog.open(ProjectionsComponent, {
-      width: '80%',
+      id:'covidBioBr',
+      width: '70%',
       data: {}
     });
   }
@@ -2165,53 +2171,115 @@ export class MapComponent implements OnInit {
     }
   }
 
-  printViewMap(){
-    var pdf = new jsPDF('landscape', undefined, format);
-    var dims = {
-      a0: [1189, 841],
-      a1: [841, 594],
-      a2: [594, 420],
-      a3: [420, 297],
-      a4: [297, 210],
-      a5: [210, 148]
-    };
+  async printViewMap(){
 
-    var format = 'a4';
-    var resolution = 72;
-    var dim = dims[format];
-    var width = Math.round(dim[0] * resolution / 25.4);
-    var height = Math.round(dim[1] * resolution / 25.4);
-    var size = this.map.getSize();
-    var viewResolution = this.map.getView().getResolution();
+    let language = this.language;
+    let dd = {
+      pageSize: 'A4',
 
-    var mapCanvas = document.createElement('canvas');
-    mapCanvas.width = size[0];
-    mapCanvas.height = size[1];
-    // var mapContext = mapCanvas.getContext('2d');
-    // Array.prototype.forEach.call(this.mpref.nativeElement.querySelectorAll('.ol-viewport canvas'), function(canvas) {
-    //   if (canvas.width > 0) {
-    //     var opacity = canvas.parentNode.style.opacity;
-    //     mapContext.globalAlpha = opacity === '' ? 1 : Number(opacity);
-    //     var transform = canvas.style.transform;
-    //     // Get the transform parameters from the style's transform matrix
-    //     var matrix = transform.match(/^matrix\(([^\(]*)\)$/)[1].split(',').map(Number);
-    //     // Apply the transform to the export map context
-    //     CanvasRenderingContext2D.prototype.setTransform.apply(mapContext, matrix);
-    //     mapContext.drawImage(canvas, 0, 0);
-    //   }
-    // });
-    let self = this;
-    html2canvas(this.mpref.nativeElement.querySelectorAll('.ol-viewport canvas')[0]).then(canvas => {
-      var imgData = mapCanvas.toDataURL("image/png");
-      pdf.addImage(canvas, 'PNG', 0, 0, dim[0], dim[1]);
-      pdf.save('map.pdf');
-    });
+      // by default we use portrait, you can change it to landscape if you wish
+      pageOrientation: 'landscape',
 
-    // pdf.addImage(mapCanvas.toDataURL('image/png'), 'PNG', 0, 0, dim[0], dim[1]);
-    // pdf.save('map.pdf');
-    // Reset original map size
-    this.map.setSize(size);
-    this.map.getView().setResolution(viewResolution);
+      // [left, top, right, bottom]
+      pageMargins: [ 40, 70, 40, 20 ],
+
+      header: {
+        margin:[ 24, 10, 24, 30 ],
+        columns: [
+          {
+            image: logos.logoCovid,
+            width: 130
+          },
+          // {
+          //   // [left, top, right, bottom]
+          //   margin:[ 0, 20, 0, 0 ],
+          //   text: logos.print[language].toUpperCase(),
+          //   alignment: 'center',
+          //   style: 'titleReport',
+          // },
+          {
+            image: logos.logoUFG,
+            width: 130
+          },
+        ]
+      },
+      footer: function (currentPage, pageCount) {
+        return {
+          table: {
+            widths: '*',
+            body: [
+              // [
+              //   { image: logos.signature, colSpan: 3, alignment: 'center', fit: [300, 43]},
+              //   {},
+              //   {},
+              // ],
+              [
+                { text: 'https://covidgoias.ufg.br/', alignment: 'left', style: 'textFooter', margin: [20, 0, 0, 0]},
+                { text: moment().format('DD/MM/YYYY HH:mm:ss'), alignment: 'center', style: 'textFooter', margin: [0, 0, 0, 0]},
+                { text: logos.page.title[language] + currentPage.toString() + logos.page.of[language] + '' + pageCount, alignment: 'right', style: 'textFooter', margin: [0, 0, 20, 0]},
+              ],
+            ]
+          },
+          layout: 'noBorders'
+        };
+      },
+      content: [],
+      styles: {
+        titleReport: {
+          fontSize: 16,
+          bold: true
+        },
+        textFooter: {
+          fontSize: 9
+        },
+        textImglegend: {
+          fontSize: 9
+        },
+        header: {
+          fontSize: 18,
+          bold: true,
+          margin: [0, 0, 0, 10]
+        },
+        data: {
+          bold: true,
+        },
+        subheader: {
+          fontSize: 16,
+          bold: true,
+          margin: [0, 10, 0, 5]
+        },
+        codCar: {
+          fontSize: 11,
+          bold: true,
+        },
+        textObs: {
+          fontSize: 11,
+        },
+        tableDpat: {
+          margin: [0, 5, 0, 15],
+          fontSize: 11,
+        },
+        tableHeader: {
+          bold: true,
+          fontSize: 13,
+          color: 'black'
+        },
+        metadata:{
+          background: '#0b4e26',
+          color: '#fff'
+        }
+      }
+    }
+
+    let canvasToBase64Map = async function(){
+      let canvas = await html2canvas(document.querySelector(".ol-viewport"));
+      return canvas.toDataURL('image/png');
+    }
+    // @ts-ignore
+    dd.content.push({image: await canvasToBase64Map(), width: 850, alignment: 'center', margin:[ 40, 10, 2, 0]})
+
+    let filename = 'map.pdf'
+    pdfMake.createPdf(dd).download(filename);
   }
 
   private updateSummary() {
