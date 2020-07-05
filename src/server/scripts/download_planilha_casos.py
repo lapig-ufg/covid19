@@ -33,6 +33,12 @@ docid4 = "1l_3ZlgEBdd53BZFhGktgzvnuze7s3r0QGwVQomfo1eU"
 #recuperados
 docid5 = "1fO70w9OI1sbRiyHmD9HQZiG_Wa7vqrwpgSigeHRMAD4"
 
+#tabela_prev_mod_logistico_luisa_adaptado
+docid6 = "1x9zk22gE8p8suaqfdtm3rPLGHvxEIN8mMCU2Mn7XTkI"
+
+#tabela_estatisticas_mod_logistico_luisa_adaptado
+docid7 = "1ELlIaPqgSZubGQOJy1pXVQa60Az9YfjAfPZ1UeiKseY"
+
 class UnicodeWriter:
     """
     A CSV writer which will write rows to CSV file "f",
@@ -113,6 +119,24 @@ client = gspread.authorize(credentials)
 spreadsheet = client.open_by_key(docid5)
 for i, worksheet in enumerate(spreadsheet.worksheets()):
     filename = docid5 + '-worksheet' + str(i) + '.csv'
+    with open(filename, 'wb') as f:
+        writer = UnicodeWriter(f)
+        writer.writerows(worksheet.get_all_values())
+
+#Spreadsheet download function7
+client = gspread.authorize(credentials)
+spreadsheet = client.open_by_key(docid6)
+for i, worksheet in enumerate(spreadsheet.worksheets()):
+    filename = docid6 + '-worksheet' + str(i) + '.csv'
+    with open(filename, 'wb') as f:
+        writer = UnicodeWriter(f)
+        writer.writerows(worksheet.get_all_values())
+
+#Spreadsheet download function7
+client = gspread.authorize(credentials)
+spreadsheet = client.open_by_key(docid7)
+for i, worksheet in enumerate(spreadsheet.worksheets()):
+    filename = docid7 + '-worksheet' + str(i) + '.csv'
     with open(filename, 'wb') as f:
         writer = UnicodeWriter(f)
         writer.writerows(worksheet.get_all_values())
