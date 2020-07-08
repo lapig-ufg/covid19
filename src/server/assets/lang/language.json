@@ -147,6 +147,10 @@
 				"label_total":{
 					"pt-br": "Total de bairros com casos: ",
 					"en-us": "Total of neighborhoods with cases: "
+				},
+				"label_msg":{
+					"pt-br": "A atualização diária para os bairros de Goiânia encontra-se temporariamente suspensa, visando aperfeiçoamento técnico com a SMS.",
+					"en-us": "The daily update for the neighborhoods of Goiânia is temporarily suspended, improving technical improvement with an SMS."
 				}
 			},
 			"charts_box_states": {

@@ -345,6 +345,7 @@ module.exports = function (app) {
       properties: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["properties_name"][language],
       filename: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["filename"][language],
       label_sms: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label_sms"][language],
+      label_msg: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label_msg"][language],
       label_confirmed: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label_confirmed"][language],
       label_total: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label_total"][language],
       show: show,

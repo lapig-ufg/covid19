@@ -838,7 +838,6 @@ export class MapComponent implements OnInit {
 
     });
 
-
     let neighborhoodsUrl = '/service/indicators/neighborhoods' + this.getServiceParams() + '&timefilter=' + this.selectedBairroTime;
     this.exportColumnsBairros = [];
     this.http.get(neighborhoodsUrl).subscribe(citiesResult => {
