@@ -39,6 +39,9 @@ docid6 = "1x9zk22gE8p8suaqfdtm3rPLGHvxEIN8mMCU2Mn7XTkI"
 #tabela_estatisticas_mod_logistico_luisa_adaptado
 docid7 = "1ELlIaPqgSZubGQOJy1pXVQa60Az9YfjAfPZ1UeiKseY"
 
+#tabela_estatisticas_mod_logistico_luisa_adaptado
+docid8 = "1I2pc2g1ciqlua5fH-SKpwxIzssgY-bjeqmxcPZpwWqs"
+
 class UnicodeWriter:
     """
     A CSV writer which will write rows to CSV file "f",
@@ -140,3 +143,13 @@ for i, worksheet in enumerate(spreadsheet.worksheets()):
     with open(filename, 'wb') as f:
         writer = UnicodeWriter(f)
         writer.writerows(worksheet.get_all_values())
+
+
+#Spreadsheet download function8
+client = gspread.authorize(credentials)
+spreadsheet = client.open_by_key(docid8)
+for i, worksheet in enumerate(spreadsheet.worksheets()):
+    filename = docid8 + '-worksheet' + str(i) + '.csv'
+    with open(filename, 'wb') as f:
+        writer = UnicodeWriter(f)
+        writer.writerows(worksheet.get_all_values())        
