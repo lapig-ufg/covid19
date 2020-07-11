@@ -39,7 +39,7 @@ docid6 = "1x9zk22gE8p8suaqfdtm3rPLGHvxEIN8mMCU2Mn7XTkI"
 #tabela_estatisticas_mod_logistico_luisa_adaptado
 docid7 = "1ELlIaPqgSZubGQOJy1pXVQa60Az9YfjAfPZ1UeiKseY"
 
-#tabela_estatisticas_mod_logistico_luisa_adaptado
+#dados_MM7_novos_casos
 docid8 = "1I2pc2g1ciqlua5fH-SKpwxIzssgY-bjeqmxcPZpwWqs"
 
 class UnicodeWriter:
