@@ -336,24 +336,48 @@
 						<mat-tab label="{{dataSeries.timeseries.label}}">
 							<p-tabView>
 								<p-tabPanel [header]="selectRegion.nome">
+									<p-scrollPanel [style]="{width: '100%', height: '38vh'}">
+										<h5 *ngIf="!dataSeries.timeseries.chartResult[0]?.show" style="text-align: center;">
+											<br>
+											<br>
+											<strong> {{dataSeries.timeseries.not_cases}} {{selectRegion.nome}} </strong>
+											<br>
+											<br>
+										</h5>
 
-									<h5 *ngIf="!dataSeries.timeseries.chartResult[0]?.show" style="text-align: center;">
-										<br>
-										<br>
-										<strong> {{dataSeries.timeseries.not_cases}} {{selectRegion.nome}} </strong>
-										<br>
-										<br>
-									</h5>
+										<div *ngIf="dataSeries.timeseries.chartResult[0]?.show">
+											<p style="font-weight: bold; text-align: center;">
+												{{ dataSeries.timeseries.chartResult[0]?.text }}</p>
+											<p-chart [ngStyle]="{'overflow-x': hidden}"
+												[type]="dataSeries.timeseries.chartResult[0]?.type"
+												[data]="dataSeries.timeseries.chartResult[0]?.dataResult"
+												[options]="dataSeries.timeseries.chartResult[0]?.options">
+											</p-chart>
+										</div>
+									</p-scrollPanel>
+								</p-tabPanel>
 
-									<div *ngIf="dataSeries.timeseries.chartResult[0]?.show">
-										<p style="font-weight: bold; text-align: center;">
-											{{ dataSeries.timeseries.chartResult[0]?.text }}</p>
-										<p-chart [ngStyle]="{'overflow-x': hidden}"
-											[type]="dataSeries.timeseries.chartResult[0]?.type"
-											[data]="dataSeries.timeseries.chartResult[0]?.dataResult"
-											[options]="dataSeries.timeseries.chartResult[0]?.options">
-										</p-chart>
-									</div>
+								<p-tabPanel [header]=" tendeciaSeries.timeseries.chartResult[0]?.title_tab.replace('[region]',selectRegion.nome)">
+									<p-scrollPanel [style]="{width: '100%', height: '38vh'}">
+										<div *ngIf="tendeciaSeries.timeseries.chartResult[0]?.show">
+											<p style="font-weight: bold; text-align: center; font-size: 15px; margin-top: 5px; margin-bottom: 5px">
+												{{ tendeciaSeries.timeseries.chartResult[0]?.text }}</p>
+											<div style="font-weight: normal; font-size: 12px; text-align: center; display: flex; justify-content: center;" >
+												<div class="tendenciaMedia" >{{tendeciaSeries.timeseries.chartResult[0]?.label_media}} {{tendeciaSeries.timeseries.chartResult[0]?.last_ob.media | number:'1.2-3'}}</div>
+												<div class="tendenciaVariacao">{{tendeciaSeries.timeseries.chartResult[0]?.label_variation}} {{tendeciaSeries.timeseries.chartResult[0]?.last_ob.variacao | number:'1.2-3'}}%</div>
+												<div class="tendenciaTendencia" [innerHTML]=" tendeciaSeries.timeseries.chartResult[0]?.label_trend + tend[tendeciaSeries.timeseries.chartResult[0]?.last_ob.tendencia][language] "></div>
+											</div>
+											<p style="font-weight: 200; text-align: center;">{{tendeciaSeries.timeseries.chartResult[0]?.label_last_update + tendeciaSeries.timeseries.chartResult[0]?.last_ob.data}}</p>
+											<p-chart [ngStyle]="{'overflow-x': hidden}"
+													 [type]="tendeciaSeries.timeseries.chartResult[0]?.type"
+													 [data]="tendeciaSeries.timeseries.chartResult[0]?.dataResult"
+													 [options]="tendeciaSeries.timeseries.chartResult[0]?.options">
+											</p-chart>
+											<p style="font-weight: 300; text-align: center">
+												{{tendeciaSeries.timeseries.chartResult[0]?.note}}
+											</p>
+										</div>
+									</p-scrollPanel>
 								</p-tabPanel>
 
 								<p-tabPanel *ngIf="neighborhoodsCharts.show" [header]="neighborhoodsCharts.label">
@@ -483,7 +507,7 @@
 									<div style="text-align: start;" *ngIf="dataProjSeries.timeseries.chartResult[0]?.show">
 										<!-- <h5><b>{{statistics_county.text.title}}</b> {{selectRegion.nome}}</h5> -->
 										<p><b>{{statistics_county.text.total_dias}}</b> {{statistics_county.result.total_dias}}</p>
-										<p *ngIf="statistics_county.result.media_novos_casos_3dias != -1"><b>{{statistics_county.text.media_novos_casos_3dias}}</b> {{statistics_county.result.media_novos_casos_3dias}}</p>
+										<p *ngIf="statistics_county.result.media_novos_casos_7dias != -1"><b>{{statistics_county.text.media_novos_casos_7dias}}</b> {{statistics_county.result.media_novos_casos_7dias | number:'1.0-3'}}</p>
 										<p *ngIf="statistics_county.result.dias_duplicacao_confirmados != -1"><b>{{statistics_county.text.dias_duplicacao_confirmados}}</b> {{statistics_county.result.dias_duplicacao_confirmados | number:'1.0-3'}}</p>
 										<p *ngIf="statistics_county.result.taxa_crescimento != ''"><b>{{statistics_county.text.taxa_crescimento}}</b> {{statistics_county.result.taxa_crescimento | number:'1.0-2'}}</p>
 										<p *ngIf="statistics_county.result.n_total_infectadados_pico != ''"><b>{{statistics_county.text.n_total_infectadados_pico}}</b> {{statistics_county.result.n_total_infectadados_pico | number }}</p>
@@ -651,6 +675,33 @@
 						</tbody>
 					</table>
 				</div>
+<!--				<div *ngIf="infoTendencias" class="card-body">-->
+<!--					<p class="card-text">{{infoTendencias.nome}} - {{infoTendencias.uf}}</p>-->
+<!--					<table>-->
+<!--						<tbody>-->
+<!--						<tr>-->
+<!--							<th>{{minireportText.new_cases}} </th>-->
+<!--							<td>{{infoTendencias.novos_casos}}</td>-->
+<!--						</tr>-->
+<!--						<tr>-->
+<!--							<th>{{minireportText.mm7}} </th>-->
+<!--							<td>{{infoTendencias.mm7 | number:'1.0-0'}}</td>-->
+<!--						</tr>-->
+<!--						<tr *ngIf="infoprojecao.variacao_per_mm7_14dias">-->
+<!--							<th>{{minireportText.variation}} </th>-->
+<!--							<td>{{infoTendencias.variacao_per_mm7_14dias | number:'1.0-0'}} %</td>-->
+<!--						</tr>-->
+<!--						<tr>-->
+<!--							<th>{{minireportText.trend}} </th>-->
+<!--							<td>{{infoTendencias[infoprojecao.tendencia_novos_casos]}}</td>-->
+<!--						</tr>-->
+<!--						<tr>-->
+<!--							<th>{{minireportText.last_update}} </th>-->
+<!--							<td>{{infoTendencias.data | date : 'dd/MM/yyyy'}}</td>-->
+<!--						</tr>-->
+<!--						</tbody>-->
+<!--					</table>-->
+<!--				</div>-->
 				<div *ngIf="clickable" class="card-body">
 					<p class="card-text">{{clickableTitle}}</p>
 					<div align="center" style="padding: 10px">

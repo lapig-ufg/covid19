@@ -53,6 +53,8 @@ mv 1ELlIaPqgSZubGQOJy1pXVQa60Az9YfjAfPZ1UeiKseY-worksheet0.csv estatisticas_luis
 
 mv 1x9zk22gE8p8suaqfdtm3rPLGHvxEIN8mMCU2Mn7XTkI-worksheet0.csv projecao_casos_go_luisa.csv
 
+mv 1I2pc2g1ciqlua5fH-SKpwxIzssgY-bjeqmxcPZpwWqs-worksheet0.csv medias_moveis.csv
+
 rm -rfv 1mlyQIUbGKB2J3UIQrCPxAORaY5HYAPlMgY61IMCu4JY-worksheet1.csv
 
 clear
@@ -83,6 +85,9 @@ node atualiza_projecao_luisa.js > /data/containers/APP_COVID19/APP/covid19/src/s
 sleep 2
 clear
 node atualiza_estatisticas_luisa.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_estatisticas_luisa.log
+sleep 2
+clear
+node atualiza_medias_moveis.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_medias_moveis.log
 sleep 2
 clear
 
@@ -117,6 +122,8 @@ ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd projecao
 
 ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd projecao_luisa_recuperados-tiles/; rm -rfv *'
 
+ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd covid_medias_moveis-tiles/; rm -rfv *'
+
 else
 clear
 echo "Os diretorios nao existem!"
@@ -137,4 +144,8 @@ echo -n -e "Rotina Concluida!"
 
 cd $BASELOCAL
 
-echo "Rotina Concluida em $DATA" >> /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
+echo -e "\n LOG DE EXECUÇÃO DA ATUALIZAÇÃO\n"
+
+cat /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
+
+echo -e"\nRotina Concluida em $DATA \n" >> /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log

@@ -8,7 +8,6 @@ import { MatDialogModule } from "@angular/material";
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MapComponent } from './views/map.component';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule} from '@angular/material/expansion';
@@ -39,7 +38,7 @@ import { MAT_LABEL_GLOBAL_OPTIONS } from '@angular/material/core';
 
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy} from '@angular/common';
 import { ChartModule } from 'primeng/chart';
 import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
@@ -51,7 +50,7 @@ import { LightboxModule } from 'ngx-lightbox';
 import { NgxGalleryModule } from 'ngx-image-video-gallery';
 import { CardModule } from 'primeng/card';
 import { AccordionModule } from 'primeng/accordion';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { SpinnerImgComponent } from './views/spinner-img/spinner-img.component';
@@ -158,6 +157,7 @@ const ENTRY_COMPONENTS = [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: {float: 'always'} },
     DatePipe,
+    DecimalPipe,
     GoogleAnalyticsService,
     {
       provide: HTTP_INTERCEPTORS,

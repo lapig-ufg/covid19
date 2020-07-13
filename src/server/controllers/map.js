@@ -44,7 +44,8 @@ module.exports = function (app) {
           id: "informacoes",
           label: languageJson["descriptor"]["informacoes"]["label"][language],
           group_expanded: true,
-          layers: [{
+          layers: [
+            {
             id: "casos_covid_confirmados",
             label: languageJson["descriptor"]["informacoes"]["layers"]["casos_covid_confirmados"]["label"][language],
             visible: true,
@@ -59,43 +60,57 @@ module.exports = function (app) {
               order: 3
             }]
           },
-          {
-            id: "casos_bairro",
-            label: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["label"][language],
-            visible: false,
-            selectedType: "casos_por_bairro_covid",
-            showTypes: true,
-            types: [{
-              value: "casos_por_bairro_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3,
-              timeLabel: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["timelabel"][language],
-              timeSelected: "cd_geocmu='52'",
-              timeHandler: "msfilter",
-              times: [
+           {
+              id: "casos_bairro",
+              label: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["label"][language],
+              visible: false,
+              selectedType: "casos_por_bairro_covid",
+              showTypes: true,
+              types: [{
+                value: "casos_por_bairro_covid",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["view_value"][language],
+                regionFilter: true,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3,
+                timeLabel: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["timelabel"][language],
+                timeSelected: "cd_geocmu='52'",
+                timeHandler: "msfilter",
+                times: [
+                  {
+                  value: "cd_geocmu='52'",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["default_placeholder"][language]
+                },
                 {
-                value: "cd_geocmu='52'",
-                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["default_placeholder"][language]
-              },
-              {
-                value: "cd_geocmu='5201405' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5201405')",
-                Viewvalue: "Aparecida de Goiânia"
-              },
-              {
-                value: "cd_geocmu='5300108' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5300108')",
-                Viewvalue: "Brasília"
-              },
-              {
-                value: "cd_geocmu='5208707' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5208707')",
-                Viewvalue: "Goiânia"
-              }
-              ]
-            }]
-          },
-          {
+                  value: "cd_geocmu='5201405' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5201405')",
+                  Viewvalue: "Aparecida de Goiânia"
+                },
+                {
+                  value: "cd_geocmu='5300108' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5300108')",
+                  Viewvalue: "Brasília"
+                },
+                {
+                  value: "cd_geocmu='5208707' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5208707')",
+                  Viewvalue: "Goiânia"
+                }
+                ]
+              }]
+            },
+            {
+              id: "tendencia",
+              label: languageJson["descriptor"]["informacoes"]["layers"]["tendencias"]["label"][language],
+              visible: false,
+              selectedType: "covid_medias_moveis",
+              types: [{
+                value: "covid_medias_moveis",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["tendencias"]["types"]["covid_medias_moveis"]["view_value"][language],
+                source: 'ows',
+                regionFilter: true,
+                opacity: 0.8,
+                order: 3
+              }]
+            },
+            {
             id: "projecoes_luisa",
             label: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["label"][language],
             visible: false,
@@ -141,7 +156,7 @@ module.exports = function (app) {
               }
             ]
           },
-          {
+            {
             id: "urban_traffic",
             label: languageJson["descriptor"]["informacoes"]["layers"]["urban_traffic"]["label"][language],
             visible: false,
@@ -157,7 +172,7 @@ module.exports = function (app) {
               order: 3
             }]
           },
-          {
+            {
             id: "indice_vulnerabilidade",
             label: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["label"][language],
             visible: false,
@@ -221,7 +236,7 @@ module.exports = function (app) {
             }
           ]
           },
-          {
+            {
             id: "doencas_respiratorias",
             label: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["label"][language],
             visible: false,
@@ -333,7 +348,7 @@ module.exports = function (app) {
             },
           ]
           },
-          {
+            {
             id: "casos_tuberculose",
             label: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["label"][language],
             visible: false,

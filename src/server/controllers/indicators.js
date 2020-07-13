@@ -42,10 +42,6 @@ module.exports = function (app) {
   }
 
   function createDataSetTimeSeriesGO(labels, graphic, language) {
-
-
-    console.log(graphic)
-
     let hideobito = true;
     let hiderecuperados = true;
     graphic.forEach(function (item, i) {
@@ -128,7 +124,6 @@ module.exports = function (app) {
           spanGaps: true,
           borderDash: labels.borderDashRef,
         },
-
       ]
     };
 
@@ -199,6 +194,132 @@ module.exports = function (app) {
 
       if (chart.id == 'timeseries_go') {
         chart["dataResult"] = createDataSetTimeSeriesGO(chart, qr, language);
+      }
+      else {
+        chart["dataResult"] = qr
+      }
+      if (chart['dataResult'].labels.length > 0) {
+        chart['show'] = true
+        chart['text'] = chart.getText(chart)
+      }
+
+    }
+
+    let finalResult = {
+      title: languageJson["charts_box"]["charts_box_title"][language],
+      timeseries: {
+        label: languageJson["charts_box"]["charts_box_dados_oficiais"]["label"][language],
+        not_cases: languageJson["charts_box"]["charts_box_dados_oficiais"]["not_cases"][language],
+        chartResult: chartResult
+      }
+    };
+
+
+    response.send(finalResult);
+    response.end();
+  };
+
+  function createDataSetTendenciasGO(labels, graphic, language) {
+
+    let data = {
+      labels: graphic.map(element => formatDate(element.data, language)),
+      datasets: [
+        {
+          label: labels.label_mm7,
+          data: graphic.map(element => parseFloat(element.media)),
+          fill: false,
+          backgroundColor: '#e5d42c',
+          borderColor: '#e69b26',
+          spanGaps: true,
+          type: 'line',
+          order: 1
+        },
+        {
+          label: labels.label_new_cases,
+          data: graphic.map(element => parseFloat(element.casos)),
+          fill: false,
+          backgroundColor: '#be1b24',
+          borderColor: '#be1b24',
+          spanGaps: true,
+          type: 'bar',
+          order: 2
+        }
+      ]
+    };
+
+    return data;
+  }
+
+  Controller.timeseriesTendencias = function (request, response) {
+    var language = request.param('lang')
+    var chartResult = [
+      {
+        id: "timeseries_tendencias_go",
+        title: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["title"][language],
+        title_tab: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["title_tab"][language],
+        note: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["note"][language],
+        label_last_update: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["last_update"][language],
+        label_media: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["media"][language],
+        label_variation: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["variation"][language],
+        label_trend: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["trend"][language],
+        label_new_cases: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["new_cases"][language],
+        label_mm7: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["mm7"][language],
+        borderDashRef: [5, 5],
+        getText: function (chart) {
+          // var label = chart['indicators'][0]["label"]
+          // var value = chart['indicators'][0]["value"]
+          // var areaMun = chart['indicators'][0]["area_mun"]
+
+          // var percentual_area_ha = ((value * 100) / areaMun);
+
+          // var text = "De acordo com o projeto Terra Class Cerrado(referente ao ano de 2013), " + region
+          // + " possui uma área total de " + numberFormat(parseFloat(areaMun)) + " de hectares, "
+          // +"sendo a classe " + label + " a de maior predominância, com " + numberFormat(parseFloat(value))
+          // + " de hectares (" + Math.round(percentual_area_ha) + "% da área total). "
+
+          var text = languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["title"][language];
+
+          return text;
+        },
+        type: "bar",
+        pointStyle: "rect",
+        disabled: false,
+        options: {
+          title: {
+            display: false,
+            text: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["text"][language],
+            fontSize: 10,
+            position: "bottom"
+          },
+          legend: {
+            labels: {
+              usePointStyle: true,
+              fontColor: "#85560c"
+            },
+            position: "bottom"
+          },
+          tooltips: {},
+          scales: {
+            pointLabels: {
+              fontSize: 20,
+            },
+            yAxes: [],
+            xAxes: []
+          }
+        }
+      }
+    ];
+
+    for (let chart of chartResult) {
+
+      chart['show'] = false
+      var qr = request.queryResult[chart.id]
+
+      chart['last_ob'] = qr[qr.length - 1];
+      chart['last_ob'].data = moment(chart['last_ob'].data ).format("DD/MM/YYYY")
+
+      if (chart.id == 'timeseries_tendencias_go') {
+        chart["dataResult"] = createDataSetTendenciasGO(chart, qr, language);
       }
       else {
         chart["dataResult"] = qr
@@ -701,7 +822,7 @@ module.exports = function (app) {
 
     var res = {
       total_dias: queryResult[0]['total_dias'],
-      media_novos_casos_3dias: queryResult[0]['media_novos_casos_3dias'],
+      media_novos_casos_7dias: queryResult[0]['media_novos_casos_7dias'],
       dias_duplicacao_confirmados: queryResult[0]['dias_duplicacao_confirmados'],
       data_pico_infectados_incidencia: queryResultLuisa[0]['data_pico_infectados_incidencia'],
       data_pico_infectados_acumudado: queryResultLuisa[0]['data_pico_infectados_acumudado'],
@@ -712,7 +833,7 @@ module.exports = function (app) {
     let texts = {
       title: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["title"][language],
       total_dias: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["total_dias"][language],
-      media_novos_casos_3dias: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["media_novos_casos_3dias"][language],
+      media_novos_casos_7dias: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["media_novos_casos_7dias"][language],
       dias_duplicacao_confirmados: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["dias_duplicacao_confirmados"][language],
       taxa_crescimento: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["taxa_crescimento"][language],
       n_total_infectadados_pico: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["n_total_infectadados_pico"][language],

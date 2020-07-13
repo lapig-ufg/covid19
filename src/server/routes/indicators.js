@@ -4,6 +4,7 @@ module.exports = function (app) {
 	var indicators = app.controllers.indicators;
 
 	app.get('/service/indicators/timeseries', dataInjector, indicators.timeseries);
+	app.get('/service/indicators/timeseriesTendencias', dataInjector, indicators.timeseriesTendencias);
 	app.get('/service/indicators/cities', dataInjector, indicators.cities);
 	app.get('/service/indicators/neighborhoods', dataInjector, indicators.neighborhoods);
 	app.get('/service/indicators/states', dataInjector, indicators.states);

@@ -69,6 +69,48 @@
 					"en-us": "Recovered"
 				}
 			},
+			"timeseries_tendencias_go":{
+				"title": {
+					"pt-br": "Média móvel de 7 dias",
+					"en-us": "7-day moving average"
+				},
+				"title_tab": {
+					"pt-br": "Média móvel de [region]",
+					"en-us": "Moving average of [region]"
+				},
+				"new_cases":{
+					"pt-br": "Novos casos",
+					"en-us": "New cases"
+				},
+				"mm7":{
+					"pt-br": "Média móvel",
+					"en-us": "Moving average"
+				},
+				"note":{
+					"pt-br": "Segundo a SES-GO, os dados podem ser alterados para mais ou para menos conforme investigação das Vigilâncias Epidemiológicas Municipais e atualização das fichas de notificações pelos municípios nos sistemas oficiais. Diante de eventuais inconsistências nos números, estes serão atualizados a partir das correções feitas pelas cidades nos sistemas de notificação.",
+					"en-us": "According to SES-GO, the data can be changed upwards or downwards according to the investigation of the Municipal Epidemiological Surveillance and update of the notification forms by the municipalities in the official systems. In the event of any inconsistencies in the numbers, these will be updated based on the corrections made by the cities in the notification systems."
+				},
+				"text":{
+					"pt-br": "Clique nos botões para atualizar o gráfico.",
+					"en-us": "Click on the buttons here to update the statistics."
+				},
+				"media":{
+					"pt-br": "Média: ",
+					"en-us": "Average: "
+				},
+				"variation":{
+					"pt-br": "Variação: ",
+					"en-us": "Variation: "
+				},
+				"trend":{
+					"pt-br": "Tendência: ",
+					"en-us": "Trend: "
+				},
+				"last_update":{
+					"pt-br": "Última atualização em ",
+					"en-us": "Last update on  "
+				}
+			},
 			"ranking_municipios": {
 				"label": {
 					"pt-br": "Municípios",
@@ -225,9 +267,9 @@
 						"pt-br": "Total de Dias: ",
 						"en-us": "Total Days: "
 					},
-					"media_novos_casos_3dias":{
-						"pt-br": "Média de novos casos dos últimos 3 dias: ",
-						"en-us": "Average number of new cases every 3 days: "
+					"media_novos_casos_7dias":{
+						"pt-br": "Média de novos casos dos últimos 7 dias: ",
+						"en-us": "Average number of new cases every 7 days: "
 					},
 					"dias_duplicacao_confirmados":{
 						"pt-br": "Quantidade de dias até duplicação de casos confirmados: ",
@@ -363,6 +405,26 @@
 		"label_area_bairro": {
 			"pt-br": "Área do Bairro:",
 			"en-us": "District Area:"
+		},
+		"new_cases": {
+			"pt-br": "Novos casos:",
+			"en-us": "New cases:"
+		},
+		"mm7": {
+			"pt-br": "Média móvel dos últimos 7 dias:",
+			"en-us": "Moving average over the last 7 days:"
+		},
+		"variation": {
+			"pt-br": "Variação da média móvel:",
+			"en-us": "Moving average variation:"
+		},
+		"trend": {
+			"pt-br": "Tendência de novos casos:",
+			"en-us": "Trend of new cases:"
+		},
+		"last_update": {
+			"pt-br": "ùltima atualização em:",
+			"en-us": "Last update on:"
 		}
 	},
 	"summary_box":{
@@ -565,6 +627,20 @@
 							"view_value": {
 								"pt-br": "Google Traffic",
 								"en-us": "Google Traffic"
+							}
+						}
+					}
+				},
+				"tendencias":{
+					"label":{
+						"pt-br": "Tendência de novos casos",
+						"en-us": "\nTrend of new cases"
+					},
+					"types": {
+						"covid_medias_moveis": {
+							"view_value": {
+								"pt-br": "Tendências des casos",
+								"en-us": "Tendências des casos"
 							}
 						}
 					}
@@ -1139,7 +1215,6 @@
 			"pt-br": "Imprimir mapa",
 			"en-us": "Print map"
 		}
-
 	},
 	"team": {
 		"title": {

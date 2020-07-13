@@ -32,6 +32,31 @@ module.exports = function (app) {
     ];
   }
 
+  Query.timeseriesTendencias = function (params) {
+
+    var filter = ""
+    var cd_geocmu = params['cd_geocmu']
+
+    if (cd_geocmu == 52) {
+      filter = "cd_geocmu = '52'"
+    }
+    else {
+      filter = "cd_geocmu = '" + cd_geocmu + "' "
+    }
+
+    return [
+      {
+        id: 'timeseries_tendencias_go',
+        sql: "select mm7 as media, novos_casos as casos, variacao_per_mm7_14dias as variacao, tendencia_novos_casos as tendencia, data from medias_moveis where " + filter + " group by data,mm7,novos_casos,variacao_per_mm7_14dias,tendencia_novos_casos  order by data;"
+      },
+      {
+        id: 'next',
+        sql: "select true"
+      }
+
+
+    ];
+  }
   Query.states = function (params) {
 
     return "select uf , max(total_casos) as total_casos from casos_estados where cd_geouf <> '1058' group by uf order by 2 desc"
@@ -107,7 +132,7 @@ module.exports = function (app) {
 
       {
         id: 'estatisticas_municipios',
-        sql: "select cd_geocmu, total_dias, media_novos_casos_3dias, dias_duplicacao_confirmados from estatisticas where cd_geocmu = '" + cd_geocmu +"'"
+        sql: "select cd_geocmu, total_dias, media_novos_casos_7dias, dias_duplicacao_confirmados from estatisticas where cd_geocmu = '" + cd_geocmu +"'"
       },
       {
         id: 'estatisticas_luisa',

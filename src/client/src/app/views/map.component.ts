@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, HostListener, Injectable, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
@@ -47,6 +47,7 @@ import * as moment from 'moment';
 import { Table } from 'primeng/table';
 
 import logos from './logos';
+import tendencias from './tendencias';
 import {BedsComponent} from "./beds/beds.component";
 import {NoteComponent} from "./note/note.component";
 import {MatTableDataSource} from "@angular/material/table";
@@ -108,6 +109,7 @@ export class MapComponent implements OnInit {
   regionsLimits: any;
   dataSeries: any;
   dataProjSeries: any;
+  tendeciaSeries: any;
   dataStates: any;
   dataCities: any;
   dataBrasil: any;
@@ -183,6 +185,7 @@ export class MapComponent implements OnInit {
   infomarker: any;
   infobairro: any;
   infoprojecao: any;
+  infoTendencias: any;
   infodataMunicipio: any;
   fieldPointsStop: any;
   utfgridsource: UTFGrid;
@@ -190,7 +193,9 @@ export class MapComponent implements OnInit {
   utfgridBairro: UTFGrid;
   utfgridlayerBairro: OlTileLayer;
   utfgridProjecao: UTFGrid;
+  utfgridTendencias: UTFGrid;
   utfgridlayerProjecao: OlTileLayer;
+  utfgridlayerTendencias: OlTileLayer;
   infoOverlay: Overlay;
   datePipe: DatePipe;
   dataForDialog = {} as any;
@@ -259,6 +264,7 @@ export class MapComponent implements OnInit {
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
   @ViewChild("map", { static: false }) mpref: ElementRef;
   selectedConfirmedDate: any;
+  tend:any;
 
   constructor(
     private http: HttpClient,
@@ -268,7 +274,8 @@ export class MapComponent implements OnInit {
     private domSanitizer: DomSanitizer,
     public googleAnalyticsService: GoogleAnalyticsService,
     private router: Router,
-    private elementRef : ElementRef
+    private elementRef : ElementRef,
+    private decimalPipe: DecimalPipe
   ) {
 
     this.projection = OlProj.get('EPSG:900913');
@@ -277,7 +284,9 @@ export class MapComponent implements OnInit {
 
     this.dataSeries = { timeseries: { label: "", chartResult: [] } };
     this.dataProjSeries = { timeseries: { label: "", chartResult: [] } };
+    this.tendeciaSeries =  { timeseries: { label: "", chartResult: [] } };
     this.dataStates = {};
+
 
     this.clickableTitle = 'Informações não disponíveis';
 
@@ -289,7 +298,7 @@ export class MapComponent implements OnInit {
     this.infomarker = {};
     this.infobairro = {};
     this.infoprojecao = {};
-
+    this.infoTendencias = {};
     this.defaultRegion = {
       nome: 'Goiás',
       area_mun: 1547.26991096032,
@@ -388,6 +397,7 @@ export class MapComponent implements OnInit {
     this.getDatesProjections();
     this.dataMS = {};
     this.getDataMS();
+    this.tend = tendencias;
   }
 
   search = (text$: Observable<string>) =>
@@ -799,6 +809,83 @@ export class MapComponent implements OnInit {
     }
     );
 
+    let timeseriesTendenciasUrl = '/service/indicators/timeseriesTendencias' + this.getServiceParams();
+
+    this.http.get(timeseriesTendenciasUrl).subscribe(result => {
+
+      this.tendeciaSeries = result;
+        for (let graphic of this.tendeciaSeries.timeseries.chartResult) {
+          let y = [{
+            ticks: {
+              beginAtZero: true,
+              autoskip: true,
+              autoSkipPadding: 20,
+              callback: function (value) {
+                return value.toLocaleString('de-DE');
+              }
+            }
+          }]
+
+          graphic.options.scales.yAxes = y;
+
+          let x = [{
+            ticks: {
+              autoskip: false,
+              autoSkipPadding: 20
+            }
+          }]
+
+          graphic.options.scales.xAxes = x;
+
+          // graphic.options.legend.onHover = function (event) {
+          //   event.target.style.cursor = 'pointer';
+          //   graphic.options.legend.labels.fontColor = '#0335fc';
+          // };
+
+          // graphic.options.legend.onLeave = function (event) {
+          //   event.target.style.cursor = 'default';
+          //   graphic.options.legend.labels.fontColor = '#fa1d00';
+          // };
+
+          graphic.options.legend.onClick = function (event) {
+            return null;
+          };
+
+          // graphic.options.tooltips.callbacks = {
+          //   title(tooltipItem, data) {
+          //     return data.labels[tooltipItem[0].index];
+          //   },
+          //   label(tooltipItem, data) {
+          //     console.log(tooltipItem, data)
+          //     return data.toLocaleString('de-DE');
+          //   },
+          //   // afterLabel: function (tooltipItem, data) {
+          //   //   return "a calcular";
+          //   // }
+          // };
+
+          graphic.options.tooltips = {
+            mode: 'index',
+            callbacks: {
+              label: function(tooltipItem, data) {
+                var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                if (label) {
+                  label += ': ';
+                }
+                label += tooltipItem.yLabel.toLocaleString('de-DE')
+                // label += Math.round(tooltipItem.yLabel * 100) / 100;
+                return label;
+              }
+            }
+          };
+
+        }
+
+      }
+    );
+
+
     let citiesUrl = '/service/indicators/cities' + this.getServiceParams();
     this.exportColumnsCities = [];
     this.http.get(citiesUrl).subscribe(citiesResult => {
@@ -966,6 +1053,7 @@ export class MapComponent implements OnInit {
 
     this.http.get(statisticsURL).subscribe(res => {
       this.statistics_county = res
+      console.log(this.statistics_county);
       this.statistics_county.result.dias_duplicacao_confirmados = Math.round(this.statistics_county.result.dias_duplicacao_confirmados)
 
     });
@@ -1374,6 +1462,34 @@ export class MapComponent implements OnInit {
         this.infoprojecao = null;
       }
 
+      let tendencias = this.layersNames.find(element => element.id === 'tendencia');
+      if (tendencias.visible) {
+
+        let zoom = this.map.getView().getZoom();
+
+        if (this.utfgridTendencias) {
+          this.utfgridTendencias.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+            console.log(data);
+                if (data) {
+                  window.document.body.style.cursor = 'pointer';
+
+                  this.infoTendencias = data;
+
+                  if (this.infoTendencias.nome == "") {
+                    this.infoTendencias.nome = this.minireportText.undisclosed_message;
+                  }
+
+                } else {
+                  window.document.body.style.cursor = 'auto';
+                  this.infoTendencias = null;
+                }
+
+              }.bind(this)
+          );
+        }
+      } else {
+        this.infoTendencias = null;
+      }
 
     }
 
@@ -1635,6 +1751,15 @@ export class MapComponent implements OnInit {
       source: this.utfgridProjecao
     });
 
+    this.utfgridTendencias = new UTFGrid({
+      tileJSON: this.getTileJSONTendencias()
+    });
+
+    this.utfgridlayerTendencias = new OlTileLayer({
+      source: this.utfgridTendencias
+    });
+
+
     this.layers.push(this.utfgridlayer);
     this.layers.push(this.utfgridlayerBairro)
     this.layers.push(this.utfgridlayerProjecao)
@@ -1690,6 +1815,21 @@ export class MapComponent implements OnInit {
     };
 
   }
+
+  private getTileJSONTendencias() {
+
+    let p = this.layersNames.find(element => element.id === 'tendencia');
+    let layer = p.types.find(element => element.value === p.selectedType);
+
+    return {
+      version: '2.2.0',
+      grids: [
+        this.returnUTFGRID(p.selectedType, layer.layerfilter, '{x}+{y}+{z}')
+      ]
+    };
+
+  }
+
 
   private returnUTFGRID(layername, filter, tile) {
     return '/ows?layers=' + layername + '&MSFILTER=' + filter + '&mode=tile&tile=' + tile + '&tilemode=gmap&map.imagetype=utfgrid'
@@ -1878,12 +2018,24 @@ export class MapComponent implements OnInit {
         this.utfgridlayerProjecao.setVisible(true);
       }
 
+      if (this.utfgridTendencias) {
+        let tileJSONTendencias = this.getTileJSONTendencias();
+        console.log(tileJSONTendencias);
+        this.utfgridTendencias.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONTendencias.grids, this.utfgridTendencias.tileGrid);
+        this.utfgridTendencias.tileJSON = tileJSONTendencias;
+        this.utfgridTendencias.refresh();
 
-    }else if (this.utfgridsource && this.utfgridBairro && this.utfgridProjecao)
+        this.utfgridlayerTendencias.setVisible(true);
+      }
+
+
+
+    }else if (this.utfgridsource && this.utfgridBairro && this.utfgridProjecao && this.utfgridTendencias)
     {
       this.utfgridlayer.setVisible(false);
       this.utfgridlayerBairro.setVisible(false);
       this.utfgridlayerProjecao.setVisible(false);
+      this.utfgridlayerTendencias.setVisible(false);
     }
 
 
