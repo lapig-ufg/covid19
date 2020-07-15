@@ -137,7 +137,9 @@ sleep 2
 
 cd $BASELOCAL
 
-rm -rfv Jatai.txt RioVerde.txt Mineiros.txt
+rm -rfv *.txt
+
+rm -rfv *.csv
 
 clear
 echo -n -e "Rotina Concluida!"

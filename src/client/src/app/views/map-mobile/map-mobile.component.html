@@ -341,7 +341,8 @@
 				</mat-tab>
 		</mat-tab>
 		<mat-tab *ngIf="neighborhoodsCharts.show" [label] = "neighborhoodsCharts.label" >
-			<p-scrollPanel  *ngIf="this.selectRegion.cd_geocmu != '5208707'" [style]="{width: '100%', height: '98%'}">
+<!--			*ngIf="this.selectRegion.cd_geocmu != '5208707'"-->
+			<p-scrollPanel  [style]="{width: '100%', height: '98%'}">
 
 				<div class="resumo-neigh">{{neighborhoodsCharts.label_sms}}.</div>
 
@@ -381,7 +382,7 @@
 				</table>
 
 			</p-scrollPanel>
-			<p style="width: 100%; height: 38vh; margin-top: 60px; font-size: 18px; text-align: center"  *ngIf="this.selectRegion.cd_geocmu == '5208707'">{{neighborhoodsCharts.label_msg}}</p>
+			<p style="width: 100%; height: 38vh; margin-top: 60px; font-size: 18px; text-align: center"  *ngIf="false">{{neighborhoodsCharts.label_msg}}</p>
 		</mat-tab>
 		<mat-tab  (click)="handleAnalytics('charts', 'dados_oficiais', 'Municípios')" label = "Municípios" >
 			<p-scrollPanel [style]="{width: '100%', height: '98%'}">

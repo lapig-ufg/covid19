@@ -97,6 +97,42 @@ module.exports = function (app) {
               }]
             },
             {
+              id: "obitos_bairro",
+              label: languageJson["descriptor"]["informacoes"]["layers"]["obitos_bairro"]["label"][language],
+              visible: false,
+              selectedType: "obitos_por_bairro_covid",
+              showTypes: true,
+              types: [{
+                value: "obitos_por_bairro_covid",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["obitos_bairro"]["types"]["obitos_por_bairro_covid"]["view_value"][language],
+                regionFilter: true,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3,
+                timeLabel: languageJson["descriptor"]["informacoes"]["layers"]["obitos_bairro"]["types"]["obitos_por_bairro_covid"]["timelabel"][language],
+                timeSelected: "cd_geocmu='52'",
+                timeHandler: "msfilter",
+                times: [
+                  {
+                    value: "cd_geocmu='52'",
+                    Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["obitos_bairro"]["types"]["obitos_por_bairro_covid"]["default_placeholder"][language]
+                  },
+                  // {
+                  //   value: "cd_geocmu='5201405' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5201405')",
+                  //   Viewvalue: "Aparecida de Goiânia"
+                  // },
+                  // {
+                  //   value: "cd_geocmu='5300108' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5300108')",
+                  //   Viewvalue: "Brasília"
+                  // },
+                  {
+                    value: "cd_geocmu='5208707' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_obitos_bairros where cd_geocmu = '5208707')",
+                    Viewvalue: "Goiânia"
+                  }
+                ]
+              }]
+            },
+            {
               id: "tendencia",
               label: languageJson["descriptor"]["informacoes"]["layers"]["tendencias"]["label"][language],
               visible: false,

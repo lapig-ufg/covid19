@@ -145,6 +145,7 @@ export class MapComponent implements OnInit {
   dataExtent: any;
 
   selectedBairroTime: any;
+  selectedBairroObitosTime: any;
   searching = false;
   searchFailed = false;
   msFilterRegion = '';
@@ -184,6 +185,7 @@ export class MapComponent implements OnInit {
   infodata: any;
   infomarker: any;
   infobairro: any;
+  infobairroObitos: any;
   infoprojecao: any;
   infoTendencias: any;
   infodataMunicipio: any;
@@ -191,7 +193,9 @@ export class MapComponent implements OnInit {
   utfgridsource: UTFGrid;
   utfgridlayer: OlTileLayer;
   utfgridBairro: UTFGrid;
+  utfgridBairroObitos: UTFGrid;
   utfgridlayerBairro: OlTileLayer;
+  utfgridlayerBairroObitos: OlTileLayer;
   utfgridProjecao: UTFGrid;
   utfgridTendencias: UTFGrid;
   utfgridlayerProjecao: OlTileLayer;
@@ -296,7 +300,8 @@ export class MapComponent implements OnInit {
     this.textSummary = {};
 
     this.infomarker = {};
-    this.infobairro = {};
+    this.infobairro = {}
+    this.infobairroObitos = {};
     this.infoprojecao = {};
     this.infoTendencias = {};
     this.defaultRegion = {
@@ -353,7 +358,7 @@ export class MapComponent implements OnInit {
 
     this.selectedConfirmedDate = ''
     this.selectedBairroTime = "(select max(data_ultima_atualizacao) from v_casos_bairros)"
-
+    this.selectedBairroObitosTime = "(select max(data_ultima_atualizacao) from v_obitos_bairros)"
     this.bntStyleENG = this.styleDefault;
     this.bntStylePOR = this.styleSelected;
 
@@ -726,6 +731,9 @@ export class MapComponent implements OnInit {
   getDataMS() {
     this.http.get('/service/indicators/summaryBrasil').subscribe(result => {
       this.dataMS = result;
+      this.dataMS.recuperados =  this.dataMS.recuperados.replace(',', '')
+      this.dataMS.recuperados =  this.dataMS.recuperados.replace(',', '')
+      this.dataMS.recuperados =  this.dataMS.recuperados.replace(',', '')
     });
   }
 
@@ -1053,7 +1061,6 @@ export class MapComponent implements OnInit {
 
     this.http.get(statisticsURL).subscribe(res => {
       this.statistics_county = res
-      console.log(this.statistics_county);
       this.statistics_county.result.dias_duplicacao_confirmados = Math.round(this.statistics_county.result.dias_duplicacao_confirmados)
 
     });
@@ -1166,6 +1173,10 @@ export class MapComponent implements OnInit {
       this.changeVisibility(bairro, { checked: false });
       bairro.types[0].timeSelected = "cd_geocmu = '52'"
 
+      let bairroObitos = this.layersNames.find(element => element.id === 'obitos_bairro');
+      this.changeVisibility(bairroObitos, { checked: false });
+      bairroObitos.types[0].timeSelected = "cd_geocmu = '52'"
+
       this.isFilteredByCity = false;
     }
     else {
@@ -1179,6 +1190,7 @@ export class MapComponent implements OnInit {
     this.selectRegion.nome = this.captalizeCity(this.selectRegion.nome);
 
     this.selectedBairroTime = "(select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '" + this.selectRegion.cd_geocmu + "')"
+    this.selectedBairroObitosTime = "(select max(data_ultima_atualizacao) from v_obitos_bairros where cd_geocmu = '" + this.selectRegion.cd_geocmu + "')"
 
     if (this.selectRegion.cd_geocmu != '52') {
       this.getDates('/service/indicators/datesNeighborhoods');
@@ -1199,7 +1211,6 @@ export class MapComponent implements OnInit {
   }
 
 
-
   zoomToCityOnTypesLayer(layer) {
 
     if (layer.value == "casos_por_bairro_covid") {
@@ -1207,8 +1218,6 @@ export class MapComponent implements OnInit {
         this.selectedBairroTime = "(select max(data_ultima_atualizacao) from v_casos_bairros)"
       }
       else {
-
-        // console.log("laaaaayer ", layer)
 
         let tmp
 
@@ -1234,6 +1243,39 @@ export class MapComponent implements OnInit {
           this.infodata = null
 
 
+
+        });
+      }
+    }
+
+    if (layer.value == "obitos_por_bairro_covid") {
+      if (layer.timeSelected == "cd_geocmu = '52'") {
+        this.selectedBairroObitosTime = "(select max(data_ultima_atualizacao) from v_obitos_bairros)"
+      }
+      else {
+
+        let tmp
+
+        if (layer['times']) {
+          tmp = layer['times'].find(
+              element => element.value === layer.timeSelected
+          );
+        }
+
+        this.http.get(SEARCH_URL, { params: PARAMS.set('key', tmp.Viewvalue) }).subscribe(result => {
+
+          let ob = result[0];
+          this.updateRegion(ob);
+
+          // this.selectedBairroTime = "(select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '" + this.selectRegion.cd_geocmu +"')"
+
+
+          this.handleInteraction();
+          // let l = this.layersNames.find(element => element.id === 'urban_traffic');
+          // this.changeVisibility(l, { checked: true });
+          let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+          this.changeVisibility(p, { checked: false });
+          this.infodata = null
 
         });
       }
@@ -1326,6 +1368,12 @@ export class MapComponent implements OnInit {
     if (!utfgridlayerBairroVisible || evt.dragging) {
       return;
     }
+
+    let utfgridlayerBairroObitosVisible = this.utfgridlayerBairroObitos.getVisible();
+    if (!utfgridlayerBairroObitosVisible || evt.dragging) {
+      return;
+    }
+
 
     let coordinate = this.map.getEventCoordinate(evt.originalEvent);
     let viewResolution = this.map.getView().getResolution();
@@ -1434,6 +1482,34 @@ export class MapComponent implements OnInit {
         this.infobairro = null;
       }
 
+      let bairroObitos = this.layersNames.find(element => element.id === 'obitos_bairro');
+      if (bairroObitos.visible) {
+
+        let zoom = this.map.getView().getZoom();
+
+        if (this.utfgridBairroObitos) {
+          this.utfgridBairroObitos.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+                if (data && data.numpoints > 0) {
+                  // window.document.body.style.cursor = 'pointer';
+
+                  this.infobairroObitos = data;
+
+                  if (this.infobairroObitos.nome == "") {
+                    this.infobairroObitos.nome = this.minireportText.undisclosed_message;
+                  }
+
+                } else {
+                  window.document.body.style.cursor = 'auto';
+                  this.infobairroObitos = null;
+                }
+
+              }.bind(this)
+          );
+        }
+      } else {
+        this.infobairroObitos = null;
+      }
+
       let projecao = this.layersNames.find(element => element.id === 'projecoes_luisa');
       if (projecao.visible) {
 
@@ -1469,7 +1545,6 @@ export class MapComponent implements OnInit {
 
         if (this.utfgridTendencias) {
           this.utfgridTendencias.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
-            console.log(data);
                 if (data) {
                   window.document.body.style.cursor = 'pointer';
 
@@ -1733,15 +1808,21 @@ export class MapComponent implements OnInit {
       source: this.utfgridsource
     });
 
-
     this.utfgridBairro = new UTFGrid({
       tileJSON: this.getTileJSONBairros()
+    });
+
+    this.utfgridBairroObitos = new UTFGrid({
+      tileJSON: this.getTileJSONBairrosObitos()
     });
 
     this.utfgridlayerBairro = new OlTileLayer({
       source: this.utfgridBairro
     });
 
+    this.utfgridlayerBairroObitos = new OlTileLayer({
+      source: this.utfgridBairroObitos
+    });
 
     this.utfgridProjecao = new UTFGrid({
       tileJSON: this.getTileJSONProjecao()
@@ -1762,6 +1843,7 @@ export class MapComponent implements OnInit {
 
     this.layers.push(this.utfgridlayer);
     this.layers.push(this.utfgridlayerBairro)
+    this.layers.push(this.utfgridlayerBairroObitos)
     this.layers.push(this.utfgridlayerProjecao)
 
     this.layers = this.layers.concat(olLayers.reverse());
@@ -1798,6 +1880,17 @@ export class MapComponent implements OnInit {
       version: '2.2.0',
       grids: [
         this.returnUTFGRID('casos_por_bairro_covid', filter, '{x}+{y}+{z}')
+      ]
+    };
+  }
+
+  private getTileJSONBairrosObitos() {
+
+    let filter = "cd_geocmu='" + this.selectRegion.cd_geocmu + "' AND data_ultima_atualizacao = " + this.selectedBairroObitosTime ;
+    return {
+      version: '2.2.0',
+      grids: [
+        this.returnUTFGRID('obitos_por_bairro_covid', filter, '{x}+{y}+{z}')
       ]
     };
   }
@@ -1977,11 +2070,12 @@ export class MapComponent implements OnInit {
 
     let covid = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
     let bairros = this.layersNames.find(element => element.id === 'casos_bairro');
+    let bairrosObitos = this.layersNames.find(element => element.id === 'obitos_bairro');
     let projecao = this.layersNames.find(element => element.id === 'projecoes_luisa');
 
 
 
-    if(covid.visible || bairros.visible || projecao.visible)
+    if(covid.visible || bairros.visible || bairrosObitos.visible || projecao.visible)
     {
       if (covid.selectedType == 'covid19_municipios_casos') {
 
@@ -2008,6 +2102,18 @@ export class MapComponent implements OnInit {
         }
       }
 
+      if (bairrosObitos.selectedType == 'obitos_por_bairro_covid') {
+        if (this.utfgridBairroObitos) {
+          let tileJSONBairroObitos = this.getTileJSONBairrosObitos();
+
+          this.utfgridBairroObitos.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONBairroObitos.grids, this.utfgridBairro.tileGrid);
+          this.utfgridBairroObitos.tileJSON = tileJSONBairroObitos;
+          this.utfgridBairroObitos.refresh();
+
+          this.utfgridlayerBairroObitos.setVisible(true);
+        }
+      }
+
       if (this.utfgridProjecao) {
         let tileJSONProjecao = this.getTileJSONProjecao();
 
@@ -2020,7 +2126,6 @@ export class MapComponent implements OnInit {
 
       if (this.utfgridTendencias) {
         let tileJSONTendencias = this.getTileJSONTendencias();
-        console.log(tileJSONTendencias);
         this.utfgridTendencias.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONTendencias.grids, this.utfgridTendencias.tileGrid);
         this.utfgridTendencias.tileJSON = tileJSONTendencias;
         this.utfgridTendencias.refresh();
@@ -2793,6 +2898,21 @@ export class MapComponent implements OnInit {
         .then(blob => {
           saveAs(blob, 'obitos_confirmados.csv');
         }).catch(err => console.log(err));
+  }
+
+  showDialogUTFGrid(){
+    let dialog = {visibility: 'hidden'};
+
+    if(this.infodata){
+      dialog.visibility = 'visible'
+    }else if(this.infobairro){
+      dialog.visibility = 'visible'
+    }else if(this.infobairroObitos){
+      dialog.visibility = 'visible'
+    }else if(this.clickable){
+      dialog.visibility = 'visible'
+    }
+    return dialog;
   }
 
   ngOnInit() {

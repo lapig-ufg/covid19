@@ -381,7 +381,8 @@
 								</p-tabPanel>
 
 								<p-tabPanel *ngIf="neighborhoodsCharts.show" [header]="neighborhoodsCharts.label">
-									<p-scrollPanel *ngIf="this.selectRegion.cd_geocmu != '5208707'" [style]="{width: '100%', height: '38vh'}">
+<!--									*ngIf="this.selectRegion.cd_geocmu != '5208707'"-->
+									<p-scrollPanel  [style]="{width: '100%', height: '38vh'}">
 										<button (click)="openInfo()" style="position: absolute; right: 7%; top: 12%;" classs="btn-info" mat-icon-button>
 											<mat-icon>info</mat-icon>
 										</button>
@@ -421,7 +422,7 @@
 										</table>
 
 									</p-scrollPanel>
-									<p style="width: 100%; height: 38vh; margin-top: 60px; font-size: 18px; text-align: center"  *ngIf="this.selectRegion.cd_geocmu == '5208707'">{{neighborhoodsCharts.label_msg}}</p>
+									<p style="width: 100%; height: 38vh; margin-top: 60px; font-size: 18px; text-align: center"  *ngIf="false">{{neighborhoodsCharts.label_msg}}</p>
 								</p-tabPanel>
 
 								<p-tabPanel [header]="chartResultCities.label">
@@ -582,8 +583,7 @@
 			<!-- [ngStyle]="{'visibility': (infodata || clickable) || infobairro ? 'visible' : 'hidden'}"> -->
 			<!-- [ngStyle]="{'visibility': infodata  ? 'visible' : (infobairro ? 'visible' : (clickable ? 'visible' : 'hidden'))}"> -->
 
-			<div id="map-info" class="card"
-			[ngStyle]="{'visibility': infodata  ? 'visible' : (infobairro ? 'visible' : (infoprojecao ? 'visible' : (clickable ? 'visible' : 'hidden')))}">
+			<div id="map-info" class="card" [ngStyle]="showDialogUTFGrid()">
 				<div *ngIf="infodata && !clickable" class="card-body">
 					<p class="card-text">{{infodata.nome}} - {{infodata.uf}}</p>
 					<table>
@@ -632,6 +632,29 @@
 								<th>{{minireportText.label_last_update}} </th>
 								<td>{{infobairro.data_ultima_atualizacao | date : 'dd/MM/yyyy'}}</td>
 							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div *ngIf="infobairroObitos && !clickable" class="card-body">
+					<p class="card-text deaths">{{infobairroObitos.nome}}</p>
+					<table>
+						<tbody>
+						<tr>
+							<th>{{minireportText.label_area_bairro}}</th>
+							<td>{{infobairroObitos.area_km2 | number:'1.2-2'  }} km²</td>
+						</tr>
+						<tr>
+							<th>{{minireportText.deaths}} </th>
+							<td>{{infobairroObitos.numpoints}} </td>
+						</tr>
+						<tr>
+							<th>{{minireportText.label_fonte}} </th>
+							<td>{{infobairroObitos.fonte}}</td>
+						</tr>
+						<tr>
+							<th>{{minireportText.label_last_update}} </th>
+							<td>{{infobairroObitos.data_ultima_atualizacao | date : 'dd/MM/yyyy'}}</td>
+						</tr>
 						</tbody>
 					</table>
 				</div>

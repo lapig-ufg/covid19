@@ -330,6 +330,10 @@
 			"pt-br": "Quantidade de Casos Confirmados:",
 			"en-us": "Number of Confirmed Cases:"
 		},
+		"deaths": {
+			"pt-br": "Quantidade de óbitos:",
+			"en-us": "Number of deaths:"
+		},
 		"recovered_cases": {
 			"pt-br": "Quantidade de Casos Recuperados:",
 			"en-us": "Number of Recovered Cases:"
@@ -702,6 +706,28 @@
 					},
 					"types": {
 						"casos_por_bairro_covid": {
+							"view_value": {
+								"pt-br": "Bairros",
+								"en-us": "District"
+							},
+							"timelabel": {
+								"pt-br": "Município",
+								"en-us": "Municipality"
+							},
+							"default_placeholder":{
+								"pt-br": "Selecione aqui...",
+								"en-us": "Select here..."
+							}
+						}
+					}
+				},
+				"obitos_bairro": {
+					"label": {
+						"pt-br": "Óbitos por Bairros",
+						"en-us": "Deaths by Districts"
+					},
+					"types": {
+						"obitos_por_bairro_covid": {
 							"view_value": {
 								"pt-br": "Bairros",
 								"en-us": "District"

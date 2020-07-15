@@ -47,7 +47,7 @@ module.exports = function (app) {
     return [
       {
         id: 'timeseries_tendencias_go',
-        sql: "select mm7 as media, novos_casos as casos, variacao_per_mm7_14dias as variacao, tendencia_novos_casos as tendencia, data from medias_moveis where " + filter + " group by data,mm7,novos_casos,variacao_per_mm7_14dias,tendencia_novos_casos  order by data;"
+        sql: "select mm7 as media, novos_casos as casos, variacao_per_mm7_14dias as variacao, tendencia_novos_casos as tendencia, data from medias_moveis where " + filter + " group by data,mm7,novos_casos,variacao_per_mm7_14dias,tendencia_novos_casos order by data ASC;"
       },
       {
         id: 'next',
