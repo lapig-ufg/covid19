@@ -196,6 +196,12 @@
 				</div>
 
 				<div class="resumo">
+					<div *ngIf="!isFilteredByCity"class="card-resumo">
+						<div  class="card-resumo-title recup" [title]="textSummary.confirmed_recovered" >{{textSummary.confirmed_recovered}}
+						</div>
+						<h2>{{summary.recuperados | number}}</h2>
+					</div>
+
 					<div class="card-resumo">
 						<div class="card-resumo-title confirmado" [title]="textSummary.confirmed_label" >{{textSummary.confirmed_label}}
 						</div>
@@ -336,7 +342,11 @@
 						<mat-tab label="{{dataSeries.timeseries.label}}">
 							<p-tabView>
 								<p-tabPanel [header]="selectRegion.nome">
-									<p-scrollPanel [style]="{width: '100%', height: '38vh'}">
+									<p-scrollPanel [style]="{width: '100%', height: '40vh'}">
+										<button (click)="openDialogCharts('dataSeries')" classs="btn-info" mat-icon-button>
+											<mat-icon>open_with</mat-icon>
+										</button>
+
 										<h5 *ngIf="!dataSeries.timeseries.chartResult[0]?.show" style="text-align: center;">
 											<br>
 											<br>
@@ -358,16 +368,20 @@
 								</p-tabPanel>
 
 								<p-tabPanel [header]=" tendeciaSeries.timeseries.chartResult[0]?.title_tab.replace('[region]',selectRegion.nome)">
-									<p-scrollPanel [style]="{width: '100%', height: '38vh'}">
+									<p-scrollPanel [style]="{width: '100%', height: '40vh'}">
 										<div *ngIf="tendeciaSeries.timeseries.chartResult[0]?.show">
 											<p style="font-weight: bold; text-align: center; font-size: 15px; margin-top: 5px; margin-bottom: 5px">
 												{{ tendeciaSeries.timeseries.chartResult[0]?.text }}</p>
+											<button style="position: absolute;" (click)="openDialogCharts('tendeciaSeries')" classs="btn-info" mat-icon-button>
+												<mat-icon>open_with</mat-icon>
+											</button>
 											<div style="font-weight: normal; font-size: 12px; text-align: center; display: flex; justify-content: center;" >
 												<div class="tendenciaMedia" >{{tendeciaSeries.timeseries.chartResult[0]?.label_media}} {{tendeciaSeries.timeseries.chartResult[0]?.last_ob.media | number:'1.2-3'}}</div>
 												<div class="tendenciaVariacao">{{tendeciaSeries.timeseries.chartResult[0]?.label_variation}} {{tendeciaSeries.timeseries.chartResult[0]?.last_ob.variacao | number:'1.2-3'}}%</div>
 												<div class="tendenciaTendencia" [innerHTML]=" tendeciaSeries.timeseries.chartResult[0]?.label_trend + tend[tendeciaSeries.timeseries.chartResult[0]?.last_ob.tendencia][language] "></div>
 											</div>
 											<p style="font-weight: 200; text-align: center;">{{tendeciaSeries.timeseries.chartResult[0]?.label_last_update + tendeciaSeries.timeseries.chartResult[0]?.last_ob.data}}</p>
+
 											<p-chart [ngStyle]="{'overflow-x': hidden}"
 													 [type]="tendeciaSeries.timeseries.chartResult[0]?.type"
 													 [data]="tendeciaSeries.timeseries.chartResult[0]?.dataResult"

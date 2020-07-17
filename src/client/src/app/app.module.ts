@@ -46,6 +46,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { PanelModule } from 'primeng/panel';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { TooltipModule } from 'primeng/tooltip';
+import { SidebarModule } from 'primeng/sidebar';
 import { LightboxModule } from 'ngx-lightbox';
 import { NgxGalleryModule } from 'ngx-image-video-gallery';
 import { CardModule } from 'primeng/card';
@@ -69,6 +70,7 @@ import { NoCacheHeadersInterceptor } from './interceptors/no-cache-headers-inter
 import { BedsComponent } from './views/beds/beds.component';
 import { NoteComponent } from './views/note/note.component';
 import { ProjectionsComponent } from './views/projections/projections.component';
+import { DialogChartsComponent } from './views/dialog-charts/dialog-charts.component';
 
 registerLocaleData(localePt);
 
@@ -83,7 +85,8 @@ const ENTRY_COMPONENTS = [
   RestrictedAreaFormComponent,
   BedsComponent,
   NoteComponent,
-  ProjectionsComponent
+  ProjectionsComponent,
+  DialogChartsComponent
 ];
 
 @NgModule({
@@ -101,6 +104,7 @@ const ENTRY_COMPONENTS = [
     BedsComponent,
     NoteComponent,
     ProjectionsComponent,
+    DialogChartsComponent,
   ],
   imports: [
     TabViewModule,
@@ -118,6 +122,7 @@ const ENTRY_COMPONENTS = [
     TableModule,
     ChartModule,
     DialogModule,
+    SidebarModule,
     ToggleButtonModule,
     MatDialogModule,
     BrowserAnimationsModule,

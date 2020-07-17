@@ -57,6 +57,7 @@ import {ProjectionsComponent} from "./projections/projections.component";
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import {DialogChartsComponent} from "./dialog-charts/dialog-charts.component";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -775,6 +776,10 @@ export class MapComponent implements OnInit {
 
         graphic.options.scales.xAxes = x;
 
+        graphic.options.legend.onHover = function (event) {
+          event.target.style.cursor = 'pointer';
+        };
+
         // graphic.options.legend.onHover = function (event) {
         //   event.target.style.cursor = 'pointer';
         //   graphic.options.legend.labels.fontColor = '#0335fc';
@@ -785,9 +790,9 @@ export class MapComponent implements OnInit {
         //   graphic.options.legend.labels.fontColor = '#fa1d00';
         // };
 
-        graphic.options.legend.onClick = function (event) {
-          return null;
-        };
+        // graphic.options.legend.onClick = function (event) {
+        //   return null;
+        // };
 
         // graphic.options.tooltips.callbacks = {
         //   title(tooltipItem, data) {
@@ -850,6 +855,9 @@ export class MapComponent implements OnInit {
           }]
 
           graphic.options.scales.xAxes = x;
+          graphic.options.legend.onHover = function (event) {
+            event.target.style.cursor = 'pointer';
+          };
 
           // graphic.options.legend.onHover = function (event) {
           //   event.target.style.cursor = 'pointer';
@@ -861,9 +869,9 @@ export class MapComponent implements OnInit {
           //   graphic.options.legend.labels.fontColor = '#fa1d00';
           // };
 
-          graphic.options.legend.onClick = function (event) {
-            return null;
-          };
+          // graphic.options.legend.onClick = function (event) {
+          //   return null;
+          // };
 
           // graphic.options.tooltips.callbacks = {
           //   title(tooltipItem, data) {
@@ -1014,7 +1022,6 @@ export class MapComponent implements OnInit {
       else{
         this.deathsCharts.label += this.selectRegion.nome
       }
-      console.log(this.deathsCharts);
       this.deathsCharts.label_sms = this.deathsCharts.label_sms.replace('[source]', this.deathsCharts.fonte);
       this.deathsCharts.label_sms = this.deathsCharts.label_sms.replace('[date]', this.deathsCharts.data_ultima_atualizacao);
 
@@ -1080,6 +1087,10 @@ export class MapComponent implements OnInit {
 
         graphic.options.scales.xAxes = x;
 
+        graphic.options.legend.onHover = function (event) {
+          event.target.style.cursor = 'pointer';
+        };
+
         // graphic.options.legend.onHover = function (event) {
         //   event.target.style.cursor = 'pointer';
         //   graphic.options.legend.labels.fontColor = '#0335fc';
@@ -1090,9 +1101,9 @@ export class MapComponent implements OnInit {
         //   graphic.options.legend.labels.fontColor = '#fa1d00';
         // };
 
-        graphic.options.legend.onClick = function (event) {
-          return null;
-        };
+        // graphic.options.legend.onClick = function (event) {
+        //   return null;
+        // };
 
         // graphic.options.tooltips.filter = function (tooltipItem, data) {
 
@@ -2727,6 +2738,21 @@ export class MapComponent implements OnInit {
       // console.log('The dialog was closed');
     });
   }
+
+  openDialogCharts(charts) {
+
+    let dialogRef = this.dialog.open(DialogChartsComponent, {
+      width: '90%',
+      height: '90%',
+      data: this[charts]
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+    });
+  }
+
+
   exportPdf(table) {
     let self = this;
     let language = this.language;

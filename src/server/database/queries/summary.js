@@ -24,7 +24,7 @@ module.exports = function (app) {
         return [
             {
                 id: 'resumed_indicators',
-                sql: "SELECT SUM(confirmados) as confirmados, SUM(suspeitos) as suspeitos, SUM(obitos) as obitos FROM casos WHERE data = (select max(data) from casos) AND " + filter +"",
+                sql: "SELECT SUM(recuperados) as recuperados, SUM(confirmados) as confirmados, SUM(suspeitos) as suspeitos, SUM(obitos) as obitos FROM casos WHERE data = (select max(data) from casos) AND " + filter +"",
             },
             {
                 id: 'last_update',

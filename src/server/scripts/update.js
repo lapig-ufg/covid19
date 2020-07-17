@@ -66,6 +66,21 @@ class Update {
         return suspeitos
     }
 
+    async getRecuperados() {
+        var propertiesObject = { dataAccessId: 'DSBigNumberRecuperados' };
+        let url = 'https://extranet.saude.go.gov.br/pentaho/plugin/cda/api/doQuery?path=/coronavirus/paineis/painel.cda';
+        let recuperados = null;
+
+        try {
+            let response = await rp({ url: url, qs: propertiesObject });
+            let bd = JSON.parse(response);
+            recuperados = bd.resultset[0][0];
+        }catch (e) {
+            console.log(e)
+        }
+        return recuperados
+    }
+
     async getDadosDF() {
 
         let df = {};
@@ -442,6 +457,7 @@ class Update {
                     data: moment().format('YYYY-MM-DD HH:mm'),
                     confirmados: item.confirmados,
                     suspeitos: 0,
+                    recuperados: 0,
                     obitos: obitos == undefined ? 0 : obitos.obitos,
                     feminino: feminino == undefined ? 0 : feminino.qtde,
                     masculino: masculino == undefined ? 0 : masculino.qtde,
@@ -473,6 +489,7 @@ class Update {
             });
 
             let suspeitos = await self.getSuspeitos();
+            let recuperados = await self.getRecuperados();
             let df = await self.getDadosDF();
 
             tabela.push({
@@ -480,6 +497,7 @@ class Update {
                 data: moment().format('YYYY-MM-DD HH:mm'),
                 confirmados:0,
                 suspeitos: suspeitos,
+                recuperados: 0,
                 obitos: 0,
                 feminino: 0,
                 masculino: 0,
@@ -509,10 +527,45 @@ class Update {
             });
 
             tabela.push({
+                cd_geocmu: 222,
+                data: moment().format('YYYY-MM-DD HH:mm'),
+                confirmados:0,
+                recuperados: recuperados,
+                suspeitos: 0,
+                obitos: 0,
+                feminino: 0,
+                masculino: 0,
+                menor10: 0,
+                de10a14: 0,
+                de15a19: 0,
+                de20a29: 0,
+                de30a39: 0,
+                de40a49: 0,
+                de50a59: 0,
+                de60a69: 0,
+                de70a79: 0,
+                maior80: 0,
+                feminino_obitos: 0,
+                masculino_obitos: 0,
+                menor10_obitos: 0,
+                de10a14_obitos: 0,
+                de15a19_obitos: 0,
+                de20a29_obitos: 0,
+                de30a39_obitos:0,
+                de40a49_obitos: 0,
+                de50a59_obitos: 0,
+                de60a69_obitos: 0,
+                de70a79_obitos: 0,
+                maior80_obitos:0,
+                municipio: 'RECUPERADOS'
+            });
+
+            tabela.push({
                 cd_geocmu: 5300108,
                 data: moment().format('YYYY-MM-DD HH:mm'),
                 confirmados: df.confirmados,
                 suspeitos: 0,
+                recuperados: 0,
                 obitos: df.obitos,
                 feminino: 0,
                 masculino: 0,
