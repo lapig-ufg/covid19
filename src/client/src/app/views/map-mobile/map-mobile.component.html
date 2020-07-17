@@ -342,46 +342,130 @@
 		</mat-tab>
 		<mat-tab *ngIf="neighborhoodsCharts.show" [label] = "neighborhoodsCharts.label" >
 <!--			*ngIf="this.selectRegion.cd_geocmu != '5208707'"-->
-			<p-scrollPanel  [style]="{width: '100%', height: '98%'}">
+<!--			<p-scrollPanel  [style]="{width: '100%', height: '98%'}">-->
 
-				<div class="resumo-neigh">{{neighborhoodsCharts.label_sms}}.</div>
+<!--				<div class="resumo-neigh">{{neighborhoodsCharts.label_sms}}.</div>-->
 
-				<div class="resumo-totais">
-					<div class="total"> {{neighborhoodsCharts.label_total }} <strong style="color: #333333">{{ neighborhoodsCharts.total_neighborhoods}}</strong> </div>
-					<div class="total"> {{neighborhoodsCharts.label_confirmed }} <strong style="color: #333333"> {{neighborhoodsCharts.total_confirmados}} </strong></div>
-				</div>
+<!--				<div class="resumo-totais">-->
+<!--					<div class="total"> {{neighborhoodsCharts.label_total }} <strong style="color: #333333">{{ neighborhoodsCharts.total_neighborhoods}}</strong> </div>-->
+<!--					<div class="total"> {{neighborhoodsCharts.label_confirmed }} <strong style="color: #333333"> {{neighborhoodsCharts.total_confirmados}} </strong></div>-->
+<!--				</div>-->
 
-				<div class="export-table">
-					<button mat-raised-button color="primary" (click)="exportPdf('bairros')">PDF</button>
-					<!-- <button mat-raised-button color="accent" (click)="exportExcel('bairros')">EXCEL</button> -->
-					<button (click)="openInfo()" mat-raised-button color="primary">INFO</button>
-				</div>
+<!--				<div class="export-table">-->
+<!--					<button mat-raised-button color="primary" (click)="exportPdf('bairros')">PDF</button>-->
+<!--					&lt;!&ndash; <button mat-raised-button color="accent" (click)="exportExcel('bairros')">EXCEL</button> &ndash;&gt;-->
+<!--					<button (click)="openInfo()" mat-raised-button color="primary">INFO</button>-->
+<!--				</div>-->
 
-				<table style="width: 97% !important; margin-left: 2% !important; margin-right: 2% !important;"  mat-table [dataSource]="dataSourceNeighbor" class="mat-elevation-z8">
-					<!-- Position Column -->
-					<ng-container matColumnDef="rank">
-						<th mat-header-cell *matHeaderCellDef> {{this.neighborhoodsCharts.split[0].header}} </th>
-						<td mat-cell *matCellDef="let element"> {{element.rank}} </td>
-					</ng-container>
+<!--				<table style="width: 97% !important; margin-left: 2% !important; margin-right: 2% !important;"  mat-table [dataSource]="dataSourceNeighbor" class="mat-elevation-z8">-->
+<!--					&lt;!&ndash; Position Column &ndash;&gt;-->
+<!--					<ng-container matColumnDef="rank">-->
+<!--						<th mat-header-cell *matHeaderCellDef> {{this.neighborhoodsCharts.split[0].header}} </th>-->
+<!--						<td mat-cell *matCellDef="let element"> {{element.rank}} </td>-->
+<!--					</ng-container>-->
 
-					<!-- Name Column -->
-					<ng-container matColumnDef="nome">
-						<th mat-header-cell *matHeaderCellDef> {{this.neighborhoodsCharts.split[1].header}} </th>
-						<td mat-cell *matCellDef="let element"> {{element.nome}} </td>
-					</ng-container>
+<!--					&lt;!&ndash; Name Column &ndash;&gt;-->
+<!--					<ng-container matColumnDef="nome">-->
+<!--						<th mat-header-cell *matHeaderCellDef> {{this.neighborhoodsCharts.split[1].header}} </th>-->
+<!--						<td mat-cell *matCellDef="let element"> {{element.nome}} </td>-->
+<!--					</ng-container>-->
 
-					<!-- Weight Column -->
-					<ng-container matColumnDef="confirmados">
-						<th mat-header-cell *matHeaderCellDef>{{this.neighborhoodsCharts.split[2].header}}</th>
-						<td mat-cell *matCellDef="let element"> {{element.confirmados}} </td>
-					</ng-container>
+<!--					&lt;!&ndash; Weight Column &ndash;&gt;-->
+<!--					<ng-container matColumnDef="confirmados">-->
+<!--						<th mat-header-cell *matHeaderCellDef>{{this.neighborhoodsCharts.split[2].header}}</th>-->
+<!--						<td mat-cell *matCellDef="let element"> {{element.confirmados}} </td>-->
+<!--					</ng-container>-->
 
 
-					<tr mat-header-row *matHeaderRowDef="displayedColumnsNeighbor"></tr>
-					<tr mat-row *matRowDef="let row; columns: displayedColumnsNeighbor;"></tr>
-				</table>
+<!--					<tr mat-header-row *matHeaderRowDef="displayedColumnsNeighbor"></tr>-->
+<!--					<tr mat-row *matRowDef="let row; columns: displayedColumnsNeighbor;"></tr>-->
+<!--				</table>-->
 
-			</p-scrollPanel>
+<!--			</p-scrollPanel>-->
+			<mat-tab-group id="group_table">
+				<mat-tab  label="{{neighborhoodsCharts.label_tab}}">
+					<p-scrollPanel  [style]="{width: '100%', height: '88%'}">
+						<div class="resumo-neigh">{{neighborhoodsCharts.label_sms}}.</div>
+
+						<div class="resumo-totais">
+							<div class="total"> {{neighborhoodsCharts.label_total }} <strong style="color: #333333">{{ neighborhoodsCharts.total_neighborhoods}}</strong> </div>
+							<div class="total"> {{neighborhoodsCharts.label_confirmed }} <strong style="color: #333333"> {{neighborhoodsCharts.total_confirmados}} </strong></div>
+						</div>
+
+						<div class="export-table">
+							<button mat-raised-button color="primary" (click)="exportPdf('bairros')">PDF</button>
+							<!-- <button mat-raised-button color="accent" (click)="exportExcel('bairros')">EXCEL</button> -->
+							<button (click)="openInfo()" mat-raised-button color="primary">INFO</button>
+						</div>
+
+						<table style="width: 97% !important; margin-left: 2%!important; margin-right: 2% !important;"  mat-table [dataSource]="dataSourceNeighbor" class="mat-elevation-z8">
+							<!-- Position Column -->
+							<ng-container matColumnDef="rank">
+								<th mat-header-cell *matHeaderCellDef> {{this.neighborhoodsCharts.split[0].header}} </th>
+								<td mat-cell *matCellDef="let element"> {{element.rank}} </td>
+							</ng-container>
+
+							<!-- Name Column -->
+							<ng-container matColumnDef="nome">
+								<th mat-header-cell *matHeaderCellDef> {{this.neighborhoodsCharts.split[1].header}} </th>
+								<td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+							</ng-container>
+
+							<!-- Weight Column -->
+							<ng-container matColumnDef="confirmados">
+								<th mat-header-cell *matHeaderCellDef>{{this.neighborhoodsCharts.split[2].header}}</th>
+								<td mat-cell *matCellDef="let element"> {{element.confirmados}} </td>
+							</ng-container>
+
+
+							<tr mat-header-row *matHeaderRowDef="displayedColumnsNeighbor"></tr>
+							<tr mat-row *matRowDef="let row; columns: displayedColumnsNeighbor;"></tr>
+						</table>
+
+					</p-scrollPanel>
+				</mat-tab>
+				<mat-tab *ngIf="deathsCharts.show" label="{{deathsCharts.label_tab}}">
+					<p-scrollPanel  [style]="{width: '100%', height: '98%'}">
+						<div class="resumo-neigh">{{deathsCharts.label_sms}}.</div>
+
+						<div class="resumo-totais">
+							<div class="total"> {{deathsCharts.label_total }} <strong style="color: #333333">{{ deathsCharts.total_neighborhoods}}</strong> </div>
+							<div class="total"> {{deathsCharts.label_deaths }} <strong style="color: #333333"> {{deathsCharts.total_obtios}} </strong></div>
+						</div>
+
+						<div class="export-table">
+							<button mat-raised-button color="primary" (click)="exportPdfDeaths('bairros')">PDF</button>
+							<!-- <button mat-raised-button color="accent" (click)="exportExcel('bairros')">EXCEL</button> -->
+							<button (click)="openInfo()" mat-raised-button color="primary">INFO</button>
+						</div>
+
+						<table style="width: 97% !important; margin-left: 2%!important; margin-right: 2% !important;"  mat-table [dataSource]="dataSourceDeaths" class="mat-elevation-z8">
+							<!-- Position Column -->
+							<ng-container matColumnDef="rank">
+								<th mat-header-cell *matHeaderCellDef> {{this.deathsCharts.split[0].header}} </th>
+								<td mat-cell *matCellDef="let element"> {{element.rank}} </td>
+							</ng-container>
+
+							<!-- Name Column -->
+							<ng-container matColumnDef="nome">
+								<th mat-header-cell *matHeaderCellDef> {{this.deathsCharts.split[1].header}} </th>
+								<td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+							</ng-container>
+
+							<!-- Weight Column -->
+							<ng-container matColumnDef="obitos">
+								<th mat-header-cell *matHeaderCellDef>{{this.deathsCharts.split[2].header}}</th>
+								<td mat-cell *matCellDef="let element"> {{element.obitos}} </td>
+							</ng-container>
+
+
+							<tr mat-header-row *matHeaderRowDef="displayedColumnsDeaths"></tr>
+							<tr mat-row *matRowDef="let row; columns: displayedColumnsDeaths;"></tr>
+						</table>
+
+					</p-scrollPanel>
+				</mat-tab>
+			</mat-tab-group>
 			<p style="width: 100%; height: 38vh; margin-top: 60px; font-size: 18px; text-align: center"  *ngIf="false">{{neighborhoodsCharts.label_msg}}</p>
 		</mat-tab>
 		<mat-tab  (click)="handleAnalytics('charts', 'dados_oficiais', 'Municípios')" label = "Municípios" >
