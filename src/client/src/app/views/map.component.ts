@@ -116,6 +116,7 @@ export class MapComponent implements OnInit {
   optionsBrasil: any;
   dataSource: any;
   neighborhoodsCharts: any;
+  deathsCharts: any;
 
   chartResultCities: any;
   chartResultCitiesIllegalAPP: any;
@@ -131,6 +132,7 @@ export class MapComponent implements OnInit {
   trafficgoogle: any;
   exportColumnsCities: any[];
   exportColumnsBairros: any[];
+  exportColumnsBairrosDeaths: any[];
   textOnDialog: any;
   mapbox: any;
   satelite: any;
@@ -262,6 +264,9 @@ export class MapComponent implements OnInit {
   displayedColumnsNeighbor = [];
 
 
+  dataSourceDeaths:TableElement[];
+  displayedColumnsDeaths = [];
+
   dataSourceCities:TableElement[];
   displayedColumnsCities = [];
 
@@ -321,6 +326,7 @@ export class MapComponent implements OnInit {
     this.avoidMarkers = ["go_hospitais_datasus", "vacinacao_gripe", "uni_basicas_goiania"];
 
     this.neighborhoodsCharts = {}
+    this.deathsCharts = {};
 
     this.optionsStates = {};
     this.statistics_county = { result: {}, text: {} };
@@ -988,6 +994,60 @@ export class MapComponent implements OnInit {
 
     });
 
+    let deathsUrl = '/service/indicators/deaths' + this.getServiceParams() + '&timefilter=' + this.selectedBairroObitosTime;
+    this.exportColumnsBairrosDeaths = [];
+    this.http.get(deathsUrl).subscribe(result => {
+
+      this.deathsCharts = result;
+      if(this.selectRegion.cd_geocmu == '5300108')
+      {
+
+        if (this.language == 'pt-br') {
+          this.deathsCharts.label += "Distrito Federal"
+          this.deathsCharts.label_sms = this.neighborhoodsCharts.label_sms.replace('de', '');
+          this.deathsCharts.label = this.neighborhoodsCharts.label.replace('de', 'do').replace('Bairros', 'Regiões Administrativas');
+        }
+        else {
+          this.deathsCharts.label += "Federal Disctrict"
+        }
+      }
+      else{
+        this.deathsCharts.label += this.selectRegion.nome
+      }
+      console.log(this.deathsCharts);
+      this.deathsCharts.label_sms = this.deathsCharts.label_sms.replace('[source]', this.deathsCharts.fonte);
+      this.deathsCharts.label_sms = this.deathsCharts.label_sms.replace('[date]', this.deathsCharts.data_ultima_atualizacao);
+
+      let d = new Date(this.deathsCharts.last_updated);
+
+      this.deathsCharts.last_updated = this.datePipe.transform(d.setDate(d.getDate() + 1), 'dd/MM/yyyy');
+
+      let headers = this.deathsCharts.title.split('?');
+      let properties = this.deathsCharts.properties.split('?');
+
+      this.deathsCharts.split = [];
+      for (let i = 0; i < headers.length; i++) {
+        this.deathsCharts.split.push({
+          header: headers[i],
+          field: properties[i]
+        })
+      }
+
+      this.exportColumnsBairrosDeaths = this.deathsCharts.split.map(col => ({ title: col.header, dataKey: col.field }));
+      let self = this;
+      this.deathsCharts.series.forEach(function (item, index) {
+        if(item.obitos > 0 && item.obitos < 10){
+          self.deathsCharts.series[index].obitos = "000" + item.obitos;
+        }else if(item.obitos >= 10 && item.obitos <= 99){
+          self.deathsCharts.series[index].obitos = "00" + item.obitos;
+        }
+      });
+
+      this.dataSourceDeaths = this.deathsCharts.series;
+      this.displayedColumnsDeaths = ["rank", "nome", "obitos"]
+
+    });
+
     let projectionURL = '/service/indicators/projections' + this.getServiceParams();
 
     this.http.get(projectionURL).subscribe(result => {
@@ -1114,10 +1174,6 @@ export class MapComponent implements OnInit {
       };
 
     });
-
-
-
-
   }
 
   exportExcel(table) {
@@ -1140,6 +1196,23 @@ export class MapComponent implements OnInit {
       this.saveAsExcelFile(excelBuffer, tablename);
     });
   }
+
+  exportExcelDeaths(table) {
+
+    let ob = [];
+    let tablename = '';
+
+    ob = this.deathsCharts.series;
+    tablename = 'ranking_bairros_' + this.selectRegion.nome
+
+    import("xlsx").then(xlsx => {
+      const worksheet = xlsx.utils.json_to_sheet(ob);
+      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, tablename);
+    });
+  }
+
 
   saveAsExcelFile(buffer: any, fileName: string): void {
     import("file-saver").then(FileSaver => {
@@ -2682,6 +2755,90 @@ export class MapComponent implements OnInit {
           doc.setFontType('bold');
           doc.setFontSize(12);
           doc.text(logos.title.left, logos.title.top, title);
+          doc.addImage(logos.logoCovid, 'PNG', 15, 5, 45, 20);
+
+          doc.addImage(
+              logos[self.selectRegion.cd_geocmu].logo.img,
+              'PNG',
+              logos[self.selectRegion.cd_geocmu].logo.left,
+              logos[self.selectRegion.cd_geocmu].logo.top,
+              logos[self.selectRegion.cd_geocmu].logo.width,
+              logos[self.selectRegion.cd_geocmu].logo.height
+          );
+
+          doc.addImage(logos.logoUFG, 'PNG', 156, 5, 40, 20);
+
+        };
+
+        let footer = function () {
+          var paginas = logos.page.title[language] + doc.internal.getNumberOfPages();
+          if (typeof doc.putTotalPages === 'function') {
+            paginas = paginas + logos.page.of[language] + totalDePaginas;
+          }
+
+          doc.setFontSize(9);
+          doc.setFontType('normal');
+
+          doc.text(logos[self.selectRegion.cd_geocmu].footer.text[language], logos[self.selectRegion.cd_geocmu].footer.left, doc.internal.pageSize.height - 10);
+
+          doc.setFontType('normal');
+          doc.text(paginas, 175, doc.internal.pageSize.height - 5);
+          doc.text("https://covidgoias.ufg.br", 15, doc.internal.pageSize.height - 5);
+          doc.text(moment().format('DD/MM/YYYY HH:mm:ss'), 90, doc.internal.pageSize.height - 5);
+        };
+
+        let options = {
+
+          margin: {
+            top: 40,
+          },
+
+          didDrawPage: function (data) {
+            // Header
+            header();
+            // Footer
+            footer();
+          },
+
+          //'everyPage' = mostra o cabeçalho a cada página
+          //'firstPage' = mostra o cabeçalho apenas na primeira página
+          //'never'     = nunca mostra o cabeçalho
+          showHead: 'everyPage',
+          theme: 'striped', // 'striped', 'grid' or 'plain'
+          startY: false //doc.autoTableEndPosY() + 60
+        };
+
+        doc.autoTable(titleTable, ob, options);
+
+        if (typeof doc.putTotalPages === 'function') {
+          doc.putTotalPages(totalDePaginas);
+        }
+        doc.save(tablename + this.selectRegion.nome + '.pdf');
+      })
+    })
+  }
+
+  exportPdfDeaths(table) {
+    let self = this;
+    let language = this.language;
+    let tablename = '';
+    let ob = [];
+    let titleTable = [];
+
+    tablename = this.deathsCharts.filename;
+    ob = this.deathsCharts.series;
+    titleTable = this.exportColumnsBairrosDeaths;
+
+    import("jspdf").then(jsPDF => {
+      import("jspdf-autotable").then(x => {
+        const doc = new jsPDF.default(0, 0);
+        let totalDePaginas = "{total_pages_count_string}";
+
+        let header = function () {
+          let title = logos.title_deaths[language].toLocaleUpperCase()
+          doc.setFontType('bold');
+          doc.setFontSize(12);
+          doc.text(logos.title_deaths.left, logos.title_deaths.top, title);
           doc.addImage(logos.logoCovid, 'PNG', 15, 5, 45, 20);
 
           doc.addImage(

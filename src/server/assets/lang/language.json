@@ -144,6 +144,10 @@
 					"pt-br": "Total de casos: ",
 					"en-us": "Total cases: "
 				},
+				"label_deaths_sms":{
+					"pt-br": "Total de óbitos: ",
+					"en-us": "Total óbitos: "
+				},
 				"label_total_ses":{
 					"pt-br": "Total de municípios com casos: ",
 					"en-us": "Total municipalities with cases: "
@@ -157,6 +161,10 @@
 				"label": {
 					"pt-br": "Bairros de ",
 					"en-us": "Neighborhoods from "
+				},
+				"label_tab": {
+					"pt-br": "Casos",
+					"en-us": "Cases"
 				},
 				"description": {
 					"pt-br": "Bairros com maiores número de casos de COVID-19: ",
@@ -189,6 +197,52 @@
 				"label_total":{
 					"pt-br": "Total de bairros com casos: ",
 					"en-us": "Total of neighborhoods with cases: "
+				},
+				"label_msg":{
+					"pt-br": "A atualização diária para os bairros de Goiânia encontra-se temporariamente suspensa, visando aperfeiçoamento técnico com a SMS.",
+					"en-us": "The daily update for the neighborhoods of Goiânia is temporarily suspended, improving technical improvement with an SMS."
+				}
+			},
+			"ranking_deaths": {
+				"label": {
+					"pt-br": "Bairros de ",
+					"en-us": "Neighborhoods from "
+				},
+				"label_tab": {
+					"pt-br": "Óbitos",
+					"en-us": "Deaths"
+				},
+				"description": {
+					"pt-br": "Bairros com maiores número de óbtios por COVID-19: ",
+					"en-us": "Ranking of Neighborhoods with the highest deaths COVID-19:"
+				},
+				"title": {
+					"pt-br": "Posição?Bairros?Óbitos",
+					"en-us": "Position?Neighborhood?Deaths"
+				},
+				"tooltip_text": {
+					"pt-br": "Clique para visualizar no mapa",
+					"en-us": "Click to view on map"
+				},
+				"properties_name": {
+					"pt-br": "rank?nome?obitos",
+					"en-us": "rank?nome?obitos"
+				},
+				"filename":{
+					"pt-br": "obitos_por_bairro_",
+					"en-us": "neighborhoods_deaths_"
+				},
+				"label_sms":{
+					"pt-br": "Dados de óbitos divulgados pela [source] em [date]",
+					"en-us": "Data od deaths released by [source] on [date]"
+				},
+				"label_deaths":{
+					"pt-br": "Total de óbitos: ",
+					"en-us": "Total deaths: "
+				},
+				"label_total":{
+					"pt-br": "Total de bairros com óbitos registrados: ",
+					"en-us": "Total of neighborhoods with deaths: "
 				},
 				"label_msg":{
 					"pt-br": "A atualização diária para os bairros de Goiânia encontra-se temporariamente suspensa, visando aperfeiçoamento técnico com a SMS.",

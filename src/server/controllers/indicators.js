@@ -461,6 +461,7 @@ module.exports = function (app) {
     var result = {
       label: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label"][language],
       description: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["description"][language],
+      label_tab: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label_tab"][language],
       title: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["title"][language],
       tooltip: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["tooltip_text"][language],
       properties: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["properties_name"][language],
@@ -472,6 +473,80 @@ module.exports = function (app) {
       show: show,
       total_neighborhoods: Array.isArray(queryResult) ? queryResult.length : null,
       total_confirmados: total_confirmados,
+      last_updated: queryResultDate[0]['max'],
+      fonte: fonte,
+      data_ultima_atualizacao: moment(data_ultima_atualizacao).format("DD/MM/YYYY"),
+      series: queryResult
+    }
+    response.send(result)
+    response.end()
+
+  }
+
+  Controller.deaths = function (request, response) {
+
+    var language = request.param('lang')
+
+    var queryResult = request.queryResult['ranking_deaths']
+    var queryResultDate = request.queryResult['updated_at']
+
+    let show = false
+    if (queryResult.length > 0) {
+      show = true
+
+      queryResult.map(function (item, i) {
+        if (i > 0) {
+          //Get our previous list item
+          var prevItem = queryResult[i - 1];
+          if (parseInt(prevItem.obtios) == parseInt(item.obitos)) {
+            //Same score = same rank
+            item.rank = prevItem.rank;
+          } else {
+            //Not the same score, give em the current iterated index + 1
+            item.rank = prevItem.rank + 1;
+          }
+        } else {
+          //First item takes the rank 1 spot
+          item.rank = 1;
+        }
+
+        return item;
+      });
+
+    }
+
+    let total_obtios = 0;
+    let data_ultima_atualizacao = null;
+    let fonte = null;
+    if (Array.isArray(queryResult)) {
+      if (queryResult.length > 0) {
+        queryResult.forEach(function (item, index) {
+          fonte = item.fonte;
+          total_obtios += item.obitos;
+          data_ultima_atualizacao = item.data_ultima_atualizacao;
+        });
+      } else {
+        total_obtios = null;
+      }
+    } else {
+      total_obtios = null;
+    }
+
+    var result = {
+      label: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["label"][language],
+      description: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["description"][language],
+      label_tab: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["label_tab"][language],
+      title: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["title"][language],
+      tooltip: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["tooltip_text"][language],
+      properties: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["properties_name"][language],
+      filename: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["filename"][language],
+      label_sms: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["label_sms"][language],
+      label_msg: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["label_msg"][language],
+      label_deaths: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["label_deaths"][language],
+      label_total: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["label_total"][language],
+      show: show,
+      total_neighborhoods: Array.isArray(queryResult) ? queryResult.length : null,
+      total_obtios: total_obtios,
       last_updated: queryResultDate[0]['max'],
       fonte: fonte,
       data_ultima_atualizacao: moment(data_ultima_atualizacao).format("DD/MM/YYYY"),

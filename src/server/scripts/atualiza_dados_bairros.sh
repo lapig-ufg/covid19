@@ -7,8 +7,8 @@ BASELOCAL='/data/containers/APP_COVID19/APP/covid19/src/server/scripts/'
 
 #Step 0
 
-clear
-echo -n -e "Baixando Planilhas do GoogleSheets!"
+
+echo -n -e "\nBaixando Planilhas do GoogleSheets!\n"
 sleep 2
 
 cd $BASELOCAL
@@ -20,22 +20,20 @@ mv 1H7k1RwWqUCcqkMlr7puEx2bgftsrLk7MwEpXNkuN_F4-worksheet0.csv bairros_obitos.cs
 
 #Step 1
 
-clear
-echo -n -e "Atualizando O Banco de Dados para Casos!"
+echo -n -e "\nAtualizando O Banco de Dados para Casos!\n"
 sleep 2
 
 node atualiza_bairros.js
 
-clear
-echo -n -e "Atualizando O Banco de Dados para Óbitos!"
+echo -n -e "\n\n[ Atualizando O Banco de Dados para Óbitos! ] "
 sleep 2
 
 node atualiza_bairros_obitos.js
 
 #Step 2
 
-clear
-echo -n -e "Limpando Cache dos Dados!"
+
+echo -n -e "\nLimpando Cache dos Dados!\n"
 sleep 2
 
 if [[ -e "$BASESTORAGE/casos_por_bairro_covid-tiles" ]];then

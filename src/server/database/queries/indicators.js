@@ -105,6 +105,32 @@ module.exports = function (app) {
 
   }
 
+  Query.deaths = function (params) {
+
+    var filter = ""
+    var cd_geocmu = params['cd_geocmu']
+
+    var timefilter = params['timefilter']
+
+    if (cd_geocmu == 52) {
+      filter = "cd_geocmu = '52' AND data_ultima_atualizacao = " + timefilter
+    }
+    else {
+      filter = "cd_geocmu = '" + cd_geocmu + "' AND data_ultima_atualizacao = " + timefilter
+    }
+    console.log(filter)
+    return [
+      {
+        id: 'ranking_deaths',
+        sql: "SELECT rank, nome, cd_geocmu as geocodigo, numpoints as obitos, data_ultima_atualizacao, fonte FROM v_obitos_bairros where numpoints > 0 AND " + filter
+      },
+      {
+        id: 'updated_at',
+        sql: "select max(data_ultima_atualizacao) from v_obitos_bairros where " + filter
+      }
+    ]
+
+  }
   Query.projections = function (params) {
 
     var filter = ""
