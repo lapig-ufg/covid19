@@ -84,11 +84,11 @@ function foo(dados) {
 
               var rowValues = [row.cd_geocmu, row.data, row.confirmados, row.suspeitos, row.obitos, row.masculino, row.feminino,
                 row.menor10, row.de10a14, row.de15a19, row.de20a29, row.de30a39,
-                row.de40a49, row.de50a59, row.de60a69, row.de70a79, row.maior80 , row.municipio ]
+                row.de40a49, row.de50a59, row.de60a69, row.de70a79, row.maior80 , row.municipio,  row.recuperados]
 
                 var rowObitos = [row.cd_geocmu, row.data, row.obitos, row.masculino_obitos, row.feminino_obitos,
                     row.menor10_obitos, row.de10a14_obitos, row.de15a19_obitos, row.de20a29_obitos, row.de30a39_obitos,
-                    row.de40a49_obitos, row.de50a59_obitos, row.de60a69_obitos, row.de70a79_obitos, row.maior80_obitos, row.municipio, row.recuperados]
+                    row.de40a49_obitos, row.de50a59_obitos, row.de60a69_obitos, row.de70a79_obitos, row.maior80_obitos, row.municipio]
 
               const res = await client.query(insertRow, rowValues)
 
