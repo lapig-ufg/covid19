@@ -142,8 +142,8 @@ echo -n -e "Rotina Concluida!"
 
 cd $BASELOCAL
 
-echo -e "\n LOG DE EXECUÇÃO DA ATUALIZAÇÃO\n"
+echo -e "LOG DE EXECUÇÃO DA ATUALIZAÇÃO/n/n"
 
 cat /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
 
-echo -e"\nRotina Concluida em $DATA \n" >> /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
+echo -e "Rotina Concluida em $DATA/n/n" >> /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
