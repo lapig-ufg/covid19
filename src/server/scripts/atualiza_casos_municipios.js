@@ -11,7 +11,28 @@ var pool = new Pool(config['pg'])
 
 
 const lastDateQuery = 'SELECT max(id) as last_id, max(data) AS last_date FROM casos'
-const insertRow = 'INSERT INTO casos(cd_geocmu, data, confirmados, suspeitos, obitos, masculino, feminino,menor10, de10a14,	de15a19,	de20a29,	de30a39	,de40a49,	de50a59,	de60a69	,de70a79,	maior80, municipio, recuperados ) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING id'
+const insertRow = 'INSERT INTO casos(' +
+        'cd_geocmu,' +
+        'data,' +
+        'confirmados,' +
+        'suspeitos,' +
+        'descartados,' +
+        'obitos,' +
+        'masculino,' +
+        'feminino,' +
+        'menor10,' +
+        'de15a19,' +
+        'de10a14,' +
+        'de20a29,' +
+        'de30a39,' +
+        'de40a49,' +
+        'de50a59,' +
+        'de60a69,' +
+        'de70a79,' +
+        'maior80,' +
+        'municipio,' +
+        'recuperados' +
+    ') VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING id'
 const insertObitos = 'INSERT INTO obitos_stats(cd_geocmu, data, obitos, masculino, feminino,menor10, de10a14,	de15a19,	de20a29,	de30a39	,de40a49,	de50a59,	de60a69	,de70a79,	maior80 , municipio) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16) RETURNING gid'
 const updateCdGeo = 'update casos set cd_geocmu = m.cd_geocmu from municipios m where casos.cd_geocmu = SUBSTRING (m.cd_geocmu FROM 1 FOR 6) and data = (select max(data) from casos)'
 
@@ -82,9 +103,28 @@ function foo(dados) {
               if (row.maior80_obitos == '') row.maior80_obitos = null
 
 
-              var rowValues = [row.cd_geocmu, row.data, row.confirmados, row.suspeitos, row.obitos, row.masculino, row.feminino,
-                row.menor10, row.de10a14, row.de15a19, row.de20a29, row.de30a39,
-                row.de40a49, row.de50a59, row.de60a69, row.de70a79, row.maior80 , row.municipio,  row.recuperados]
+              var rowValues = [
+                  row.cd_geocmu,
+                  row.data,
+                  row.confirmados,
+                  row.suspeitos,
+                  null,
+                  row.obitos,
+                  row.masculino,
+                  row.feminino,
+                  row.menor10,
+                  row.de15a19,
+                  row.de10a14,
+                  row.de20a29,
+                  row.de30a39,
+                  row.de40a49,
+                  row.de50a59,
+                  row.de60a69,
+                  row.de70a79,
+                  row.maior80,
+                  row.municipio,
+                  row.recuperados
+              ]
 
                 var rowObitos = [row.cd_geocmu, row.data, row.obitos, row.masculino_obitos, row.feminino_obitos,
                     row.menor10_obitos, row.de10a14_obitos, row.de15a19_obitos, row.de20a29_obitos, row.de30a39_obitos,
@@ -119,7 +159,6 @@ function foo(dados) {
 
           console.log("Doing commit")
           await client.query('COMMIT')
-
         } catch (e) {
           console.log("Doing rollback")
           await client.query('ROLLBACK')

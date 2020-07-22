@@ -47,6 +47,7 @@ import { PanelModule } from 'primeng/panel';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { TooltipModule } from 'primeng/tooltip';
 import { SidebarModule } from 'primeng/sidebar';
+import { SliderModule } from 'primeng/slider';
 import { LightboxModule } from 'ngx-lightbox';
 import { NgxGalleryModule } from 'ngx-image-video-gallery';
 import { CardModule } from 'primeng/card';
@@ -123,6 +124,7 @@ const ENTRY_COMPONENTS = [
     ChartModule,
     DialogModule,
     SidebarModule,
+    SliderModule,
     ToggleButtonModule,
     MatDialogModule,
     BrowserAnimationsModule,

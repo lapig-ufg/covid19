@@ -18,7 +18,6 @@ module.exports = function (app) {
     return numero.join(",");
   };
 
-
   function formatDate(date, language) {
     var d = new Date(date),
       month = '' + (d.getMonth() + 1),
@@ -315,9 +314,6 @@ module.exports = function (app) {
       chart['show'] = false
       var qr = request.queryResult[chart.id]
 
-      chart['last_ob'] = qr[qr.length - 1];
-      chart['last_ob'].data = moment(chart['last_ob'].data ).format("DD/MM/YYYY")
-
       if (chart.id == 'timeseries_tendencias_go') {
         chart["dataResult"] = createDataSetTendenciasGO(chart, qr, language);
       }
@@ -328,6 +324,8 @@ module.exports = function (app) {
         chart['show'] = true
         chart['text'] = chart.getText(chart)
       }
+      chart['last_ob'] = qr[qr.length - 1];
+      chart['last_ob'].data = moment(chart['last_ob'].data ).format("DD/MM/YYYY")
 
     }
 

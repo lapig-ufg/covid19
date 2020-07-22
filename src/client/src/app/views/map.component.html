@@ -342,7 +342,7 @@
 						<mat-tab label="{{dataSeries.timeseries.label}}">
 							<p-tabView>
 								<p-tabPanel [header]="selectRegion.nome">
-									<p-scrollPanel [style]="{width: '100%', height: '40vh'}">
+									<p-scrollPanel [style]="{width: '100%', height: '45vh'}">
 										<button (click)="openDialogCharts('dataSeries')" classs="btn-info" mat-icon-button>
 											<mat-icon>open_with</mat-icon>
 										</button>
@@ -358,12 +358,15 @@
 										<div *ngIf="dataSeries.timeseries.chartResult[0]?.show">
 											<p style="font-weight: bold; text-align: center;">
 												{{ dataSeries.timeseries.chartResult[0]?.text }}</p>
+<!--											<p style="font-weight: 200">Intervalo de  {{dataSeries.timeseries.chartResult[0]?.dataResult.lables[rangeValuesChartCases[0]]}} até {{dataSeries.timeseries.chartResult[0]?.dataResult.lables[rangeValuesChartCases[1]]}}</p>-->
 											<p-chart [ngStyle]="{'overflow-x': hidden}"
 												[type]="dataSeries.timeseries.chartResult[0]?.type"
 												[data]="dataSeries.timeseries.chartResult[0]?.dataResult"
 												[options]="dataSeries.timeseries.chartResult[0]?.options">
 											</p-chart>
+<!--											<p-slider [(ngModel)]="rangeValuesChartCases" [range]="true"></p-slider>-->
 										</div>
+
 									</p-scrollPanel>
 								</p-tabPanel>
 

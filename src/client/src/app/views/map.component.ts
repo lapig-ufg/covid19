@@ -271,6 +271,8 @@ export class MapComponent implements OnInit {
   dataSourceCities:TableElement[];
   displayedColumnsCities = [];
 
+  rangeValuesChartCases: number[];
+
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
   @ViewChild("map", { static: false }) mpref: ElementRef;
   selectedConfirmedDate: any;
@@ -751,6 +753,8 @@ export class MapComponent implements OnInit {
     this.http.get(timeseriesUrl).subscribe(result => {
 
       this.dataSeries = result;
+
+      this.rangeValuesChartCases = [0, this.dataSeries.timeseries.chartResult[0].dataResult.labels.length -1];
 
       for (let graphic of this.dataSeries.timeseries.chartResult) {
 
