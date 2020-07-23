@@ -16,12 +16,6 @@ credentials = ServiceAccountCredentials.from_json_keyfile_name('credentials.json
 
 #Spreadsheet credential ID:
 
-#PLANILHA COVID19
-docid = "1mlyQIUbGKB2J3UIQrCPxAORaY5HYAPlMgY61IMCu4JY"
-
-#tabela_casos_estados
-docid1 = "163Agr2r4r4evn74SUkVojcdg-hq6urb0qcCMk5Pdknw"
-
 #tabela_prev_casos_conf_municipios
 docid2 = "1sMzwMlPThQ0-AVYeYAxjkPQ_0G82hOEyDDh-xTlaaf4"
 
@@ -70,25 +64,6 @@ class UnicodeWriter:
         for row in rows:
             self.writerow(row)
 
-#Spreadsheet download function1
-client = gspread.authorize(credentials)
-spreadsheet = client.open_by_key(docid)
-for i, worksheet in enumerate(spreadsheet.worksheets()):
-    filename = docid + '-worksheet' + str(i) + '.csv'
-    with open(filename, 'wb') as f:
-        writer = UnicodeWriter(f)
-        writer.writerows(worksheet.get_all_values())
-    time.sleep(10)
-
-#Spreadsheet download function2
-client = gspread.authorize(credentials)
-spreadsheet = client.open_by_key(docid1)
-for i, worksheet in enumerate(spreadsheet.worksheets()):
-    filename = docid1 + '-worksheet' + str(i) + '.csv'
-    with open(filename, 'wb') as f:
-        writer = UnicodeWriter(f)
-        writer.writerows(worksheet.get_all_values())
-    time.sleep(10)
 
 #Spreadsheet download function3
 client = gspread.authorize(credentials)
