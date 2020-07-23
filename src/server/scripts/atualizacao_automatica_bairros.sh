@@ -29,13 +29,26 @@ echo -n -e "\nLimpando Cache dos Dados!\n"
 sleep 2
 
 
-cd $BASESTORAGE
-cd casos_por_bairro_covid-tiles
-rm -rfv *
+if [ -d $BASESTORAGE/casos_por_bairro_covid-tiles ];then    
+       
+        echo "Arquivos existem apagando!"
+        cd $BASESTORAGE
+        cd casos_por_bairro_covid-tiles 
+        rm -rfv *
+    
+else	
+        echo "Arquivos nao existem!" 
+fi
 
-cd $BASESTORAGE
-cd obitos_por_bairro_covid-tiles
-rm -rfv *
+if [ -d $BASESTORAGE/obitos_por_bairro_covid-tile ];then    
+       
+        echo "Arquivos existem apagando!" 
+    	cd $BASESTORAGE
+    	cd obitos_por_bairro_covid-tiles
+    	rm -rfv * 
+else	
+        echo "Arquivos nao existem!" 
+fi
 
 #Step 3
 
@@ -46,4 +59,3 @@ sleep 2
 cd $BASELOCAL
 
 rm -rfv *.csv
-
