@@ -72,21 +72,59 @@ clear
 echo -n -e "Excluindo Cache!"
 sleep 2
 
-cd $BASESTORAGE
-cd projecao_luisa_confirmados-tile
-rm -rfv *
-cd $BASESTORAGE
-cd projecao_luisa_hospitalizados-tiles
-rm -rfv *
-cd $BASESTORAGE
-cd projecao_luisa_infectados-tiles
-rm -rfv *
-cd $BASESTORAGE
-cd projecao_luisa_recuperados-tiles
-rm -rfv *
-cd $BASESTORAGE
-cd covid_medias_moveis-tiles
-rm -rfv *
+
+
+if [ -d $BASESTORAGE/projecao_luisa_confirmados-tile ];then    
+       
+        echo "Arquivos existem apagando!"
+        cd $BASESTORAGE
+        cd projecao_luisa_confirmados-tile
+        rm -rfv *
+    
+else	
+        echo "Arquivos nao existem!" 
+fi
+
+if [ -d $BASESTORAGE/projecao_luisa_hospitalizados-tiles ];then    
+       
+        echo "Arquivos existem apagando!" 
+    	cd $BASESTORAGE
+    	cd projecao_luisa_hospitalizados-tiles
+    	rm -rfv * 
+else	
+        echo "Arquivos nao existem!" 
+fi
+
+if [ -d $BASESTORAGE/projecao_luisa_infectados-tiles ];then    
+       
+        echo "Arquivos existem apagando!"
+        cd $BASESTORAGE
+        cd projecao_luisa_infectados-tiles 
+        rm -rfv *
+    
+else	
+        echo "Arquivos nao existem!" 
+fi
+
+if [ -d $BASESTORAGE/projecao_luisa_recuperados-tiles];then    
+       
+        echo "Arquivos existem apagando!" 
+    	cd $BASESTORAGE
+    	cd projecao_luisa_recuperados-tiles
+    	rm -rfv * 
+else	
+        echo "Arquivos nao existem!" 
+fi
+
+if [ -d $BASESTORAGE/covid_medias_moveis-tiles ];then    
+       
+        echo "Arquivos existem apagando!" 
+    	cd $BASESTORAGE
+    	cd covid_medias_moveis-tiles
+    	rm -rfv * 
+else	
+        echo "Arquivos nao existem!" 
+fi
 
 
 clear
