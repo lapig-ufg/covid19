@@ -27,8 +27,6 @@ mv 1sMzwMlPThQ0-AVYeYAxjkPQ_0G82hOEyDDh-xTlaaf4-worksheet0.csv projecao_casos_go
 
 mv 1LeLPLxMqJMiCq5VQLtjO_e7hPtXWmSZxs5t9-1lYAgU-worksheet0.csv estatisticas.csv
 
-mv 1l_3ZlgEBdd53BZFhGktgzvnuze7s3r0QGwVQomfo1eU-worksheet0.csv bairros_casos.csv
-
 mv 1fO70w9OI1sbRiyHmD9HQZiG_Wa7vqrwpgSigeHRMAD4-worksheet0.csv recuperados.csv
 
 mv 1ELlIaPqgSZubGQOJy1pXVQa60Az9YfjAfPZ1UeiKseY-worksheet0.csv estatisticas_luisa.csv
@@ -74,56 +72,56 @@ sleep 2
 
 
 
-if [ -d $BASESTORAGE/projecao_luisa_confirmados-tile ];then    
-       
+if [ -d $BASESTORAGE/projecao_luisa_confirmados-tiles ];then
+
         echo "Arquivos existem apagando!"
         cd $BASESTORAGE
-        cd projecao_luisa_confirmados-tile
+        cd projecao_luisa_confirmados-tiles
         rm -rfv *
-    
-else	
-        echo "Arquivos nao existem!" 
+
+else
+        echo "Arquivos projecao_luisa_confirmados-tile nao existem!"
 fi
 
-if [ -d $BASESTORAGE/projecao_luisa_hospitalizados-tiles ];then    
-       
-        echo "Arquivos existem apagando!" 
+if [ -d $BASESTORAGE/projecao_luisa_hospitalizados-tiles ];then
+
+        echo "Arquivos existem apagando!"
     	cd $BASESTORAGE
     	cd projecao_luisa_hospitalizados-tiles
-    	rm -rfv * 
-else	
-        echo "Arquivos nao existem!" 
+    	rm -rfv *
+else
+        echo "Arquivos projecao_luisa_hospitalizados-tiles nao existem!"
 fi
 
-if [ -d $BASESTORAGE/projecao_luisa_infectados-tiles ];then    
-       
+if [ -d $BASESTORAGE/projecao_luisa_infectados-tiles ];then
+
         echo "Arquivos existem apagando!"
         cd $BASESTORAGE
-        cd projecao_luisa_infectados-tiles 
+        cd projecao_luisa_infectados-tiles
         rm -rfv *
-    
-else	
-        echo "Arquivos nao existem!" 
+
+else
+        echo "Arquivos  projecao_luisa_infectados-tiles nao existem!"
 fi
 
-if [ -d $BASESTORAGE/projecao_luisa_recuperados-tiles];then    
-       
-        echo "Arquivos existem apagando!" 
+if [ -d $BASESTORAGE/projecao_luisa_recuperados-tiles];then
+
+      echo "Arquivos existem apagando!"
     	cd $BASESTORAGE
     	cd projecao_luisa_recuperados-tiles
-    	rm -rfv * 
-else	
-        echo "Arquivos nao existem!" 
+    	rm -rfv *
+else
+        echo "Arquivos projecao_luisa_recuperados-tiles nao existem!"
 fi
 
-if [ -d $BASESTORAGE/covid_medias_moveis-tiles ];then    
-       
-        echo "Arquivos existem apagando!" 
+if [ -d $BASESTORAGE/covid_medias_moveis-tiles ];then
+
+        echo "Arquivos existem apagando!"
     	cd $BASESTORAGE
     	cd covid_medias_moveis-tiles
-    	rm -rfv * 
-else	
-        echo "Arquivos nao existem!" 
+    	rm -rfv *
+else
+        echo "Arquivos covid_medias_moveis-tiles nao existem!"
 fi
 
 
