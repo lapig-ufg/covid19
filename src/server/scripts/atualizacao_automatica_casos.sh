@@ -44,12 +44,26 @@ clear
 echo -n -e "Excluindo Cache!"
 sleep 2
 
-cd $BASESTORAGE
-cd covid19_municipios_casos_utfgrid-tiles
-rm -rfv *
-cd $BASESTORAGE
-cd covid19_municipios_casos-tiles
-rm -rfv *
+if [ -d $BASESTORAGE/covid19_municipios_casos_utfgrid-tiles ];then    
+       
+        echo "Arquivos existem apagando!"
+        cd $BASESTORAGE
+        cd covid19_municipios_casos_utfgrid-tiles 
+        rm -rfv *
+    
+else	
+        echo "Arquivos nao existem!" 
+fi
+
+if [ -d $BASESTORAGE/covid19_municipios_casos-tiles ];then    
+       
+        echo "Arquivos existem apagando!" 
+    	cd $BASESTORAGE
+    	cd covid19_municipios_casos-tiles
+    	rm -rfv * 
+else	
+        echo "Arquivos nao existem!" 
+fi
 
 clear
 echo "Apagando Rastros!"
