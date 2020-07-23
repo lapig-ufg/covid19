@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BASESTORAGE='/storage/ows-cache/layers'
-BASELOCAL='/data/containers/APP_COVID19/APP/covid19/src/server/scripts/'
+BASELOCAL='/data/containers/APP_COVID19/APP/covid19/src/server/scripts'
 DATA=`date +%d-%m-%Y-%H.%M`
 DATA02=`date +%d-%m-%Y`
 
@@ -68,10 +68,10 @@ clear
 echo -n -e "Populando banco de dados!"
 sleep 2
 
-clear
-node atualiza_casos_municipios.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_casos_municipios.log
-sleep 2
-clear
+# clear
+# node atualiza_casos_municipios.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_casos_municipios.log
+# sleep 2
+# clear
 node atualiza_estatisticas.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_estatisticas.log
 sleep 2
 clear
@@ -104,32 +104,56 @@ clear
 echo -n -e "Excluindo Cache!"
 sleep 2
 
-if [[ -e "$BASESTORAGE/covid19_municipios_casos_utfgrid-tiles" ]] || [[ -e "$BASESTORAGE/covid19_municipios_casos-tiles" ]] || [[ -e "$BASESTORAGE/projecao_luisa_confirmados-tiles" ]] || [[ -e "$BASESTORAGE/projecao_luisa_hospitalizados-tiles" ]] || [[ -e "$BASESTORAGE/projecao_luisa_infectados-tiles" ]] || [[ -e "$BASESTORAGE/projecao_luisa_recuperados-tiles" ]];then
+cd $BASESTORAGE
+cd covid19_municipios_casos_utfgrid-tiles
+rm -rfv *
+cd $BASESTORAGE
+cd covid19_municipios_casos-tiles
+rm -rfv *
+cd $BASESTORAGE
+cd projecao_luisa_confirmados-tile
+rm -rfv *
+cd $BASESTORAGE
+cd projecao_luisa_hospitalizados-tiles
+rm -rfv *
+cd $BASESTORAGE
+cd projecao_luisa_infectados-tiles
+rm -rfv *
+cd $BASESTORAGE
+cd projecao_luisa_recuperados-tiles
+rm -rfv *
+cd $BASESTORAGE
+cd covid_medias_moveis-tiles
+rm -rfv *
 
-clear
-echo "Os diretorios existem, apagando!"
-sleep 2
 
-ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd covid19_municipios_casos_utfgrid-tiles/; rm -rfv *'
+# if [[ -e "$BASESTORAGE/covid19_municipios_casos_utfgrid-tiles" ]] || [[ -e "$BASESTORAGE/covid19_municipios_casos-tiles" ]] || [[ -e "$BASESTORAGE/projecao_luisa_confirmados-tiles" ]] || [[ -e "$BASESTORAGE/projecao_luisa_hospitalizados-tiles" ]] || [[ -e "$BASESTORAGE/projecao_luisa_infectados-tiles" ]] || [[ -e "$BASESTORAGE/projecao_luisa_recuperados-tiles" ]];then
 
-ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd covid19_municipios_casos-tiles/; rm -rfv *'
+# clear
+# echo "Os diretorios existem, apagando!"
+# sleep 2
 
-ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd projecao_luisa_confirmados-tiles/; rm -rfv *'
+# cd $BASESTORAGE/covid19_municipios_casos_utfgrid-tiles
+# rm -rfv *
+# cd $BASESTORAGE/covid19_municipios_casos-tiles
+# rm -rfv *
+# cd $BASESTORAGE/projecao_luisa_confirmados-tile
+# rm -rfv *
+# cd $BASESTORAGE/projecao_luisa_hospitalizados-tiles
+# rm -rfv *
+# cd $BASESTORAGE/projecao_luisa_infectados-tiles
+# rm -rfv *
+# cd $BASESTORAGE/projecao_luisa_recuperados-tiles
+# rm -rfv *
+# cd $BASESTORAGE/covid_medias_moveis-tiles
+# rm -rfv *
 
-ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd projecao_luisa_hospitalizados-tiles/; rm -rfv *'
-
-ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd projecao_luisa_infectados-tiles/; rm -rfv *'
-
-ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd projecao_luisa_recuperados-tiles/; rm -rfv *'
-
-ssh -p 2522 root@200.137.217.158 'cd /storage; cd ows-cache/layers/; cd covid_medias_moveis-tiles/; rm -rfv *'
-
-else
-clear
-echo "Os diretorios nao existem!"
-sleep 2
-clear
-fi
+# else
+# clear
+# echo "Os diretorios nao existem!"
+# sleep 2
+# clear
+# fi
 
 clear
 echo "Apagando Rastros!"
