@@ -68,10 +68,10 @@ clear
 echo -n -e "Populando banco de dados!"
 sleep 2
 
-# clear
-# node atualiza_casos_municipios.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_casos_municipios.log
-# sleep 2
-# clear
+clear
+node atualiza_casos_municipios.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_casos_municipios.log
+sleep 2
+clear
 node atualiza_estatisticas.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_estatisticas.log
 sleep 2
 clear
