@@ -45,7 +45,7 @@ echo -n -e "Populando banco de dados!"
 sleep 2
 
 clear
-node atualiza_casos_municipios.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_casos_municipios.log
+node atualiza_casos_municipios.js | tee /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_casos_municipios.log
 sleep 2
 clear
 
@@ -87,7 +87,7 @@ echo -n -e "Rotina Concluida!"
 
 cd $BASELOCAL
 
-echo -e "Rotina Concluida em $DATA \n\n" >> /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
+echo -e "\n\n Rotina atualizacao_automatica_casos.sh Concluida em $DATA \n\n" >> /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
 
 echo -n "Enviando Mensagem ao Telegram"
 
