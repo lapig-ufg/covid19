@@ -56,22 +56,22 @@ clear
 echo -n -e "Populando banco de dados!"
 sleep 2
 
-node atualiza_estatisticas.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_estatisticas.log
+node atualiza_estatisticas.js | tee /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_estatisticas.log
 sleep 2
 clear
-node atualiza_projecao.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_projecao.log
+node atualiza_projecao.js | tee  /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_projecao.log
 sleep 2
 clear
-node update_recuperados.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/update_recuperados.log
+node update_recuperados.js | tee /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/update_recuperados.log
 sleep 2
 clear
-node atualiza_projecao_luisa.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_projecao_luisa.log
+node atualiza_projecao_luisa.js | tee  /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_projecao_luisa.log
 sleep 2
 clear
-node atualiza_estatisticas_luisa.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_estatisticas_luisa.log
+node atualiza_estatisticas_luisa.js | tee  /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_estatisticas_luisa.log
 sleep 2
 clear
-node atualiza_medias_moveis.js > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_medias_moveis.log
+node atualiza_medias_moveis.js | tee  /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_medias_moveis.log
 sleep 2
 clear
 
@@ -136,7 +136,7 @@ fi
 clear
 echo -n -e "Rotina Concluida!"
 
-echo -e "Rotina Concluida em $DATA \n\n" >> /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
+echo -e "\n\n Rotina atualizacao_automatica_estatisticas.sh Concluida em $DATA \n\n" >> /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
 
 echo -n "Enviando Mensagem ao Telegram"
 
