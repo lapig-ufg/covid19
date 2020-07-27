@@ -5,7 +5,17 @@ BASELOCAL='/data/containers/APP_COVID19/APP/covid19/src/server/scripts'
 DATA=`date +%d-%m-%Y-%H.%M`
 DATA02=`date +%d-%m-%Y`
 
-apt-get -y install pv
+#Include telegram chat id and bot token ID here
+chat_id="-427575689"
+TOKEN="1370924692:AAFd-MW3vei_24_HkQxcwHPYtKJmKnFT2so"
+
+function UPDATE-COVID19-ALERT
+{
+curl --silent --output /dev/null  "https://api.telegram.org/bot$TOKEN/sendMessage?chat_id=$chat_id&text=$SUBJECT" > /dev/null 
+}
+
+
+apt-get -y install pv >> /dev/null
 
 pip install gspread >> /dev/null
 
@@ -77,8 +87,14 @@ echo -n -e "Rotina Concluida!"
 
 cd $BASELOCAL
 
-echo -e "LOG DE EXECUÇÃO DA ATUALIZAÇÃO/n/n"
+echo -e "Rotina Concluida em $DATA \n\n" >> /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
+
+echo -n "Enviando Mensagem ao Telegram"
+
+SUBJECT="✅ UPDATE atualizacao_automatica_casos.sh on 200.137.217.159 Server Time : $(date +" %d %b %Y %T")"
+UPDATE-COVID19-ALERT
+
+clear
+echo -e "LOG DE EXECUÇÃO DA ATUALIZAÇÃO: \n\n"
 
 cat /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
-
-echo -e "Rotina Concluida em $DATA/n/n" >> /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
