@@ -76,13 +76,6 @@ else
 fi
 
 clear
-echo "Apagando Rastros!"
-sleep 2
-
-cd $BASELOCAL
-rm -rfv *.csv
-
-clear
 echo -n -e "Rotina Concluida!"
 
 cd $BASELOCAL
