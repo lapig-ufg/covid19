@@ -18,12 +18,12 @@ mv 1H7k1RwWqUCcqkMlr7puEx2bgftsrLk7MwEpXNkuN_F4-worksheet0.csv bairros_obitos.cs
 echo -n -e "\nAtualizando O Banco de Dados para Casos!\n"
 sleep 2
 
-node atualiza_bairros.js  > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_bairros.log
+node atualiza_bairros.js  | tee /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_bairros.log
 
 echo -n -e "\n\n[ Atualizando O Banco de Dados para Óbitos! ] "
 sleep 2
 
-node atualiza_bairros_obitos.js  > /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_bairros_obitos.log
+node atualiza_bairros_obitos.js  | tee /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_bairros_obitos.log
 
 echo -n -e "\nLimpando Cache dos Dados!\n"
 sleep 2
@@ -53,7 +53,7 @@ fi
 clear
 echo -n -e "Rotina Concluida!"
 
-echo -e "Rotina Concluida em $DATA \n\n" >> /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
+echo -e "\n\n Rotina atualizacao_automatica_bairros.sh Concluida em $DATA \n\n" >> /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
 
 echo -n "Enviando Mensagem ao Telegram"
 
