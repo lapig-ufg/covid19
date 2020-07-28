@@ -2,6 +2,10 @@
 
 BASESTORAGE='/data/storage/ows-cache/layers'
 BASELOCAL='/data/containers/APP_COVID19/APP/covid19/src/server/scripts/'
+START_DATE=`date +%d-%m-%Y-%H.%M.%S`
+
+
+echo -e "\n\nRotina atualizacao_automatica_bairros.sh iniciada em: $START_DATE" | tee -a /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
 
 #Script de Atualização de Casos por Bairros.
 
@@ -53,7 +57,10 @@ fi
 clear
 echo -n -e "Rotina Concluida!"
 
-echo -e "\n\n Rotina atualizacao_automatica_bairros.sh Concluida em $DATA \n\n" >> /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
+clear
+END_DATE=`date +%d-%m-%Y-%H.%M.%S`
+
+echo "Rotina atualizacao_automatica_bairros.sh Concluida em $END_DATE" | tee -a  /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
 
 echo -n "Enviando Mensagem ao Telegram"
 
