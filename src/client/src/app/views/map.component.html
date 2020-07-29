@@ -402,6 +402,7 @@
 									<mat-tab-group>
 										<mat-tab  label="{{neighborhoodsCharts.label_tab}}">
 											<p-scrollPanel  [style]="{width: '100%', height: '38vh'}">
+
 												<button (click)="openInfo()" style="position: absolute; right: 7%; top: 12%;" classs="btn-info" mat-icon-button>
 													<mat-icon>info</mat-icon>
 												</button>
@@ -410,7 +411,7 @@
 													<div class="total"> {{neighborhoodsCharts.label_total }} <strong>{{ neighborhoodsCharts.total_neighborhoods}}</strong> </div>
 													<div class="total"> {{neighborhoodsCharts.label_confirmed }} <strong> {{neighborhoodsCharts.total_confirmados}} </strong></div>
 												</div>
-
+												<p class="msg"  *ngIf="this.selectRegion.cd_geocmu == '5208707'">{{neighborhoodsCharts.label_msg}}</p>
 												<div class="export-table">
 													<button mat-raised-button color="primary" (click)="exportPdf('bairros')">PDF</button>
 													<button mat-raised-button color="accent" (click)="exportExcel('bairros')">EXCEL</button>
@@ -485,7 +486,6 @@
 											</p-scrollPanel>
 										</mat-tab>
 									</mat-tab-group>
-									<p style="width: 100%; height: 38vh; margin-top: 60px; font-size: 18px; text-align: center"  *ngIf="false">{{neighborhoodsCharts.label_msg}}</p>
 								</p-tabPanel>
 
 								<p-tabPanel [header]="chartResultCities.label">

@@ -199,8 +199,8 @@
 					"en-us": "Total of neighborhoods with cases: "
 				},
 				"label_msg":{
-					"pt-br": "A atualização diária para os bairros de Goiânia encontra-se temporariamente suspensa, visando aperfeiçoamento técnico com a SMS.",
-					"en-us": "The daily update for the neighborhoods of Goiânia is temporarily suspended, improving technical improvement with an SMS."
+					"pt-br": "Próxima atualização prevista para 31/07/2020.",
+					"en-us": "Next update scheduled for 07/31/2020."
 				}
 			},
 			"ranking_deaths": {
@@ -245,8 +245,8 @@
 					"en-us": "Total of neighborhoods with deaths: "
 				},
 				"label_msg":{
-					"pt-br": "A atualização diária para os bairros de Goiânia encontra-se temporariamente suspensa, visando aperfeiçoamento técnico com a SMS.",
-					"en-us": "The daily update for the neighborhoods of Goiânia is temporarily suspended, improving technical improvement with an SMS."
+					"pt-br": "Próxima atualização prevista para 31/07/2020.",
+					"en-us": "Next update scheduled for 07/31/2020."
 				}
 			},
 			"charts_box_states": {
