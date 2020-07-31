@@ -456,6 +456,10 @@
 			"pt-br": "Fonte:",
 			"en-us": "Source:"
 		},
+		"label_regiao": {
+			"pt-br": "Região:",
+			"en-us": "Region:"
+		},
 		"label_last_update": {
 			"pt-br": "Atualizado em:",
 			"en-us": "Last Updated on:"

@@ -1012,7 +1012,6 @@ export class MapComponent implements OnInit {
       }
       
       this.exportColumnsBairros = this.neighborhoodsCharts.split.map(col => ({ title: col.header, dataKey: col.field }));
-      console.log("Caso: " , this.neighborhoodsCharts)
 
     });
 
@@ -1075,7 +1074,6 @@ export class MapComponent implements OnInit {
       }
       
       this.exportColumnsBairrosDeaths = this.deathsCharts.split.map(col => ({ title: col.header, dataKey: col.field }));
-      console.log("Morte: " , this.deathsCharts)
     });
 
     let projectionURL = '/service/indicators/projections' + this.getServiceParams();
@@ -2793,7 +2791,6 @@ export class MapComponent implements OnInit {
       ob = this.neighborhoodsCharts.series;
       titleTable = this.exportColumnsBairros;
     }
-    console.log(ob)
 
     import("jspdf").then(jsPDF => {
       import("jspdf-autotable").then(x => {

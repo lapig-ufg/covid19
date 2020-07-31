@@ -689,6 +689,10 @@
 					<p class="card-text">{{infobairro.nome}}</p>
 					<table>
 						<tbody>
+							<tr *ngIf="infobairro.regiao !== ''">
+								<th>{{minireportText.label_regiao}} </th>
+								<td>{{infobairro.regiao}}</td>
+							</tr>
 							<tr>
 								<th>{{minireportText.label_area_bairro}}</th>
 								<td>{{infobairro.area_km2 | number:'1.2-2'  }} km²</td>
