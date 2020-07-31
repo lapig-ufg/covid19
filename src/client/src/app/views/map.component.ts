@@ -991,7 +991,6 @@ export class MapComponent implements OnInit {
         })
       }
 
-      this.exportColumnsBairros = this.neighborhoodsCharts.split.map(col => ({ title: col.header, dataKey: col.field }));
       let self = this;
       this.neighborhoodsCharts.series.forEach(function (item, index) {
         if(item.confirmados > 0 && item.confirmados < 10){
@@ -1000,9 +999,20 @@ export class MapComponent implements OnInit {
           self.neighborhoodsCharts.series[index].confirmados = "0" + item.confirmados;
         }
       });
-
+      
       this.dataSourceNeighbor = this.neighborhoodsCharts.series;
       this.displayedColumnsNeighbor = ["rank", "nome", "confirmados"]
+      
+      if(this.neighborhoodsCharts.showRegion)
+      {
+        this.displayedColumnsNeighbor.push("regiao");
+      }
+      else{
+        this.neighborhoodsCharts.split = this.neighborhoodsCharts.split.filter(item => item.field !== "regiao");
+      }
+      
+      this.exportColumnsBairros = this.neighborhoodsCharts.split.map(col => ({ title: col.header, dataKey: col.field }));
+      console.log("Caso: " , this.neighborhoodsCharts)
 
     });
 
@@ -1044,7 +1054,6 @@ export class MapComponent implements OnInit {
         })
       }
 
-      this.exportColumnsBairrosDeaths = this.deathsCharts.split.map(col => ({ title: col.header, dataKey: col.field }));
       let self = this;
       this.deathsCharts.series.forEach(function (item, index) {
         if(item.obitos > 0 && item.obitos < 10){
@@ -1053,10 +1062,20 @@ export class MapComponent implements OnInit {
           self.deathsCharts.series[index].obitos = "00" + item.obitos;
         }
       });
-
+      
       this.dataSourceDeaths = this.deathsCharts.series;
       this.displayedColumnsDeaths = ["rank", "nome", "obitos"]
-
+      
+      if(this.deathsCharts.showRegion)
+      {
+        this.displayedColumnsDeaths.push("regiao");
+      }
+      else{
+        this.deathsCharts.split = this.deathsCharts.split.filter(item => item.field !== "regiao");
+      }
+      
+      this.exportColumnsBairrosDeaths = this.deathsCharts.split.map(col => ({ title: col.header, dataKey: col.field }));
+      console.log("Morte: " , this.deathsCharts)
     });
 
     let projectionURL = '/service/indicators/projections' + this.getServiceParams();
@@ -2774,6 +2793,7 @@ export class MapComponent implements OnInit {
       ob = this.neighborhoodsCharts.series;
       titleTable = this.exportColumnsBairros;
     }
+    console.log(ob)
 
     import("jspdf").then(jsPDF => {
       import("jspdf-autotable").then(x => {

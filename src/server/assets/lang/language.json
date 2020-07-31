@@ -171,16 +171,16 @@
 					"en-us": "Ranking of Neighborhoods with the highest cases of COVID-19:"
 				},
 				"title": {
-					"pt-br": "Posição?Bairros?Casos Confirmados",
-					"en-us": "Position?Neighborhood?Confirmed Cases"
+					"pt-br": "Posição?Bairros?Casos Confirmados?Região",
+					"en-us": "Position?Neighborhood?Confirmed Cases?Region"
 				},
 				"tooltip_text": {
 					"pt-br": "Clique para visualizar no mapa",
 					"en-us": "Click to view on map"
 				},
 				"properties_name": {
-					"pt-br": "rank?nome?confirmados",
-					"en-us": "rank?nome?confirmados"
+					"pt-br": "rank?nome?confirmados?regiao",
+					"en-us": "rank?nome?confirmados?regiao"
 				},
 				"filename":{
 					"pt-br": "casos_por_bairro_",
@@ -217,16 +217,16 @@
 					"en-us": "Ranking of Neighborhoods with the highest deaths COVID-19:"
 				},
 				"title": {
-					"pt-br": "Posição?Bairros?Óbitos",
-					"en-us": "Position?Neighborhood?Deaths"
+					"pt-br": "Posição?Bairros?Óbitos?Região",
+					"en-us": "Position?Neighborhood?Deaths?Region"
 				},
 				"tooltip_text": {
 					"pt-br": "Clique para visualizar no mapa",
 					"en-us": "Click to view on map"
 				},
 				"properties_name": {
-					"pt-br": "rank?nome?obitos",
-					"en-us": "rank?nome?obitos"
+					"pt-br": "rank?nome?obitos?regiao",
+					"en-us": "rank?nome?obitos?regiao"
 				},
 				"filename":{
 					"pt-br": "obitos_por_bairro_",

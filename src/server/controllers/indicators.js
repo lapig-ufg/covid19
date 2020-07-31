@@ -442,9 +442,21 @@ module.exports = function (app) {
     let total_confirmados = 0;
     let data_ultima_atualizacao = null;
     let fonte = null;
+    let showRegion = false
+
+    let allowGeo = ["5208707"];
     if (Array.isArray(queryResult)) {
       if (queryResult.length > 0) {
         queryResult.forEach(function (item, index) {
+          if(allowGeo.includes(item.geocodigo) )
+          {
+            showRegion = true;
+          }
+
+          if(item.regiao === null){
+            delete item['regiao']
+          }
+
           fonte = item.fonte;
           total_confirmados += item.confirmados;
           data_ultima_atualizacao = item.data_ultima_atualizacao;
@@ -474,7 +486,8 @@ module.exports = function (app) {
       last_updated: queryResultDate[0]['max'],
       fonte: fonte,
       data_ultima_atualizacao: moment(data_ultima_atualizacao).format("DD/MM/YYYY"),
-      series: queryResult
+      series: queryResult,
+      showRegion : showRegion
     }
     response.send(result)
     response.end()
@@ -516,9 +529,21 @@ module.exports = function (app) {
     let total_obtios = 0;
     let data_ultima_atualizacao = null;
     let fonte = null;
+    let showRegion = false
+
+    let allowGeo = ["5208707"];
     if (Array.isArray(queryResult)) {
       if (queryResult.length > 0) {
         queryResult.forEach(function (item, index) {
+          if(allowGeo.includes(item.geocodigo) )
+          {
+            showRegion = true;
+          }
+
+          if(item.regiao === null){
+            delete item['regiao']
+          }
+
           fonte = item.fonte;
           total_obtios += item.obitos;
           data_ultima_atualizacao = item.data_ultima_atualizacao;
@@ -548,7 +573,8 @@ module.exports = function (app) {
       last_updated: queryResultDate[0]['max'],
       fonte: fonte,
       data_ultima_atualizacao: moment(data_ultima_atualizacao).format("DD/MM/YYYY"),
-      series: queryResult
+      series: queryResult,
+      showRegion : showRegion
     }
     response.send(result)
     response.end()
