@@ -9,6 +9,12 @@ export default {
         left: 68,
         top: 35,
     },
+    title_deaths: {
+        "pt-br": "Relação de óbitos registrados",
+        "en-us": "List of deaths",
+        left: 68,
+        top: 35,
+    },
     page: {
         title: {
             "pt-br": "Página ",

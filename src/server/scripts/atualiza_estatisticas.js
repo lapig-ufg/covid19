@@ -9,7 +9,7 @@ var csvRows = []
 var csvFilepath = 'estatisticas.csv'
 
 const lastDateQuery = 'SELECT max(data_inicial) AS last_date FROM estatisticas'
-const insertRow = 'INSERT INTO estatisticas(cd_geocmu, nome, data_inicial, total_dias, confirmados, confirmado_inicial, confirmados_novos,media_novos_casos_3dias,taxa_crescimento_confirmados,dias_duplicacao_confirmados) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING gid'
+const insertRow = 'INSERT INTO estatisticas(cd_geocmu, nome, data_inicial, total_dias, confirmados, confirmado_inicial, confirmados_novos,media_novos_casos_3dias,taxa_crescimento_confirmados,dias_duplicacao_confirmados,media_novos_casos_7dias,variacao_per_MM7_14dias,tendencia_novos_casos) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING gid'
 
 fs.createReadStream(csvFilepath)
 	.pipe(csv())
@@ -61,8 +61,20 @@ fs.createReadStream(csvFilepath)
 						row.media_novos_casos_3dias = -1
 					}
 
+					if(row.media_novos_casos_7dias == "NA" || row.media_novos_casos_7dias == "" || row.media_novos_casos_7dias == "-Inf"){
+						row.media_novos_casos_7dias = null
+					}
+
+					if(row.variacao_per_MM7_14dias == "NA" || row.variacao_per_MM7_14dias == "" || row.variacao_per_MM7_14dias == "-Inf"){
+						row.variacao_per_MM7_14dias = null
+					}
+
+					if(row.tendencia_novos_casos == "NA" || row.tendencia_novos_casos == "" ){
+						row.tendencia_novos_casos = "sem_registro"
+					}
+
 					/* for initial population*/
-					var rowValues = [row.cd_geocmu, row.municipios, row.data_inicial, row.total_dias, row.confirmados,row.confirmado_inicial, row.confirmados_novos, row.media_novos_casos_3dias,row.taxa_crescimento_confirmados,row.dias_duplicacao_confirmados]
+					var rowValues = [row.cd_geocmu, row.municipios, row.data_inicial, row.total_dias, row.confirmados,row.confirmado_inicial, row.confirmados_novos, row.media_novos_casos_3dias,row.taxa_crescimento_confirmados,row.dias_duplicacao_confirmados,row.media_novos_casos_7dias,row.variacao_per_MM7_14dias,row.tendencia_novos_casos]
 					const res = await client.query(insertRow, rowValues)
 
 					// if (rowDate > lastDate ) {

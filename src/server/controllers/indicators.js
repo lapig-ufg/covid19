@@ -18,7 +18,6 @@ module.exports = function (app) {
     return numero.join(",");
   };
 
-
   function formatDate(date, language) {
     var d = new Date(date),
       month = '' + (d.getMonth() + 1),
@@ -42,10 +41,6 @@ module.exports = function (app) {
   }
 
   function createDataSetTimeSeriesGO(labels, graphic, language) {
-
-
-    console.log(graphic)
-
     let hideobito = true;
     let hiderecuperados = true;
     graphic.forEach(function (item, i) {
@@ -128,7 +123,6 @@ module.exports = function (app) {
           spanGaps: true,
           borderDash: labels.borderDashRef,
         },
-
       ]
     };
 
@@ -207,6 +201,131 @@ module.exports = function (app) {
         chart['show'] = true
         chart['text'] = chart.getText(chart)
       }
+
+    }
+
+    let finalResult = {
+      title: languageJson["charts_box"]["charts_box_title"][language],
+      timeseries: {
+        label: languageJson["charts_box"]["charts_box_dados_oficiais"]["label"][language],
+        not_cases: languageJson["charts_box"]["charts_box_dados_oficiais"]["not_cases"][language],
+        chartResult: chartResult
+      }
+    };
+
+
+    response.send(finalResult);
+    response.end();
+  };
+
+  function createDataSetTendenciasGO(labels, graphic, language) {
+
+    let data = {
+      labels: graphic.map(element => formatDate(element.data, language)),
+      datasets: [
+        {
+          label: labels.label_mm7,
+          data: graphic.map(element => parseFloat(element.media)),
+          fill: false,
+          backgroundColor: '#e5d42c',
+          borderColor: '#e69b26',
+          spanGaps: true,
+          type: 'line',
+          order: 1
+        },
+        {
+          label: labels.label_new_cases,
+          data: graphic.map(element => parseFloat(element.casos)),
+          fill: false,
+          backgroundColor: '#be1b24',
+          borderColor: '#be1b24',
+          spanGaps: true,
+          type: 'bar',
+          order: 2
+        }
+      ]
+    };
+
+    return data;
+  }
+
+  Controller.timeseriesTendencias = function (request, response) {
+    var language = request.param('lang')
+    var chartResult = [
+      {
+        id: "timeseries_tendencias_go",
+        title: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["title"][language],
+        title_tab: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["title_tab"][language],
+        note: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["note"][language],
+        label_last_update: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["last_update"][language],
+        label_media: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["media"][language],
+        label_variation: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["variation"][language],
+        label_trend: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["trend"][language],
+        label_new_cases: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["new_cases"][language],
+        label_mm7: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["mm7"][language],
+        borderDashRef: [5, 5],
+        getText: function (chart) {
+          // var label = chart['indicators'][0]["label"]
+          // var value = chart['indicators'][0]["value"]
+          // var areaMun = chart['indicators'][0]["area_mun"]
+
+          // var percentual_area_ha = ((value * 100) / areaMun);
+
+          // var text = "De acordo com o projeto Terra Class Cerrado(referente ao ano de 2013), " + region
+          // + " possui uma área total de " + numberFormat(parseFloat(areaMun)) + " de hectares, "
+          // +"sendo a classe " + label + " a de maior predominância, com " + numberFormat(parseFloat(value))
+          // + " de hectares (" + Math.round(percentual_area_ha) + "% da área total). "
+
+          var text = languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["title"][language];
+
+          return text;
+        },
+        type: "bar",
+        pointStyle: "rect",
+        disabled: false,
+        options: {
+          title: {
+            display: false,
+            text: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["text"][language],
+            fontSize: 10,
+            position: "bottom"
+          },
+          legend: {
+            labels: {
+              usePointStyle: true,
+              fontColor: "#85560c"
+            },
+            position: "bottom"
+          },
+          tooltips: {},
+          scales: {
+            pointLabels: {
+              fontSize: 20,
+            },
+            yAxes: [],
+            xAxes: []
+          }
+        }
+      }
+    ];
+
+    for (let chart of chartResult) {
+
+      chart['show'] = false
+      var qr = request.queryResult[chart.id]
+
+      if (chart.id == 'timeseries_tendencias_go') {
+        chart["dataResult"] = createDataSetTendenciasGO(chart, qr, language);
+      }
+      else {
+        chart["dataResult"] = qr
+      }
+      if (chart['dataResult'].labels.length > 0) {
+        chart['show'] = true
+        chart['text'] = chart.getText(chart)
+      }
+      chart['last_ob'] = qr[qr.length - 1];
+      chart['last_ob'].data = moment(chart['last_ob'].data ).format("DD/MM/YYYY")
 
     }
 
@@ -340,16 +459,92 @@ module.exports = function (app) {
     var result = {
       label: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label"][language],
       description: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["description"][language],
+      label_tab: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label_tab"][language],
       title: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["title"][language],
       tooltip: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["tooltip_text"][language],
       properties: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["properties_name"][language],
       filename: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["filename"][language],
       label_sms: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label_sms"][language],
+      label_msg: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label_msg"][language],
       label_confirmed: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label_confirmed"][language],
       label_total: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_neighborhoods"]["label_total"][language],
       show: show,
       total_neighborhoods: Array.isArray(queryResult) ? queryResult.length : null,
       total_confirmados: total_confirmados,
+      last_updated: queryResultDate[0]['max'],
+      fonte: fonte,
+      data_ultima_atualizacao: moment(data_ultima_atualizacao).format("DD/MM/YYYY"),
+      series: queryResult
+    }
+    response.send(result)
+    response.end()
+
+  }
+
+  Controller.deaths = function (request, response) {
+
+    var language = request.param('lang')
+
+    var queryResult = request.queryResult['ranking_deaths']
+    var queryResultDate = request.queryResult['updated_at']
+
+    let show = false
+    if (queryResult.length > 0) {
+      show = true
+
+      queryResult.map(function (item, i) {
+        if (i > 0) {
+          //Get our previous list item
+          var prevItem = queryResult[i - 1];
+          if (parseInt(prevItem.obtios) == parseInt(item.obitos)) {
+            //Same score = same rank
+            item.rank = prevItem.rank;
+          } else {
+            //Not the same score, give em the current iterated index + 1
+            item.rank = prevItem.rank + 1;
+          }
+        } else {
+          //First item takes the rank 1 spot
+          item.rank = 1;
+        }
+
+        return item;
+      });
+
+    }
+
+    let total_obtios = 0;
+    let data_ultima_atualizacao = null;
+    let fonte = null;
+    if (Array.isArray(queryResult)) {
+      if (queryResult.length > 0) {
+        queryResult.forEach(function (item, index) {
+          fonte = item.fonte;
+          total_obtios += item.obitos;
+          data_ultima_atualizacao = item.data_ultima_atualizacao;
+        });
+      } else {
+        total_obtios = null;
+      }
+    } else {
+      total_obtios = null;
+    }
+
+    var result = {
+      label: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["label"][language],
+      description: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["description"][language],
+      label_tab: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["label_tab"][language],
+      title: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["title"][language],
+      tooltip: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["tooltip_text"][language],
+      properties: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["properties_name"][language],
+      filename: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["filename"][language],
+      label_sms: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["label_sms"][language],
+      label_msg: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["label_msg"][language],
+      label_deaths: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["label_deaths"][language],
+      label_total: languageJson["charts_box"]["charts_box_dados_oficiais"]["ranking_deaths"]["label_total"][language],
+      show: show,
+      total_neighborhoods: Array.isArray(queryResult) ? queryResult.length : null,
+      total_obtios: total_obtios,
       last_updated: queryResultDate[0]['max'],
       fonte: fonte,
       data_ultima_atualizacao: moment(data_ultima_atualizacao).format("DD/MM/YYYY"),
@@ -700,7 +895,7 @@ module.exports = function (app) {
 
     var res = {
       total_dias: queryResult[0]['total_dias'],
-      media_novos_casos_3dias: queryResult[0]['media_novos_casos_3dias'],
+      media_novos_casos_7dias: queryResult[0]['media_novos_casos_7dias'],
       dias_duplicacao_confirmados: queryResult[0]['dias_duplicacao_confirmados'],
       data_pico_infectados_incidencia: queryResultLuisa[0]['data_pico_infectados_incidencia'],
       data_pico_infectados_acumudado: queryResultLuisa[0]['data_pico_infectados_acumudado'],
@@ -711,7 +906,7 @@ module.exports = function (app) {
     let texts = {
       title: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["title"][language],
       total_dias: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["total_dias"][language],
-      media_novos_casos_3dias: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["media_novos_casos_3dias"][language],
+      media_novos_casos_7dias: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["media_novos_casos_7dias"][language],
       dias_duplicacao_confirmados: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["dias_duplicacao_confirmados"][language],
       taxa_crescimento: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["taxa_crescimento"][language],
       n_total_infectadados_pico: languageJson["charts_box"]["charts_box_projecoes"]["statistics"]["text"]["n_total_infectadados_pico"][language],

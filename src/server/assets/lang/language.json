@@ -69,6 +69,48 @@
 					"en-us": "Recovered"
 				}
 			},
+			"timeseries_tendencias_go":{
+				"title": {
+					"pt-br": "Média móvel de 7 dias",
+					"en-us": "7-day moving average"
+				},
+				"title_tab": {
+					"pt-br": "Média móvel de [region]",
+					"en-us": "Moving average of [region]"
+				},
+				"new_cases":{
+					"pt-br": "Novos casos",
+					"en-us": "New cases"
+				},
+				"mm7":{
+					"pt-br": "Média móvel",
+					"en-us": "Moving average"
+				},
+				"note":{
+					"pt-br": "Segundo a SES-GO, os dados podem ser alterados para mais ou para menos conforme investigação das Vigilâncias Epidemiológicas Municipais e atualização das fichas de notificações pelos municípios nos sistemas oficiais. Diante de eventuais inconsistências nos números, estes serão atualizados a partir das correções feitas pelas cidades nos sistemas de notificação.",
+					"en-us": "According to SES-GO, the data can be changed upwards or downwards according to the investigation of the Municipal Epidemiological Surveillance and update of the notification forms by the municipalities in the official systems. In the event of any inconsistencies in the numbers, these will be updated based on the corrections made by the cities in the notification systems."
+				},
+				"text":{
+					"pt-br": "Clique nos botões para atualizar o gráfico.",
+					"en-us": "Click on the buttons here to update the statistics."
+				},
+				"media":{
+					"pt-br": "Média: ",
+					"en-us": "Average: "
+				},
+				"variation":{
+					"pt-br": "Variação: ",
+					"en-us": "Variation: "
+				},
+				"trend":{
+					"pt-br": "Tendência: ",
+					"en-us": "Trend: "
+				},
+				"last_update":{
+					"pt-br": "Última atualização em ",
+					"en-us": "Last update on  "
+				}
+			},
 			"ranking_municipios": {
 				"label": {
 					"pt-br": "Municípios",
@@ -102,6 +144,10 @@
 					"pt-br": "Total de casos: ",
 					"en-us": "Total cases: "
 				},
+				"label_deaths_sms":{
+					"pt-br": "Total de óbitos: ",
+					"en-us": "Total óbitos: "
+				},
 				"label_total_ses":{
 					"pt-br": "Total de municípios com casos: ",
 					"en-us": "Total municipalities with cases: "
@@ -115,6 +161,10 @@
 				"label": {
 					"pt-br": "Bairros de ",
 					"en-us": "Neighborhoods from "
+				},
+				"label_tab": {
+					"pt-br": "Casos",
+					"en-us": "Cases"
 				},
 				"description": {
 					"pt-br": "Bairros com maiores número de casos de COVID-19: ",
@@ -147,6 +197,56 @@
 				"label_total":{
 					"pt-br": "Total de bairros com casos: ",
 					"en-us": "Total of neighborhoods with cases: "
+				},
+				"label_msg":{
+					"pt-br": "Próxima atualização prevista para 31/07/2020.",
+					"en-us": "Next update scheduled for 07/31/2020."
+				}
+			},
+			"ranking_deaths": {
+				"label": {
+					"pt-br": "Bairros de ",
+					"en-us": "Neighborhoods from "
+				},
+				"label_tab": {
+					"pt-br": "Óbitos",
+					"en-us": "Deaths"
+				},
+				"description": {
+					"pt-br": "Bairros com maiores número de óbtios por COVID-19: ",
+					"en-us": "Ranking of Neighborhoods with the highest deaths COVID-19:"
+				},
+				"title": {
+					"pt-br": "Posição?Bairros?Óbitos",
+					"en-us": "Position?Neighborhood?Deaths"
+				},
+				"tooltip_text": {
+					"pt-br": "Clique para visualizar no mapa",
+					"en-us": "Click to view on map"
+				},
+				"properties_name": {
+					"pt-br": "rank?nome?obitos",
+					"en-us": "rank?nome?obitos"
+				},
+				"filename":{
+					"pt-br": "obitos_por_bairro_",
+					"en-us": "neighborhoods_deaths_"
+				},
+				"label_sms":{
+					"pt-br": "Dados de óbitos divulgados pela [source] em [date]",
+					"en-us": "Data od deaths released by [source] on [date]"
+				},
+				"label_deaths":{
+					"pt-br": "Total de óbitos: ",
+					"en-us": "Total deaths: "
+				},
+				"label_total":{
+					"pt-br": "Total de bairros com óbitos registrados: ",
+					"en-us": "Total of neighborhoods with deaths: "
+				},
+				"label_msg":{
+					"pt-br": "Próxima atualização prevista para 31/07/2020.",
+					"en-us": "Next update scheduled for 07/31/2020."
 				}
 			},
 			"charts_box_states": {
@@ -221,9 +321,9 @@
 						"pt-br": "Total de Dias: ",
 						"en-us": "Total Days: "
 					},
-					"media_novos_casos_3dias":{
-						"pt-br": "Média de novos casos dos últimos 3 dias: ",
-						"en-us": "Average number of new cases every 3 days: "
+					"media_novos_casos_7dias":{
+						"pt-br": "Média de novos casos dos últimos 7 dias: ",
+						"en-us": "Average number of new cases every 7 days: "
 					},
 					"dias_duplicacao_confirmados":{
 						"pt-br": "Quantidade de dias até duplicação de casos confirmados: ",
@@ -283,6 +383,10 @@
 		"confirmed_cases": {
 			"pt-br": "Quantidade de Casos Confirmados:",
 			"en-us": "Number of Confirmed Cases:"
+		},
+		"deaths": {
+			"pt-br": "Quantidade de óbitos:",
+			"en-us": "Number of deaths:"
 		},
 		"recovered_cases": {
 			"pt-br": "Quantidade de Casos Recuperados:",
@@ -359,6 +463,26 @@
 		"label_area_bairro": {
 			"pt-br": "Área do Bairro:",
 			"en-us": "District Area:"
+		},
+		"new_cases": {
+			"pt-br": "Novos casos:",
+			"en-us": "New cases:"
+		},
+		"mm7": {
+			"pt-br": "Média móvel dos últimos 7 dias:",
+			"en-us": "Moving average over the last 7 days:"
+		},
+		"variation": {
+			"pt-br": "Variação da média móvel:",
+			"en-us": "Moving average variation:"
+		},
+		"trend": {
+			"pt-br": "Tendência de novos casos:",
+			"en-us": "Trend of new cases:"
+		},
+		"last_update": {
+			"pt-br": "ùltima atualização em:",
+			"en-us": "Last update on:"
 		}
 	},
 	"summary_box":{
@@ -565,6 +689,20 @@
 						}
 					}
 				},
+				"tendencias":{
+					"label":{
+						"pt-br": "Tendência de novos casos",
+						"en-us": "\nTrend of new cases"
+					},
+					"types": {
+						"covid_medias_moveis": {
+							"view_value": {
+								"pt-br": "Tendências des casos",
+								"en-us": "Tendências des casos"
+							}
+						}
+					}
+				},
 				"indice_vulnerabilidade":{
 					"label":{
 						"pt-br": "Vulnerabilidade à COVID-19",
@@ -622,6 +760,28 @@
 					},
 					"types": {
 						"casos_por_bairro_covid": {
+							"view_value": {
+								"pt-br": "Bairros",
+								"en-us": "District"
+							},
+							"timelabel": {
+								"pt-br": "Município",
+								"en-us": "Municipality"
+							},
+							"default_placeholder":{
+								"pt-br": "Selecione aqui...",
+								"en-us": "Select here..."
+							}
+						}
+					}
+				},
+				"obitos_bairro": {
+					"label": {
+						"pt-br": "Óbitos por Bairros",
+						"en-us": "Deaths by Districts"
+					},
+					"types": {
+						"obitos_por_bairro_covid": {
 							"view_value": {
 								"pt-br": "Bairros",
 								"en-us": "District"
@@ -1135,7 +1295,6 @@
 			"pt-br": "Imprimir mapa",
 			"en-us": "Print map"
 		}
-
 	},
 	"team": {
 		"title": {

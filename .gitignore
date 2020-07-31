@@ -320,3 +320,4 @@ src/server/scripts/recuperados.csv
 src/server/scripts/obitos.csv
 src/server/scripts/confirmados.csv
 src/server/download-covid19
+src/server/scripts/credentials.json

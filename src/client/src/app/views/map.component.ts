@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, ElementRef, HostListener, Injectable, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
@@ -47,8 +47,23 @@ import { RestrictedAreaAccessComponent } from "./restricted-area-access/restrict
 import { RestrictedAreaFormComponent } from "./restricted-area-form/restricted-area-form.component";
 
 
+<<<<<<< HEAD
 
 
+=======
+import logos from './logos';
+import tendencias from './tendencias';
+import {BedsComponent} from "./beds/beds.component";
+import {NoteComponent} from "./note/note.component";
+import {MatTableDataSource} from "@angular/material/table";
+import { saveAs } from 'file-saver';
+import * as jsPDF from 'jspdf';
+import {ProjectionsComponent} from "./projections/projections.component";
+
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import {DialogChartsComponent} from "./dialog-charts/dialog-charts.component";
+>>>>>>> c37951380de9569d687a16e6f32ccc2ff5fb1f9f
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -101,12 +116,14 @@ export class MapComponent implements OnInit {
   regionsLimits: any;
   dataSeries: any;
   dataProjSeries: any;
+  tendeciaSeries: any;
   dataStates: any;
   dataCities: any;
   dataBrasil: any;
   optionsBrasil: any;
   dataSource: any;
   neighborhoodsCharts: any;
+  deathsCharts: any;
 
   chartResultCities: any;
   chartResultCitiesIllegalAPP: any;
@@ -122,6 +139,7 @@ export class MapComponent implements OnInit {
   trafficgoogle: any;
   exportColumnsCities: any[];
   exportColumnsBairros: any[];
+  exportColumnsBairrosDeaths: any[];
   textOnDialog: any;
   mapbox: any;
   satelite: any;
@@ -136,6 +154,7 @@ export class MapComponent implements OnInit {
   dataExtent: any;
 
   selectedBairroTime: any;
+  selectedBairroObitosTime: any;
   searching = false;
   searchFailed = false;
   msFilterRegion = '';
@@ -175,15 +194,21 @@ export class MapComponent implements OnInit {
   infodata: any;
   infomarker: any;
   infobairro: any;
+  infobairroObitos: any;
   infoprojecao: any;
+  infoTendencias: any;
   infodataMunicipio: any;
   fieldPointsStop: any;
   utfgridsource: UTFGrid;
   utfgridlayer: OlTileLayer;
   utfgridBairro: UTFGrid;
+  utfgridBairroObitos: UTFGrid;
   utfgridlayerBairro: OlTileLayer;
+  utfgridlayerBairroObitos: OlTileLayer;
   utfgridProjecao: UTFGrid;
+  utfgridTendencias: UTFGrid;
   utfgridlayerProjecao: OlTileLayer;
+  utfgridlayerTendencias: OlTileLayer;
   infoOverlay: Overlay;
   datePipe: DatePipe;
   dataForDialog = {} as any;
@@ -246,12 +271,18 @@ export class MapComponent implements OnInit {
   displayedColumnsNeighbor = [];
 
 
+  dataSourceDeaths:TableElement[];
+  displayedColumnsDeaths = [];
+
   dataSourceCities:TableElement[];
   displayedColumnsCities = [];
+
+  rangeValuesChartCases: number[];
 
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
   @ViewChild("map", { static: false }) mpref: ElementRef;
   selectedConfirmedDate: any;
+  tend:any;
 
   constructor(
     private http: HttpClient,
@@ -261,7 +292,8 @@ export class MapComponent implements OnInit {
     private domSanitizer: DomSanitizer,
     public googleAnalyticsService: GoogleAnalyticsService,
     private router: Router,
-    private elementRef : ElementRef
+    private elementRef : ElementRef,
+    private decimalPipe: DecimalPipe
   ) {
 
     this.projection = OlProj.get('EPSG:900913');
@@ -270,7 +302,9 @@ export class MapComponent implements OnInit {
 
     this.dataSeries = { timeseries: { label: "", chartResult: [] } };
     this.dataProjSeries = { timeseries: { label: "", chartResult: [] } };
+    this.tendeciaSeries =  { timeseries: { label: "", chartResult: [] } };
     this.dataStates = {};
+
 
     this.clickableTitle = 'Informações não disponíveis';
 
@@ -280,9 +314,10 @@ export class MapComponent implements OnInit {
     this.textSummary = {};
 
     this.infomarker = {};
-    this.infobairro = {};
+    this.infobairro = {}
+    this.infobairroObitos = {};
     this.infoprojecao = {};
-
+    this.infoTendencias = {};
     this.defaultRegion = {
       nome: 'Goiás',
       area_mun: 1547.26991096032,
@@ -300,6 +335,7 @@ export class MapComponent implements OnInit {
     this.avoidMarkers = ["go_hospitais_datasus", "vacinacao_gripe", "uni_basicas_goiania"];
 
     this.neighborhoodsCharts = {}
+    this.deathsCharts = {};
 
     this.optionsStates = {};
     this.statistics_county = { result: {}, text: {} };
@@ -337,7 +373,7 @@ export class MapComponent implements OnInit {
 
     this.selectedConfirmedDate = ''
     this.selectedBairroTime = "(select max(data_ultima_atualizacao) from v_casos_bairros)"
-
+    this.selectedBairroObitosTime = "(select max(data_ultima_atualizacao) from v_obitos_bairros)"
     this.bntStyleENG = this.styleDefault;
     this.bntStylePOR = this.styleSelected;
 
@@ -381,6 +417,7 @@ export class MapComponent implements OnInit {
     this.getDatesProjections();
     this.dataMS = {};
     this.getDataMS();
+    this.tend = tendencias;
   }
 
   search = (text$: Observable<string>) =>
@@ -709,6 +746,9 @@ export class MapComponent implements OnInit {
   getDataMS() {
     this.http.get('/service/indicators/summaryBrasil').subscribe(result => {
       this.dataMS = result;
+      this.dataMS.recuperados =  this.dataMS.recuperados.replace(',', '')
+      this.dataMS.recuperados =  this.dataMS.recuperados.replace(',', '')
+      this.dataMS.recuperados =  this.dataMS.recuperados.replace(',', '')
     });
   }
 
@@ -719,6 +759,8 @@ export class MapComponent implements OnInit {
     this.http.get(timeseriesUrl).subscribe(result => {
 
       this.dataSeries = result;
+
+      this.rangeValuesChartCases = [0, this.dataSeries.timeseries.chartResult[0].dataResult.labels.length -1];
 
       for (let graphic of this.dataSeries.timeseries.chartResult) {
 
@@ -744,6 +786,10 @@ export class MapComponent implements OnInit {
 
         graphic.options.scales.xAxes = x;
 
+        graphic.options.legend.onHover = function (event) {
+          event.target.style.cursor = 'pointer';
+        };
+
         // graphic.options.legend.onHover = function (event) {
         //   event.target.style.cursor = 'pointer';
         //   graphic.options.legend.labels.fontColor = '#0335fc';
@@ -754,9 +800,9 @@ export class MapComponent implements OnInit {
         //   graphic.options.legend.labels.fontColor = '#fa1d00';
         // };
 
-        graphic.options.legend.onClick = function (event) {
-          return null;
-        };
+        // graphic.options.legend.onClick = function (event) {
+        //   return null;
+        // };
 
         // graphic.options.tooltips.callbacks = {
         //   title(tooltipItem, data) {
@@ -791,6 +837,86 @@ export class MapComponent implements OnInit {
 
     }
     );
+
+    let timeseriesTendenciasUrl = '/service/indicators/timeseriesTendencias' + this.getServiceParams();
+
+    this.http.get(timeseriesTendenciasUrl).subscribe(result => {
+
+      this.tendeciaSeries = result;
+        for (let graphic of this.tendeciaSeries.timeseries.chartResult) {
+          let y = [{
+            ticks: {
+              beginAtZero: true,
+              autoskip: true,
+              autoSkipPadding: 20,
+              callback: function (value) {
+                return value.toLocaleString('de-DE');
+              }
+            }
+          }]
+
+          graphic.options.scales.yAxes = y;
+
+          let x = [{
+            ticks: {
+              autoskip: false,
+              autoSkipPadding: 20
+            }
+          }]
+
+          graphic.options.scales.xAxes = x;
+          graphic.options.legend.onHover = function (event) {
+            event.target.style.cursor = 'pointer';
+          };
+
+          // graphic.options.legend.onHover = function (event) {
+          //   event.target.style.cursor = 'pointer';
+          //   graphic.options.legend.labels.fontColor = '#0335fc';
+          // };
+
+          // graphic.options.legend.onLeave = function (event) {
+          //   event.target.style.cursor = 'default';
+          //   graphic.options.legend.labels.fontColor = '#fa1d00';
+          // };
+
+          // graphic.options.legend.onClick = function (event) {
+          //   return null;
+          // };
+
+          // graphic.options.tooltips.callbacks = {
+          //   title(tooltipItem, data) {
+          //     return data.labels[tooltipItem[0].index];
+          //   },
+          //   label(tooltipItem, data) {
+          //     console.log(tooltipItem, data)
+          //     return data.toLocaleString('de-DE');
+          //   },
+          //   // afterLabel: function (tooltipItem, data) {
+          //   //   return "a calcular";
+          //   // }
+          // };
+
+          graphic.options.tooltips = {
+            mode: 'index',
+            callbacks: {
+              label: function(tooltipItem, data) {
+                var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                if (label) {
+                  label += ': ';
+                }
+                label += tooltipItem.yLabel.toLocaleString('de-DE')
+                // label += Math.round(tooltipItem.yLabel * 100) / 100;
+                return label;
+              }
+            }
+          };
+
+        }
+
+      }
+    );
+
 
     let citiesUrl = '/service/indicators/cities' + this.getServiceParams();
     this.exportColumnsCities = [];
@@ -830,7 +956,6 @@ export class MapComponent implements OnInit {
       this.displayedColumnsCities = ["rank", "nome", "confirmados"]
 
     });
-
 
     let neighborhoodsUrl = '/service/indicators/neighborhoods' + this.getServiceParams() + '&timefilter=' + this.selectedBairroTime;
     this.exportColumnsBairros = [];
@@ -887,6 +1012,59 @@ export class MapComponent implements OnInit {
 
     });
 
+    let deathsUrl = '/service/indicators/deaths' + this.getServiceParams() + '&timefilter=' + this.selectedBairroObitosTime;
+    this.exportColumnsBairrosDeaths = [];
+    this.http.get(deathsUrl).subscribe(result => {
+
+      this.deathsCharts = result;
+      if(this.selectRegion.cd_geocmu == '5300108')
+      {
+
+        if (this.language == 'pt-br') {
+          this.deathsCharts.label += "Distrito Federal"
+          this.deathsCharts.label_sms = this.neighborhoodsCharts.label_sms.replace('de', '');
+          this.deathsCharts.label = this.neighborhoodsCharts.label.replace('de', 'do').replace('Bairros', 'Regiões Administrativas');
+        }
+        else {
+          this.deathsCharts.label += "Federal Disctrict"
+        }
+      }
+      else{
+        this.deathsCharts.label += this.selectRegion.nome
+      }
+      this.deathsCharts.label_sms = this.deathsCharts.label_sms.replace('[source]', this.deathsCharts.fonte);
+      this.deathsCharts.label_sms = this.deathsCharts.label_sms.replace('[date]', this.deathsCharts.data_ultima_atualizacao);
+
+      let d = new Date(this.deathsCharts.last_updated);
+
+      this.deathsCharts.last_updated = this.datePipe.transform(d.setDate(d.getDate() + 1), 'dd/MM/yyyy');
+
+      let headers = this.deathsCharts.title.split('?');
+      let properties = this.deathsCharts.properties.split('?');
+
+      this.deathsCharts.split = [];
+      for (let i = 0; i < headers.length; i++) {
+        this.deathsCharts.split.push({
+          header: headers[i],
+          field: properties[i]
+        })
+      }
+
+      this.exportColumnsBairrosDeaths = this.deathsCharts.split.map(col => ({ title: col.header, dataKey: col.field }));
+      let self = this;
+      this.deathsCharts.series.forEach(function (item, index) {
+        if(item.obitos > 0 && item.obitos < 10){
+          self.deathsCharts.series[index].obitos = "000" + item.obitos;
+        }else if(item.obitos >= 10 && item.obitos <= 99){
+          self.deathsCharts.series[index].obitos = "00" + item.obitos;
+        }
+      });
+
+      this.dataSourceDeaths = this.deathsCharts.series;
+      this.displayedColumnsDeaths = ["rank", "nome", "obitos"]
+
+    });
+
     let projectionURL = '/service/indicators/projections' + this.getServiceParams();
 
     this.http.get(projectionURL).subscribe(result => {
@@ -919,6 +1097,10 @@ export class MapComponent implements OnInit {
 
         graphic.options.scales.xAxes = x;
 
+        graphic.options.legend.onHover = function (event) {
+          event.target.style.cursor = 'pointer';
+        };
+
         // graphic.options.legend.onHover = function (event) {
         //   event.target.style.cursor = 'pointer';
         //   graphic.options.legend.labels.fontColor = '#0335fc';
@@ -929,9 +1111,9 @@ export class MapComponent implements OnInit {
         //   graphic.options.legend.labels.fontColor = '#fa1d00';
         // };
 
-        graphic.options.legend.onClick = function (event) {
-          return null;
-        };
+        // graphic.options.legend.onClick = function (event) {
+        //   return null;
+        // };
 
         // graphic.options.tooltips.filter = function (tooltipItem, data) {
 
@@ -1013,10 +1195,6 @@ export class MapComponent implements OnInit {
       };
 
     });
-
-
-
-
   }
 
   exportExcel(table) {
@@ -1039,6 +1217,23 @@ export class MapComponent implements OnInit {
       this.saveAsExcelFile(excelBuffer, tablename);
     });
   }
+
+  exportExcelDeaths(table) {
+
+    let ob = [];
+    let tablename = '';
+
+    ob = this.deathsCharts.series;
+    tablename = 'ranking_bairros_' + this.selectRegion.nome
+
+    import("xlsx").then(xlsx => {
+      const worksheet = xlsx.utils.json_to_sheet(ob);
+      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, tablename);
+    });
+  }
+
 
   saveAsExcelFile(buffer: any, fileName: string): void {
     import("file-saver").then(FileSaver => {
@@ -1072,6 +1267,10 @@ export class MapComponent implements OnInit {
       this.changeVisibility(bairro, { checked: false });
       bairro.types[0].timeSelected = "cd_geocmu = '52'"
 
+      let bairroObitos = this.layersNames.find(element => element.id === 'obitos_bairro');
+      this.changeVisibility(bairroObitos, { checked: false });
+      bairroObitos.types[0].timeSelected = "cd_geocmu = '52'"
+
       this.isFilteredByCity = false;
     }
     else {
@@ -1085,6 +1284,7 @@ export class MapComponent implements OnInit {
     this.selectRegion.nome = this.captalizeCity(this.selectRegion.nome);
 
     this.selectedBairroTime = "(select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '" + this.selectRegion.cd_geocmu + "')"
+    this.selectedBairroObitosTime = "(select max(data_ultima_atualizacao) from v_obitos_bairros where cd_geocmu = '" + this.selectRegion.cd_geocmu + "')"
 
     if (this.selectRegion.cd_geocmu != '52') {
       this.getDates('/service/indicators/datesNeighborhoods');
@@ -1105,7 +1305,6 @@ export class MapComponent implements OnInit {
   }
 
 
-
   zoomToCityOnTypesLayer(layer) {
 
     if (layer.value == "casos_por_bairro_covid") {
@@ -1113,8 +1312,6 @@ export class MapComponent implements OnInit {
         this.selectedBairroTime = "(select max(data_ultima_atualizacao) from v_casos_bairros)"
       }
       else {
-
-        // console.log("laaaaayer ", layer)
 
         let tmp
 
@@ -1140,6 +1337,39 @@ export class MapComponent implements OnInit {
           this.infodata = null
 
 
+
+        });
+      }
+    }
+
+    if (layer.value == "obitos_por_bairro_covid") {
+      if (layer.timeSelected == "cd_geocmu = '52'") {
+        this.selectedBairroObitosTime = "(select max(data_ultima_atualizacao) from v_obitos_bairros)"
+      }
+      else {
+
+        let tmp
+
+        if (layer['times']) {
+          tmp = layer['times'].find(
+              element => element.value === layer.timeSelected
+          );
+        }
+
+        this.http.get(SEARCH_URL, { params: PARAMS.set('key', tmp.Viewvalue) }).subscribe(result => {
+
+          let ob = result[0];
+          this.updateRegion(ob);
+
+          // this.selectedBairroTime = "(select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '" + this.selectRegion.cd_geocmu +"')"
+
+
+          this.handleInteraction();
+          // let l = this.layersNames.find(element => element.id === 'urban_traffic');
+          // this.changeVisibility(l, { checked: true });
+          let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+          this.changeVisibility(p, { checked: false });
+          this.infodata = null
 
         });
       }
@@ -1232,6 +1462,12 @@ export class MapComponent implements OnInit {
     if (!utfgridlayerBairroVisible || evt.dragging) {
       return;
     }
+
+    let utfgridlayerBairroObitosVisible = this.utfgridlayerBairroObitos.getVisible();
+    if (!utfgridlayerBairroObitosVisible || evt.dragging) {
+      return;
+    }
+
 
     let coordinate = this.map.getEventCoordinate(evt.originalEvent);
     let viewResolution = this.map.getView().getResolution();
@@ -1340,6 +1576,34 @@ export class MapComponent implements OnInit {
         this.infobairro = null;
       }
 
+      let bairroObitos = this.layersNames.find(element => element.id === 'obitos_bairro');
+      if (bairroObitos.visible) {
+
+        let zoom = this.map.getView().getZoom();
+
+        if (this.utfgridBairroObitos) {
+          this.utfgridBairroObitos.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+                if (data && data.numpoints > 0) {
+                  // window.document.body.style.cursor = 'pointer';
+
+                  this.infobairroObitos = data;
+
+                  if (this.infobairroObitos.nome == "") {
+                    this.infobairroObitos.nome = this.minireportText.undisclosed_message;
+                  }
+
+                } else {
+                  window.document.body.style.cursor = 'auto';
+                  this.infobairroObitos = null;
+                }
+
+              }.bind(this)
+          );
+        }
+      } else {
+        this.infobairroObitos = null;
+      }
+
       let projecao = this.layersNames.find(element => element.id === 'projecoes_luisa');
       if (projecao.visible) {
 
@@ -1368,6 +1632,33 @@ export class MapComponent implements OnInit {
         this.infoprojecao = null;
       }
 
+      let tendencias = this.layersNames.find(element => element.id === 'tendencia');
+      if (tendencias.visible) {
+
+        let zoom = this.map.getView().getZoom();
+
+        if (this.utfgridTendencias) {
+          this.utfgridTendencias.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+                if (data) {
+                  window.document.body.style.cursor = 'pointer';
+
+                  this.infoTendencias = data;
+
+                  if (this.infoTendencias.nome == "") {
+                    this.infoTendencias.nome = this.minireportText.undisclosed_message;
+                  }
+
+                } else {
+                  window.document.body.style.cursor = 'auto';
+                  this.infoTendencias = null;
+                }
+
+              }.bind(this)
+          );
+        }
+      } else {
+        this.infoTendencias = null;
+      }
 
     }
 
@@ -1611,15 +1902,21 @@ export class MapComponent implements OnInit {
       source: this.utfgridsource
     });
 
-
     this.utfgridBairro = new UTFGrid({
       tileJSON: this.getTileJSONBairros()
+    });
+
+    this.utfgridBairroObitos = new UTFGrid({
+      tileJSON: this.getTileJSONBairrosObitos()
     });
 
     this.utfgridlayerBairro = new OlTileLayer({
       source: this.utfgridBairro
     });
 
+    this.utfgridlayerBairroObitos = new OlTileLayer({
+      source: this.utfgridBairroObitos
+    });
 
     this.utfgridProjecao = new UTFGrid({
       tileJSON: this.getTileJSONProjecao()
@@ -1629,8 +1926,18 @@ export class MapComponent implements OnInit {
       source: this.utfgridProjecao
     });
 
+    this.utfgridTendencias = new UTFGrid({
+      tileJSON: this.getTileJSONTendencias()
+    });
+
+    this.utfgridlayerTendencias = new OlTileLayer({
+      source: this.utfgridTendencias
+    });
+
+
     this.layers.push(this.utfgridlayer);
     this.layers.push(this.utfgridlayerBairro)
+    this.layers.push(this.utfgridlayerBairroObitos)
     this.layers.push(this.utfgridlayerProjecao)
 
     this.layers = this.layers.concat(olLayers.reverse());
@@ -1671,6 +1978,17 @@ export class MapComponent implements OnInit {
     };
   }
 
+  private getTileJSONBairrosObitos() {
+
+    let filter = "cd_geocmu='" + this.selectRegion.cd_geocmu + "' AND data_ultima_atualizacao = " + this.selectedBairroObitosTime ;
+    return {
+      version: '2.2.0',
+      grids: [
+        this.returnUTFGRID('obitos_por_bairro_covid', filter, '{x}+{y}+{z}')
+      ]
+    };
+  }
+
   private getTileJSONProjecao() {
 
     let p = this.layersNames.find(element => element.id === 'projecoes_luisa');
@@ -1684,6 +2002,21 @@ export class MapComponent implements OnInit {
     };
 
   }
+
+  private getTileJSONTendencias() {
+
+    let p = this.layersNames.find(element => element.id === 'tendencia');
+    let layer = p.types.find(element => element.value === p.selectedType);
+
+    return {
+      version: '2.2.0',
+      grids: [
+        this.returnUTFGRID(p.selectedType, layer.layerfilter, '{x}+{y}+{z}')
+      ]
+    };
+
+  }
+
 
   private returnUTFGRID(layername, filter, tile) {
     return '/ows?layers=' + layername + '&MSFILTER=' + filter + '&mode=tile&tile=' + tile + '&tilemode=gmap&map.imagetype=utfgrid'
@@ -1831,11 +2164,12 @@ export class MapComponent implements OnInit {
 
     let covid = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
     let bairros = this.layersNames.find(element => element.id === 'casos_bairro');
+    let bairrosObitos = this.layersNames.find(element => element.id === 'obitos_bairro');
     let projecao = this.layersNames.find(element => element.id === 'projecoes_luisa');
 
 
 
-    if(covid.visible || bairros.visible || projecao.visible)
+    if(covid.visible || bairros.visible || bairrosObitos.visible || projecao.visible)
     {
       if (covid.selectedType == 'covid19_municipios_casos') {
 
@@ -1862,6 +2196,18 @@ export class MapComponent implements OnInit {
         }
       }
 
+      if (bairrosObitos.selectedType == 'obitos_por_bairro_covid') {
+        if (this.utfgridBairroObitos) {
+          let tileJSONBairroObitos = this.getTileJSONBairrosObitos();
+
+          this.utfgridBairroObitos.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONBairroObitos.grids, this.utfgridBairro.tileGrid);
+          this.utfgridBairroObitos.tileJSON = tileJSONBairroObitos;
+          this.utfgridBairroObitos.refresh();
+
+          this.utfgridlayerBairroObitos.setVisible(true);
+        }
+      }
+
       if (this.utfgridProjecao) {
         let tileJSONProjecao = this.getTileJSONProjecao();
 
@@ -1872,12 +2218,23 @@ export class MapComponent implements OnInit {
         this.utfgridlayerProjecao.setVisible(true);
       }
 
+      if (this.utfgridTendencias) {
+        let tileJSONTendencias = this.getTileJSONTendencias();
+        this.utfgridTendencias.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONTendencias.grids, this.utfgridTendencias.tileGrid);
+        this.utfgridTendencias.tileJSON = tileJSONTendencias;
+        this.utfgridTendencias.refresh();
 
-    }else if (this.utfgridsource && this.utfgridBairro && this.utfgridProjecao)
+        this.utfgridlayerTendencias.setVisible(true);
+      }
+
+
+
+    }else if (this.utfgridsource && this.utfgridBairro && this.utfgridProjecao && this.utfgridTendencias)
     {
       this.utfgridlayer.setVisible(false);
       this.utfgridlayerBairro.setVisible(false);
       this.utfgridlayerProjecao.setVisible(false);
+      this.utfgridlayerTendencias.setVisible(false);
     }
 
 
@@ -2391,6 +2748,21 @@ export class MapComponent implements OnInit {
       // console.log('The dialog was closed');
     });
   }
+
+  openDialogCharts(charts) {
+
+    let dialogRef = this.dialog.open(DialogChartsComponent, {
+      width: '90%',
+      height: '90%',
+      data: this[charts]
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+    });
+  }
+
+
   exportPdf(table) {
     let self = this;
     let language = this.language;
@@ -2419,6 +2791,90 @@ export class MapComponent implements OnInit {
           doc.setFontType('bold');
           doc.setFontSize(12);
           doc.text(logos.title.left, logos.title.top, title);
+          doc.addImage(logos.logoCovid, 'PNG', 15, 5, 45, 20);
+
+          doc.addImage(
+              logos[self.selectRegion.cd_geocmu].logo.img,
+              'PNG',
+              logos[self.selectRegion.cd_geocmu].logo.left,
+              logos[self.selectRegion.cd_geocmu].logo.top,
+              logos[self.selectRegion.cd_geocmu].logo.width,
+              logos[self.selectRegion.cd_geocmu].logo.height
+          );
+
+          doc.addImage(logos.logoUFG, 'PNG', 156, 5, 40, 20);
+
+        };
+
+        let footer = function () {
+          var paginas = logos.page.title[language] + doc.internal.getNumberOfPages();
+          if (typeof doc.putTotalPages === 'function') {
+            paginas = paginas + logos.page.of[language] + totalDePaginas;
+          }
+
+          doc.setFontSize(9);
+          doc.setFontType('normal');
+
+          doc.text(logos[self.selectRegion.cd_geocmu].footer.text[language], logos[self.selectRegion.cd_geocmu].footer.left, doc.internal.pageSize.height - 10);
+
+          doc.setFontType('normal');
+          doc.text(paginas, 175, doc.internal.pageSize.height - 5);
+          doc.text("https://covidgoias.ufg.br", 15, doc.internal.pageSize.height - 5);
+          doc.text(moment().format('DD/MM/YYYY HH:mm:ss'), 90, doc.internal.pageSize.height - 5);
+        };
+
+        let options = {
+
+          margin: {
+            top: 40,
+          },
+
+          didDrawPage: function (data) {
+            // Header
+            header();
+            // Footer
+            footer();
+          },
+
+          //'everyPage' = mostra o cabeçalho a cada página
+          //'firstPage' = mostra o cabeçalho apenas na primeira página
+          //'never'     = nunca mostra o cabeçalho
+          showHead: 'everyPage',
+          theme: 'striped', // 'striped', 'grid' or 'plain'
+          startY: false //doc.autoTableEndPosY() + 60
+        };
+
+        doc.autoTable(titleTable, ob, options);
+
+        if (typeof doc.putTotalPages === 'function') {
+          doc.putTotalPages(totalDePaginas);
+        }
+        doc.save(tablename + this.selectRegion.nome + '.pdf');
+      })
+    })
+  }
+
+  exportPdfDeaths(table) {
+    let self = this;
+    let language = this.language;
+    let tablename = '';
+    let ob = [];
+    let titleTable = [];
+
+    tablename = this.deathsCharts.filename;
+    ob = this.deathsCharts.series;
+    titleTable = this.exportColumnsBairrosDeaths;
+
+    import("jspdf").then(jsPDF => {
+      import("jspdf-autotable").then(x => {
+        const doc = new jsPDF.default(0, 0);
+        let totalDePaginas = "{total_pages_count_string}";
+
+        let header = function () {
+          let title = logos.title_deaths[language].toLocaleUpperCase()
+          doc.setFontType('bold');
+          doc.setFontSize(12);
+          doc.text(logos.title_deaths.left, logos.title_deaths.top, title);
           doc.addImage(logos.logoCovid, 'PNG', 15, 5, 45, 20);
 
           doc.addImage(
@@ -2635,6 +3091,21 @@ export class MapComponent implements OnInit {
         .then(blob => {
           saveAs(blob, 'obitos_confirmados.csv');
         }).catch(err => console.log(err));
+  }
+
+  showDialogUTFGrid(){
+    let dialog = {visibility: 'hidden'};
+
+    if(this.infodata){
+      dialog.visibility = 'visible'
+    }else if(this.infobairro){
+      dialog.visibility = 'visible'
+    }else if(this.infobairroObitos){
+      dialog.visibility = 'visible'
+    }else if(this.clickable){
+      dialog.visibility = 'visible'
+    }
+    return dialog;
   }
 
   ngOnInit() {

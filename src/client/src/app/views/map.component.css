@@ -109,6 +109,10 @@ ngb-highlight .ngb-highlight:first-child {
 	height: 36px;
 }
 
+#map-info  .card-body p.deaths {
+	background: #000!important;
+}
+
 /*.ol-zoom-in,*/
 /*.ol-zoom-out {*/
 /*	background-color: rgba(0, 0, 0, 0.5) !important;*/
@@ -167,7 +171,7 @@ ngb-highlight .ngb-highlight:first-child {
 	position: absolute;
 	right: 1%;
 	bottom: 2%;
-	width: 65vh;
+	width: 82vh;
 	background-color: #FFF;
 	color: #666;
 	text-align: left;
@@ -1132,9 +1136,9 @@ mat-select {
 .container-resumo {
 	position: absolute;
 	top: 2%;
-	right: 36%;
+	right: 35%;
 	z-index: 2200000;
-	width: 30%;
+	width: 33%;
 }
 
 
@@ -1461,6 +1465,57 @@ mat-slider {
 .legend-projections img{
 	max-width: 100%;
 }
+
+.tendenciaMedia{
+	margin: 10px;
+	color: white;
+	font-weight: bold;
+	padding-bottom: 4px;
+	padding-top: 4px;
+	padding-left: 6px;
+	padding-right: 6px;
+	border-radius: 4px;
+	background-color: #e69b26;
+	box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.tendenciaVariacao{
+	margin: 10px;
+	padding-bottom: 4px;
+	font-weight: bold;
+	padding-top: 4px;
+	padding-left: 6px;
+	padding-right: 6px;
+	color: white;
+	border-radius: 4px;
+	background-color:#0f5bd3;
+
+	box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.tendenciaTendencia{
+	margin: 10px;
+	padding-bottom: 4px;
+	padding-top: 4px;
+	padding-left: 6px;
+	padding-right: 6px;
+	font-weight: bold;
+	color: white;
+	border-radius: 4px;
+	background-color:#864248;
+	box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.msg{
+	width: 100%;
+	margin-bottom: 20px;
+	font-size: 18px;
+	text-align: center;
+	padding:20px;
+	background-color: rgba(255, 165, 0, 0.38);
+	border-radius: 10px;
+}
+
 @media screen and (max-width: 1050px) {
 
 }
@@ -1488,7 +1543,7 @@ mat-slider {
 		width: 34%;
 	}
 	.container-resumo {
-		width: 30%;
+		width: 39%;
 	}
 
 }
