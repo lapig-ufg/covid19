@@ -1,61 +1,54 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, HostListener, Injectable, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ElementRef, HostListener, Injectable, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { saveAs } from 'file-saver';
+import * as moment from 'moment';
+import CropFilter from 'ol-ext/filter/Crop';
+import MaskFilter from 'ol-ext/filter/Mask';
+import { Attribution } from 'ol/control';
 import * as OlExtent from 'ol/extent.js';
 import GeoJSON from 'ol/format/GeoJSON';
 import { defaults as defaultInteractions } from 'ol/interaction';
 import OlTileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
-import Feature from 'ol/Feature';
 import OlMap from 'ol/Map';
 import Overlay from 'ol/Overlay.js';
 import * as OlProj from 'ol/proj';
 import BingMaps from 'ol/source/BingMaps';
 import TileWMS from 'ol/source/TileWMS';
 import UTFGrid from 'ol/source/UTFGrid.js';
-import Icon from 'ol/style/Icon.js';
 import VectorSource from 'ol/source/Vector';
 import OlXYZ from 'ol/source/XYZ';
 import Circle from 'ol/style/Circle.js';
 import Fill from 'ol/style/Fill.js';
+import Icon from 'ol/style/Icon.js';
 import Stroke from 'ol/style/Stroke';
 import Style from 'ol/style/Style';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import * as _ol_TileUrlFunction_ from 'ol/tileurlfunction.js';
 import OlView from 'ol/View';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs/observable/of';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
-import { MetadataComponent } from './metadata/metadata.component';
-import CropFilter from 'ol-ext/filter/Crop';
-import MaskFilter from 'ol-ext/filter/Mask';
-import MultiPolygon from 'ol/geom/MultiPolygon';
-import { defaults as defaultControls, Control, Attribution} from 'ol/control';
-import { Router } from '@angular/router';
-import { google } from "google-maps";
-import { DataSource } from '@angular/cdk/table';
-
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
+import { BedsComponent } from "./beds/beds.component";
 import { HelpComponent } from "./help/help.component";
+import logos from './logos';
+import { NoteComponent } from "./note/note.component";
+import { ProjectionsComponent } from "./projections/projections.component";
 import { RestrictedAreaAccessComponent } from "./restricted-area-access/restricted-area-access.component";
 import { RestrictedAreaFormComponent } from "./restricted-area-form/restricted-area-form.component";
-import * as moment from 'moment';
 
-import { Table } from 'primeng/table';
 
-import logos from './logos';
-import {BedsComponent} from "./beds/beds.component";
-import {NoteComponent} from "./note/note.component";
-import {MatTableDataSource} from "@angular/material/table";
-import { saveAs } from 'file-saver';
-import * as jsPDF from 'jspdf';
-import {ProjectionsComponent} from "./projections/projections.component";
 
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
