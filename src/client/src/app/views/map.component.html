@@ -564,50 +564,50 @@
 							</p-tabView>
 						</mat-tab>
 
-						<mat-tab label="{{dataProjSeries.timeseries.label}}">
-							<p-tabView>
-								<p-tabPanel [header]="selectRegion.nome">
-								<p-scrollPanel [style]="{width: '100%', height: '50vh'}">
+<!--						<mat-tab label="{{dataProjSeries.timeseries.label}}">-->
+<!--							<p-tabView>-->
+<!--								<p-tabPanel [header]="selectRegion.nome">-->
+<!--								<p-scrollPanel [style]="{width: '100%', height: '50vh'}">-->
 
-									<h5 *ngIf="!dataProjSeries.timeseries.chartResult[0]?.show" style="text-align: center;">
-										<br>
-										<br>
-										<strong> {{dataProjSeries.timeseries.not_cases}} {{selectRegion.nome}} </strong>
-										<br>
-										<br>
-									</h5>
-
-
-									<div style="text-align: start;" *ngIf="dataProjSeries.timeseries.chartResult[0]?.show">
-										<!-- <h5><b>{{statistics_county.text.title}}</b> {{selectRegion.nome}}</h5> -->
-										<p><b>{{statistics_county.text.total_dias}}</b> {{statistics_county.result.total_dias}}</p>
-										<p *ngIf="statistics_county.result.media_novos_casos_7dias != -1"><b>{{statistics_county.text.media_novos_casos_7dias}}</b> {{statistics_county.result.media_novos_casos_7dias | number:'1.0-3'}}</p>
-										<p *ngIf="statistics_county.result.dias_duplicacao_confirmados != -1"><b>{{statistics_county.text.dias_duplicacao_confirmados}}</b> {{statistics_county.result.dias_duplicacao_confirmados | number:'1.0-3'}}</p>
-										<p *ngIf="statistics_county.result.taxa_crescimento != ''"><b>{{statistics_county.text.taxa_crescimento}}</b> {{statistics_county.result.taxa_crescimento | number:'1.0-2'}}</p>
-										<p *ngIf="statistics_county.result.n_total_infectadados_pico != ''"><b>{{statistics_county.text.n_total_infectadados_pico}}</b> {{statistics_county.result.n_total_infectadados_pico | number }}</p>
-										<!-- <p *ngIf="statistics_county.result.data_pico_infectados_incidencia != ''"><b>{{statistics_county.text.data_pico_infectados_incidencia}}</b> {{statistics_county.result.data_pico_infectados_incidencia | date : 'dd/MM/yyyy' }}</p> -->
-										<p *ngIf="statistics_county.result.data_pico_infectados_acumudado != ''"><b>{{statistics_county.text.data_pico_infectados_acumudado}}</b> {{statistics_county.result.data_pico_infectados_acumudado | date : 'dd/MM/yyyy' }}</p>
-
-										<br>
+<!--									<h5 *ngIf="!dataProjSeries.timeseries.chartResult[0]?.show" style="text-align: center;">-->
+<!--										<br>-->
+<!--										<br>-->
+<!--										<strong> {{dataProjSeries.timeseries.not_cases}} {{selectRegion.nome}} </strong>-->
+<!--										<br>-->
+<!--										<br>-->
+<!--									</h5>-->
 
 
-									</div>
+<!--									<div style="text-align: start;" *ngIf="dataProjSeries.timeseries.chartResult[0]?.show">-->
+<!--										&lt;!&ndash; <h5><b>{{statistics_county.text.title}}</b> {{selectRegion.nome}}</h5> &ndash;&gt;-->
+<!--										<p><b>{{statistics_county.text.total_dias}}</b> {{statistics_county.result.total_dias}}</p>-->
+<!--										<p *ngIf="statistics_county.result.media_novos_casos_7dias != -1"><b>{{statistics_county.text.media_novos_casos_7dias}}</b> {{statistics_county.result.media_novos_casos_7dias | number:'1.0-3'}}</p>-->
+<!--										<p *ngIf="statistics_county.result.dias_duplicacao_confirmados != -1"><b>{{statistics_county.text.dias_duplicacao_confirmados}}</b> {{statistics_county.result.dias_duplicacao_confirmados | number:'1.0-3'}}</p>-->
+<!--										<p *ngIf="statistics_county.result.taxa_crescimento != ''"><b>{{statistics_county.text.taxa_crescimento}}</b> {{statistics_county.result.taxa_crescimento | number:'1.0-2'}}</p>-->
+<!--										<p *ngIf="statistics_county.result.n_total_infectadados_pico != ''"><b>{{statistics_county.text.n_total_infectadados_pico}}</b> {{statistics_county.result.n_total_infectadados_pico | number }}</p>-->
+<!--										&lt;!&ndash; <p *ngIf="statistics_county.result.data_pico_infectados_incidencia != ''"><b>{{statistics_county.text.data_pico_infectados_incidencia}}</b> {{statistics_county.result.data_pico_infectados_incidencia | date : 'dd/MM/yyyy' }}</p> &ndash;&gt;-->
+<!--										<p *ngIf="statistics_county.result.data_pico_infectados_acumudado != ''"><b>{{statistics_county.text.data_pico_infectados_acumudado}}</b> {{statistics_county.result.data_pico_infectados_acumudado | date : 'dd/MM/yyyy' }}</p>-->
 
-									<div *ngIf="dataProjSeries.timeseries.chartResult[0]?.show">
-										<p style="font-weight: bold; text-align: end;">
-											{{dataProjSeries.timeseries.last_updated}}  {{dataProjSeries.timeseries.chartResult[0]?.last_model_date}}</p>
-										<p-chart [ngStyle]="{'overflow-x': hidden}"
-											*ngIf="dataProjSeries.timeseries.chartResult[0]?.type"
-											[type]="dataProjSeries.timeseries.chartResult[0]?.type"
-											[data]="dataProjSeries.timeseries.chartResult[0]?.dataResult"
-											[options]="dataProjSeries.timeseries.chartResult[0]?.options">
-										</p-chart>
-									</div>
-									<div style="height: 30vh"></div>
-								</p-scrollPanel>
-								</p-tabPanel>
-							</p-tabView>
-						</mat-tab>
+<!--										<br>-->
+
+
+<!--									</div>-->
+
+<!--									<div *ngIf="dataProjSeries.timeseries.chartResult[0]?.show">-->
+<!--										<p style="font-weight: bold; text-align: end;">-->
+<!--											{{dataProjSeries.timeseries.last_updated}}  {{dataProjSeries.timeseries.chartResult[0]?.last_model_date}}</p>-->
+<!--										<p-chart [ngStyle]="{'overflow-x': hidden}"-->
+<!--											*ngIf="dataProjSeries.timeseries.chartResult[0]?.type"-->
+<!--											[type]="dataProjSeries.timeseries.chartResult[0]?.type"-->
+<!--											[data]="dataProjSeries.timeseries.chartResult[0]?.dataResult"-->
+<!--											[options]="dataProjSeries.timeseries.chartResult[0]?.options">-->
+<!--										</p-chart>-->
+<!--									</div>-->
+<!--									<div style="height: 30vh"></div>-->
+<!--								</p-scrollPanel>-->
+<!--								</p-tabPanel>-->
+<!--							</p-tabView>-->
+<!--						</mat-tab>-->
 
 						<mat-tab label="{{dataSource.title}}">
 							<p-scrollPanel [style]="{width: '100%', height: '60vh'}">
