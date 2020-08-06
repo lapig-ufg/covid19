@@ -1,13 +1,20 @@
 #!/bin/bash
+#Script de Atualização de Casos por Bairros.
 
 BASESTORAGE='/data/storage/ows-cache/layers'
 BASELOCAL='/data/containers/APP_COVID19/APP/covid19/src/server/scripts/'
 START_DATE=`date +%d-%m-%Y-%H.%M.%S`
 
+#Include telegram chat id and bot token ID here
+chat_id="-427575689"
+TOKEN="1370924692:AAFd-MW3vei_24_HkQxcwHPYtKJmKnFT2so"
+
+function UPDATE-COVID19-ALERT
+{
+curl --silent --output /dev/null  "https://api.telegram.org/bot$TOKEN/sendMessage?chat_id=$chat_id&text=$SUBJECT" > /dev/null 
+}
 
 echo -e "\n\nRotina atualizacao_automatica_bairros.sh iniciada em: $START_DATE" | tee -a /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
-
-#Script de Atualização de Casos por Bairros.
 
 echo -n -e "\nBaixando Planilhas do GoogleSheets!\n"
 sleep 2
