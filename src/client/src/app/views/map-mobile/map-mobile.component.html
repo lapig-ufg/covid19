@@ -283,34 +283,34 @@
 											</div>
 										</p-scrollPanel>
 									</p-tabPanel>
-<!--									<p-tabPanel header="Projeções">-->
-<!--											<div style="text-align: justify; padding-bottom: 10px;">-->
-<!--												<h5 style="text-align: center;"><b>{{statistics_county.text.title}}</b> {{selectRegion.nome}}</h5>-->
-<!--												<p><b>{{statistics_county.text.total_dias}}</b> {{statistics_county.result.total_dias}}</p>-->
-<!--												<p *ngIf="statistics_county.result.media_novos_casos_3dias != -1"><b>{{statistics_county.text.media_novos_casos_3dias}}</b> {{statistics_county.result.media_novos_casos_3dias}}</p>-->
-<!--												<p *ngIf="statistics_county.result.dias_duplicacao_confirmados != -1"><b>{{statistics_county.text.dias_duplicacao_confirmados}}</b> {{statistics_county.result.dias_duplicacao_confirmados | number:'1.0-3'}}</p>-->
-<!--											</div>-->
+									<p-tabPanel header="Projeções">
+											<div style="text-align: justify; padding-bottom: 10px;">
+												<h5 style="text-align: center;"><b>{{statistics_county.text.title}}</b> {{selectRegion.nome}}</h5>
+												<p><b>{{statistics_county.text.total_dias}}</b> {{statistics_county.result.total_dias}}</p>
+												<p *ngIf="statistics_county.result.media_novos_casos_3dias != -1"><b>{{statistics_county.text.media_novos_casos_3dias}}</b> {{statistics_county.result.media_novos_casos_3dias}}</p>
+												<p *ngIf="statistics_county.result.dias_duplicacao_confirmados != -1"><b>{{statistics_county.text.dias_duplicacao_confirmados}}</b> {{statistics_county.result.dias_duplicacao_confirmados | number:'1.0-3'}}</p>
+											</div>
 
-<!--											<h5 *ngIf="!dataProjSeries.timeseries.chartResult[0]?.show" style="text-align: center;">-->
-<!--												<br>-->
-<!--												<br>-->
-<!--												<strong> {{dataProjSeries.timeseries.not_cases}} {{selectRegion.nome}} </strong>-->
-<!--												<br>-->
-<!--												<br>-->
-<!--											</h5>-->
+											<h5 *ngIf="!dataProjSeries.timeseries.chartResult[0]?.show" style="text-align: center;">
+												<br>
+												<br>
+												<strong> {{dataProjSeries.timeseries.not_cases}} {{selectRegion.nome}} </strong>
+												<br>
+												<br>
+											</h5>
 
-<!--											<div *ngIf="dataProjSeries.timeseries.chartResult[0]?.show">-->
-<!--												<p style="font-weight: bold; text-align: end;">-->
-<!--													{{dataProjSeries.timeseries.last_updated}}  {{dataProjSeries.timeseries.chartResult[0]?.last_model_date | date : 'dd/MM/yyyy'}}</p>-->
-<!--												<p-chart [ngStyle]="{'overflow-x': hidden}"-->
-<!--													height="30vh"-->
-<!--													*ngIf="dataProjSeries.timeseries.chartResult[0]?.type"-->
-<!--													[type]="dataProjSeries.timeseries.chartResult[0]?.type"-->
-<!--													[data]="dataProjSeries.timeseries.chartResult[0]?.dataResult"-->
-<!--													[options]="dataProjSeries.timeseries.chartResult[0]?.options">-->
-<!--												</p-chart>-->
-<!--											</div>-->
-<!--									</p-tabPanel>-->
+											<div *ngIf="dataProjSeries.timeseries.chartResult[0]?.show">
+												<p style="font-weight: bold; text-align: end;">
+													{{dataProjSeries.timeseries.last_updated}}  {{dataProjSeries.timeseries.chartResult[0]?.last_model_date | date : 'dd/MM/yyyy'}}</p>
+												<p-chart [ngStyle]="{'overflow-x': hidden}"
+													height="30vh"
+													*ngIf="dataProjSeries.timeseries.chartResult[0]?.type"
+													[type]="dataProjSeries.timeseries.chartResult[0]?.type"
+													[data]="dataProjSeries.timeseries.chartResult[0]?.dataResult"
+													[options]="dataProjSeries.timeseries.chartResult[0]?.options">
+												</p-chart>
+											</div>
+									</p-tabPanel>
 									<p-tabPanel  [header]="dataStates.label" id="tabGraficoLinhas">
 										<h6 style="text-align: center;">
 											<b>{{dataStates.description}}</b>
