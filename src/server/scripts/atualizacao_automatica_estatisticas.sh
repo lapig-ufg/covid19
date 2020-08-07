@@ -31,7 +31,7 @@ clear
 echo -n -e "Baixando Planilhas!"
 sleep 2
 
-python2 download_planilha_casos.py
+python2 download_planilha_estatisticas.py
 
 mv 1uCWUVbEaI8kQvQCuwsAGXuHc-Y8Ab_ottunsz3ib6M0-worksheet0.csv projecao_casos_go.csv
 
