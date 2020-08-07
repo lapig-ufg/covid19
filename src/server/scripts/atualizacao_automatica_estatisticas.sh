@@ -33,18 +33,17 @@ sleep 2
 
 python2 download_planilha_casos.py
 
-mv 1sMzwMlPThQ0-AVYeYAxjkPQ_0G82hOEyDDh-xTlaaf4-worksheet0.csv projecao_casos_go.csv
+mv 1uCWUVbEaI8kQvQCuwsAGXuHc-Y8Ab_ottunsz3ib6M0-worksheet0.csv projecao_casos_go.csv
 
 mv 1LeLPLxMqJMiCq5VQLtjO_e7hPtXWmSZxs5t9-1lYAgU-worksheet0.csv estatisticas.csv
 
 mv 1fO70w9OI1sbRiyHmD9HQZiG_Wa7vqrwpgSigeHRMAD4-worksheet0.csv recuperados.csv
 
-mv 1ELlIaPqgSZubGQOJy1pXVQa60Az9YfjAfPZ1UeiKseY-worksheet0.csv estatisticas_luisa.csv
-
 mv 1x9zk22gE8p8suaqfdtm3rPLGHvxEIN8mMCU2Mn7XTkI-worksheet0.csv projecao_casos_go_luisa.csv
 
-mv 1I2pc2g1ciqlua5fH-SKpwxIzssgY-bjeqmxcPZpwWqs-worksheet0.csv medias_moveis.csv
+mv 1ELlIaPqgSZubGQOJy1pXVQa60Az9YfjAfPZ1UeiKseY-worksheet0.csv estatisticas_luisa.csv
 
+mv 1wa6WKm2amGY47Klz5oedttvWpTPew2LbbbHwYKF2tds-worksheet0.csv medias_moveis.csv
 
 clear
 echo -n -e "Planilha baixada com sucesso!"
