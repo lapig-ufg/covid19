@@ -35,7 +35,7 @@ python2 download_planilha_estatisticas.py
 
 mv 1uCWUVbEaI8kQvQCuwsAGXuHc-Y8Ab_ottunsz3ib6M0-worksheet0.csv projecao_casos_go.csv
 
-mv 1LeLPLxMqJMiCq5VQLtjO_e7hPtXWmSZxs5t9-1lYAgU-worksheet0.csv estatisticas.csv
+mv 17MUnurVVXmhcwJwRA0cV1L83zm7pMbat0jljKnESEI0-worksheet0.csv estatisticas.csv
 
 mv 1fO70w9OI1sbRiyHmD9HQZiG_Wa7vqrwpgSigeHRMAD4-worksheet0.csv recuperados.csv
 
