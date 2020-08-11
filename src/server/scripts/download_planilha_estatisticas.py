@@ -16,23 +16,23 @@ credentials = ServiceAccountCredentials.from_json_keyfile_name('credentials.json
 
 #Spreadsheet credential ID:
 
-#tabela_prev_casos_conf_municipios
-docid2 = "1uCWUVbEaI8kQvQCuwsAGXuHc-Y8Ab_ottunsz3ib6M0"
+# #tabela_prev_casos_conf_municipios
+# docid2 = "1uCWUVbEaI8kQvQCuwsAGXuHc-Y8Ab_ottunsz3ib6M0"
 
-#tabela_estatistica_municipios
-docid3 = "17MUnurVVXmhcwJwRA0cV1L83zm7pMbat0jljKnESEI0"
+# #tabela_estatistica_municipios
+# docid3 = "17MUnurVVXmhcwJwRA0cV1L83zm7pMbat0jljKnESEI0"
 
 #recuperados
 docid5 = "1fO70w9OI1sbRiyHmD9HQZiG_Wa7vqrwpgSigeHRMAD4"
 
-#tabela_prev_mod_logistico_luisa_adaptado
-docid6 = "1x9zk22gE8p8suaqfdtm3rPLGHvxEIN8mMCU2Mn7XTkI"
+# #tabela_prev_mod_logistico_luisa_adaptado
+# docid6 = "1x9zk22gE8p8suaqfdtm3rPLGHvxEIN8mMCU2Mn7XTkI"
 
-#tabela_estatisticas_mod_logistico_luisa_adaptado
-docid7 = "1ELlIaPqgSZubGQOJy1pXVQa60Az9YfjAfPZ1UeiKseY"
+# #tabela_estatisticas_mod_logistico_luisa_adaptado
+# docid7 = "1ELlIaPqgSZubGQOJy1pXVQa60Az9YfjAfPZ1UeiKseY"
 
-#dados_MM7_novos_casos
-docid8 = "1wa6WKm2amGY47Klz5oedttvWpTPew2LbbbHwYKF2tds"
+# #dados_MM7_novos_casos
+# docid8 = "1wa6WKm2amGY47Klz5oedttvWpTPew2LbbbHwYKF2tds"
 
 
 class UnicodeWriter:
@@ -65,27 +65,27 @@ class UnicodeWriter:
             self.writerow(row)
 
 
+# #Spreadsheet download function1
+# client = gspread.authorize(credentials)
+# spreadsheet = client.open_by_key(docid2)
+# for i, worksheet in enumerate(spreadsheet.worksheets()):
+#     filename = docid2 + '-worksheet' + str(i) + '.csv'
+#     with open(filename, 'wb') as f:
+#         writer = UnicodeWriter(f)
+#         writer.writerows(worksheet.get_all_values())
+#     time.sleep(10)
+
+# #Spreadsheet download function2
+# client = gspread.authorize(credentials)
+# spreadsheet = client.open_by_key(docid3)
+# for i, worksheet in enumerate(spreadsheet.worksheets()):
+#     filename = docid3 + '-worksheet' + str(i) + '.csv'
+#     with open(filename, 'wb') as f:
+#         writer = UnicodeWriter(f)
+#         writer.writerows(worksheet.get_all_values())
+#     time.sleep(10)
+
 #Spreadsheet download function3
-client = gspread.authorize(credentials)
-spreadsheet = client.open_by_key(docid2)
-for i, worksheet in enumerate(spreadsheet.worksheets()):
-    filename = docid2 + '-worksheet' + str(i) + '.csv'
-    with open(filename, 'wb') as f:
-        writer = UnicodeWriter(f)
-        writer.writerows(worksheet.get_all_values())
-    time.sleep(10)
-
-#Spreadsheet download function4
-client = gspread.authorize(credentials)
-spreadsheet = client.open_by_key(docid3)
-for i, worksheet in enumerate(spreadsheet.worksheets()):
-    filename = docid3 + '-worksheet' + str(i) + '.csv'
-    with open(filename, 'wb') as f:
-        writer = UnicodeWriter(f)
-        writer.writerows(worksheet.get_all_values())
-    time.sleep(10)
-
-#Spreadsheet download function6
 client = gspread.authorize(credentials)
 spreadsheet = client.open_by_key(docid5)
 for i, worksheet in enumerate(spreadsheet.worksheets()):
@@ -95,32 +95,32 @@ for i, worksheet in enumerate(spreadsheet.worksheets()):
         writer.writerows(worksheet.get_all_values())
     time.sleep(10)
 
-#Spreadsheet download function7
-client = gspread.authorize(credentials)
-spreadsheet = client.open_by_key(docid6)
-for i, worksheet in enumerate(spreadsheet.worksheets()):
-    filename = docid6 + '-worksheet' + str(i) + '.csv'
-    with open(filename, 'wb') as f:
-        writer = UnicodeWriter(f)
-        writer.writerows(worksheet.get_all_values())
-    time.sleep(10)
+# #Spreadsheet download function4
+# client = gspread.authorize(credentials)
+# spreadsheet = client.open_by_key(docid6)
+# for i, worksheet in enumerate(spreadsheet.worksheets()):
+#     filename = docid6 + '-worksheet' + str(i) + '.csv'
+#     with open(filename, 'wb') as f:
+#         writer = UnicodeWriter(f)
+#         writer.writerows(worksheet.get_all_values())
+#     time.sleep(10)
 
-#Spreadsheet download function7
-client = gspread.authorize(credentials)
-spreadsheet = client.open_by_key(docid7)
-for i, worksheet in enumerate(spreadsheet.worksheets()):
-    filename = docid7 + '-worksheet' + str(i) + '.csv'
-    with open(filename, 'wb') as f:
-        writer = UnicodeWriter(f)
-        writer.writerows(worksheet.get_all_values())
-    time.sleep(10)
+# #Spreadsheet download function5
+# client = gspread.authorize(credentials)
+# spreadsheet = client.open_by_key(docid7)
+# for i, worksheet in enumerate(spreadsheet.worksheets()):
+#     filename = docid7 + '-worksheet' + str(i) + '.csv'
+#     with open(filename, 'wb') as f:
+#         writer = UnicodeWriter(f)
+#         writer.writerows(worksheet.get_all_values())
+#     time.sleep(10)
 
-#Spreadsheet download function8
-client = gspread.authorize(credentials)
-spreadsheet = client.open_by_key(docid8)
-for i, worksheet in enumerate(spreadsheet.worksheets()):
-    filename = docid8 + '-worksheet' + str(i) + '.csv'
-    with open(filename, 'wb') as f:
-        writer = UnicodeWriter(f)
-        writer.writerows(worksheet.get_all_values())
-    time.sleep(10)
+# #Spreadsheet download function6
+# client = gspread.authorize(credentials)
+# spreadsheet = client.open_by_key(docid8)
+# for i, worksheet in enumerate(spreadsheet.worksheets()):
+#     filename = docid8 + '-worksheet' + str(i) + '.csv'
+#     with open(filename, 'wb') as f:
+#         writer = UnicodeWriter(f)
+#         writer.writerows(worksheet.get_all_values())
+#     time.sleep(10)
