@@ -51,7 +51,7 @@ else
         echo "Arquivos nao existem!" 
 fi
 
-if [ -d $BASESTORAGE/obitos_por_bairro_covid-tile ];then    
+if [ -d $BASESTORAGE/obitos_por_bairro_covid-tiles ];then    
        
         echo "Arquivos existem apagando!" 
         cd $BASESTORAGE
