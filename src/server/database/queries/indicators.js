@@ -10,12 +10,14 @@ module.exports = function (app) {
 
     var filter = ""
     var cd_geocmu = params['cd_geocmu']
-
+    var f = "0"
     if (cd_geocmu == 52) {
       filter = "cd_geocmu <> '52' AND cd_geocmu <> '5300108' "
+      f = "'222'"
     }
     else {
       filter = "cd_geocmu = '" + cd_geocmu + "' "
+      f = "'" + cd_geocmu + "'"
     }
 
     return [
@@ -158,11 +160,11 @@ module.exports = function (app) {
 
       {
         id: 'estatisticas_municipios',
-        sql: "select cd_geocmu, total_dias, media_novos_casos_7dias, dias_duplicacao_confirmados from estatisticas where cd_geocmu = '" + cd_geocmu +"'"
+        sql: "select cd_geocmu, total_dias, media_novos_casos_7dias, dias_duplicacao_confirmados from estatisticas where cd_geocmu = '" + cd_geocmu + "'"
       },
       {
         id: 'estatisticas_luisa',
-        sql: "select data_pico_infectados_acumudado, data_pico_infectados_incidencia, taxa_crescimento, n_total_infectadados_pico , cd_geocmu from estatisticas_luisa where cd_geocmu = '" + cd_geocmu +"'"
+        sql: "select data_pico_infectados_acumudado, data_pico_infectados_incidencia, taxa_crescimento, n_total_infectadados_pico , cd_geocmu from estatisticas_luisa where cd_geocmu = '" + cd_geocmu + "'"
       }
     ]
   }
@@ -186,7 +188,7 @@ module.exports = function (app) {
     var cd_geocmu = params['cd_geocmu']
 
     if (cd_geocmu != 52 && cd_geocmu != undefined) {
-      filter = "  WHERE cd_geocmu = '"+cd_geocmu+"' "
+      filter = "  WHERE cd_geocmu = '" + cd_geocmu + "' "
     }
     else {
       filter = " "
@@ -195,7 +197,7 @@ module.exports = function (app) {
 
       {
         id: 'dates-neighborhoods',
-        sql: "SELECT  to_char(max(data_ultima_atualizacao), 'DD/MM/YYYY') as data_formatada, to_char(max(data_ultima_atualizacao), 'YYYY-MM-DD') as data_db, to_char(max(data_ultima_atualizacao), 'DD/MM') as data_rotulo FROM v_casos_bairros "+filter+" GROUP BY data_ultima_atualizacao ORDER BY data_ultima_atualizacao; "
+        sql: "SELECT  to_char(max(data_ultima_atualizacao), 'DD/MM/YYYY') as data_formatada, to_char(max(data_ultima_atualizacao), 'YYYY-MM-DD') as data_db, to_char(max(data_ultima_atualizacao), 'DD/MM') as data_rotulo FROM v_casos_bairros " + filter + " GROUP BY data_ultima_atualizacao ORDER BY data_ultima_atualizacao; "
       },
       {
         id: 'next',
@@ -210,12 +212,12 @@ module.exports = function (app) {
       {
         id: 'dates-projections',
         sql: "SELECT \n" +
-            "\tto_char(date_trunc('week', data), 'DD/MM/YYYY') as data_formatada,\n" +
-            "\tto_char(date_trunc('week', data), 'YYYY-MM-DD') as data_db,\n" +
-            "\tto_char(date_trunc('week', data), 'DD/MM') as data_rotulo\n" +
-            "FROM projecao_casos_mapa_luisa\n" +
-            "WHERE data >= NOW() \n" +
-            "GROUP BY date_trunc('week', data) ORDER BY date_trunc('week', data);"
+          "\tto_char(date_trunc('week', data), 'DD/MM/YYYY') as data_formatada,\n" +
+          "\tto_char(date_trunc('week', data), 'YYYY-MM-DD') as data_db,\n" +
+          "\tto_char(date_trunc('week', data), 'DD/MM') as data_rotulo\n" +
+          "FROM projecao_casos_mapa_luisa\n" +
+          "WHERE data >= NOW() \n" +
+          "GROUP BY date_trunc('week', data) ORDER BY date_trunc('week', data);"
       },
       {
         id: 'next',

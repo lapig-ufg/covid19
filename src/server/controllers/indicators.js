@@ -48,7 +48,7 @@ module.exports = function (app) {
         hideobito = false
       }
 
-      if (item.nome == "GOIÂNIA") {
+      if (item.cd_geocmu. == "5208707") {
         if (parseInt(item.recuperados) > 0) {
           hiderecuperados = false
         }
@@ -325,7 +325,7 @@ module.exports = function (app) {
         chart['text'] = chart.getText(chart)
       }
       chart['last_ob'] = qr[qr.length - 1];
-      chart['last_ob'].data = moment(chart['last_ob'].data ).format("DD/MM/YYYY")
+      chart['last_ob'].data = moment(chart['last_ob'].data).format("DD/MM/YYYY")
 
     }
 
@@ -448,12 +448,11 @@ module.exports = function (app) {
     if (Array.isArray(queryResult)) {
       if (queryResult.length > 0) {
         queryResult.forEach(function (item, index) {
-          if(allowGeo.includes(item.geocodigo) )
-          {
+          if (allowGeo.includes(item.geocodigo)) {
             showRegion = true;
           }
 
-          if(item.regiao === null){
+          if (item.regiao === null) {
             delete item['regiao']
           }
 
@@ -487,7 +486,7 @@ module.exports = function (app) {
       fonte: fonte,
       data_ultima_atualizacao: moment(data_ultima_atualizacao).format("DD/MM/YYYY"),
       series: queryResult,
-      showRegion : showRegion
+      showRegion: showRegion
     }
     response.send(result)
     response.end()
@@ -535,12 +534,11 @@ module.exports = function (app) {
     if (Array.isArray(queryResult)) {
       if (queryResult.length > 0) {
         queryResult.forEach(function (item, index) {
-          if(allowGeo.includes(item.geocodigo) )
-          {
+          if (allowGeo.includes(item.geocodigo)) {
             showRegion = true;
           }
 
-          if(item.regiao === null){
+          if (item.regiao === null) {
             delete item['regiao']
           }
 
@@ -574,7 +572,7 @@ module.exports = function (app) {
       fonte: fonte,
       data_ultima_atualizacao: moment(data_ultima_atualizacao).format("DD/MM/YYYY"),
       series: queryResult,
-      showRegion : showRegion
+      showRegion: showRegion
     }
     response.send(result)
     response.end()
@@ -769,7 +767,7 @@ module.exports = function (app) {
 
     let requestLastUpdate = {
       headers: {
-        'x-parse-application-id':'unAFkcaNDeXajurGB7LChj8SgQYS2ptm'
+        'x-parse-application-id': 'unAFkcaNDeXajurGB7LChj8SgQYS2ptm'
       },
       uri: 'https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalGeral',
       method: 'GET'
@@ -1007,7 +1005,7 @@ module.exports = function (app) {
 
   Controller.covidBio = async function (request, response) {
     let pageCovid = await rp('http://covid.bio.br/');
-    response.send({page: pageCovid});
+    response.send({ page: pageCovid });
     response.end();
   };
   return Controller;
