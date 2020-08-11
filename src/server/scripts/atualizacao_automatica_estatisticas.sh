@@ -33,17 +33,29 @@ sleep 2
 
 python2 download_planilha_estatisticas.py
 
-mv 1uCWUVbEaI8kQvQCuwsAGXuHc-Y8Ab_ottunsz3ib6M0-worksheet0.csv projecao_casos_go.csv
+# mv 1uCWUVbEaI8kQvQCuwsAGXuHc-Y8Ab_ottunsz3ib6M0-worksheet0.csv projecao_casos_go.csv 
 
-mv 17MUnurVVXmhcwJwRA0cV1L83zm7pMbat0jljKnESEI0-worksheet0.csv estatisticas.csv
+# mv 17MUnurVVXmhcwJwRA0cV1L83zm7pMbat0jljKnESEI0-worksheet0.csv estatisticas.csv 
 
-mv 1fO70w9OI1sbRiyHmD9HQZiG_Wa7vqrwpgSigeHRMAD4-worksheet0.csv recuperados.csv
+mv 1fO70w9OI1sbRiyHmD9HQZiG_Wa7vqrwpgSigeHRMAD4-worksheet0.csv recuperados.csv 
 
-mv 1x9zk22gE8p8suaqfdtm3rPLGHvxEIN8mMCU2Mn7XTkI-worksheet0.csv projecao_casos_go_luisa.csv
+# mv 1x9zk22gE8p8suaqfdtm3rPLGHvxEIN8mMCU2Mn7XTkI-worksheet0.csv projecao_casos_go_luisa.csv 
 
-mv 1ELlIaPqgSZubGQOJy1pXVQa60Az9YfjAfPZ1UeiKseY-worksheet0.csv estatisticas_luisa.csv
+# mv 1ELlIaPqgSZubGQOJy1pXVQa60Az9YfjAfPZ1UeiKseY-worksheet0.csv estatisticas_luisa.csv
 
-mv 1wa6WKm2amGY47Klz5oedttvWpTPew2LbbbHwYKF2tds-worksheet0.csv medias_moveis.csv
+# mv 1wa6WKm2amGY47Klz5oedttvWpTPew2LbbbHwYKF2tds-worksheet0.csv medias_moveis.csv 
+
+cp -rvp /data/projetos/planilhas_covid_bauman/*.csv $BASELOCAL
+
+mv tabela_prev_casos_conf_municipios.csv projecao_casos_go.csv
+
+mv tabela_estatistica_municipios.csv estatisticas.csv
+
+mv tabela_prev_mod_logistico_luisa_adaptado.csv projecao_casos_go_luisa.csv
+
+mv tabela_estatisticas_mod_logistico_luisa_adaptado.csv estatisticas_luisa.csv
+
+mv dados_MM7_novos_casos.csv medias_moveis.csv
 
 clear
 echo -n -e "Planilha baixada com sucesso!"
