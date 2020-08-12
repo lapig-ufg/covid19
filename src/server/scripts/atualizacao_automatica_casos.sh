@@ -45,8 +45,8 @@ rm -rfv casos_confirmados.csv
 
 rm -rfv obitos_confirmados.csv
 
-wget http://datasets.saude.go.gov.br/coronavirus/casos_confirmados.csv && cat casos_confirmados.csv | tr ';' '.' > confirmados.csv
-wget http://datasets.saude.go.gov.br/coronavirus/obitos_confirmados.csv && cat obitos_confirmados.csv | tr ';' '.' > obitos.csv
+wget http://datasets.saude.go.gov.br/coronavirus/casos_confirmados.csv && cat casos_confirmados.csv | tr ';' ',' > confirmados.csv
+wget http://datasets.saude.go.gov.br/coronavirus/obitos_confirmados.csv && cat obitos_confirmados.csv | tr ';' ',' > obitos.csv
 
 clear
 echo -n -e "Populando banco de dados!"
@@ -69,17 +69,17 @@ if [ -d $BASESTORAGE/covid19_municipios_casos_utfgrid-tiles ];then
         cd covid19_municipios_casos_utfgrid-tiles 
         rm -rfv *
     
-else	
+else    
         echo "Arquivos nao existem!" 
 fi
 
 if [ -d $BASESTORAGE/covid19_municipios_casos-tiles ];then    
        
         echo "Arquivos existem apagando!" 
-    	cd $BASESTORAGE
-    	cd covid19_municipios_casos-tiles
-    	rm -rfv * 
-else	
+        cd $BASESTORAGE
+        cd covid19_municipios_casos-tiles
+        rm -rfv * 
+else    
         echo "Arquivos nao existem!" 
 fi
 
