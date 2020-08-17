@@ -12,9 +12,10 @@ TOKEN="1370924692:AAFd-MW3vei_24_HkQxcwHPYtKJmKnFT2so"
 
 function UPDATE-COVID19-ALERT
 {
-curl --silent --output /dev/null  "https://api.telegram.org/bot$TOKEN/sendMessage?chat_id=$chat_id&text=$SUBJECT" > /dev/null 
+curl --silent --output /dev/null  "https://api.telegram.org/bot$TOKEN/sendMessage?chat_id=$chat_id&text=$SUBJECT" 
 }
 
+SUBJECT="✅ UPDATE atualizacao_automatica_casos.sh on 200.137.217.159 Server Time : $(date +" %d %b %Y %T")"
 
 apt-get -y install pv >> /dev/null
 
@@ -94,9 +95,7 @@ echo "Rotina atualizacao_automatica_casos.sh Concluida em $END_DATE" | tee -a  /
 
 echo -n "Enviando Mensagem ao Telegram"
 
-SUBJECT="✅ UPDATE atualizacao_automatica_casos.sh on 200.137.217.159 Server Time : $(date +" %d %b %Y %T")"
 UPDATE-COVID19-ALERT
-
 
 echo -e "LOG DE EXECUÇÃO DA ATUALIZAÇÃO: \n\n"
 
