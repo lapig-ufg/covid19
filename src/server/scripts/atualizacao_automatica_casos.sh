@@ -6,16 +6,17 @@ START_DATE=`date +%d-%m-%Y-%H.%M.%S`
 
 echo -e "\n\nRotina atualizacao_automatica_casos.sh iniciada em: $START_DATE" | tee -a /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
 
-#Include telegram chat id and bot token ID here
+#Include telegram chat id and bot token ID here and URL variable
 chat_id="-427575689"
 TOKEN="1370924692:AAFd-MW3vei_24_HkQxcwHPYtKJmKnFT2so"
+URL="https://api.telegram.org/bot$TOKEN/sendMessage"
 
 function UPDATE-COVID19-ALERT
 {
-curl --silent --output /dev/null  "https://api.telegram.org/bot$TOKEN/sendMessage?chat_id=$chat_id&text=$SUBJECT" 
-}
 
-SUBJECT="✅ UPDATE atualizacao_automatica_casos.sh on 200.137.217.159 Server Time : $(date +" %d %b %Y %T")"
+curl -s -X POST $URL -d chat_id="$chat_id" -d text="$SUBJECT" > /dev/null 2>&1
+
+}
 
 apt-get -y install pv >> /dev/null
 
@@ -94,7 +95,7 @@ END_DATE=`date +%d-%m-%Y-%H.%M.%S`
 echo "Rotina atualizacao_automatica_casos.sh Concluida em $END_DATE" | tee -a  /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
 
 echo -n "Enviando Mensagem ao Telegram"
-
+SUBJECT="✅ UPDATE atualizacao_automatica_casos.sh on 200.137.217.159 Server Time : $(date +" %d %b %Y %T")"
 UPDATE-COVID19-ALERT
 
 echo -e "LOG DE EXECUÇÃO DA ATUALIZAÇÃO: \n\n"
