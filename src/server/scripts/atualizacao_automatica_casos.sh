@@ -51,8 +51,6 @@ cd /data/containers/APP_COVID19/APP/covid19/src/server/scripts
 
 wget http://datasets.saude.go.gov.br/coronavirus/casos_confirmados.csv
 
-cd /data/containers/APP_COVID19/APP/covid19/src/server/scripts/ 
-
 cat confirmados.csv | tr ';' ',' > confirmados.csv
 
 cd /data/containers/APP_COVID19/APP/covid19/src/server/scripts
