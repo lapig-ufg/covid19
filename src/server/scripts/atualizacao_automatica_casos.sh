@@ -51,7 +51,7 @@ cd /data/containers/APP_COVID19/APP/covid19/src/server/scripts
 
 wget http://datasets.saude.go.gov.br/coronavirus/casos_confirmados.csv
 
-cat confirmados.csv | tr ';' ',' > confirmados.csv
+cat casos_confirmados.csv | tr ';' ',' > confirmados.csv
 
 cd /data/containers/APP_COVID19/APP/covid19/src/server/scripts
 
@@ -73,25 +73,25 @@ clear
 echo -n -e "Excluindo Cache!"
 sleep 2
 
-if [ -d $BASESTORAGE/covid19_municipios_casos_utfgrid-tiles ];then    
-       
+if [ -d $BASESTORAGE/covid19_municipios_casos_utfgrid-tiles ];then
+
         echo "Arquivos existem apagando!"
         cd $BASESTORAGE
-        cd covid19_municipios_casos_utfgrid-tiles 
+        cd covid19_municipios_casos_utfgrid-tiles
         rm -rfv *
-    
-else    
-        echo "Arquivos nao existem!" 
+
+else
+        echo "Arquivos nao existem!"
 fi
 
-if [ -d $BASESTORAGE/covid19_municipios_casos-tiles ];then    
-       
-        echo "Arquivos existem apagando!" 
+if [ -d $BASESTORAGE/covid19_municipios_casos-tiles ];then
+
+        echo "Arquivos existem apagando!"
         cd $BASESTORAGE
         cd covid19_municipios_casos-tiles
-        rm -rfv * 
-else    
-        echo "Arquivos nao existem!" 
+        rm -rfv *
+else
+        echo "Arquivos nao existem!"
 fi
 
 clear
