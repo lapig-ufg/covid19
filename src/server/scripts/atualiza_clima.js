@@ -1,229 +1,279 @@
+/**
+ * @description Read files synchronously from a folder, with natural sorting
+ * @param {String} dir Absolute path to directory
+ * @returns {Object[]} List of object, each object represent a file
+ * structured like so: `{ filepath, name, ext, stat }`
+ */
+
 const fs = require('fs');
 const path = require('path');
-const async = require('async')
-
 const moment = require("moment");
+const csv = require("csv-parser");
+const parse = require('csv-parse/lib/sync');
+const fastcsv = require('fast-csv');
+
+var StringBuffer = require("stringbuffer");
+
 
 const {
-  Pool,
-  Client
+    Pool,
+    Client
 } = require('pg')
-const csv = require('csv-parser');
 const { resolve } = require('app-root-path');
 
 var config = require('../configScript.js')()
 var pool = new Pool(config['pg'])
 
+var insertSQLPM = 'INSERT INTO dados_clima(cd_geocmu,nome_municipio,latitude,longitude,aod,pm25,iqa,temperatura,ur,data_modelo,data_previsao,data_atualizacao) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING gid'
+// var updateSQLTEMP = 'UPDATE dados_clima set temperatura = $1,ur = $2 where cd_geocmu = $3 and data_modelo = $4 AND data_previsao = $5'
 
 
-var csvFolderPath = '/home/luizmlpascoal/Downloads/datdpos/dados-test';
+var csvFolderPath = '/data/containers/APP_COVID19/APP/teste/dados-test';
 
-var insertSQLPM = 'INSERT INTO dados_clima(cd_geocmu,nome_municipio,latitude,longitude,aod,pm25,iqa,data_modelo,data_previsao,data_atualizacao) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING gid'
-var updateSQLTEMP = 'UPDATE dados_clima set temperatura = $1,ur = $2 where cd_geocmu = $3 and data_modelo = $4 AND data_previsao = $5'
 
-readFiles(csvFolderPath, (filepath, name, ext, stat) => {
-  // console.log('file path:', filepath);
-  // console.log('file name:', name);
-  // console.log('file extension:', ext);
-  // console.log('file information:', stat);
+var vecPM25 = getPM25();
+var vecTEMP = getTEMP_UR();
 
-  if (ext == '.csv') {
+var tab = unionVecs(vecPM25, vecTEMP);
 
-    var name_split = name.split('_');
-    var csvRows = []
+console.log(tab.length)
 
-    if (name.includes('PM25')) {
-      fs.createReadStream(filepath)
-        .pipe(csv())
-        .on('data', (row) => {
-          csvRows.push(row)
-        })
-        .on('end', () => {
 
-          (async () => {
+saveCSV(tab)
+//createSQLFile(tab);
+insertDB(tab)
 
-            const client = await pool.connect()
-            try {
-              await client.query('BEGIN')
+function createSQLFile(table) {
+    var sb = new StringBuffer();
+    let text = "INSERT INTO dados_clima(cd_geocmu,nome_municipio,latitude,longitude,aod,pm25,iqa,temperatura,ur,data_modelo,data_previsao,data_atualizacao) VALUES("
+    let fim = ");\n"
+    for (ob of table) {
 
-              console.log("Executando .. " + filepath)
+        if (ob.nome_municipio.includes("'")) {
+            ob.nome_municipio = ob.nome_municipio.replace("'", "");
+        }
 
-              // var data_inicial = new Date(name_split[1])
-              var str_dataIni = name_split[1] + " " + name_split[4]
-              var data_inicial = moment(str_dataIni, "YYYYMMDD HHmm").format('YYYY-MM-DD hh:mm')
-              // var data_final = new Date(name_split[2]).format('YYYYMMDD');
+        let values = "'" + ob.cd_geocmu + "'," + "'" + ob.nome_municipio + "'," + ob.latitude + "," + ob.longitude + "," + ob.aod + "," + ob.pm25 + ",'" + ob.iqa + "',"
+            + ob.temperatura + "," + ob.ur + "," + "'" + ob.data_modelo + "'," + "'" + ob.data_previsao + "'," + "'" + ob.data_atualizacao + "'";
+        sb.append(text + values + fim)
+    }
 
-              var str_dataFim = name_split[2] + " " + name_split[4]
-              var data_final = moment(str_dataFim, "YYYYMMDD HHmm").format('YYYY-MM-DD hh:mm')
+    // write to a new file named 2pac.txt
+    fs.writeFile(csvFolderPath + '/final/insert.sql', sb.toString(), (err) => {
+        // throws an error, you could also catch it here
+        if (err) throw err;
 
-              // var data_final = moment(name_split[2], "YYYYMMDD").format('YYYY-MM-DD')
-              var data_atualizacao = moment().format('YYYY-MM-DD')
+        // success case, the file was saved
+        console.log('CSV saved!');
+    });
+}
 
-              for (i in csvRows) {
-                var row = csvRows[i]
 
-                var ob = {
-                  cd_geocmu: row.Geocodigo,
-                  nome_municipio: row.Municipio,
-                  latitude: Number(row.Lat),
-                  longitude: Number(row.Lon),
-                  aod: Number(row.AOD),
-                  pm25: Number(row.PM25),
-                  iqa: row.IQA
+function saveCSV(data) {
 
-                };
+    let dir = csvFolderPath + '/final/'
+
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+    }
+
+    const ws = fs.createWriteStream(dir + 'test.csv');
+    fastcsv.write(data, { headers: true }).pipe(ws);
+}
+
+function insertDB(csvRows) {
+
+
+    (async () => {
+
+        const client = await pool.connect()
+        try {
+            await client.query('BEGIN')
+
+            console.log("Executando insertion.. ")
+
+            for (ob of csvRows) {
 
                 /* for initial population*/
-                var rowValues = [ob.cd_geocmu, ob.nome_municipio, ob.latitude, ob.longitude, ob.aod, ob.pm25, ob.iqa, data_inicial, data_final, data_atualizacao]
+                var rowValues = [ob.cd_geocmu, ob.nome_municipio, ob.latitude, ob.longitude, ob.aod, ob.pm25, ob.iqa, ob.temperatura, ob.ur, new Date(ob.data_modelo),
+                new Date(ob.data_previsao), new Date(ob.data_atualizacao)]
                 // console.log(rowValues)
                 const res = await client.query(insertSQLPM, rowValues)
 
-                // var rowValues = [row.tipo, row.ordem_dia, row.data, row.codigo_municipio, row.municipios, row.total_casos]
-                // const res = await client.query(insertRow, rowValues)
-                // console.log(ob.nome_municipio + ' inserted.')
-                // } else  {
-                // 	console.log('Duplicated register ignored.')
-                // }
-
-              }
-
-              console.log("Doing commit")
-              await client.query('COMMIT')
-
-            } catch (e) {
-              console.log("Doing rollback")
-              await client.query('ROLLBACK')
-              throw e
-            } finally {
-              client.release()
             }
-            console.log('fim')
-          }
-          )().catch(e => console.error(e.stack))
 
-        });
+            console.log("Doing commit")
+            await client.query('COMMIT')
+
+        } catch (e) {
+            console.log("Doing rollback")
+            await client.query('ROLLBACK')
+            throw e
+        } finally {
+            client.release()
+        }
+        console.log('fim')
     }
-    else {
+    )().catch(e => console.error(e.stack))
+}
 
-      fs.createReadStream(filepath)
-        .pipe(csv())
-        .on('data', (row) => {
-          csvRows.push(row)
+function unionVecs(vecPM25, vecTEMP) {
+    let tabela = []
+    for (let ob25 of vecPM25) {
+        for (let t of vecTEMP) {
+            if (ob25.cd_geocmu === t.cd_geocmu && new Date(ob25.data_modelo).getTime() === new Date(t.data_modelo).getTime() &&
+                new Date(ob25.data_previsao).getTime() === new Date(t.data_previsao).getTime()) {
+                let o = {
+                    cd_geocmu: ob25.cd_geocmu,
+                    nome_municipio: ob25.nome_municipio.replace("'", ""),
+                    latitude: ob25.latitude,
+                    longitude: ob25.longitude,
+                    aod: ob25.aod,
+                    pm25: ob25.pm25,
+                    iqa: ob25.iqa,
+                    temperatura: t.temperatura,
+                    ur: t.ur,
+                    data_modelo: ob25.data_modelo,
+                    data_previsao: ob25.data_previsao,
+                    data_atualizacao: ob25.data_atualizacao
+                }
+
+                // console.log(o)
+                tabela.push(o)
+            }
+        }
+    }
+
+    return tabela;
+}
+
+
+function getPM25() {
+    const files = readFilesSync(csvFolderPath, 'PM25');
+    // console.log(files)
+    var returnVec = []
+    for (file of files) {
+        // var csvRows = []
+        let filepath = file.filepath
+
+        var myMap = fs.readFileSync(filepath, 'utf8');
+        const csvRows = parse(myMap, {
+            columns: true,
+            skip_empty_lines: true
         })
-        .on('end', async () => {
 
-          (async () => {
+        var name_split = file.name.split('_');
 
-            const client = await pool.connect()
-            try {
-              await client.query('BEGIN')
+        var str_dataIni = name_split[1] + " " + name_split[4]
+        var data_inicial = moment(str_dataIni, "YYYYMMDD HHmm").format('YYYY-MM-DD HH:mm')
+        // var data_final = new Date(name_split[2]).format('YYYYMMDD');
 
-              console.log("Else .. " + filepath)
+        var str_dataFim = name_split[2] + " " + name_split[4]
+        var data_final = moment(str_dataFim, "YYYYMMDD HHmm").format('YYYY-MM-DD HH:mm')
 
-              // var data_inicial = new Date(name_split[1])
-              var str_dataIni = name_split[1] + " " + name_split[4]
-              var data_inicial = moment(str_dataIni, "YYYYMMDD HHmm").format('YYYY-MM-DD hh:mm')
-              // var data_final = new Date(name_split[2]).format('YYYYMMDD');
+        // var data_final = moment(name_split[2], "YYYYMMDD").format('YYYY-MM-DD')
+        var data_atualizacao = moment().format('YYYY-MM-DD')
 
-              var str_dataFim = name_split[2] + " " + name_split[4]
-              var data_final = moment(str_dataFim, "YYYYMMDD HHmm").format('YYYY-MM-DD hh:mm')
+        for (let i in csvRows) {
+            var row = csvRows[i]
 
-              // var data_final = moment(name_split[2], "YYYYMMDD").format('YYYY-MM-DD')
-              var data_atualizacao = moment().format('YYYY-MM-DD')
+            var ob = {
+                cd_geocmu: row.Geocodigo,
+                nome_municipio: row.Municipio,
+                latitude: Number(row.Lat),
+                longitude: Number(row.Lon),
+                aod: Number(row.AOD),
+                pm25: Number(row.PM25),
+                iqa: row.IQA,
+                data_modelo: data_inicial,
+                data_previsao: data_final,
+                data_atualizacao: data_atualizacao
 
-              for (i in csvRows) {
-                var row = csvRows[i]
+            };
 
-                var ob = {
-                  cd_geocmu: row.Geocodigo,
-                  nome_municipio: row.Municipio,
-                  latitude: Number(row.Lat),
-                  longitude: Number(row.Lon),
-                  temperatura: Number(row.TEMP),
-                  ur: Number(row.UR),
+            returnVec.push(ob)
+        }
 
-                };
-
-                /* for initial population*/
-                var rowValues = [ob.temperatura, ob.ur, ob.cd_geocmu, data_inicial, data_final]
-                // console.log(rowValues)
-                const res = await client.query(updateSQLTEMP, rowValues)
-
-                // var rowValues = [row.tipo, row.ordem_dia, row.data, row.codigo_municipio, row.municipios, row.total_casos]
-                // const res = await client.query(insertRow, rowValues)
-                // console.log(ob.nome_municipio + ' inserted.')
-                // } else  {
-                // 	console.log('Duplicated register ignored.')
-                // }
-
-              }
-
-              console.log("Doing commit")
-              await client.query('COMMIT')
-
-            } catch (e) {
-              console.log("Doing rollback")
-              await client.query('ROLLBACK')
-              throw e
-            } finally {
-              client.release()
-            }
-            console.log('fim')
-          }
-          )().catch(e => console.error(e.stack))
-
-        });
+        // console.log(returnVec)
+        // console.log("fim", file.name)
+        // console.log("csv - ", csvRows.length)
+        // console.log("vec - ", returnVec.length)
     }
-  }
-});
+    return returnVec;
+}
+
+function getTEMP_UR() {
+    const files = readFilesSync(csvFolderPath, 'TEMP-UR');
+    // console.log(files)
+    var returnVec = []
+    for (file of files) {
+        // var csvRows = []
+        let filepath = file.filepath
+
+        var myMap = fs.readFileSync(filepath, 'utf8');
+        const csvRows = parse(myMap, {
+            columns: true,
+            skip_empty_lines: true
+        })
+
+        var name_split = file.name.split('_');
+        var str_dataIni = name_split[1] + " " + name_split[4]
+        var data_inicial = moment(str_dataIni, "YYYYMMDD HHmm").format('YYYY-MM-DD HH:mm')
+        // var data_final = new Date(name_split[2]).format('YYYYMMDD');
+
+        var str_dataFim = name_split[2] + " " + name_split[4]
+        var data_final = moment(str_dataFim, "YYYYMMDD HHmm").format('YYYY-MM-DD HH:mm')
 
 
+        for (let i in csvRows) {
+            var row = csvRows[i]
 
+            var ob = {
+                cd_geocmu: row.Geocodigo,
+                nome_municipio: row.Municipio,
+                latitude: Number(row.Lat),
+                longitude: Number(row.Lon),
+                temperatura: Number(row.TEMP),
+                ur: Number(row.UR),
+                data_modelo: data_inicial,
+                data_previsao: data_final,
+            };
 
-function readFiles(dir, processFile) {
-  // read directory
+            /* for initial population*/
+            // var rowValues = [ob.cd_geocmu, ob.nome_municipio, ob.latitude, ob.longitude, ob.aod, ob.pm25, ob.iqa, data_inicial, data_final, data_atualizacao]
+            // console.log(rowValues)
+            returnVec.push(ob)
+        }
 
-  var fileNames = [];
-  fs.readdirSync(dir).forEach(file => {
-    const name = path.parse(file).name;
-    if (name.includes('PM25')) {
-      fileNames.push(file)
+        // console.log(returnVec)
+        // console.log("fim", file.name)
+        // console.log("csv - ", csvRows.length)
+        // console.log("vec - ", returnVec.length)
     }
-  });
+    return returnVec;
+}
 
-  fs.readdirSync(dir).forEach(file => {
-    const name = path.parse(file).name;
-    if (name.includes('TEMP-UR')) {
-      fileNames.push(file)
-    }
-  });
+function readFilesSync(dir, stringPart) {
+    const files = [];
 
-  // fs.readdir(dir, (error, fileNames) => {
-  // if (error) throw error;
+    fs.readdirSync(dir).forEach(filename => {
+        const name = path.parse(filename).name;
+        const ext = path.parse(filename).ext;
+        const filepath = path.resolve(dir, filename);
+        const stat = fs.statSync(filepath);
+        const isFile = stat.isFile();
 
-  for (const [index, filename] of fileNames.entries()) {
-    // fileNames.forEach(filename => {
-    // get current file name
-
-    const name = path.parse(filename).name;
-    // get current file extension
-    const ext = path.parse(filename).ext;
-    // get current file path
-    const filepath = path.resolve(dir, filename);
-
-    // get information about the file
-    fs.stat(filepath, function (error, stat) {
-      if (error) throw error;
-
-      // check if the current path is a file or a folder
-      const isFile = stat.isFile();
-
-      // exclude folders
-      if (isFile) {
-        // callback, do something with the file
-        processFile(filepath, name, ext, stat);
-      }
+        if (isFile) {
+            if (ext == '.csv' && name.includes(stringPart))
+                files.push({ filepath, name, ext, stat });
+        }
     });
-  };
-  // });
+
+    // files.sort((a, b) => {
+    //     // natural sort alphanumeric strings
+    //     // https://stackoverflow.com/a/38641281
+    //     return a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
+    // });
+
+    return files;
 }

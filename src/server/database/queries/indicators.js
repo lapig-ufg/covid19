@@ -23,7 +23,7 @@ module.exports = function (app) {
     return [
       {
         id: 'timeseries_go',
-        sql: "select (select nome from municipios where cd_geocmu = '" + cd_geocmu + "'), data, sum(confirmados) as confirmados, sum(suspeitos) as suspeitos, sum(obitos) as obitos , sum(descartados) as descartados, sum(recuperados) as recuperados from casos where " + filter + " group by data order by data;"
+        sql: "select (select nome from municipios where cd_geocmu = '" + cd_geocmu + "'), (select cd_geocmu from municipios where cd_geocmu = '" + cd_geocmu + "'), data, sum(confirmados) as confirmados, sum(suspeitos) as suspeitos, sum(obitos) as obitos , sum(descartados) as descartados, sum(recuperados) as recuperados from casos where " + filter + " group by data order by data;"
       },
       {
         id: 'timeseries_cities',

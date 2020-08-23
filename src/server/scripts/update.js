@@ -410,10 +410,10 @@ class Update {
 
     async up(callback) {
 
-        (async () => {
+        /*(async () => {
             await this.getConfimadosSES();
             await this.getObitosSES();
-        })().catch(e => console.error(e.stack))
+        })().catch(e => console.error(e.stack))*/
 
         let tabela = [];
         let self = this;

@@ -43,15 +43,20 @@ module.exports = function (app) {
   function createDataSetTimeSeriesGO(labels, graphic, language) {
     let hideobito = true;
     let hiderecuperados = true;
+
+    let allowGeo = ["5208707"];
+
     graphic.forEach(function (item, i) {
       if (parseInt(item.obitos) > 0) {
         hideobito = false
       }
 
-      if (item.cd_geocmu. == "5208707") {
+      if (allowGeo.includes(item.cd_geocmu)) {
         if (parseInt(item.recuperados) > 0) {
           hiderecuperados = false
         }
+      } else {
+        item.recuperados = null
       }
 
     })
