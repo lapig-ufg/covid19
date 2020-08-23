@@ -225,6 +225,20 @@ module.exports = function (app) {
       }
     ]
   }
+
+  Query.datesClima = function (params) {
+    return [
+
+      {
+        id: 'dates-clima-temperatura',
+        sql: "SELECT data_previsao, to_char(data_previsao, 'DD/MM HH24:MI') as f_data_previsao, to_char(data_atualizacao, 'DD/MM/YYYY') as f_data_atualizacao, to_char(data_modelo, 'DD/MM/YYYY') as f_data_modelo from v_clima_temperatura where data_atualizacao = (select max(data_atualizacao) from v_clima_temperatura)"
+      },
+      {
+        id: 'next',
+        sql: "select true"
+      }
+    ]
+  }
   return Query;
 
 };

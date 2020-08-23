@@ -1013,6 +1013,12 @@ module.exports = function (app) {
     response.send({ page: pageCovid });
     response.end();
   };
+
+  Controller.datesClima = function (request, response) {
+    let dates = request.queryResult['dates-clima-temperatura'];
+    response.send(dates);
+    response.end();
+  };
   return Controller;
 };
 
