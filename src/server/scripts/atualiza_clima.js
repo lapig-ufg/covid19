@@ -28,7 +28,8 @@ var insertSQLPM = 'INSERT INTO dados_clima(cd_geocmu,nome_municipio,latitude,lon
 // var updateSQLTEMP = 'UPDATE dados_clima set temperatura = $1,ur = $2 where cd_geocmu = $3 and data_modelo = $4 AND data_previsao = $5'
 
 
-var csvFolderPath = '/data/containers/APP_COVID19/APP/teste/dados-test';
+// var csvFolderPath = '/data/containers/APP_COVID19/APP/teste/dados-test';
+var csvFolderPath = '/home/luizmlpascoal/Downloads/datdpos/dados-test';
 
 
 var vecPM25 = getPM25();
