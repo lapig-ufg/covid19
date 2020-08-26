@@ -46,21 +46,21 @@ module.exports = function (app) {
           group_expanded: true,
           layers: [
             {
-            id: "casos_covid_confirmados",
-            label: languageJson["descriptor"]["informacoes"]["layers"]["casos_covid_confirmados"]["label"][language],
-            visible: true,
-            selectedType: "covid19_municipios_casos",
-            types: [{
-              value: "covid19_municipios_casos",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_covid_confirmados"]["types"]["covid19_municipios_casos"]["view_value"][language],
-              regionFilter: false,
-              layerfilter: "data = (select max(data) from casos)",
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            }]
-          },
-           {
+              id: "casos_covid_confirmados",
+              label: languageJson["descriptor"]["informacoes"]["layers"]["casos_covid_confirmados"]["label"][language],
+              visible: true,
+              selectedType: "covid19_municipios_casos",
+              types: [{
+                value: "covid19_municipios_casos",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_covid_confirmados"]["types"]["covid19_municipios_casos"]["view_value"][language],
+                regionFilter: false,
+                layerfilter: "data = (select max(data) from casos)",
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              }]
+            },
+            {
               id: "casos_bairro",
               label: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["label"][language],
               visible: false,
@@ -192,6 +192,25 @@ module.exports = function (app) {
               }
             ]
           },
+            {
+              id: "clima_temperatura",
+              label: languageJson["descriptor"]["informacoes"]["layers"]["clima_temperatura"]["label"][language],
+              visible: false,
+              showLayer: false,
+              selectedType: "clima_temperatura_em_goias",
+              showTypes: true,
+              types: [
+                {
+                  value: "clima_temperatura_em_goias",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["clima_temperatura"]["types"]["clima_temperatura_em_goias"]["view_value"][language],
+                  layerfilter: "data_previsao = (select min(data_previsao) from v_clima_temperatura)",
+                  regionFilter: false,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3,
+                }
+              ]
+            },
             {
             id: "urban_traffic",
             label: languageJson["descriptor"]["informacoes"]["layers"]["urban_traffic"]["label"][language],

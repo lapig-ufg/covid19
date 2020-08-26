@@ -487,6 +487,22 @@
 		"last_update": {
 			"pt-br": "ùltima atualização em:",
 			"en-us": "Last update on:"
+		},
+		"data_previsao": {
+			"pt-br": "Data da previsão: ",
+			"en-us": "Forecast date: "
+		},
+		"iqa": {
+			"pt-br": "Qualidade do ar: ",
+			"en-us": "Air quality: "
+		},
+		"temperatura": {
+			"pt-br": "Temperatura: ",
+			"en-us": "Temperature: "
+		},
+		"data_modelo": {
+			"pt-br": "Data de Geração do Modelo:",
+			"en-us": "Model Generation Date:"
 		}
 	},
 	"summary_box":{
@@ -775,6 +791,28 @@
 							"default_placeholder":{
 								"pt-br": "Selecione aqui...",
 								"en-us": "Select here..."
+							}
+						}
+					}
+				},
+				"clima_temperatura": {
+					"label": {
+						"pt-br": "Previsão de Qualidade do Ar e Temperatura",
+						"en-us": "Air Quality and Temperature Forecast"
+					},
+					"types": {
+						"clima_temperatura_em_goias": {
+							"view_value": {
+								"pt-br": "Previsão de Qualidade do Ar e Temperatura",
+								"en-us": "Air Quality and Temperature Forecast"
+							},
+							"timelabel": {
+								"pt-br": "Previsão de Qualidade do Ar e Temperatura",
+								"en-us": "Air Quality and Temperature Forecast"
+							},
+							"default_placeholder":{
+								"pt-br": "Previsão de Qualidade do Ar e Temperatura",
+								"en-us": "Air Quality and Temperature Forecast"
 							}
 						}
 					}
@@ -1235,6 +1273,10 @@
 			"pt-br": "Projeções de [layer] para as próximas [weeks] semanas",
 			"en-us": "[Layer] projections for the next [weeks] weeks"
 		},
+		"text_temperatures": {
+			"pt-br": "Previsão de Qualidade do Ar e Temperatura para os próximos 3 dias.",
+			"en-us": "Air Quality and Temperature forecast for the next 3 days."
+		},
 		"label_name": {
 			"pt-br": "Nome: ",
 			"en-us": "Name: "
@@ -1298,6 +1340,10 @@
 		"label_print_map": {
 			"pt-br": "Imprimir mapa",
 			"en-us": "Print map"
+		},
+		"label_humidities": {
+			"pt-br": "Temperatura",
+			"en-us": "Temperature"
 		}
 	},
 	"team": {
