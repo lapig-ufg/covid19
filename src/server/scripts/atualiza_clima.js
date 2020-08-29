@@ -266,7 +266,7 @@ function getTEMP_UR() {
                 ur: Number(row.UR),
                 data_modelo: data_inicial,
                 data_previsao: data_final,
-                iqa_categoria: row.IQA - Categoria
+                iqa_categoria: row.IQA_Categoria
             };
 
             /* for initial population*/
