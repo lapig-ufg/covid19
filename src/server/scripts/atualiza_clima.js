@@ -38,15 +38,22 @@ var insertSQLPM = 'INSERT INTO dados_clima(cd_geocmu,nome_municipio,latitude,lon
 
 var baseFolder = env.CLIMA_FOLDER;
 var today = moment()
+
 let month = ''
 if (parseInt(today.month()) < 10) {
     month = '0' + (parseInt(today.month()) + 1)
 }
-let day = ''
-if (parseInt(today.day()) < 10) {
-    day = '0' + today.day();
+else {
+    month = parseInt(today.month()) + 1
 }
-var csvFolderPath = baseFolder + '/Y' + today.year() + '/M' + month + '/D' + day + '/CSV-FILES'
+let day = ''
+if (parseInt(today.date()) < 10) {
+    day = '0' + today.date();
+}
+else {
+    day = today.date();
+}
+var csvFolderPath = baseFolder + '/Y' + today.year() + '/M' + month + '/D' + day + '/CSV-FILES/'
 
 console.log(csvFolderPath)
 
