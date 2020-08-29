@@ -191,6 +191,7 @@ export class MapComponent implements OnInit {
   infobairroObitos: any;
   infoprojecao: any;
   infoTendencias: any;
+  infoTemperatures:any;
   infodataMunicipio: any;
   fieldPointsStop: any;
   utfgridsource: UTFGrid;
@@ -201,8 +202,10 @@ export class MapComponent implements OnInit {
   utfgridlayerBairroObitos: OlTileLayer;
   utfgridProjecao: UTFGrid;
   utfgridTendencias: UTFGrid;
+  utfgridTemperatures: UTFGrid;
   utfgridlayerProjecao: OlTileLayer;
   utfgridlayerTendencias: OlTileLayer;
+  utfgridlayerTemperatures: OlTileLayer;
   infoOverlay: Overlay;
   datePipe: DatePipe;
   dataForDialog = {} as any;
@@ -253,12 +256,19 @@ export class MapComponent implements OnInit {
   team: any;
   dates: any;
   datesProjections: any;
+  datesTemperatures: any;
+
   showSlider: boolean;
   showProjections:boolean;
+  showTemperatures:boolean;
   projectionsLayers:any;
+  temperaturesLayers:any;
   selectedProjectionLayer:any;
+  selectedTemperatureLayer:any;
   urlLegendProjections:string
+  urlLegendTemperatures:string
   labelProjections:any;
+  labelTemperatures:any;
   dataMS:any;
 
   dataSourceNeighbor:TableElement[];
@@ -312,6 +322,7 @@ export class MapComponent implements OnInit {
     this.infobairroObitos = {};
     this.infoprojecao = {};
     this.infoTendencias = {};
+    this.infoTemperatures = {};
     this.defaultRegion = {
       nome: 'Goiás',
       area_mun: 1547.26991096032,
@@ -399,7 +410,9 @@ export class MapComponent implements OnInit {
     this.getDates();
     this.showSlider = false;
     this.datesProjections = [];
+    this.datesTemperatures = [];
     this.showProjections = false;
+    this.showTemperatures = false;
     this.projectionsLayers = [
       {label: 'Confirmados', value: 'projecao_luisa_confirmados'},
       {label: 'Recuperados', value: 'projecao_luisa_recuperados'},
@@ -407,8 +420,11 @@ export class MapComponent implements OnInit {
       {label: 'Hospitalizados', value: 'projecao_luisa_hospitalizados'}
     ];
     this.selectedProjectionLayer = 'projecao_luisa_confirmados';
+    this.selectedTemperatureLayer   = 'clima_temperatura_em_goias';
     this.labelProjections = 'Confirmados';
+    this.labelTemperatures  = '';
     this.getDatesProjections();
+    this.getDatesTemperatures();
     this.dataMS = {};
     this.getDataMS();
     this.tend = tendencias;
@@ -733,6 +749,16 @@ export class MapComponent implements OnInit {
 
     this.http.get(sourceUrl).subscribe(result => {
       this.datesProjections = result;
+    });
+
+  }
+
+  getDatesTemperatures(url = '/service/indicators/datesClima') {
+
+    let sourceUrl = url + this.getServiceParams();
+
+    this.http.get(sourceUrl).subscribe(result => {
+      this.datesTemperatures = result;
     });
 
   }
@@ -1245,7 +1271,6 @@ export class MapComponent implements OnInit {
     });
   }
 
-
   saveAsExcelFile(buffer: any, fileName: string): void {
     import("file-saver").then(FileSaver => {
       let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
@@ -1479,6 +1504,16 @@ export class MapComponent implements OnInit {
       return;
     }
 
+    let utfgridlayerTendenciasVisible = this.utfgridlayerTendencias.getVisible();
+    if (!utfgridlayerTendenciasVisible || evt.dragging) {
+      return;
+    }
+
+    let utfgridlayerTemperaturesVisible = this.utfgridlayerTemperatures.getVisible();
+    if (!utfgridlayerTemperaturesVisible || evt.dragging) {
+      return;
+    }
+
 
     let coordinate = this.map.getEventCoordinate(evt.originalEvent);
     let viewResolution = this.map.getView().getResolution();
@@ -1624,7 +1659,6 @@ export class MapComponent implements OnInit {
           this.utfgridProjecao.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
             if (data) {
               // window.document.body.style.cursor = 'pointer';
-
               this.infoprojecao = data;
 
               if (this.infoprojecao.nome == "") {
@@ -1643,32 +1677,32 @@ export class MapComponent implements OnInit {
         this.infoprojecao = null;
       }
 
-      let tendencias = this.layersNames.find(element => element.id === 'tendencia');
-      if (tendencias.visible) {
+      let temperatures = this.layersNames.find(element => element.id === 'clima_temperatura');
+      if (temperatures.visible) {
 
         let zoom = this.map.getView().getZoom();
 
-        if (this.utfgridTendencias) {
-          this.utfgridTendencias.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+        if (this.utfgridTemperatures) {
+          this.utfgridTemperatures.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
                 if (data) {
                   window.document.body.style.cursor = 'pointer';
 
-                  this.infoTendencias = data;
+                  this.infoTemperatures = data;
 
-                  if (this.infoTendencias.nome == "") {
-                    this.infoTendencias.nome = this.minireportText.undisclosed_message;
+                  if (this.infoTemperatures.nome == "") {
+                    this.infoTemperatures.nome = this.minireportText.undisclosed_message;
                   }
 
                 } else {
                   window.document.body.style.cursor = 'auto';
-                  this.infoTendencias = null;
+                  this.infoTemperatures = null;
                 }
 
               }.bind(this)
           );
         }
       } else {
-        this.infoTendencias = null;
+        this.infoTemperatures = null;
       }
 
     }
@@ -1945,11 +1979,19 @@ export class MapComponent implements OnInit {
       source: this.utfgridTendencias
     });
 
+    this.utfgridTemperatures = new UTFGrid({
+      tileJSON: this.getTileJSONTemperatures()
+    });
+
+    this.utfgridlayerTemperatures = new OlTileLayer({
+      source: this.utfgridTemperatures
+    });
 
     this.layers.push(this.utfgridlayer);
     this.layers.push(this.utfgridlayerBairro)
     this.layers.push(this.utfgridlayerBairroObitos)
     this.layers.push(this.utfgridlayerProjecao)
+    this.layers.push(this.utfgridlayerTemperatures)
 
     this.layers = this.layers.concat(olLayers.reverse());
   }
@@ -2028,11 +2070,23 @@ export class MapComponent implements OnInit {
 
   }
 
+  private getTileJSONTemperatures() {
+
+    let p = this.layersNames.find(element => element.id === 'clima_temperatura');
+    let layer = p.types.find(element => element.value === p.selectedType);
+
+    return {
+      version: '2.2.0',
+      grids: [
+        this.returnUTFGRID(p.selectedType, layer.layerfilter, '{x}+{y}+{z}')
+      ]
+    };
+
+  }
 
   private returnUTFGRID(layername, filter, tile) {
     return '/ows?layers=' + layername + '&MSFILTER=' + filter + '&mode=tile&tile=' + tile + '&tilemode=gmap&map.imagetype=utfgrid'
   }
-
 
   private createTMSLayer(layer) {
     return new OlTileLayer({
@@ -2177,10 +2231,10 @@ export class MapComponent implements OnInit {
     let bairros = this.layersNames.find(element => element.id === 'casos_bairro');
     let bairrosObitos = this.layersNames.find(element => element.id === 'obitos_bairro');
     let projecao = this.layersNames.find(element => element.id === 'projecoes_luisa');
+    let clima_temperatura = this.layersNames.find(element => element.id === 'clima_temperatura');
 
 
-
-    if(covid.visible || bairros.visible || bairrosObitos.visible || projecao.visible)
+    if(covid.visible || bairros.visible || bairrosObitos.visible || projecao.visible || clima_temperatura.visible)
     {
       if (covid.selectedType == 'covid19_municipios_casos') {
 
@@ -2229,23 +2283,31 @@ export class MapComponent implements OnInit {
         this.utfgridlayerProjecao.setVisible(true);
       }
 
-      if (this.utfgridTendencias) {
-        let tileJSONTendencias = this.getTileJSONTendencias();
-        this.utfgridTendencias.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONTendencias.grids, this.utfgridTendencias.tileGrid);
-        this.utfgridTendencias.tileJSON = tileJSONTendencias;
-        this.utfgridTendencias.refresh();
+      // if (this.utfgridTendencias) {
+      //   let tileJSONTendencias = this.getTileJSONTendencias();
+      //   this.utfgridTendencias.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONTendencias.grids, this.utfgridTendencias.tileGrid);
+      //   this.utfgridTendencias.tileJSON = tileJSONTendencias;
+      //   this.utfgridTendencias.refresh();
+      //
+      //   this.utfgridlayerTendencias.setVisible(true);
+      // }
 
-        this.utfgridlayerTendencias.setVisible(true);
+      if (this.utfgridTemperatures) {
+        let tileJSONTemperatures = this.getTileJSONTemperatures();
+        this.utfgridTemperatures.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONTemperatures.grids, this.utfgridTemperatures.tileGrid);
+        this.utfgridTemperatures.tileJSON = tileJSONTemperatures;
+        this.utfgridTemperatures.refresh();
+
+        this.utfgridlayerTemperatures.setVisible(true);
       }
 
-
-
-    }else if (this.utfgridsource && this.utfgridBairro && this.utfgridProjecao && this.utfgridTendencias)
+    }else if (this.utfgridsource && this.utfgridBairro && this.utfgridProjecao && this.utfgridTendencias && this.utfgridTemperatures)
     {
       this.utfgridlayer.setVisible(false);
       this.utfgridlayerBairro.setVisible(false);
       this.utfgridlayerProjecao.setVisible(false);
       this.utfgridlayerTendencias.setVisible(false);
+      this.utfgridlayerTemperatures.setVisible(false);
     }
 
 
@@ -2499,6 +2561,15 @@ export class MapComponent implements OnInit {
       data: {}
     });
   }
+
+  openInfoTemperatures() {
+    // let dialogRef = this.dialog.open(ProjectionsComponent, {
+    //   id:'covidBioBr',
+    //   width: '70%',
+    //   data: {}
+    // });
+  }
+
   downloadCSV(layer) {
 
     let selected = {
@@ -3001,6 +3072,14 @@ export class MapComponent implements OnInit {
     }
   };
 
+  formatRateLabelTemperatures = (v) => {
+    return (value: number) => {
+      if (this.datesTemperatures[value] != undefined) {
+        return this.datesTemperatures[value].f_data_previsao;
+      }
+    }
+  };
+
   onProjectionsChange(event) {
 
     let lay = this.projectionsLayers.find(element => element.value === this.selectedProjectionLayer);
@@ -3028,6 +3107,32 @@ export class MapComponent implements OnInit {
 
     this.updateSourceLayer(layer);
   }
+
+  onTemperaturesChange(event) {
+    this.labelProjections = this.controls.text_temperatures
+
+    if(isNaN(event.value)){
+      event.value = 0;
+    }
+
+    let self = this;
+    this.layersNames.forEach(function (item) {
+      self.changeVisibility(item, { checked: false });
+    });
+
+    let p = this.layersNames.find(element => element.id === 'clima_temperatura');
+
+    let layer = p.types.find(element => element.value === 'clima_temperatura_em_goias')
+    layer.layerfilter = "data_previsao = '" + this.datesTemperatures[event.value].data_previsao + "'"
+    this.urlLegendTemperatures = layer.urlLegend;
+
+    console.log(layer)
+
+    this.changeVisibility(p, { checked: true });
+
+    this.updateSourceLayer(layer);
+  }
+
   onSliderChange(event) {
 
     this.selectedConfirmedDate = this.dates[event.value].data_db
@@ -3090,6 +3195,58 @@ export class MapComponent implements OnInit {
 
   }
 
+  handleTemperatures() {
+
+    this.labelTemperatures = this.controls.text_temperatures
+    this.showTemperatures = !this.showTemperatures;
+
+    let self = this;
+
+    this.layersNames.forEach(function (item) {
+      self.changeVisibility(item, { checked: false });
+    });
+
+    if(this.showTemperatures){
+      this.onTemperaturesChange({ value: 0 });
+    }else{
+
+      this.layersNames.forEach(function (item) {
+        self.changeVisibility(item, { checked: false });
+      });
+
+      let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+      this.changeVisibility(p, { checked: true });
+    }
+
+  }
+
+  getClassByIqa(iqa){
+    let classes = "";
+
+    switch (iqa) {
+      case 'boa':
+        classes = 'iqa iqa-boa'
+        break;
+      case 'moderada':
+        classes = 'iqa iqa-moderada'
+        break;
+      case 'ruim (grupos de risco)':
+        classes = 'iqa iqa-ruim-grupo-risco'
+        break;
+      case 'ruim':
+        classes = 'iqa iqa-ruim'
+        break;
+      case 'pessimo':
+        classes = 'iqa iqa-pessimo'
+        break;
+      case 'critico':
+        classes = 'iqa iqa-critico'
+        break;
+    }
+    return classes;
+
+  }
+
   downloadHistorico(){
     this.http.get("/service/download/confirmados", {responseType: 'blob'})
         .toPromise()
@@ -3109,13 +3266,27 @@ export class MapComponent implements OnInit {
 
     if(this.infodata){
       dialog.visibility = 'visible'
-    }else if(this.infobairro){
-      dialog.visibility = 'visible'
-    }else if(this.infobairroObitos){
-      dialog.visibility = 'visible'
-    }else if(this.clickable){
+    }
+
+    if(this.infobairro){
       dialog.visibility = 'visible'
     }
+    if(this.infobairroObitos){
+      dialog.visibility = 'visible'
+    }
+
+    if(this.infoTendencias){
+      dialog.visibility = 'visible'
+    }
+
+    if(this.infoTemperatures){
+      dialog.visibility = 'visible'
+    }
+
+    if(this.clickable){
+      dialog.visibility = 'visible'
+    }
+
     return dialog;
   }
 
@@ -3196,9 +3367,9 @@ export class MapComponent implements OnInit {
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/csv.svg')
     );
 
-    if (window.innerWidth < 1024) {
-      this.router.navigate(['/mobile']);
-    }
+    // if (window.innerWidth < 1024) {
+    //   this.router.navigate(['/mobile']);
+    // }
 
   }
 }

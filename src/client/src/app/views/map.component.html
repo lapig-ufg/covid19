@@ -269,6 +269,9 @@
 				<div [matTooltip]="controls.label_projections" [class]="showProjections ? 'btn-layers btn-layers-active' : 'btn-layers'" (click)="handleProjections()">
 					<img width="30" height="30" src="../../assets/img/projections.svg" [alt]="controls.label_projections">
 				</div>
+				<div [matTooltip]="controls.label_humidities" [class]="showTemperatures ? 'btn-layers btn-layers-active' : 'btn-layers'" (click)="handleTemperatures()">
+					<img width="30" height="30" src="../../assets/img/umidade.svg" [alt]="controls.label_humidities">
+				</div>
 			</div>
 
 			<div class="slider" *ngIf="showSlider" >
@@ -321,7 +324,34 @@
 						</div>
 					</div>
 				</div>
+			</div>
 
+			<div class="temperatures" *ngIf="showTemperatures" >
+				<div class="row ju">
+					<div class="col-9">
+						<h6>{{this.labelTemperatures}}</h6>
+						<mat-slider
+								#temperatures
+								thumbLabel
+								(input)="onTemperaturesChange($event)"
+								[displayWith]="formatRateLabelTemperatures(temperatures.value)"
+								color="warn"
+								value="{{0}}"
+								tickInterval="1"
+								min="{{'0'}}"
+								max="{{datesTemperatures.length -1}}"
+						>
+						</mat-slider>
+<!--						<button (click)="openInfoTemperatures()" style="position: absolute; right: 7%; top: 12%;" classs="btn-info" mat-icon-button>-->
+<!--							<mat-icon>info</mat-icon>-->
+<!--						</button>-->
+					</div>
+					<div class="col-3 vertical-center mt-4">
+						<div class="legend-projections">
+							<img [src]="urlLegendTemperatures" alt="legend">
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<div *ngIf="showStatistics" id="positionCharts">
@@ -654,7 +684,7 @@
 
 			</div>
 			<!-- [ngStyle]="{'visibility': (infodata || clickable) || infobairro ? 'visible' : 'hidden'}"> -->
-			<!-- [ngStyle]="{'visibility': infodata  ? 'visible' : (infobairro ? 'visible' : (clickable ? 'visible' : 'hidden'))}"> -->
+<!--			 [ngStyle]="{'visibility': infodata  ? 'visible' : (infobairro ? 'visible' : (clickable ? 'visible' : 'hidden'))}">-->
 
 			<div id="map-info" class="card" [ngStyle]="showDialogUTFGrid()">
 				<div *ngIf="infodata && !clickable" class="card-body">
@@ -775,33 +805,6 @@
 						</tbody>
 					</table>
 				</div>
-<!--				<div *ngIf="infoTendencias" class="card-body">-->
-<!--					<p class="card-text">{{infoTendencias.nome}} - {{infoTendencias.uf}}</p>-->
-<!--					<table>-->
-<!--						<tbody>-->
-<!--						<tr>-->
-<!--							<th>{{minireportText.new_cases}} </th>-->
-<!--							<td>{{infoTendencias.novos_casos}}</td>-->
-<!--						</tr>-->
-<!--						<tr>-->
-<!--							<th>{{minireportText.mm7}} </th>-->
-<!--							<td>{{infoTendencias.mm7 | number:'1.0-0'}}</td>-->
-<!--						</tr>-->
-<!--						<tr *ngIf="infoprojecao.variacao_per_mm7_14dias">-->
-<!--							<th>{{minireportText.variation}} </th>-->
-<!--							<td>{{infoTendencias.variacao_per_mm7_14dias | number:'1.0-0'}} %</td>-->
-<!--						</tr>-->
-<!--						<tr>-->
-<!--							<th>{{minireportText.trend}} </th>-->
-<!--							<td>{{infoTendencias[infoprojecao.tendencia_novos_casos]}}</td>-->
-<!--						</tr>-->
-<!--						<tr>-->
-<!--							<th>{{minireportText.last_update}} </th>-->
-<!--							<td>{{infoTendencias.data | date : 'dd/MM/yyyy'}}</td>-->
-<!--						</tr>-->
-<!--						</tbody>-->
-<!--					</table>-->
-<!--				</div>-->
 				<div *ngIf="clickable" class="card-body">
 					<p class="card-text">{{clickableTitle}}</p>
 					<div align="center" style="padding: 10px">
@@ -830,6 +833,33 @@
 						<img src='assets/markers/google_maps.png'> <br>
 						<b> {{minireportText.open_googlemaps}} </b>
 					</div>
+				</div>
+				<div *ngIf="infoTemperatures && !clickable" class="card-body">
+					<p class="card-text">{{infoTemperatures.nome}} - {{infoTemperatures.uf}}</p>
+					<table>
+						<tbody>
+						<tr>
+							<th>{{minireportText.qtd_population}} </th>
+							<td>{{infoTemperatures.pop_2019 | number:'1.0-0' }} </td>
+						</tr>
+						<tr>
+							<th>{{minireportText.data_previsao}}</th>
+							<td>{{infoTemperatures.data_previsao | date : 'dd/MM/yyyy HH:mm'}}</td>
+						</tr>
+						<tr>
+							<th >{{minireportText.iqa}}</th>
+							<td [ngClass]="getClassByIqa(infoTemperatures.iqa)">{{infoTemperatures.iqa.toUpperCase()}}</td>
+						</tr>
+						<tr>
+							<th>{{minireportText.temperatura}} </th>
+							<td>{{infoTemperatures.temperatura}}ºC</td>
+						</tr>
+						<tr>
+							<th>{{minireportText.data_modelo}}  </th>
+							<td>{{infoTemperatures.data_modelo | date : 'dd/MM/yyyy'}}</td>
+						</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 
