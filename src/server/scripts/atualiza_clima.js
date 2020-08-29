@@ -5,6 +5,14 @@
  * structured like so: `{ filepath, name, ext, stat }`
  */
 
+const dotenv = require('dotenv');
+
+const result = dotenv.config();
+if (result.error) {
+    throw result.error;
+}
+const { parsed: env } = result;
+
 const fs = require('fs');
 const path = require('path');
 const moment = require("moment");
@@ -28,8 +36,19 @@ var insertSQLPM = 'INSERT INTO dados_clima(cd_geocmu,nome_municipio,latitude,lon
 // var updateSQLTEMP = 'UPDATE dados_clima set temperatura = $1,ur = $2 where cd_geocmu = $3 and data_modelo = $4 AND data_previsao = $5'
 
 
-// var csvFolderPath = '/data/containers/APP_COVID19/APP/teste/dados-test';
-var csvFolderPath = '/home/luizmlpascoal/Downloads/datdpos/dados-test';
+var baseFolder = env.CLIMA_FOLDER;
+var today = moment()
+let month = ''
+if (parseInt(today.month()) < 10) {
+    month = '0' + (parseInt(today.month()) + 1)
+}
+let day = ''
+if (parseInt(today.day()) < 10) {
+    day = '0' + today.day();
+}
+var csvFolderPath = baseFolder + '/Y' + today.year() + '/M' + month + '/D' + day + '/CSV-FILES'
+
+console.log(csvFolderPath)
 
 
 var vecPM25 = getPM25();
@@ -46,7 +65,7 @@ insertDB(tab)
 
 function createSQLFile(table) {
     var sb = new StringBuffer();
-    let text = "INSERT INTO dados_clima(cd_geocmu,nome_municipio,latitude,longitude,aod,pm25,iqa,temperatura,ur,data_modelo,data_previsao,data_atualizacao) VALUES("
+    let text = "INSERT INTO dados_clima(cd_geocmu,nome_municipio,latitude,longitude,aod,pm25,iqa-categoria,temperatura,ur,data_modelo,data_previsao,data_atualizacao,iqa) VALUES("
     let fim = ");\n"
     for (ob of table) {
 
@@ -54,8 +73,8 @@ function createSQLFile(table) {
             ob.nome_municipio = ob.nome_municipio.replace("'", "");
         }
 
-        let values = "'" + ob.cd_geocmu + "'," + "'" + ob.nome_municipio + "'," + ob.latitude + "," + ob.longitude + "," + ob.aod + "," + ob.pm25 + ",'" + ob.iqa + "',"
-            + ob.temperatura + "," + ob.ur + "," + "'" + ob.data_modelo + "'," + "'" + ob.data_previsao + "'," + "'" + ob.data_atualizacao + "'";
+        let values = "'" + ob.cd_geocmu + "'," + "'" + ob.nome_municipio + "'," + ob.latitude + "," + ob.longitude + "," + ob.aod + "," + ob.pm25 + ",'" + ob.iqa_categoria + "',"
+            + ob.temperatura + "," + ob.ur + "," + "'" + ob.data_modelo + "'," + "'" + ob.data_previsao + "'," + "'" + ob.iqa + "'";
         sb.append(text + values + fim)
     }
 
@@ -96,8 +115,8 @@ function insertDB(csvRows) {
             for (ob of csvRows) {
 
                 /* for initial population*/
-                var rowValues = [ob.cd_geocmu, ob.nome_municipio, ob.latitude, ob.longitude, ob.aod, ob.pm25, ob.iqa, ob.temperatura, ob.ur, new Date(ob.data_modelo),
-                new Date(ob.data_previsao), new Date(ob.data_atualizacao)]
+                var rowValues = [ob.cd_geocmu, ob.nome_municipio, ob.latitude, ob.longitude, ob.aod, ob.pm25, ob.iqa_categoria, ob.temperatura, ob.ur, new Date(ob.data_modelo),
+                new Date(ob.data_previsao), new Date(ob.data_atualizacao), ob.iqa]
                 // console.log(rowValues)
                 const res = await client.query(insertSQLPM, rowValues)
 
@@ -136,7 +155,8 @@ function unionVecs(vecPM25, vecTEMP) {
                     ur: t.ur,
                     data_modelo: ob25.data_modelo,
                     data_previsao: ob25.data_previsao,
-                    data_atualizacao: ob25.data_atualizacao
+                    data_atualizacao: ob25.data_atualizacao,
+                    iqa_categoria: ob25.iqa_categoria
                 }
 
                 // console.log(o)
@@ -185,10 +205,11 @@ function getPM25() {
                 longitude: Number(row.Lon),
                 aod: Number(row.AOD),
                 pm25: Number(row.PM25),
-                iqa: row.IQA,
+                iqa: Number(row.IQA),
                 data_modelo: data_inicial,
                 data_previsao: data_final,
-                data_atualizacao: data_atualizacao
+                data_atualizacao: data_atualizacao,
+                iqa_categoria: row.IQA_Categoria
 
             };
 
@@ -238,6 +259,7 @@ function getTEMP_UR() {
                 ur: Number(row.UR),
                 data_modelo: data_inicial,
                 data_previsao: data_final,
+                iqa_categoria: row.IQA - Categoria
             };
 
             /* for initial population*/
