@@ -37,7 +37,9 @@ var insertSQLPM = 'INSERT INTO dados_clima(cd_geocmu,nome_municipio,latitude,lon
 
 
 var baseFolder = env.CLIMA_FOLDER;
+
 var today = moment()
+// var today = moment("2020-08-05", 'YYYY-MM-DD')  //descomente e atualize para a data desejada, lembrando de comentar a linha de cima.
 
 let month = ''
 if (parseInt(today.month()) < 10) {
