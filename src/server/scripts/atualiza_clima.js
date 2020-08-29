@@ -66,7 +66,7 @@ var tab = unionVecs(vecPM25, vecTEMP);
 console.log(tab.length)
 
 
-saveCSV(tab)
+// saveCSV(tab)
 //createSQLFile(tab);
 insertDB(tab)
 
