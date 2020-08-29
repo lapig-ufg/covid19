@@ -32,7 +32,7 @@ const { resolve } = require('app-root-path');
 var config = require('../configScript.js')()
 var pool = new Pool(config['pg'])
 
-var insertSQLPM = 'INSERT INTO dados_clima(cd_geocmu,nome_municipio,latitude,longitude,aod,pm25,iqa,temperatura,ur,data_modelo,data_previsao,data_atualizacao) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING gid'
+var insertSQLPM = 'INSERT INTO dados_clima(cd_geocmu,nome_municipio,latitude,longitude,aod,pm25,iqa_categoria,temperatura,ur,data_modelo,data_previsao,data_atualizacao,iqa) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING gid'
 // var updateSQLTEMP = 'UPDATE dados_clima set temperatura = $1,ur = $2 where cd_geocmu = $3 and data_modelo = $4 AND data_previsao = $5'
 
 
@@ -65,7 +65,7 @@ insertDB(tab)
 
 function createSQLFile(table) {
     var sb = new StringBuffer();
-    let text = "INSERT INTO dados_clima(cd_geocmu,nome_municipio,latitude,longitude,aod,pm25,iqa-categoria,temperatura,ur,data_modelo,data_previsao,data_atualizacao,iqa) VALUES("
+    let text = "INSERT INTO dados_clima(cd_geocmu,nome_municipio,latitude,longitude,aod,pm25,iqa_categoria,temperatura,ur,data_modelo,data_previsao,data_atualizacao,iqa) VALUES("
     let fim = ");\n"
     for (ob of table) {
 

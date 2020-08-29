@@ -33,7 +33,7 @@ import { MetadataComponent } from './metadata/metadata.component';
 import CropFilter from 'ol-ext/filter/Crop';
 import MaskFilter from 'ol-ext/filter/Mask';
 import MultiPolygon from 'ol/geom/MultiPolygon';
-import { defaults as defaultControls, Control, Attribution} from 'ol/control';
+import { defaults as defaultControls, Control, Attribution } from 'ol/control';
 import { Router } from '@angular/router';
 import { google } from "google-maps";
 import { DataSource } from '@angular/cdk/table';
@@ -48,16 +48,16 @@ import { Table } from 'primeng/table';
 
 import logos from './logos';
 import tendencias from './tendencias';
-import {BedsComponent} from "./beds/beds.component";
-import {NoteComponent} from "./note/note.component";
-import {MatTableDataSource} from "@angular/material/table";
+import { BedsComponent } from "./beds/beds.component";
+import { NoteComponent } from "./note/note.component";
+import { MatTableDataSource } from "@angular/material/table";
 import { saveAs } from 'file-saver';
 import * as jsPDF from 'jspdf';
-import {ProjectionsComponent} from "./projections/projections.component";
+import { ProjectionsComponent } from "./projections/projections.component";
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import {DialogChartsComponent} from "./dialog-charts/dialog-charts.component";
+import { DialogChartsComponent } from "./dialog-charts/dialog-charts.component";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -191,7 +191,7 @@ export class MapComponent implements OnInit {
   infobairroObitos: any;
   infoprojecao: any;
   infoTendencias: any;
-  infoTemperatures:any;
+  infoTemperatures: any;
   infodataMunicipio: any;
   fieldPointsStop: any;
   utfgridsource: UTFGrid;
@@ -259,26 +259,26 @@ export class MapComponent implements OnInit {
   datesTemperatures: any;
 
   showSlider: boolean;
-  showProjections:boolean;
-  showTemperatures:boolean;
-  projectionsLayers:any;
-  temperaturesLayers:any;
-  selectedProjectionLayer:any;
-  selectedTemperatureLayer:any;
-  urlLegendProjections:string
-  urlLegendTemperatures:string
-  labelProjections:any;
-  labelTemperatures:any;
-  dataMS:any;
+  showProjections: boolean;
+  showTemperatures: boolean;
+  projectionsLayers: any;
+  temperaturesLayers: any;
+  selectedProjectionLayer: any;
+  selectedTemperatureLayer: any;
+  urlLegendProjections: string
+  urlLegendTemperatures: string
+  labelProjections: any;
+  labelTemperatures: any;
+  dataMS: any;
 
-  dataSourceNeighbor:TableElement[];
+  dataSourceNeighbor: TableElement[];
   displayedColumnsNeighbor = [];
 
 
-  dataSourceDeaths:TableElement[];
+  dataSourceDeaths: TableElement[];
   displayedColumnsDeaths = [];
 
-  dataSourceCities:TableElement[];
+  dataSourceCities: TableElement[];
   displayedColumnsCities = [];
 
   rangeValuesChartCases: number[];
@@ -286,7 +286,7 @@ export class MapComponent implements OnInit {
   @ViewChild("drawer", { static: false }) drawer: ElementRef;
   @ViewChild("map", { static: false }) mpref: ElementRef;
   selectedConfirmedDate: any;
-  tend:any;
+  tend: any;
 
   constructor(
     private http: HttpClient,
@@ -296,7 +296,7 @@ export class MapComponent implements OnInit {
     private domSanitizer: DomSanitizer,
     public googleAnalyticsService: GoogleAnalyticsService,
     private router: Router,
-    private elementRef : ElementRef,
+    private elementRef: ElementRef,
     private decimalPipe: DecimalPipe
   ) {
 
@@ -306,7 +306,7 @@ export class MapComponent implements OnInit {
 
     this.dataSeries = { timeseries: { label: "", chartResult: [] } };
     this.dataProjSeries = { timeseries: { label: "", chartResult: [] } };
-    this.tendeciaSeries =  { timeseries: { label: "", chartResult: [] } };
+    this.tendeciaSeries = { timeseries: { label: "", chartResult: [] } };
     this.dataStates = {};
 
 
@@ -414,15 +414,15 @@ export class MapComponent implements OnInit {
     this.showProjections = false;
     this.showTemperatures = false;
     this.projectionsLayers = [
-      {label: 'Confirmados', value: 'projecao_luisa_confirmados'},
-      {label: 'Recuperados', value: 'projecao_luisa_recuperados'},
-      {label: 'Infectados', value: 'projecao_luisa_infectados'},
-      {label: 'Hospitalizados', value: 'projecao_luisa_hospitalizados'}
+      { label: 'Confirmados', value: 'projecao_luisa_confirmados' },
+      { label: 'Recuperados', value: 'projecao_luisa_recuperados' },
+      { label: 'Infectados', value: 'projecao_luisa_infectados' },
+      { label: 'Hospitalizados', value: 'projecao_luisa_hospitalizados' }
     ];
     this.selectedProjectionLayer = 'projecao_luisa_confirmados';
-    this.selectedTemperatureLayer   = 'clima_temperatura_em_goias';
+    this.selectedTemperatureLayer = 'clima_temperatura_em_goias';
     this.labelProjections = 'Confirmados';
-    this.labelTemperatures  = '';
+    this.labelTemperatures = '';
     this.getDatesProjections();
     this.getDatesTemperatures();
     this.dataMS = {};
@@ -510,29 +510,28 @@ export class MapComponent implements OnInit {
     return undefined;
   }
 
-  private refreshTable()
-  {
+  private refreshTable() {
 
-      let citiesUrl = '/service/indicators/cities' + this.getServiceParams();
-      this.exportColumnsCities = [];
-      this.http.get(citiesUrl).subscribe(citiesResult => {
+    let citiesUrl = '/service/indicators/cities' + this.getServiceParams();
+    this.exportColumnsCities = [];
+    this.http.get(citiesUrl).subscribe(citiesResult => {
 
-        this.chartResultCities = citiesResult;
+      this.chartResultCities = citiesResult;
 
-        let headers = this.chartResultCities.title.split('?');
-        let properties = this.chartResultCities.properties.split('?');
+      let headers = this.chartResultCities.title.split('?');
+      let properties = this.chartResultCities.properties.split('?');
 
-        this.chartResultCities.split = [];
-        for (let i = 0; i < headers.length; i++) {
-          this.chartResultCities.split.push({
-            header: headers[i],
-            field: properties[i]
-          })
-        }
+      this.chartResultCities.split = [];
+      for (let i = 0; i < headers.length; i++) {
+        this.chartResultCities.split.push({
+          header: headers[i],
+          field: properties[i]
+        })
+      }
 
-        this.exportColumnsCities = this.chartResultCities.split.map(col => ({ title: col.header, dataKey: col.field }));
+      this.exportColumnsCities = this.chartResultCities.split.map(col => ({ title: col.header, dataKey: col.field }));
 
-        this.dt.reset();
+      this.dt.reset();
     });
   }
 
@@ -680,7 +679,7 @@ export class MapComponent implements OnInit {
           tmp = "Municipality"
         }
       }
-      if(this.selectRegion.cd_geocmu == '5300108'){
+      if (this.selectRegion.cd_geocmu == '5300108') {
         let tmp;
         if (this.language == 'pt-br') {
           tmp = "Distrito Federal"
@@ -689,7 +688,7 @@ export class MapComponent implements OnInit {
           tmp = "Federal Disctrict"
         }
         this.textSummary.title = sp[0] + tmp
-      } else{
+      } else {
         this.textSummary.title = sp[0] + tmp + sp[1] + this.selectRegion.nome
       }
 
@@ -766,9 +765,9 @@ export class MapComponent implements OnInit {
   getDataMS() {
     this.http.get('/service/indicators/summaryBrasil').subscribe(result => {
       this.dataMS = result;
-      this.dataMS.recuperados =  this.dataMS.recuperados.replace(',', '')
-      this.dataMS.recuperados =  this.dataMS.recuperados.replace(',', '')
-      this.dataMS.recuperados =  this.dataMS.recuperados.replace(',', '')
+      this.dataMS.recuperados = this.dataMS.recuperados.replace(',', '')
+      this.dataMS.recuperados = this.dataMS.recuperados.replace(',', '')
+      this.dataMS.recuperados = this.dataMS.recuperados.replace(',', '')
     });
   }
 
@@ -780,7 +779,7 @@ export class MapComponent implements OnInit {
 
       this.dataSeries = result;
 
-      this.rangeValuesChartCases = [0, this.dataSeries.timeseries.chartResult[0].dataResult.labels.length -1];
+      this.rangeValuesChartCases = [0, this.dataSeries.timeseries.chartResult[0].dataResult.labels.length - 1];
 
       for (let graphic of this.dataSeries.timeseries.chartResult) {
 
@@ -840,17 +839,17 @@ export class MapComponent implements OnInit {
         graphic.options.tooltips = {
           mode: 'index',
           callbacks: {
-            label: function(tooltipItem, data) {
-                var label = data.datasets[tooltipItem.datasetIndex].label || '';
+            label: function (tooltipItem, data) {
+              var label = data.datasets[tooltipItem.datasetIndex].label || '';
 
-                if (label) {
-                    label += ': ';
-                }
-                label += tooltipItem.yLabel.toLocaleString('de-DE')
-                // label += Math.round(tooltipItem.yLabel * 100) / 100;
-                return label;
+              if (label) {
+                label += ': ';
+              }
+              label += tooltipItem.yLabel.toLocaleString('de-DE')
+              // label += Math.round(tooltipItem.yLabel * 100) / 100;
+              return label;
             }
-        }
+          }
         };
 
       }
@@ -863,78 +862,78 @@ export class MapComponent implements OnInit {
     this.http.get(timeseriesTendenciasUrl).subscribe(result => {
 
       this.tendeciaSeries = result;
-        for (let graphic of this.tendeciaSeries.timeseries.chartResult) {
-          let y = [{
-            ticks: {
-              beginAtZero: true,
-              autoskip: true,
-              autoSkipPadding: 20,
-              callback: function (value) {
-                return value.toLocaleString('de-DE');
+      for (let graphic of this.tendeciaSeries.timeseries.chartResult) {
+        let y = [{
+          ticks: {
+            beginAtZero: true,
+            autoskip: true,
+            autoSkipPadding: 20,
+            callback: function (value) {
+              return value.toLocaleString('de-DE');
+            }
+          }
+        }]
+
+        graphic.options.scales.yAxes = y;
+
+        let x = [{
+          ticks: {
+            autoskip: false,
+            autoSkipPadding: 20
+          }
+        }]
+
+        graphic.options.scales.xAxes = x;
+        graphic.options.legend.onHover = function (event) {
+          event.target.style.cursor = 'pointer';
+        };
+
+        // graphic.options.legend.onHover = function (event) {
+        //   event.target.style.cursor = 'pointer';
+        //   graphic.options.legend.labels.fontColor = '#0335fc';
+        // };
+
+        // graphic.options.legend.onLeave = function (event) {
+        //   event.target.style.cursor = 'default';
+        //   graphic.options.legend.labels.fontColor = '#fa1d00';
+        // };
+
+        // graphic.options.legend.onClick = function (event) {
+        //   return null;
+        // };
+
+        // graphic.options.tooltips.callbacks = {
+        //   title(tooltipItem, data) {
+        //     return data.labels[tooltipItem[0].index];
+        //   },
+        //   label(tooltipItem, data) {
+        //     console.log(tooltipItem, data)
+        //     return data.toLocaleString('de-DE');
+        //   },
+        //   // afterLabel: function (tooltipItem, data) {
+        //   //   return "a calcular";
+        //   // }
+        // };
+
+        graphic.options.tooltips = {
+          mode: 'index',
+          callbacks: {
+            label: function (tooltipItem, data) {
+              var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+              if (label) {
+                label += ': ';
               }
+              label += tooltipItem.yLabel.toLocaleString('de-DE')
+              // label += Math.round(tooltipItem.yLabel * 100) / 100;
+              return label;
             }
-          }]
-
-          graphic.options.scales.yAxes = y;
-
-          let x = [{
-            ticks: {
-              autoskip: false,
-              autoSkipPadding: 20
-            }
-          }]
-
-          graphic.options.scales.xAxes = x;
-          graphic.options.legend.onHover = function (event) {
-            event.target.style.cursor = 'pointer';
-          };
-
-          // graphic.options.legend.onHover = function (event) {
-          //   event.target.style.cursor = 'pointer';
-          //   graphic.options.legend.labels.fontColor = '#0335fc';
-          // };
-
-          // graphic.options.legend.onLeave = function (event) {
-          //   event.target.style.cursor = 'default';
-          //   graphic.options.legend.labels.fontColor = '#fa1d00';
-          // };
-
-          // graphic.options.legend.onClick = function (event) {
-          //   return null;
-          // };
-
-          // graphic.options.tooltips.callbacks = {
-          //   title(tooltipItem, data) {
-          //     return data.labels[tooltipItem[0].index];
-          //   },
-          //   label(tooltipItem, data) {
-          //     console.log(tooltipItem, data)
-          //     return data.toLocaleString('de-DE');
-          //   },
-          //   // afterLabel: function (tooltipItem, data) {
-          //   //   return "a calcular";
-          //   // }
-          // };
-
-          graphic.options.tooltips = {
-            mode: 'index',
-            callbacks: {
-              label: function(tooltipItem, data) {
-                var label = data.datasets[tooltipItem.datasetIndex].label || '';
-
-                if (label) {
-                  label += ': ';
-                }
-                label += tooltipItem.yLabel.toLocaleString('de-DE')
-                // label += Math.round(tooltipItem.yLabel * 100) / 100;
-                return label;
-              }
-            }
-          };
-
-        }
+          }
+        };
 
       }
+
+    }
     );
 
 
@@ -964,11 +963,11 @@ export class MapComponent implements OnInit {
       }
       let self = this;
       this.chartResultCities.series.forEach(function (item, index) {
-        if(item.confirmados > 0 && item.confirmados < 10){
+        if (item.confirmados > 0 && item.confirmados < 10) {
           self.chartResultCities.series[index].confirmados = "000" + item.confirmados;
-        }else if(item.confirmados >= 10 && item.confirmados <= 99){
+        } else if (item.confirmados >= 10 && item.confirmados <= 99) {
           self.chartResultCities.series[index].confirmados = "00" + item.confirmados;
-        }else if(item.confirmados >= 100 && item.confirmados <= 999){
+        } else if (item.confirmados >= 100 && item.confirmados <= 999) {
           self.chartResultCities.series[index].confirmados = "0" + item.confirmados;
         }
       });
@@ -983,8 +982,7 @@ export class MapComponent implements OnInit {
 
       this.neighborhoodsCharts = citiesResult;
 
-      if(this.selectRegion.cd_geocmu == '5300108')
-      {
+      if (this.selectRegion.cd_geocmu == '5300108') {
 
         if (this.language == 'pt-br') {
           this.neighborhoodsCharts.label += "Distrito Federal"
@@ -995,7 +993,7 @@ export class MapComponent implements OnInit {
           this.neighborhoodsCharts.label += "Federal Disctrict"
         }
       }
-      else{
+      else {
         this.neighborhoodsCharts.label += this.selectRegion.nome
       }
 
@@ -1019,24 +1017,23 @@ export class MapComponent implements OnInit {
 
       let self = this;
       this.neighborhoodsCharts.series.forEach(function (item, index) {
-        if(item.confirmados > 0 && item.confirmados < 10){
+        if (item.confirmados > 0 && item.confirmados < 10) {
           self.neighborhoodsCharts.series[index].confirmados = "00" + item.confirmados;
-        }else if(item.confirmados >= 10 && item.confirmados <= 99){
+        } else if (item.confirmados >= 10 && item.confirmados <= 99) {
           self.neighborhoodsCharts.series[index].confirmados = "0" + item.confirmados;
         }
       });
-      
+
       this.dataSourceNeighbor = this.neighborhoodsCharts.series;
       this.displayedColumnsNeighbor = ["rank", "nome", "confirmados"]
-      
-      if(this.neighborhoodsCharts.showRegion)
-      {
+
+      if (this.neighborhoodsCharts.showRegion) {
         this.displayedColumnsNeighbor.push("regiao");
       }
-      else{
+      else {
         this.neighborhoodsCharts.split = this.neighborhoodsCharts.split.filter(item => item.field !== "regiao");
       }
-      
+
       this.exportColumnsBairros = this.neighborhoodsCharts.split.map(col => ({ title: col.header, dataKey: col.field }));
 
     });
@@ -1046,8 +1043,7 @@ export class MapComponent implements OnInit {
     this.http.get(deathsUrl).subscribe(result => {
 
       this.deathsCharts = result;
-      if(this.selectRegion.cd_geocmu == '5300108')
-      {
+      if (this.selectRegion.cd_geocmu == '5300108') {
 
         if (this.language == 'pt-br') {
           this.deathsCharts.label += "Distrito Federal"
@@ -1058,7 +1054,7 @@ export class MapComponent implements OnInit {
           this.deathsCharts.label += "Federal Disctrict"
         }
       }
-      else{
+      else {
         this.deathsCharts.label += this.selectRegion.nome
       }
       this.deathsCharts.label_sms = this.deathsCharts.label_sms.replace('[source]', this.deathsCharts.fonte);
@@ -1081,24 +1077,23 @@ export class MapComponent implements OnInit {
 
       let self = this;
       this.deathsCharts.series.forEach(function (item, index) {
-        if(item.obitos > 0 && item.obitos < 10){
+        if (item.obitos > 0 && item.obitos < 10) {
           self.deathsCharts.series[index].obitos = "000" + item.obitos;
-        }else if(item.obitos >= 10 && item.obitos <= 99){
+        } else if (item.obitos >= 10 && item.obitos <= 99) {
           self.deathsCharts.series[index].obitos = "00" + item.obitos;
         }
       });
-      
+
       this.dataSourceDeaths = this.deathsCharts.series;
       this.displayedColumnsDeaths = ["rank", "nome", "obitos"]
-      
-      if(this.deathsCharts.showRegion)
-      {
+
+      if (this.deathsCharts.showRegion) {
         this.displayedColumnsDeaths.push("regiao");
       }
-      else{
+      else {
         this.deathsCharts.split = this.deathsCharts.split.filter(item => item.field !== "regiao");
       }
-      
+
       this.exportColumnsBairrosDeaths = this.deathsCharts.split.map(col => ({ title: col.header, dataKey: col.field }));
     });
 
@@ -1186,7 +1181,7 @@ export class MapComponent implements OnInit {
     let brasilURL = '/service/indicators/brasil' + this.getServiceParams();
     this.http.get(brasilURL).subscribe(brasilResult => {
       this.dataBrasil = brasilResult
-      this.optionsBrasil =  this.dataBrasil.options.options;
+      this.optionsBrasil = this.dataBrasil.options.options;
 
       let y = [{
         ticks: {
@@ -1218,17 +1213,17 @@ export class MapComponent implements OnInit {
       this.optionsBrasil.tooltips = {
         mode: 'index',
         callbacks: {
-          label: function(tooltipItem, data) {
-              var label = data.datasets[tooltipItem.datasetIndex].label || '';
+          label: function (tooltipItem, data) {
+            var label = data.datasets[tooltipItem.datasetIndex].label || '';
 
-              if (label) {
-                  label += ': ';
-              }
-              label += tooltipItem.yLabel.toLocaleString('de-DE')
-              // label += Math.round(tooltipItem.yLabel * 100) / 100;
-              return label;
+            if (label) {
+              label += ': ';
+            }
+            label += tooltipItem.yLabel.toLocaleString('de-DE')
+            // label += Math.round(tooltipItem.yLabel * 100) / 100;
+            return label;
           }
-      }
+        }
       };
 
     });
@@ -1388,7 +1383,7 @@ export class MapComponent implements OnInit {
 
         if (layer['times']) {
           tmp = layer['times'].find(
-              element => element.value === layer.timeSelected
+            element => element.value === layer.timeSelected
           );
         }
 
@@ -1629,21 +1624,21 @@ export class MapComponent implements OnInit {
 
         if (this.utfgridBairroObitos) {
           this.utfgridBairroObitos.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
-                if (data && data.numpoints > 0) {
-                  // window.document.body.style.cursor = 'pointer';
+            if (data && data.numpoints > 0) {
+              // window.document.body.style.cursor = 'pointer';
 
-                  this.infobairroObitos = data;
+              this.infobairroObitos = data;
 
-                  if (this.infobairroObitos.nome == "") {
-                    this.infobairroObitos.nome = this.minireportText.undisclosed_message;
-                  }
+              if (this.infobairroObitos.nome == "") {
+                this.infobairroObitos.nome = this.minireportText.undisclosed_message;
+              }
 
-                } else {
-                  window.document.body.style.cursor = 'auto';
-                  this.infobairroObitos = null;
-                }
+            } else {
+              window.document.body.style.cursor = 'auto';
+              this.infobairroObitos = null;
+            }
 
-              }.bind(this)
+          }.bind(this)
           );
         }
       } else {
@@ -1684,21 +1679,25 @@ export class MapComponent implements OnInit {
 
         if (this.utfgridTemperatures) {
           this.utfgridTemperatures.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
-                if (data) {
-                  window.document.body.style.cursor = 'pointer';
+            if (data) {
+              window.document.body.style.cursor = 'pointer';
 
-                  this.infoTemperatures = data;
+              this.infoTemperatures = data;
 
-                  if (this.infoTemperatures.nome == "") {
-                    this.infoTemperatures.nome = this.minireportText.undisclosed_message;
-                  }
+              this.infoTemperatures.ur = this.infoTemperatures.ur.replace(".", ",")
+              this.infoTemperatures.temperatura = this.infoTemperatures.temperatura.replace(".", ",")
 
-                } else {
-                  window.document.body.style.cursor = 'auto';
-                  this.infoTemperatures = null;
-                }
 
-              }.bind(this)
+              if (this.infoTemperatures.nome == "") {
+                this.infoTemperatures.nome = this.minireportText.undisclosed_message;
+              }
+
+            } else {
+              window.document.body.style.cursor = 'auto';
+              this.infoTemperatures = null;
+            }
+
+          }.bind(this)
           );
         }
       } else {
@@ -2022,7 +2021,7 @@ export class MapComponent implements OnInit {
 
   private getTileJSONBairros() {
 
-    let filter = "cd_geocmu='" + this.selectRegion.cd_geocmu + "' AND data_ultima_atualizacao = " + this.selectedBairroTime ;
+    let filter = "cd_geocmu='" + this.selectRegion.cd_geocmu + "' AND data_ultima_atualizacao = " + this.selectedBairroTime;
     return {
       version: '2.2.0',
       grids: [
@@ -2033,7 +2032,7 @@ export class MapComponent implements OnInit {
 
   private getTileJSONBairrosObitos() {
 
-    let filter = "cd_geocmu='" + this.selectRegion.cd_geocmu + "' AND data_ultima_atualizacao = " + this.selectedBairroObitosTime ;
+    let filter = "cd_geocmu='" + this.selectRegion.cd_geocmu + "' AND data_ultima_atualizacao = " + this.selectedBairroObitosTime;
     return {
       version: '2.2.0',
       grids: [
@@ -2128,7 +2127,7 @@ export class MapComponent implements OnInit {
       let filters = [];
 
       if (this.selectRegion.cd_geocmu != '52' && this.showSlider) {
-        layer.timeSelected = "cd_geocmu = '"+this.selectRegion.cd_geocmu+"' AND " + layer.layerfilter;
+        layer.timeSelected = "cd_geocmu = '" + this.selectRegion.cd_geocmu + "' AND " + layer.layerfilter;
       }
 
       // if (layer.timeHandler == 'msfilter' && layer.times) {
@@ -2137,8 +2136,8 @@ export class MapComponent implements OnInit {
 
       if (layer.layerfilter) {
         filters.push(layer.layerfilter);
-      }else{
-        if(layer.timeHandler == 'msfilter' && layer.times){
+      } else {
+        if (layer.timeHandler == 'msfilter' && layer.times) {
           filters.push(layer.timeSelected);
         }
       }
@@ -2234,8 +2233,7 @@ export class MapComponent implements OnInit {
     let clima_temperatura = this.layersNames.find(element => element.id === 'clima_temperatura');
 
 
-    if(covid.visible || bairros.visible || bairrosObitos.visible || projecao.visible || clima_temperatura.visible)
-    {
+    if (covid.visible || bairros.visible || bairrosObitos.visible || projecao.visible || clima_temperatura.visible) {
       if (covid.selectedType == 'covid19_municipios_casos') {
 
         if (this.utfgridsource) {
@@ -2301,8 +2299,7 @@ export class MapComponent implements OnInit {
         this.utfgridlayerTemperatures.setVisible(true);
       }
 
-    }else if (this.utfgridsource && this.utfgridBairro && this.utfgridProjecao && this.utfgridTendencias && this.utfgridTemperatures)
-    {
+    } else if (this.utfgridsource && this.utfgridBairro && this.utfgridProjecao && this.utfgridTendencias && this.utfgridTemperatures) {
       this.utfgridlayer.setVisible(false);
       this.utfgridlayerBairro.setVisible(false);
       this.utfgridlayerProjecao.setVisible(false);
@@ -2549,14 +2546,14 @@ export class MapComponent implements OnInit {
 
   openInfo() {
     let dialogRef = this.dialog.open(NoteComponent, {
-        width: '80%',
-        data: { note:this.controls.note }
+      width: '80%',
+      data: { note: this.controls.note }
     });
   }
 
   openInfoProjections() {
     let dialogRef = this.dialog.open(ProjectionsComponent, {
-      id:'covidBioBr',
+      id: 'covidBioBr',
       width: '70%',
       data: {}
     });
@@ -2603,7 +2600,7 @@ export class MapComponent implements OnInit {
     }
   }
 
-  async printViewMap(){
+  async printViewMap() {
 
     let language = this.language;
     let dd = {
@@ -2613,10 +2610,10 @@ export class MapComponent implements OnInit {
       pageOrientation: 'landscape',
 
       // [left, top, right, bottom]
-      pageMargins: [ 40, 70, 40, 20 ],
+      pageMargins: [40, 70, 40, 20],
 
       header: {
-        margin:[ 24, 10, 24, 30 ],
+        margin: [24, 10, 24, 30],
         columns: [
           {
             image: logos.logoCovid,
@@ -2646,9 +2643,9 @@ export class MapComponent implements OnInit {
               //   {},
               // ],
               [
-                { text: 'https://covidgoias.ufg.br/', alignment: 'left', style: 'textFooter', margin: [20, 0, 0, 0]},
-                { text: moment().format('DD/MM/YYYY HH:mm:ss'), alignment: 'center', style: 'textFooter', margin: [0, 0, 0, 0]},
-                { text: logos.page.title[language] + currentPage.toString() + logos.page.of[language] + '' + pageCount, alignment: 'right', style: 'textFooter', margin: [0, 0, 20, 0]},
+                { text: 'https://covidgoias.ufg.br/', alignment: 'left', style: 'textFooter', margin: [20, 0, 0, 0] },
+                { text: moment().format('DD/MM/YYYY HH:mm:ss'), alignment: 'center', style: 'textFooter', margin: [0, 0, 0, 0] },
+                { text: logos.page.title[language] + currentPage.toString() + logos.page.of[language] + '' + pageCount, alignment: 'right', style: 'textFooter', margin: [0, 0, 20, 0] },
               ],
             ]
           },
@@ -2696,19 +2693,19 @@ export class MapComponent implements OnInit {
           fontSize: 13,
           color: 'black'
         },
-        metadata:{
+        metadata: {
           background: '#0b4e26',
           color: '#fff'
         }
       }
     }
 
-    let canvasToBase64Map = async function(){
+    let canvasToBase64Map = async function () {
       let canvas = await html2canvas(document.querySelector(".ol-viewport"));
       return canvas.toDataURL('image/png');
     }
     // @ts-ignore
-    dd.content.push({image: await canvasToBase64Map(), width: 850, alignment: 'center', margin:[ 40, 10, 2, 0]})
+    dd.content.push({ image: await canvasToBase64Map(), width: 850, alignment: 'center', margin: [40, 10, 2, 0] })
 
     let filename = 'map.pdf'
     pdfMake.createPdf(dd).download(filename);
@@ -2755,7 +2752,7 @@ export class MapComponent implements OnInit {
           tmp = "Municipality"
         }
       }
-      if(this.selectRegion.cd_geocmu == '5300108'){
+      if (this.selectRegion.cd_geocmu == '5300108') {
         let tmp;
         if (this.language == 'pt-br') {
           tmp = "Distrito Federal"
@@ -2764,7 +2761,7 @@ export class MapComponent implements OnInit {
           tmp = "Federal Disctrict"
         }
         this.textSummary.title = sp[0] + tmp
-      } else{
+      } else {
         this.textSummary.title = sp[0] + tmp + sp[1] + this.selectRegion.nome
       }
 
@@ -2819,7 +2816,7 @@ export class MapComponent implements OnInit {
     });
   }
 
-  openDialogBeds(){
+  openDialogBeds() {
     let dialogRef = this.dialog.open(BedsComponent, {
       width: '90%',
       height: '90%',
@@ -2876,12 +2873,12 @@ export class MapComponent implements OnInit {
           doc.addImage(logos.logoCovid, 'PNG', 15, 5, 45, 20);
 
           doc.addImage(
-              logos[self.selectRegion.cd_geocmu].logo.img,
-              'PNG',
-              logos[self.selectRegion.cd_geocmu].logo.left,
-              logos[self.selectRegion.cd_geocmu].logo.top,
-              logos[self.selectRegion.cd_geocmu].logo.width,
-              logos[self.selectRegion.cd_geocmu].logo.height
+            logos[self.selectRegion.cd_geocmu].logo.img,
+            'PNG',
+            logos[self.selectRegion.cd_geocmu].logo.left,
+            logos[self.selectRegion.cd_geocmu].logo.top,
+            logos[self.selectRegion.cd_geocmu].logo.width,
+            logos[self.selectRegion.cd_geocmu].logo.height
           );
 
           doc.addImage(logos.logoUFG, 'PNG', 156, 5, 40, 20);
@@ -2960,12 +2957,12 @@ export class MapComponent implements OnInit {
           doc.addImage(logos.logoCovid, 'PNG', 15, 5, 45, 20);
 
           doc.addImage(
-              logos[self.selectRegion.cd_geocmu].logo.img,
-              'PNG',
-              logos[self.selectRegion.cd_geocmu].logo.left,
-              logos[self.selectRegion.cd_geocmu].logo.top,
-              logos[self.selectRegion.cd_geocmu].logo.width,
-              logos[self.selectRegion.cd_geocmu].logo.height
+            logos[self.selectRegion.cd_geocmu].logo.img,
+            'PNG',
+            logos[self.selectRegion.cd_geocmu].logo.left,
+            logos[self.selectRegion.cd_geocmu].logo.top,
+            logos[self.selectRegion.cd_geocmu].logo.width,
+            logos[self.selectRegion.cd_geocmu].logo.height
           );
 
           doc.addImage(logos.logoUFG, 'PNG', 156, 5, 40, 20);
@@ -3084,10 +3081,10 @@ export class MapComponent implements OnInit {
 
     let lay = this.projectionsLayers.find(element => element.value === this.selectedProjectionLayer);
     this.labelProjections = this.controls.text_projections
-                                         .replace('[weeks]',this.datesProjections.length)
-                                         .replace('[layer]', lay.label.toLowerCase());
+      .replace('[weeks]', this.datesProjections.length)
+      .replace('[layer]', lay.label.toLowerCase());
 
-    if(isNaN(event.value)){
+    if (isNaN(event.value)) {
       event.value = 0;
     }
 
@@ -3111,7 +3108,7 @@ export class MapComponent implements OnInit {
   onTemperaturesChange(event) {
     this.labelProjections = this.controls.text_temperatures
 
-    if(isNaN(event.value)){
+    if (isNaN(event.value)) {
       event.value = 0;
     }
 
@@ -3125,8 +3122,6 @@ export class MapComponent implements OnInit {
     let layer = p.types.find(element => element.value === 'clima_temperatura_em_goias')
     layer.layerfilter = "data_previsao = '" + this.datesTemperatures[event.value].data_previsao + "'"
     this.urlLegendTemperatures = layer.urlLegend;
-
-    console.log(layer)
 
     this.changeVisibility(p, { checked: true });
 
@@ -3142,7 +3137,7 @@ export class MapComponent implements OnInit {
       this.selectedBairroTime = "'" + this.dates[event.value].data_db + "'";
       let p = this.layersNames.find(element => element.id === 'casos_bairro');
       let layer = p.types.find(element => element.value === 'casos_por_bairro_covid');
-      layer.layerfilter = " cd_geocmu= '"+this.selectRegion.cd_geocmu+"' AND data_ultima_atualizacao = '" + this.dates[event.value].data_db + "'";
+      layer.layerfilter = " cd_geocmu= '" + this.selectRegion.cd_geocmu + "' AND data_ultima_atualizacao = '" + this.dates[event.value].data_db + "'";
 
       // console.log("LAYER", layer);
       this.updateSourceLayer(layer);
@@ -3170,7 +3165,7 @@ export class MapComponent implements OnInit {
   handleProjections() {
 
     let lay = this.projectionsLayers.find(element => element.value === this.selectedProjectionLayer);
-    this.labelProjections = this.controls.text_projections.replace('[weeks]',this.datesProjections.length).replace('[layer]', lay.label.toLowerCase());
+    this.labelProjections = this.controls.text_projections.replace('[weeks]', this.datesProjections.length).replace('[layer]', lay.label.toLowerCase());
 
     this.showProjections = !this.showProjections;
     let self = this;
@@ -3181,9 +3176,9 @@ export class MapComponent implements OnInit {
     let y = this.layersNames.find(element => element.id === 'projecoes_luisa');
     this.changeVisibility(y, { checked: true });
 
-    if(this.showProjections){
+    if (this.showProjections) {
       this.onProjectionsChange({ value: 0 });
-    }else{
+    } else {
 
       this.layersNames.forEach(function (item) {
         self.changeVisibility(item, { checked: false });
@@ -3206,9 +3201,9 @@ export class MapComponent implements OnInit {
       self.changeVisibility(item, { checked: false });
     });
 
-    if(this.showTemperatures){
+    if (this.showTemperatures) {
       this.onTemperaturesChange({ value: 0 });
-    }else{
+    } else {
 
       this.layersNames.forEach(function (item) {
         self.changeVisibility(item, { checked: false });
@@ -3220,7 +3215,7 @@ export class MapComponent implements OnInit {
 
   }
 
-  getClassByIqa(iqa){
+  getClassByIqa(iqa) {
     let classes = "";
 
     switch (iqa) {
@@ -3247,43 +3242,43 @@ export class MapComponent implements OnInit {
 
   }
 
-  downloadHistorico(){
-    this.http.get("/service/download/confirmados", {responseType: 'blob'})
-        .toPromise()
-        .then(blob => {
-          saveAs(blob, 'casos_confirmados.csv');
-        }).catch(err => console.log(err));
+  downloadHistorico() {
+    this.http.get("/service/download/confirmados", { responseType: 'blob' })
+      .toPromise()
+      .then(blob => {
+        saveAs(blob, 'casos_confirmados.csv');
+      }).catch(err => console.log(err));
 
-    this.http.get("/service/download/obitos", {responseType: 'blob'})
-        .toPromise()
-        .then(blob => {
-          saveAs(blob, 'obitos_confirmados.csv');
-        }).catch(err => console.log(err));
+    this.http.get("/service/download/obitos", { responseType: 'blob' })
+      .toPromise()
+      .then(blob => {
+        saveAs(blob, 'obitos_confirmados.csv');
+      }).catch(err => console.log(err));
   }
 
-  showDialogUTFGrid(){
-    let dialog = {visibility: 'hidden'};
+  showDialogUTFGrid() {
+    let dialog = { visibility: 'hidden' };
 
-    if(this.infodata){
+    if (this.infodata) {
       dialog.visibility = 'visible'
     }
 
-    if(this.infobairro){
+    if (this.infobairro) {
       dialog.visibility = 'visible'
     }
-    if(this.infobairroObitos){
-      dialog.visibility = 'visible'
-    }
-
-    if(this.infoTendencias){
+    if (this.infobairroObitos) {
       dialog.visibility = 'visible'
     }
 
-    if(this.infoTemperatures){
+    if (this.infoTendencias) {
       dialog.visibility = 'visible'
     }
 
-    if(this.clickable){
+    if (this.infoTemperatures) {
+      dialog.visibility = 'visible'
+    }
+
+    if (this.clickable) {
       dialog.visibility = 'visible'
     }
 

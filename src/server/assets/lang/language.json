@@ -17,7 +17,7 @@
 				"pt-br": "Não existem casos confirmados em ",
 				"en-us": "There are no confirmed cases in"
 			},
-			"brasil":{
+			"brasil": {
 				"title": {
 					"pt-br": "Dados do Ministério da Saúde do Brasil",
 					"en-us": "Data from the Ministry of Health of Brazil"
@@ -27,49 +27,49 @@
 					"en-us": "Brazil"
 				}
 			},
-			"timeseries_go":{
+			"timeseries_go": {
 				"title": {
 					"pt-br": "Dados da Secretaria de Saúde do Estado de Goiás",
 					"en-us": "Data from the Health Department of the State of Goiás"
 				},
-				"text":{
+				"text": {
 					"pt-br": "Clique nos botões para atualizar o gráfico.",
 					"en-us": "Click on the buttons here to update the statistics."
 				},
-				"label_confirmados_projecao":{
+				"label_confirmados_projecao": {
 					"pt-br": "Estimativa para casos Confirmados",
 					"en-us": "Projected Confirmed"
 				},
-				"label_recuperados_projecao":{
+				"label_recuperados_projecao": {
 					"pt-br": "Estimativa para casos Recuperados",
 					"en-us": "Projected Recovered"
 				},
-				"label_confirmados":{
+				"label_confirmados": {
 					"pt-br": "Confirmados",
 					"en-us": "Confirmed"
 				},
-				"label_recuperados":{
+				"label_recuperados": {
 					"pt-br": "Recuperados",
 					"en-us": "Recovered"
 				},
-				"label_suspeitos":{
+				"label_suspeitos": {
 					"pt-br": "Suspeitos",
 					"en-us": "Suspects"
 				},
-				"label_descartados":{
+				"label_descartados": {
 					"pt-br": "Descartados",
 					"en-us": "Discarded"
 				},
-				"label_obitos":{
+				"label_obitos": {
 					"pt-br": "Óbitos",
 					"en-us": "Deaths"
 				},
-				"label_recuperados":{
+				"label_recuperados": {
 					"pt-br": "Recuperados",
 					"en-us": "Recovered"
 				}
 			},
-			"timeseries_tendencias_go":{
+			"timeseries_tendencias_go": {
 				"title": {
 					"pt-br": "Média móvel de 7 dias",
 					"en-us": "7-day moving average"
@@ -78,35 +78,35 @@
 					"pt-br": "Média móvel de [region]",
 					"en-us": "Moving average of [region]"
 				},
-				"new_cases":{
+				"new_cases": {
 					"pt-br": "Novos casos",
 					"en-us": "New cases"
 				},
-				"mm7":{
+				"mm7": {
 					"pt-br": "Média móvel",
 					"en-us": "Moving average"
 				},
-				"note":{
+				"note": {
 					"pt-br": "Segundo a SES-GO, os dados podem ser alterados para mais ou para menos conforme investigação das Vigilâncias Epidemiológicas Municipais e atualização das fichas de notificações pelos municípios nos sistemas oficiais. Diante de eventuais inconsistências nos números, estes serão atualizados a partir das correções feitas pelas cidades nos sistemas de notificação.",
 					"en-us": "According to SES-GO, the data can be changed upwards or downwards according to the investigation of the Municipal Epidemiological Surveillance and update of the notification forms by the municipalities in the official systems. In the event of any inconsistencies in the numbers, these will be updated based on the corrections made by the cities in the notification systems."
 				},
-				"text":{
+				"text": {
 					"pt-br": "Clique nos botões para atualizar o gráfico.",
 					"en-us": "Click on the buttons here to update the statistics."
 				},
-				"media":{
+				"media": {
 					"pt-br": "Média: ",
 					"en-us": "Average: "
 				},
-				"variation":{
+				"variation": {
 					"pt-br": "Variação: ",
 					"en-us": "Variation: "
 				},
-				"trend":{
+				"trend": {
 					"pt-br": "Tendência: ",
 					"en-us": "Trend: "
 				},
-				"last_update":{
+				"last_update": {
 					"pt-br": "Última atualização em ",
 					"en-us": "Last update on  "
 				}
@@ -132,27 +132,27 @@
 					"pt-br": "rank?nome?confirmados",
 					"en-us": "rank?nome?confirmados"
 				},
-				"filename":{
+				"filename": {
 					"pt-br": "casos_por_municipio_",
 					"en-us": "municipality_cases_"
 				},
-				"label_ses":{
+				"label_ses": {
 					"pt-br": "Dados divulgados pela [source] em ",
 					"en-us": "Data released by the [source] on "
 				},
-				"label_confirmed_ses":{
+				"label_confirmed_ses": {
 					"pt-br": "Total de casos: ",
 					"en-us": "Total cases: "
 				},
-				"label_deaths_sms":{
+				"label_deaths_sms": {
 					"pt-br": "Total de óbitos: ",
 					"en-us": "Total óbitos: "
 				},
-				"label_total_ses":{
+				"label_total_ses": {
 					"pt-br": "Total de municípios com casos: ",
 					"en-us": "Total municipalities with cases: "
 				},
-				"label_without_city":{
+				"label_without_city": {
 					"pt-br": "No. de casos sem identificação do município: ",
 					"en-us": "Number of cases without identification of the municipality: "
 				}
@@ -182,23 +182,23 @@
 					"pt-br": "rank?nome?confirmados?regiao",
 					"en-us": "rank?nome?confirmados?regiao"
 				},
-				"filename":{
+				"filename": {
 					"pt-br": "casos_por_bairro_",
 					"en-us": "neighborhoods_cases_"
 				},
-				"label_sms":{
+				"label_sms": {
 					"pt-br": "Dados divulgados pela [source] em [date]",
 					"en-us": "Data released by [source] on [date]"
 				},
-				"label_confirmed":{
+				"label_confirmed": {
 					"pt-br": "Total de casos: ",
 					"en-us": "Total cases: "
 				},
-				"label_total":{
+				"label_total": {
 					"pt-br": "Total de bairros com casos: ",
 					"en-us": "Total of neighborhoods with cases: "
 				},
-				"label_msg":{
+				"label_msg": {
 					"pt-br": "Próxima atualização prevista para 31/07/2020.",
 					"en-us": "Next update scheduled for 07/31/2020."
 				}
@@ -228,23 +228,23 @@
 					"pt-br": "rank?nome?obitos?regiao",
 					"en-us": "rank?nome?obitos?regiao"
 				},
-				"filename":{
+				"filename": {
 					"pt-br": "obitos_por_bairro_",
 					"en-us": "neighborhoods_deaths_"
 				},
-				"label_sms":{
+				"label_sms": {
 					"pt-br": "Dados de óbitos divulgados pela [source] em [date]",
 					"en-us": "Data od deaths released by [source] on [date]"
 				},
-				"label_deaths":{
+				"label_deaths": {
 					"pt-br": "Total de óbitos: ",
 					"en-us": "Total deaths: "
 				},
-				"label_total":{
+				"label_total": {
 					"pt-br": "Total de bairros com óbitos registrados: ",
 					"en-us": "Total of neighborhoods with deaths: "
 				},
-				"label_msg":{
+				"label_msg": {
 					"pt-br": "Próxima atualização prevista para 31/07/2020.",
 					"en-us": "Next update scheduled for 07/31/2020."
 				}
@@ -262,7 +262,7 @@
 					"pt-br": "Comparação do número de casos em diferentes Estados (Ministério da Saúde do Brasil)",
 					"en-us": "Comparison of the number of cases in different States (Ministry of Health of Brazil)"
 				},
-				"label_confirmados":{
+				"label_confirmados": {
 					"pt-br": "Confirmados",
 					"en-us": "Confirmed"
 				}
@@ -273,87 +273,87 @@
 				"pt-br": "Projeções",
 				"en-us": "Projections"
 			},
-			"projections_go":{
+			"projections_go": {
 				"title": {
 					"pt-br": "Estimativas da quantidade de casos para o ",
 					"en-us": "Estimates on the number of cases for the "
 				},
-				"label_confirmados":{
+				"label_confirmados": {
 					"pt-br": "Confirmados",
 					"en-us": "Confirmed"
 				},
-				"label_recuperados":{
+				"label_recuperados": {
 					"pt-br": "Recuperados",
 					"en-us": "Recovered"
 				},
-				"label_obitos":{
+				"label_obitos": {
 					"pt-br": "Óbitos",
 					"en-us": "Deaths"
 				},
-				"label_previstos":{
+				"label_previstos": {
 					"pt-br": "Projeção",
 					"en-us": "Projections"
 				},
-				"not_cases":{
+				"not_cases": {
 					"pt-br": "Não foram feitas projeções para ",
 					"en-us": "No projections were made for "
 				},
-				"text":{
+				"text": {
 					"pt-br": "Clique nos botões para atualizar o gráfico.",
 					"en-us": "Click on the buttons here to update the statistics."
 				},
-				"ytitle":{
+				"ytitle": {
 					"pt-br": "Nº de casos",
 					"en-us": "Number of cases"
 				},
-				"last_updated":{
+				"last_updated": {
 					"pt-br": "Data da última atualização do modelo: ",
 					"en-us": "Model last updated date: "
 				}
 			},
-			"statistics":{
+			"statistics": {
 				"title": {
 					"pt-br": "Estatisticas sobre: ",
 					"en-us": "Estimates about : "
 				},
-				"text":{
-					"total_dias":{
+				"text": {
+					"total_dias": {
 						"pt-br": "Total de Dias: ",
 						"en-us": "Total Days: "
 					},
-					"media_novos_casos_7dias":{
+					"media_novos_casos_7dias": {
 						"pt-br": "Média de novos casos dos últimos 7 dias: ",
 						"en-us": "Average number of new cases every 7 days: "
 					},
-					"dias_duplicacao_confirmados":{
+					"dias_duplicacao_confirmados": {
 						"pt-br": "Quantidade de dias até duplicação de casos confirmados: ",
 						"en-us": "Number of days until duplication of confirmed cases: "
 					},
-					"taxa_crescimento":{
+					"taxa_crescimento": {
 						"pt-br": "Taxa de Crescimento: ",
 						"en-us": "Growth rate: "
 					},
-					"n_total_infectadados_pico":{
+					"n_total_infectadados_pico": {
 						"pt-br": "Nº de infectados durante o pico: ",
 						"en-us": "No. of infected during peak: "
 					},
-					"data_pico_infectados_acumudado":{
+					"data_pico_infectados_acumudado": {
 						"pt-br": "Data prevista para o pico de infecção: ",
 						"en-us": "Expected peak infection date: "
 					}
 				}
 			}
 		},
-		"source":{
+		"source": {
 			"label": {
 				"pt-br": "Fontes",
 				"en-us": "Source"
 			},
-			"technical_note_title":{
+			"technical_note_title": {
 				"pt-br": "NOTA TÉCNICA - PROJEÇÕES COVID-19",
 				"en-us": "TECHNICAL NOTE - PROJECTIONS COVID-19"
 			},
-			"technical_note":{
+			"technical_note": {
 				"pt-br": "As projeções da plataforma têm por objetivo contribuir com um melhor entendimento da população goiana e dos gestores públicos em relação à propagação da epidemia do vírus SARS COVID-19 no estado de Goiás. Os modelos epidêmicos utilizados são amplamente difundidos no meio científico, dentre eles o SEIR e o exponencial. Todas as projeções são baseadas no histórico de ocorrências diárias do SARS COVID-19, e portanto podem sofrer alterações à cada nova ocorrência, sempre com o objetivo de produzir estimativas mais assertivas.",
 				"en-us": "The platform's projections aim to contribute to a better understanding of the population of Goiás and public managers in relation to the spread of the SARS COVID-19 virus epidemic in the state of Goiás. The epidemic models used are widely disseminated in the scientific community, among them the SEIR and the exponential. All projections are based on the historical of daily occurrences of SARS COVID-19, and therefore may change with each new occurrence, always with the objective of producing more assertive estimates."
 			}
@@ -485,7 +485,7 @@
 			"en-us": "Trend of new cases:"
 		},
 		"last_update": {
-			"pt-br": "ùltima atualização em:",
+			"pt-br": "Última atualização em:",
 			"en-us": "Last update on:"
 		},
 		"data_previsao": {
@@ -496,53 +496,61 @@
 			"pt-br": "Qualidade do ar: ",
 			"en-us": "Air quality: "
 		},
+		"indice": {
+			"pt-br": "Índice: ",
+			"en-us": "Index: "
+		},
 		"temperatura": {
 			"pt-br": "Temperatura: ",
 			"en-us": "Temperature: "
 		},
+		"umidade": {
+			"pt-br": "Umidade Relativa do Ar: ",
+			"en-us": "Relative Air Humidity: "
+		},
 		"data_modelo": {
-			"pt-br": "Data de Geração do Modelo:",
-			"en-us": "Model Generation Date:"
+			"pt-br": "Data de Atualização:",
+			"en-us": "Update date:"
 		}
 	},
-	"summary_box":{
-		"title":{
+	"summary_box": {
+		"title": {
 			"pt-br": "Casos no ? de ",
 			"en-us": "Cases in the ? of "
 		},
-		"title_brasil":{
+		"title_brasil": {
 			"pt-br": "Casos no Brasil",
 			"en-us": "Cases in the Brazil"
 		},
-		"last_update_label":{
-			"pt-br": "Ùltima atualização em: ",
+		"last_update_label": {
+			"pt-br": "Última atualização em: ",
 			"en-us": "Last updated on: "
 		},
-		"source_text":{
+		"source_text": {
 			"pt-br": "Fonte: Secretaria de Saúde do Estado de Goiás",
 			"en-us": "Source: Secretary of Health in the State of Goiás "
 		},
-		"source_text_brasil":{
+		"source_text_brasil": {
 			"pt-br": "Fonte: Ministério da Saúde do Brasil",
 			"en-us": "Source: Ministry of Health of Brazil"
 		},
-		"confirmed_label":{
+		"confirmed_label": {
 			"pt-br": "Confirmados",
 			"en-us": "Confirmed"
 		},
-		"confirmed_recovered":{
+		"confirmed_recovered": {
 			"pt-br": "Recuperados",
 			"en-us": "Recovered"
 		},
-		"suspects_label":{
+		"suspects_label": {
 			"pt-br": "Suspeitos",
 			"en-us": "Suspects"
 		},
-		"deaths_label":{
+		"deaths_label": {
 			"pt-br": "Óbitos",
 			"en-us": "Deaths"
 		},
-		"lethality_label":{
+		"lethality_label": {
 			"pt-br": "Letalidade",
 			"en-us": "Lethality"
 		}
@@ -683,20 +691,21 @@
 							}
 						}
 					},
-					"metadata": [{
-						"title": {
-							"pt-br": "Dado",
-							"en-us": "Data"
-						},
-						"description": {
-							"pt-br": "Desmatamentos - PRODES-Cerrado",
-							"en-us": "Deforestation - PRODES-Cerrado"
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Desmatamentos - PRODES-Cerrado",
+								"en-us": "Deforestation - PRODES-Cerrado"
+							}
 						}
-					}]
-
+					]
 				},
-				"urban_traffic":{
-					"label":{
+				"urban_traffic": {
+					"label": {
 						"pt-br": "Tráfego Urbano pelo Google Traffic",
 						"en-us": "Urban Traffic by Google Traffic"
 					},
@@ -709,8 +718,8 @@
 						}
 					}
 				},
-				"tendencias":{
-					"label":{
+				"tendencias": {
+					"label": {
 						"pt-br": "Tendência de novos casos",
 						"en-us": "\nTrend of new cases"
 					},
@@ -723,8 +732,8 @@
 						}
 					}
 				},
-				"indice_vulnerabilidade":{
-					"label":{
+				"indice_vulnerabilidade": {
+					"label": {
 						"pt-br": "Vulnerabilidade à COVID-19",
 						"en-us": "COVID-19 Vulnerability"
 					},
@@ -788,7 +797,7 @@
 								"pt-br": "Município",
 								"en-us": "Municipality"
 							},
-							"default_placeholder":{
+							"default_placeholder": {
 								"pt-br": "Selecione aqui...",
 								"en-us": "Select here..."
 							}
@@ -810,7 +819,7 @@
 								"pt-br": "Previsão de Qualidade do Ar e Temperatura",
 								"en-us": "Air Quality and Temperature Forecast"
 							},
-							"default_placeholder":{
+							"default_placeholder": {
 								"pt-br": "Previsão de Qualidade do Ar e Temperatura",
 								"en-us": "Air Quality and Temperature Forecast"
 							}
@@ -832,7 +841,7 @@
 								"pt-br": "Município",
 								"en-us": "Municipality"
 							},
-							"default_placeholder":{
+							"default_placeholder": {
 								"pt-br": "Selecione aqui...",
 								"en-us": "Select here..."
 							}
@@ -844,86 +853,85 @@
 						"pt-br": "Mediana do nº de internações causadas por doenças respiratórias (2015-2019)",
 						"en-us": "Median number of hospitalizations caused by respiratory diseases (2015-2019)"
 					},
-					"types":
-						{
-							"doencas_respiratorias_2015_2019_ano_total_covid_": {
-								"view_value": {
-									"pt-br": "Mediana de 2015-2019",
-									"en-us": "Median 2015-2019"
-								}
-							},
-							"doencas_respiratorias_2015_2019_janeiro_covid": {
-								"view_value": {
-									"pt-br": "Janeiro",
-									"en-us": "January"
-								}
-							},
-							"doencas_respiratorias_2015_2019_fevereiro_covid": {
-								"view_value": {
-									"pt-br": "Fevereiro",
-									"en-us": "February"
-								}
-							},
-							"doencas_respiratorias_2015_2019_marco_covid": {
-								"view_value": {
-									"pt-br": "Março",
-									"en-us": "March"
-								}
-							},
-							"doencas_respiratorias_2015_2019_abril_covid": {
-								"view_value": {
-									"pt-br": "Abril",
-									"en-us": "April"
-								}
-							},
-							"doencas_respiratorias_2015_2019_maio_covid": {
-								"view_value": {
-									"pt-br": "Maio",
-									"en-us": "May"
-								}
-							},
-							"doencas_respiratorias_2015_2019_junho_covid": {
-								"view_value": {
-									"pt-br": "Junho",
-									"en-us": "June"
-								}
-							},
-							"doencas_respiratorias_2015_2019_julho_covid": {
-								"view_value": {
-									"pt-br": "Julho",
-									"en-us": "July"
-								}
-							},
-							"doencas_respiratorias_2015_2019_agosto_covid": {
-								"view_value": {
-									"pt-br": "Agosto",
-									"en-us": "August"
-								}
-							},
-							"doencas_respiratorias_2015_2019_setembro_covid": {
-								"view_value": {
-									"pt-br": "Setembro",
-									"en-us": "September"
-								}
-							},
-							"doencas_respiratorias_2015_2019_outubro_covid": {
-								"view_value": {
-									"pt-br": "Outubro",
-									"en-us": "October"
-								}
-							},
-							"doencas_respiratorias_2015_2019_novembro_covid": {
-								"view_value": {
-									"pt-br": "Novembro",
-									"en-us": "November"
-								}
-							},
-							"doencas_respiratorias_2015_2019_dezembro_covid": {
-								"view_value": {
-									"pt-br": "Dezembro",
-									"en-us": "December"
-								}
+					"types": {
+						"doencas_respiratorias_2015_2019_ano_total_covid_": {
+							"view_value": {
+								"pt-br": "Mediana de 2015-2019",
+								"en-us": "Median 2015-2019"
 							}
+						},
+						"doencas_respiratorias_2015_2019_janeiro_covid": {
+							"view_value": {
+								"pt-br": "Janeiro",
+								"en-us": "January"
+							}
+						},
+						"doencas_respiratorias_2015_2019_fevereiro_covid": {
+							"view_value": {
+								"pt-br": "Fevereiro",
+								"en-us": "February"
+							}
+						},
+						"doencas_respiratorias_2015_2019_marco_covid": {
+							"view_value": {
+								"pt-br": "Março",
+								"en-us": "March"
+							}
+						},
+						"doencas_respiratorias_2015_2019_abril_covid": {
+							"view_value": {
+								"pt-br": "Abril",
+								"en-us": "April"
+							}
+						},
+						"doencas_respiratorias_2015_2019_maio_covid": {
+							"view_value": {
+								"pt-br": "Maio",
+								"en-us": "May"
+							}
+						},
+						"doencas_respiratorias_2015_2019_junho_covid": {
+							"view_value": {
+								"pt-br": "Junho",
+								"en-us": "June"
+							}
+						},
+						"doencas_respiratorias_2015_2019_julho_covid": {
+							"view_value": {
+								"pt-br": "Julho",
+								"en-us": "July"
+							}
+						},
+						"doencas_respiratorias_2015_2019_agosto_covid": {
+							"view_value": {
+								"pt-br": "Agosto",
+								"en-us": "August"
+							}
+						},
+						"doencas_respiratorias_2015_2019_setembro_covid": {
+							"view_value": {
+								"pt-br": "Setembro",
+								"en-us": "September"
+							}
+						},
+						"doencas_respiratorias_2015_2019_outubro_covid": {
+							"view_value": {
+								"pt-br": "Outubro",
+								"en-us": "October"
+							}
+						},
+						"doencas_respiratorias_2015_2019_novembro_covid": {
+							"view_value": {
+								"pt-br": "Novembro",
+								"en-us": "November"
+							}
+						},
+						"doencas_respiratorias_2015_2019_dezembro_covid": {
+							"view_value": {
+								"pt-br": "Dezembro",
+								"en-us": "December"
+							}
+						}
 					}
 				},
 				"casos_tuberculose": {
@@ -931,46 +939,45 @@
 						"pt-br": "Mediana dos Casos de Tuberculose entre 2015 e 2019",
 						"en-us": "Median of Tuberculosis cases between 2015 and 2019"
 					},
-					"types":
-						{
-							"casos_tuberculose_2015_covid": {
-								"view_value": {
-									"pt-br": "2015",
-									"en-us": "2015"
-								}
-							},
-							"casos_tuberculose_2016_covid": {
-								"view_value": {
-									"pt-br": "2016",
-									"en-us": "2016"
-								}
-							},
-							"casos_tuberculose_2017_covid": {
-								"view_value": {
-									"pt-br": "2017",
-									"en-us": "2017"
-								}
-							},
-							"casos_tuberculose_2018_covid": {
-								"view_value": {
-									"pt-br": "2018",
-									"en-us": "2018"
-								}
-							},
-							"casos_tuberculose_2019_covid": {
-								"view_value": {
-									"pt-br": "2019",
-									"en-us": "2019"
-								}
-							},
-							"casos_tuberculose_mediana_covid": {
-								"view_value": {
-									"pt-br": "Mediana entre 2015-2019",
-									"en-us": "Median between 2015-2019"
-								}
+					"types": {
+						"casos_tuberculose_2015_covid": {
+							"view_value": {
+								"pt-br": "2015",
+								"en-us": "2015"
+							}
+						},
+						"casos_tuberculose_2016_covid": {
+							"view_value": {
+								"pt-br": "2016",
+								"en-us": "2016"
+							}
+						},
+						"casos_tuberculose_2017_covid": {
+							"view_value": {
+								"pt-br": "2017",
+								"en-us": "2017"
+							}
+						},
+						"casos_tuberculose_2018_covid": {
+							"view_value": {
+								"pt-br": "2018",
+								"en-us": "2018"
+							}
+						},
+						"casos_tuberculose_2019_covid": {
+							"view_value": {
+								"pt-br": "2019",
+								"en-us": "2019"
+							}
+						},
+						"casos_tuberculose_mediana_covid": {
+							"view_value": {
+								"pt-br": "Mediana entre 2015-2019",
+								"en-us": "Median between 2015-2019"
 							}
 						}
 					}
+				}
 			}
 		},
 		"servicos": {
@@ -1054,16 +1061,18 @@
 						"pt-br": "População - IBGE",
 						"en-us": "Population - IBGE"
 					},
-					"metadata": [{
-						"title": {
-							"pt-br": "Dado",
-							"en-us": "Data"
-						},
-						"description": {
-							"pt-br": "Avisos - DETER-Cerrado",
-							"en-us": "Warnings - DETER-Cerrado"
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Avisos - DETER-Cerrado",
+								"en-us": "Warnings - DETER-Cerrado"
+							}
 						}
-					}],
+					],
 					"types": {
 						"covid19_ibge_populacao": {
 							"view_value": {
@@ -1325,7 +1334,7 @@
 			"pt-br": "Os dados podem diferir conforme investigação das Vigilâncias Epidemiológicas Municipais e atualização das fichas de notificações pelos municípios nos sistemas oficiais. Por este motivo, poderá haver diferenças temporárias entre os dados apresentados pelas Secretarias Municipais de Saúde (SMS) e da Secretaria Estadual de Saúde (SES) do Estado de Goiás.",
 			"en-us": "The data may differ according to the investigation of the Municipal Epidemiological Surveillance and update of the notification forms by the municipalities in the official systems. For this reason, there may be temporary differences between the data presented by the Municipal Health Secretariats (SMS) and the State Health Secretariat (SES) of the State of Goiás."
 		},
-		"projections_layer":{
+		"projections_layer": {
 			"pt-br": "Dado",
 			"en-us": "Data"
 		},
@@ -1385,7 +1394,7 @@
 					{
 						"nome": "Manuel Eduardo Ferreira",
 						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4766027A0",
-						"description" :{
+						"description": {
 							"pt-br": "Professor do Iesa/Lapig/UFG",
 							"en-us": "Professor at Iesa / Lapig / UFG"
 						}
@@ -1393,7 +1402,7 @@
 					{
 						"nome": "Laerte Guimarães Ferreira Júnior",
 						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4782789P0",
-						"description":{
+						"description": {
 							"pt-br": "Pró-Reitor de Pós-graduação da UFG e professor Iesa/Lapig/UFG",
 							"en-us": "Dean of the Postgraduation at UFG and Professor Iesa / Lapig / UFG"
 						}
@@ -1409,7 +1418,7 @@
 					{
 						"nome": "Leandro Leal Parente",
 						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4424657A7",
-						"description":{
+						"description": {
 							"pt-br": "Analista de desenvolvimento do Lapig/UFG",
 							"en-us": "Development Analyst at Lapig / UFG"
 						}
@@ -1417,7 +1426,7 @@
 					{
 						"nome": "Luiz Mário Lustosa Pascoal",
 						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4400707P7",
-						"description":{
+						"description": {
 							"pt-br": "Analista de desenvolvimento do Lapig/UFG",
 							"en-us": "Development Analyst at Lapig / UFG"
 						}
@@ -1425,7 +1434,7 @@
 					{
 						"nome": "Fernanda Stefani Souza Malaquias",
 						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K8478743T6",
-						"description":{
+						"description": {
 							"pt-br": "Analista de desenvolvimento do Lapig/UFG",
 							"en-us": "Development Analyst at Lapig / UFG"
 						}
@@ -1433,7 +1442,7 @@
 					{
 						"nome": "Renato Gomes Silvério",
 						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K2182822Y8",
-						"description":{
+						"description": {
 							"pt-br": "Analista DevOps do Lapig/UFG",
 							"en-us": "DevOps Analyst at Lapig / UFG"
 						}
@@ -1441,7 +1450,7 @@
 					{
 						"nome": "Roberto de Urzeda Paiva",
 						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4377562A1",
-						"description":{
+						"description": {
 							"pt-br": "Técnico em Tecnologia da Informação do Lapig/UFG",
 							"en-us": "Information Technology Technician at Lapig / UFG"
 						}
@@ -1449,7 +1458,7 @@
 					{
 						"nome": "Tharles de Sousa Andrade",
 						"link": "http://lattes.cnpq.br/6994901089843835",
-						"description":{
+						"description": {
 							"pt-br": "Analista de desenvolvimento do Lapig/UFG",
 							"en-us": "Development Analyst at Lapig / UFG"
 						}
@@ -1465,7 +1474,7 @@
 					{
 						"nome": "Gabrielly Cristiny de Andrade",
 						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K8283740Y2",
-						"description":{
+						"description": {
 							"pt-br": "Graduanda em Ciências Ambientais e Pesquisadora do Lapig/UFG",
 							"en-us": "Undergraduate student in Environmental Sciences and Researcher at Lapig / UFG"
 						}
@@ -1549,7 +1558,6 @@
 							"pt-br": "Doutorando (Ciamb) e pesquisador do Lapig/UFG",
 							"en-us": "PhD student (Ciamb) and researcher at Lapig / UFG"
 						}
-
 					},
 					{
 						"nome": "Luís Rodrigo Fernandes Baumann",

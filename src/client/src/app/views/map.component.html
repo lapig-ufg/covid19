@@ -56,7 +56,8 @@
 																<mat-icon>info</mat-icon>
 															</button> -->
 													</div>
-													<div *ngIf="layer.visible" style="padding-left: 8%; padding-right: 8%">
+													<div *ngIf="layer.visible"
+														style="padding-left: 8%; padding-right: 8%">
 														<div *ngIf="layer.types?.length > 1 || layer.showTypes">
 															<mat-form-field style="width: 130px;">
 																<mat-label>{{descriptor.type}}</mat-label>
@@ -70,14 +71,18 @@
 															</mat-form-field>
 															<span class="" *ngFor="let type of layer.types"
 																[hidden]="type.value != layer.selectedType">
-																<mat-form-field style="font-weight: bold;" *ngIf="type.times">
+																<mat-form-field style="font-weight: bold;"
+																	*ngIf="type.times">
 																	<mat-label>{{type.timeLabel}}</mat-label>
-																	<mat-select (selectionChange)="zoomToCityOnTypesLayer(type)"
-																	[(ngModel)]="type.timeSelected">
-																		<strong><mat-option  *ngFor="let time of type.times"
-																			[value]="time.value">
-																			{{time.Viewvalue}}
-																		</mat-option></strong>
+																	<mat-select
+																		(selectionChange)="zoomToCityOnTypesLayer(type)"
+																		[(ngModel)]="type.timeSelected">
+																		<strong>
+																			<mat-option *ngFor="let time of type.times"
+																				[value]="time.value">
+																				{{time.Viewvalue}}
+																			</mat-option>
+																		</strong>
 																	</mat-select>
 																</mat-form-field>
 															</span>
@@ -123,16 +128,16 @@
 
 	<div class="layer-sidenav-content">
 		<div #map id="map" class="covid19-ol-map" [style.height]="innerHeigth + 'px'">
-			<p-dialog header="Solicitação de Acesso à Área Restrita" [(visible)]="display" >
+			<p-dialog header="Solicitação de Acesso à Área Restrita" [(visible)]="display">
 				<p class="msg-error">{{msg}}</p>
 				<div class="container-logos-msg">
 					<img usemap="#logos" src="../../assets/logo/logos.png" alt="Logos" hidefocus="true" />
 
 					<map name="logos">
 						<area target="_self" alt="COVIDGOIÁS :: HOME" title="COVIDGOIÁS"
-							  href="https://covidgoias.ufg.br" coords="4,149,240,26" shape="rect">
+							href="https://covidgoias.ufg.br" coords="4,149,240,26" shape="rect">
 						<area target="_blank" alt="Acesse o site da UFG" title="UFG" href="https://www.ufg.br/"
-							  coords="250,24,520,149" shape="rect">
+							coords="250,24,520,149" shape="rect">
 					</map>
 				</div>
 			</p-dialog>
@@ -164,25 +169,29 @@
 
 				<div class="resumo">
 					<div class="card-resumo">
-						<div *ngIf="!isFilteredByCity" class="card-resumo-title recup" [title]="textSummary.confirmed_recovered" >{{textSummary.confirmed_recovered}}
+						<div *ngIf="!isFilteredByCity" class="card-resumo-title recup"
+							[title]="textSummary.confirmed_recovered">{{textSummary.confirmed_recovered}}
 						</div>
 						<h2>{{dataMS.recuperados | number}}</h2>
 					</div>
 
 					<div class="card-resumo">
-						<div *ngIf="!isFilteredByCity" class="card-resumo-title confirmado" [title]="textSummary.confirmed_label" >{{textSummary.confirmed_label}}
+						<div *ngIf="!isFilteredByCity" class="card-resumo-title confirmado"
+							[title]="textSummary.confirmed_label">{{textSummary.confirmed_label}}
 						</div>
 						<h2>{{dataMS.confirmados | number}}</h2>
 					</div>
 
 					<div *ngIf="!isFilteredByCity" class="card-resumo">
-						<div class="card-resumo-title obitos"  [title]="textSummary.lethality_label" >{{textSummary.deaths_label}}
+						<div class="card-resumo-title obitos" [title]="textSummary.lethality_label">
+							{{textSummary.deaths_label}}
 						</div>
 						<h2>{{dataMS.obitos | number}}</h2>
 					</div>
 
 					<div *ngIf="!isFilteredByCity" class="card-resumo">
-						<div class="card-resumo-title letalidade"  [title]="textSummary.lethality_label" >{{textSummary.lethality_label}}</div>
+						<div class="card-resumo-title letalidade" [title]="textSummary.lethality_label">
+							{{textSummary.lethality_label}}</div>
 						<h2>{{dataMS.letalidade}}%</h2>
 					</div>
 				</div>
@@ -196,128 +205,125 @@
 				</div>
 
 				<div class="resumo">
-					<div *ngIf="!isFilteredByCity"class="card-resumo">
-						<div  class="card-resumo-title recup" [title]="textSummary.confirmed_recovered" >{{textSummary.confirmed_recovered}}
+					<div *ngIf="!isFilteredByCity" class="card-resumo">
+						<div class="card-resumo-title recup" [title]="textSummary.confirmed_recovered">
+							{{textSummary.confirmed_recovered}}
 						</div>
 						<h2>{{summary.recuperados | number}}</h2>
 					</div>
 
 					<div class="card-resumo">
-						<div class="card-resumo-title confirmado" [title]="textSummary.confirmed_label" >{{textSummary.confirmed_label}}
+						<div class="card-resumo-title confirmado" [title]="textSummary.confirmed_label">
+							{{textSummary.confirmed_label}}
 						</div>
 						<h2>{{summary.confirmados  | number }}</h2>
 					</div>
 					<div *ngIf="!isFilteredByCity" class="card-resumo">
-						<div class="card-resumo-title recuperado"  [title]="textSummary.lethality_label" >{{textSummary.suspects_label}}
+						<div class="card-resumo-title recuperado" [title]="textSummary.lethality_label">
+							{{textSummary.suspects_label}}
 						</div>
 						<h2>{{summary.suspeitos  | number }}</h2>
 					</div>
 					<div class="card-resumo">
-						<div class="card-resumo-title obitos" [title]="textSummary.deaths_label" >{{textSummary.deaths_label}}</div>
+						<div class="card-resumo-title obitos" [title]="textSummary.deaths_label">
+							{{textSummary.deaths_label}}</div>
 						<h2>{{summary.obitos  | number }}</h2>
 					</div>
 
 					<div *ngIf="!isFilteredByCity" class="card-resumo">
-						<div class="card-resumo-title letalidade"  [title]="textSummary.lethality_label" >{{textSummary.lethality_label}}</div>
+						<div class="card-resumo-title letalidade" [title]="textSummary.lethality_label">
+							{{textSummary.lethality_label}}</div>
 						<h2>{{(summary.obitos / summary.confirmados) * 100  | number:'1.0-1' }}%</h2>
 					</div>
 				</div>
 			</div>
 
 			<div class="zoom">
-				<button [matTooltip]="controls.label_zoomin" mat-icon-button (click)="zoomIn()" >
+				<button [matTooltip]="controls.label_zoomin" mat-icon-button (click)="zoomIn()">
 					<mat-icon>zoom_in</mat-icon>
 				</button>
-				<button [matTooltip]="controls.label_zoomout"  mat-icon-button (click)="zoomOut()">
+				<button [matTooltip]="controls.label_zoomout" mat-icon-button (click)="zoomOut()">
 					<mat-icon>zoom_out</mat-icon>
 				</button>
-<!--				<button [matTooltip]="controls.label_print_map"  mat-icon-button (click)="printViewMap()">-->
-<!--					<mat-icon>print</mat-icon>-->
-<!--				</button>-->
+				<!--				<button [matTooltip]="controls.label_print_map"  mat-icon-button (click)="printViewMap()">-->
+				<!--					<mat-icon>print</mat-icon>-->
+				<!--				</button>-->
 			</div>
 
 			<div class="controls">
 				<div [matTooltip]="controls.label_close_mun" *ngIf="this.selectRegion != this.defaultRegion"
 					[class]="'btn-layers'" (click)="updateRegion(defaultRegion)">
-					<img width="30" height="30" src="../../assets/img/close-button.svg" [alt]="controls.label_close_mun">
+					<img width="30" height="30" src="../../assets/img/close-button.svg"
+						[alt]="controls.label_close_mun">
 				</div>
 				<div [matTooltip]="controls.label_layers"
-					[class]="showDrawer ? 'btn-layers btn-layers-active' : 'btn-layers'"
-					(click)="handleDrawer()">
+					[class]="showDrawer ? 'btn-layers btn-layers-active' : 'btn-layers'" (click)="handleDrawer()">
 					<img width="30" height="30" src="../../assets/img/btn_layers.svg" [alt]="controls.label_layers">
 				</div>
-				<div [matTooltip]="controls.icu_beds" [class]="'btn-layers'"  (click)="openDialogBeds()">
-					<img width="30" height="30" src="../../assets/img/leito.svg"  [alt]="controls.icu_beds">
+				<div [matTooltip]="controls.icu_beds" [class]="'btn-layers'" (click)="openDialogBeds()">
+					<img width="30" height="30" src="../../assets/img/leito.svg" [alt]="controls.icu_beds">
 				</div>
 				<div [matTooltip]="controls.label_statistics"
 					[class]="showStatistics ? 'btn-layers btn-layers-active' : 'btn-layers'"
 					(click)="showStatistics = !showStatistics">
-					<img width="30" height="30" src="../../assets/img/charts.svg"[alt]="controls.label_statistics">
+					<img width="30" height="30" src="../../assets/img/charts.svg" [alt]="controls.label_statistics">
 				</div>
-<!--				<div [matTooltip]="controls.label_zoomin" [class]="'btn-layers'"  (click)="zoomIn()">-->
-<!--					<img width="30" height="30" src="../../assets/img/mais.svg"  [alt]="controls.label_zoomin">-->
-<!--				</div>-->
-<!--				<div [matTooltip]="controls.label_zoomout" [class]="'btn-layers'"  (click)="zoomOut()">-->
-<!--					<img width="30" height="30" src="../../assets/img/menos.svg"  [alt]="controls.label_zoomout" >-->
-<!--				</div>-->
+				<!--				<div [matTooltip]="controls.label_zoomin" [class]="'btn-layers'"  (click)="zoomIn()">-->
+				<!--					<img width="30" height="30" src="../../assets/img/mais.svg"  [alt]="controls.label_zoomin">-->
+				<!--				</div>-->
+				<!--				<div [matTooltip]="controls.label_zoomout" [class]="'btn-layers'"  (click)="zoomOut()">-->
+				<!--					<img width="30" height="30" src="../../assets/img/menos.svg"  [alt]="controls.label_zoomout" >-->
+				<!--				</div>-->
 				<div [matTooltip]="controls.label_tips_legend" [class]="'btn-layers'" (click)="openDialogAjuda()">
 					<img width="30" height="30" src="../../assets/img/tips.svg" [alt]="controls.label_tips">
 				</div>
-				<div [matTooltip]="controls.label_historic" [class]="showSlider ? 'btn-layers btn-layers-active' : 'btn-layers'" (click)="handleSlider()">
+				<div [matTooltip]="controls.label_historic"
+					[class]="showSlider ? 'btn-layers btn-layers-active' : 'btn-layers'" (click)="handleSlider()">
 					<img width="30" height="30" src="../../assets/img/history.svg" [alt]="controls.label_historic">
 				</div>
-				<div [matTooltip]="controls.label_projections" [class]="showProjections ? 'btn-layers btn-layers-active' : 'btn-layers'" (click)="handleProjections()">
-					<img width="30" height="30" src="../../assets/img/projections.svg" [alt]="controls.label_projections">
+				<div [matTooltip]="controls.label_projections"
+					[class]="showProjections ? 'btn-layers btn-layers-active' : 'btn-layers'"
+					(click)="handleProjections()">
+					<img width="30" height="30" src="../../assets/img/projections.svg"
+						[alt]="controls.label_projections">
 				</div>
-				<div [matTooltip]="controls.label_humidities" [class]="showTemperatures ? 'btn-layers btn-layers-active' : 'btn-layers'" (click)="handleTemperatures()">
+				<div [matTooltip]="controls.label_humidities"
+					[class]="showTemperatures ? 'btn-layers btn-layers-active' : 'btn-layers'"
+					(click)="handleTemperatures()">
 					<img width="30" height="30" src="../../assets/img/umidade.svg" [alt]="controls.label_humidities">
 				</div>
 			</div>
 
-			<div class="slider" *ngIf="showSlider" >
+			<div class="slider" *ngIf="showSlider">
 				<h6> {{controls.text_historic.replace('[dias]',dates.length)}}</h6>
-				<button color="warn" [matTooltip]="controls.label_btn_download"
-						(click)="downloadHistorico()" style="position: absolute; left: 2%; top: 12%;" classs="btn-info" mat-icon-button>
+				<button color="warn" [matTooltip]="controls.label_btn_download" (click)="downloadHistorico()"
+					style="position: absolute; left: 2%; top: 12%;" classs="btn-info" mat-icon-button>
 					<mat-icon>get_app</mat-icon>
 				</button>
-				<mat-slider
-						#datesSlider
-						thumbLabel
-						(input)="onSliderChange($event)"
-						[displayWith]="formatRateLabel(datesSlider.value)"
-						color="warn"
-						value="{{dates.length -1}}"
-						tickInterval="1"
-						min="{{'0'}}"
-						max="{{dates.length -1}}"
-				>
+				<mat-slider #datesSlider thumbLabel (input)="onSliderChange($event)"
+					[displayWith]="formatRateLabel(datesSlider.value)" color="warn" value="{{dates.length -1}}"
+					tickInterval="1" min="{{'0'}}" max="{{dates.length -1}}">
 				</mat-slider>
 
 			</div>
 
-			<div class="projections" *ngIf="showProjections" >
+			<div class="projections" *ngIf="showProjections">
 
 				<div class="row ju">
 					<div class="col-9">
 						<h6>{{this.labelProjections}}</h6>
-						<mat-slider
-								#projections
-								thumbLabel
-								(input)="onProjectionsChange($event)"
-								[displayWith]="formatRateLabelProjections(projections.value)"
-								color="warn"
-								value="{{0}}"
-								tickInterval="1"
-								min="{{'0'}}"
-								max="{{datesProjections.length -1}}"
-						>
+						<mat-slider #projections thumbLabel (input)="onProjectionsChange($event)"
+							[displayWith]="formatRateLabelProjections(projections.value)" color="warn" value="{{0}}"
+							tickInterval="1" min="{{'0'}}" max="{{datesProjections.length -1}}">
 						</mat-slider>
-						<button (click)="openInfoProjections()" style="position: absolute; right: 7%; top: 12%;" classs="btn-info" mat-icon-button>
+						<button (click)="openInfoProjections()" style="position: absolute; right: 7%; top: 12%;"
+							classs="btn-info" mat-icon-button>
 							<mat-icon>info</mat-icon>
 						</button>
 					</div>
 					<div class="col-3 vertical-center mt-3">
-						<p-dropdown  (onChange)="onProjectionsChange($event)" [options]="projectionsLayers" [(ngModel)]="selectedProjectionLayer"></p-dropdown>
+						<p-dropdown (onChange)="onProjectionsChange($event)" [options]="projectionsLayers"
+							[(ngModel)]="selectedProjectionLayer"></p-dropdown>
 						<div class="mt-1"></div>
 						<div class="legend-projections">
 							<img [src]="urlLegendProjections" alt="legend">
@@ -326,25 +332,17 @@
 				</div>
 			</div>
 
-			<div class="temperatures" *ngIf="showTemperatures" >
+			<div class="temperatures" *ngIf="showTemperatures">
 				<div class="row ju">
 					<div class="col-9">
 						<h6>{{this.labelTemperatures}}</h6>
-						<mat-slider
-								#temperatures
-								thumbLabel
-								(input)="onTemperaturesChange($event)"
-								[displayWith]="formatRateLabelTemperatures(temperatures.value)"
-								color="warn"
-								value="{{0}}"
-								tickInterval="1"
-								min="{{'0'}}"
-								max="{{datesTemperatures.length -1}}"
-						>
+						<mat-slider #temperatures thumbLabel (input)="onTemperaturesChange($event)"
+							[displayWith]="formatRateLabelTemperatures(temperatures.value)" color="warn" value="{{0}}"
+							tickInterval="1" min="{{'0'}}" max="{{datesTemperatures.length -1}}">
 						</mat-slider>
-<!--						<button (click)="openInfoTemperatures()" style="position: absolute; right: 7%; top: 12%;" classs="btn-info" mat-icon-button>-->
-<!--							<mat-icon>info</mat-icon>-->
-<!--						</button>-->
+						<!--						<button (click)="openInfoTemperatures()" style="position: absolute; right: 7%; top: 12%;" classs="btn-info" mat-icon-button>-->
+						<!--							<mat-icon>info</mat-icon>-->
+						<!--						</button>-->
 					</div>
 					<div class="col-3 vertical-center mt-4">
 						<div class="legend-projections">
@@ -373,11 +371,13 @@
 							<p-tabView>
 								<p-tabPanel [header]="selectRegion.nome">
 									<p-scrollPanel [style]="{width: '100%', height: '45vh'}">
-										<button (click)="openDialogCharts('dataSeries')" classs="btn-info" mat-icon-button>
+										<button (click)="openDialogCharts('dataSeries')" classs="btn-info"
+											mat-icon-button>
 											<mat-icon>open_with</mat-icon>
 										</button>
 
-										<h5 *ngIf="!dataSeries.timeseries.chartResult[0]?.show" style="text-align: center;">
+										<h5 *ngIf="!dataSeries.timeseries.chartResult[0]?.show"
+											style="text-align: center;">
 											<br>
 											<br>
 											<strong> {{dataSeries.timeseries.not_cases}} {{selectRegion.nome}} </strong>
@@ -388,37 +388,52 @@
 										<div *ngIf="dataSeries.timeseries.chartResult[0]?.show">
 											<p style="font-weight: bold; text-align: center;">
 												{{ dataSeries.timeseries.chartResult[0]?.text }}</p>
-<!--											<p style="font-weight: 200">Intervalo de  {{dataSeries.timeseries.chartResult[0]?.dataResult.lables[rangeValuesChartCases[0]]}} até {{dataSeries.timeseries.chartResult[0]?.dataResult.lables[rangeValuesChartCases[1]]}}</p>-->
+											<!--											<p style="font-weight: 200">Intervalo de  {{dataSeries.timeseries.chartResult[0]?.dataResult.lables[rangeValuesChartCases[0]]}} até {{dataSeries.timeseries.chartResult[0]?.dataResult.lables[rangeValuesChartCases[1]]}}</p>-->
 											<p-chart [ngStyle]="{'overflow-x': hidden}"
 												[type]="dataSeries.timeseries.chartResult[0]?.type"
 												[data]="dataSeries.timeseries.chartResult[0]?.dataResult"
 												[options]="dataSeries.timeseries.chartResult[0]?.options">
 											</p-chart>
-<!--											<p-slider [(ngModel)]="rangeValuesChartCases" [range]="true"></p-slider>-->
+											<!--											<p-slider [(ngModel)]="rangeValuesChartCases" [range]="true"></p-slider>-->
 										</div>
 
 									</p-scrollPanel>
 								</p-tabPanel>
 
-								<p-tabPanel [header]=" tendeciaSeries.timeseries.chartResult[0]?.title_tab.replace('[region]',selectRegion.nome)">
+								<p-tabPanel
+									[header]=" tendeciaSeries.timeseries.chartResult[0]?.title_tab.replace('[region]',selectRegion.nome)">
 									<p-scrollPanel [style]="{width: '100%', height: '40vh'}">
 										<div *ngIf="tendeciaSeries.timeseries.chartResult[0]?.show">
-											<p style="font-weight: bold; text-align: center; font-size: 15px; margin-top: 5px; margin-bottom: 5px">
+											<p
+												style="font-weight: bold; text-align: center; font-size: 15px; margin-top: 5px; margin-bottom: 5px">
 												{{ tendeciaSeries.timeseries.chartResult[0]?.text }}</p>
-											<button style="position: absolute;" (click)="openDialogCharts('tendeciaSeries')" classs="btn-info" mat-icon-button>
+											<button style="position: absolute;"
+												(click)="openDialogCharts('tendeciaSeries')" classs="btn-info"
+												mat-icon-button>
 												<mat-icon>open_with</mat-icon>
 											</button>
-											<div style="font-weight: normal; font-size: 12px; text-align: center; display: flex; justify-content: center;" >
-												<div class="tendenciaMedia" >{{tendeciaSeries.timeseries.chartResult[0]?.label_media}} {{tendeciaSeries.timeseries.chartResult[0]?.last_ob.media | number:'1.2-3'}}</div>
-												<div class="tendenciaVariacao">{{tendeciaSeries.timeseries.chartResult[0]?.label_variation}} {{tendeciaSeries.timeseries.chartResult[0]?.last_ob.variacao | number:'1.2-3'}}%</div>
-												<div class="tendenciaTendencia" [innerHTML]=" tendeciaSeries.timeseries.chartResult[0]?.label_trend + tend[tendeciaSeries.timeseries.chartResult[0]?.last_ob.tendencia][language] "></div>
+											<div
+												style="font-weight: normal; font-size: 12px; text-align: center; display: flex; justify-content: center;">
+												<div class="tendenciaMedia">
+													{{tendeciaSeries.timeseries.chartResult[0]?.label_media}}
+													{{tendeciaSeries.timeseries.chartResult[0]?.last_ob.media | number:'1.2-3'}}
+												</div>
+												<div class="tendenciaVariacao">
+													{{tendeciaSeries.timeseries.chartResult[0]?.label_variation}}
+													{{tendeciaSeries.timeseries.chartResult[0]?.last_ob.variacao | number:'1.2-3'}}%
+												</div>
+												<div class="tendenciaTendencia"
+													[innerHTML]=" tendeciaSeries.timeseries.chartResult[0]?.label_trend + tend[tendeciaSeries.timeseries.chartResult[0]?.last_ob.tendencia][language] ">
+												</div>
 											</div>
-											<p style="font-weight: 200; text-align: center;">{{tendeciaSeries.timeseries.chartResult[0]?.label_last_update + tendeciaSeries.timeseries.chartResult[0]?.last_ob.data}}</p>
+											<p style="font-weight: 200; text-align: center;">
+												{{tendeciaSeries.timeseries.chartResult[0]?.label_last_update + tendeciaSeries.timeseries.chartResult[0]?.last_ob.data}}
+											</p>
 
 											<p-chart [ngStyle]="{'overflow-x': hidden}"
-													 [type]="tendeciaSeries.timeseries.chartResult[0]?.type"
-													 [data]="tendeciaSeries.timeseries.chartResult[0]?.dataResult"
-													 [options]="tendeciaSeries.timeseries.chartResult[0]?.options">
+												[type]="tendeciaSeries.timeseries.chartResult[0]?.type"
+												[data]="tendeciaSeries.timeseries.chartResult[0]?.dataResult"
+												[options]="tendeciaSeries.timeseries.chartResult[0]?.options">
 											</p-chart>
 											<p style="font-weight: 300; text-align: center">
 												{{tendeciaSeries.timeseries.chartResult[0]?.note}}
@@ -428,99 +443,130 @@
 								</p-tabPanel>
 
 								<p-tabPanel *ngIf="neighborhoodsCharts.show" [header]="neighborhoodsCharts.label">
-<!--									*ngIf="this.selectRegion.cd_geocmu != '5208707'"-->
+									<!--									*ngIf="this.selectRegion.cd_geocmu != '5208707'"-->
 									<mat-tab-group>
-										<mat-tab  label="{{neighborhoodsCharts.label_tab}}">
-											<p-scrollPanel  [style]="{width: '100%', height: '38vh'}">
+										<mat-tab label="{{neighborhoodsCharts.label_tab}}">
+											<p-scrollPanel [style]="{width: '100%', height: '38vh'}">
 
-												<button (click)="openInfo()" style="position: absolute; right: 7%; top: 12%;" classs="btn-info" mat-icon-button>
+												<button (click)="openInfo()"
+													style="position: absolute; right: 7%; top: 12%;" classs="btn-info"
+													mat-icon-button>
 													<mat-icon>info</mat-icon>
 												</button>
 												<div class="resumo-neigh">{{neighborhoodsCharts.label_sms}}.</div>
 												<div class="resumo-totais">
-													<div class="total"> {{neighborhoodsCharts.label_total }} <strong>{{ neighborhoodsCharts.total_neighborhoods}}</strong> </div>
-													<div class="total"> {{neighborhoodsCharts.label_confirmed }} <strong> {{neighborhoodsCharts.total_confirmados}} </strong></div>
+													<div class="total"> {{neighborhoodsCharts.label_total }}
+														<strong>{{ neighborhoodsCharts.total_neighborhoods}}</strong>
+													</div>
+													<div class="total"> {{neighborhoodsCharts.label_confirmed }}
+														<strong> {{neighborhoodsCharts.total_confirmados}} </strong>
+													</div>
 												</div>
-<!--												<p class="msg"  *ngIf="this.selectRegion.cd_geocmu == '5208707'">{{neighborhoodsCharts.label_msg}}</p>-->
+												<!--												<p class="msg"  *ngIf="this.selectRegion.cd_geocmu == '5208707'">{{neighborhoodsCharts.label_msg}}</p>-->
 												<div class="export-table">
-													<button mat-raised-button color="primary" (click)="exportPdf('bairros')">PDF</button>
-													<button mat-raised-button color="accent" (click)="exportExcel('bairros')">EXCEL</button>
+													<button mat-raised-button color="primary"
+														(click)="exportPdf('bairros')">PDF</button>
+													<button mat-raised-button color="accent"
+														(click)="exportExcel('bairros')">EXCEL</button>
 												</div>
 
-												<table style="width: 97% !important; margin-left: 2%!important; margin-right: 2% !important;"  mat-table [dataSource]="dataSourceNeighbor" class="mat-elevation-z8">
+												<table
+													style="width: 97% !important; margin-left: 2%!important; margin-right: 2% !important;"
+													mat-table [dataSource]="dataSourceNeighbor"
+													class="mat-elevation-z8">
 													<!-- Position Column -->
 													<ng-container matColumnDef="rank">
-														<th mat-header-cell *matHeaderCellDef> {{neighborhoodsCharts.split[0].header}} </th>
+														<th mat-header-cell *matHeaderCellDef>
+															{{neighborhoodsCharts.split[0].header}} </th>
 														<td mat-cell *matCellDef="let element"> {{element.rank}} </td>
 													</ng-container>
 
 													<!-- Name Column -->
 													<ng-container matColumnDef="nome">
-														<th mat-header-cell *matHeaderCellDef> {{neighborhoodsCharts.split[1].header}} </th>
+														<th mat-header-cell *matHeaderCellDef>
+															{{neighborhoodsCharts.split[1].header}} </th>
 														<td mat-cell *matCellDef="let element"> {{element.nome}} </td>
 													</ng-container>
 
 													<!-- Weight Column -->
 													<ng-container matColumnDef="confirmados">
-														<th mat-header-cell *matHeaderCellDef>{{neighborhoodsCharts.split[2].header}}</th>
-														<td mat-cell *matCellDef="let element"> {{element.confirmados}} </td>
+														<th mat-header-cell *matHeaderCellDef>
+															{{neighborhoodsCharts.split[2].header}}</th>
+														<td mat-cell *matCellDef="let element"> {{element.confirmados}}
+														</td>
 													</ng-container>
 
-													<ng-container *ngIf="neighborhoodsCharts.showRegion"  matColumnDef="regiao">
-														<th  mat-header-cell *matHeaderCellDef>{{neighborhoodsCharts.split[3].header}}</th>
-														<td  mat-cell *matCellDef="let element"> {{element.regiao}} </td>
+													<ng-container *ngIf="neighborhoodsCharts.showRegion"
+														matColumnDef="regiao">
+														<th mat-header-cell *matHeaderCellDef>
+															{{neighborhoodsCharts.split[3].header}}</th>
+														<td mat-cell *matCellDef="let element"> {{element.regiao}} </td>
 													</ng-container>
 
 
 													<tr mat-header-row *matHeaderRowDef="displayedColumnsNeighbor"></tr>
-													<tr mat-row *matRowDef="let row; columns: displayedColumnsNeighbor;"></tr>
+													<tr mat-row
+														*matRowDef="let row; columns: displayedColumnsNeighbor;"></tr>
 												</table>
 
 											</p-scrollPanel>
 										</mat-tab>
 										<mat-tab *ngIf="deathsCharts.show" label="{{deathsCharts.label_tab}}">
-											<p-scrollPanel  [style]="{width: '100%', height: '38vh'}">
-												<button (click)="openInfo()" style="position: absolute; right: 7%; top: 12%;" classs="btn-info" mat-icon-button>
+											<p-scrollPanel [style]="{width: '100%', height: '38vh'}">
+												<button (click)="openInfo()"
+													style="position: absolute; right: 7%; top: 12%;" classs="btn-info"
+													mat-icon-button>
 													<mat-icon>info</mat-icon>
 												</button>
 												<div class="resumo-neigh">{{deathsCharts.label_sms}}.</div>
 												<div class="resumo-totais">
-													<div class="total"> {{deathsCharts.label_total }} <strong>{{ deathsCharts.total_neighborhoods}}</strong> </div>
-													<div class="total"> {{deathsCharts.label_deaths }} <strong> {{deathsCharts.total_obtios}} </strong></div>
+													<div class="total"> {{deathsCharts.label_total }}
+														<strong>{{ deathsCharts.total_neighborhoods}}</strong> </div>
+													<div class="total"> {{deathsCharts.label_deaths }} <strong>
+															{{deathsCharts.total_obtios}} </strong></div>
 												</div>
 
 												<div class="export-table">
-													<button mat-raised-button color="primary" (click)="exportPdfDeaths('bairros')">PDF</button>
-													<button mat-raised-button color="accent" (click)="exportExcelDeaths('bairros')">EXCEL</button>
+													<button mat-raised-button color="primary"
+														(click)="exportPdfDeaths('bairros')">PDF</button>
+													<button mat-raised-button color="accent"
+														(click)="exportExcelDeaths('bairros')">EXCEL</button>
 												</div>
 
-												<table style="width: 97% !important; margin-left: 2%!important; margin-right: 2% !important;"  mat-table [dataSource]="dataSourceDeaths" class="mat-elevation-z8">
+												<table
+													style="width: 97% !important; margin-left: 2%!important; margin-right: 2% !important;"
+													mat-table [dataSource]="dataSourceDeaths" class="mat-elevation-z8">
 													<!-- Position Column -->
 													<ng-container matColumnDef="rank">
-														<th mat-header-cell *matHeaderCellDef> {{this.deathsCharts.split[0].header}} </th>
+														<th mat-header-cell *matHeaderCellDef>
+															{{this.deathsCharts.split[0].header}} </th>
 														<td mat-cell *matCellDef="let element"> {{element.rank}} </td>
 													</ng-container>
 
 													<!-- Name Column -->
 													<ng-container matColumnDef="nome">
-														<th mat-header-cell *matHeaderCellDef> {{this.deathsCharts.split[1].header}} </th>
+														<th mat-header-cell *matHeaderCellDef>
+															{{this.deathsCharts.split[1].header}} </th>
 														<td mat-cell *matCellDef="let element"> {{element.nome}} </td>
 													</ng-container>
 
 													<!-- Weight Column -->
 													<ng-container matColumnDef="obitos">
-														<th mat-header-cell *matHeaderCellDef>{{this.deathsCharts.split[2].header}}</th>
+														<th mat-header-cell *matHeaderCellDef>
+															{{this.deathsCharts.split[2].header}}</th>
 														<td mat-cell *matCellDef="let element"> {{element.obitos}} </td>
 													</ng-container>
 
 													<ng-container *ngIf="deathsCharts.showRegion" matColumnDef="regiao">
-														<th mat-header-cell *matHeaderCellDef>{{this.deathsCharts.split[3].header}}</th>
+														<th mat-header-cell *matHeaderCellDef>
+															{{this.deathsCharts.split[3].header}}</th>
 														<td mat-cell *matCellDef="let element"> {{element.regiao}} </td>
 													</ng-container>
 
 
 													<tr mat-header-row *matHeaderRowDef="displayedColumnsDeaths"></tr>
-													<tr mat-row *matRowDef="let row; columns: displayedColumnsDeaths;"></tr>
+													<tr mat-row *matRowDef="let row; columns: displayedColumnsDeaths;">
+													</tr>
 												</table>
 
 											</p-scrollPanel>
@@ -533,30 +579,43 @@
 										<div class="resumo-neigh">{{chartResultCities.label_ses}} {{lastUpdate.data}}.
 										</div>
 										<div class="resumo-totais">
-											<div class="total"> {{chartResultCities.label_total_ses }} <strong>{{ chartResultCities.total_cities | number}}</strong> </div>
-											<div class="total"> {{chartResultCities.label_confirmed_ses }} <strong> {{chartResultCities.total_confirmados | number}} </strong></div>
+											<div class="total"> {{chartResultCities.label_total_ses }}
+												<strong>{{ chartResultCities.total_cities | number}}</strong> </div>
+											<div class="total"> {{chartResultCities.label_confirmed_ses }} <strong>
+													{{chartResultCities.total_confirmados | number}} </strong></div>
 										</div>
-										<div *ngIf="(summary.confirmados - chartResultCities.total_confirmados) > 0" style="margin: 10px; text-align: center!important;" > {{chartResultCities.label_without_city }} <strong> {{(summary.confirmados - chartResultCities.total_confirmados) | number}} </strong></div>
+										<div *ngIf="(summary.confirmados - chartResultCities.total_confirmados) > 0"
+											style="margin: 10px; text-align: center!important;">
+											{{chartResultCities.label_without_city }} <strong>
+												{{(summary.confirmados - chartResultCities.total_confirmados) | number}}
+											</strong></div>
 
 
 										<div class="export-table">
-											<button mat-raised-button color="primary" (click)="exportPdf('cities')">PDF</button>
-											<button mat-raised-button color="accent" (click)="exportExcel('cities')">EXCEL</button>
+											<button mat-raised-button color="primary"
+												(click)="exportPdf('cities')">PDF</button>
+											<button mat-raised-button color="accent"
+												(click)="exportExcel('cities')">EXCEL</button>
 										</div>
 
-										<table style="width: 97% !important; margin-left: 2% !important; margin-right: 2% !important;"  mat-table [dataSource]="dataSourceCities" class="mat-elevation-z8">
+										<table
+											style="width: 97% !important; margin-left: 2% !important; margin-right: 2% !important;"
+											mat-table [dataSource]="dataSourceCities" class="mat-elevation-z8">
 											<ng-container matColumnDef="rank">
-												<th mat-header-cell *matHeaderCellDef> {{this.chartResultCities.split[0].header}} </th>
+												<th mat-header-cell *matHeaderCellDef>
+													{{this.chartResultCities.split[0].header}} </th>
 												<td mat-cell *matCellDef="let element"> {{element.rank}} </td>
 											</ng-container>
 
 											<ng-container matColumnDef="nome">
-												<th mat-header-cell *matHeaderCellDef> {{this.chartResultCities.split[1].header}} </th>
+												<th mat-header-cell *matHeaderCellDef>
+													{{this.chartResultCities.split[1].header}} </th>
 												<td mat-cell *matCellDef="let element"> {{element.nome}} </td>
 											</ng-container>
 
 											<ng-container matColumnDef="confirmados">
-												<th mat-header-cell *matHeaderCellDef>{{this.chartResultCities.split[2].header}}</th>
+												<th mat-header-cell *matHeaderCellDef>
+													{{this.chartResultCities.split[2].header}}</th>
 												<td mat-cell *matCellDef="let element"> {{element.confirmados}} </td>
 											</ng-container>
 
@@ -582,10 +641,8 @@
 									<div *ngIf="dataBrasil?.show">
 										<p style="font-weight: bold; text-align: center;">
 											{{ dataBrasil.title }}</p>
-										<p-chart [ngStyle]="{'overflow-x': hidden}"
-											*ngIf="dataBrasil?.show"
-											[type]="dataBrasil?.options.type"
-											[data]="dataBrasil?.dataset"
+										<p-chart [ngStyle]="{'overflow-x': hidden}" *ngIf="dataBrasil?.show"
+											[type]="dataBrasil?.options.type" [data]="dataBrasil?.dataset"
 											[options]="optionsBrasil">
 										</p-chart>
 									</div>
@@ -597,44 +654,62 @@
 						<mat-tab label="{{dataProjSeries.timeseries.label}}">
 							<p-tabView>
 								<p-tabPanel [header]="selectRegion.nome">
-								<p-scrollPanel [style]="{width: '100%', height: '50vh'}">
+									<p-scrollPanel [style]="{width: '100%', height: '50vh'}">
 
-									<h5 *ngIf="!dataProjSeries.timeseries.chartResult[0]?.show" style="text-align: center;">
-										<br>
-										<br>
-										<strong> {{dataProjSeries.timeseries.not_cases}} {{selectRegion.nome}} </strong>
-										<br>
-										<br>
-									</h5>
-
-
-									<div style="text-align: start;" *ngIf="dataProjSeries.timeseries.chartResult[0]?.show">
-										<!-- <h5><b>{{statistics_county.text.title}}</b> {{selectRegion.nome}}</h5> -->
-										<p><b>{{statistics_county.text.total_dias}}</b> {{statistics_county.result.total_dias}}</p>
-										<p *ngIf="statistics_county.result.media_novos_casos_7dias != -1"><b>{{statistics_county.text.media_novos_casos_7dias}}</b> {{statistics_county.result.media_novos_casos_7dias | number:'1.0-3'}}</p>
-										<p *ngIf="statistics_county.result.dias_duplicacao_confirmados != -1"><b>{{statistics_county.text.dias_duplicacao_confirmados}}</b> {{statistics_county.result.dias_duplicacao_confirmados | number:'1.0-3'}}</p>
-										<p *ngIf="statistics_county.result.taxa_crescimento != ''"><b>{{statistics_county.text.taxa_crescimento}}</b> {{statistics_county.result.taxa_crescimento | number:'1.0-2'}}</p>
-										<p *ngIf="statistics_county.result.n_total_infectadados_pico != ''"><b>{{statistics_county.text.n_total_infectadados_pico}}</b> {{statistics_county.result.n_total_infectadados_pico | number }}</p>
-										<!-- <p *ngIf="statistics_county.result.data_pico_infectados_incidencia != ''"><b>{{statistics_county.text.data_pico_infectados_incidencia}}</b> {{statistics_county.result.data_pico_infectados_incidencia | date : 'dd/MM/yyyy' }}</p> -->
-										<p *ngIf="statistics_county.result.data_pico_infectados_acumudado != ''"><b>{{statistics_county.text.data_pico_infectados_acumudado}}</b> {{statistics_county.result.data_pico_infectados_acumudado | date : 'dd/MM/yyyy' }}</p>
-
-										<br>
+										<h5 *ngIf="!dataProjSeries.timeseries.chartResult[0]?.show"
+											style="text-align: center;">
+											<br>
+											<br>
+											<strong> {{dataProjSeries.timeseries.not_cases}} {{selectRegion.nome}}
+											</strong>
+											<br>
+											<br>
+										</h5>
 
 
-									</div>
+										<div style="text-align: start;"
+											*ngIf="dataProjSeries.timeseries.chartResult[0]?.show">
+											<!-- <h5><b>{{statistics_county.text.title}}</b> {{selectRegion.nome}}</h5> -->
+											<p><b>{{statistics_county.text.total_dias}}</b>
+												{{statistics_county.result.total_dias}}</p>
+											<p *ngIf="statistics_county.result.media_novos_casos_7dias != -1">
+												<b>{{statistics_county.text.media_novos_casos_7dias}}</b>
+												{{statistics_county.result.media_novos_casos_7dias | number:'1.0-3'}}
+											</p>
+											<p *ngIf="statistics_county.result.dias_duplicacao_confirmados != -1">
+												<b>{{statistics_county.text.dias_duplicacao_confirmados}}</b>
+												{{statistics_county.result.dias_duplicacao_confirmados | number:'1.0-3'}}
+											</p>
+											<p *ngIf="statistics_county.result.taxa_crescimento != ''">
+												<b>{{statistics_county.text.taxa_crescimento}}</b>
+												{{statistics_county.result.taxa_crescimento | number:'1.0-2'}}</p>
+											<p *ngIf="statistics_county.result.n_total_infectadados_pico != ''">
+												<b>{{statistics_county.text.n_total_infectadados_pico}}</b>
+												{{statistics_county.result.n_total_infectadados_pico | number }}</p>
+											<!-- <p *ngIf="statistics_county.result.data_pico_infectados_incidencia != ''"><b>{{statistics_county.text.data_pico_infectados_incidencia}}</b> {{statistics_county.result.data_pico_infectados_incidencia | date : 'dd/MM/yyyy' }}</p> -->
+											<p *ngIf="statistics_county.result.data_pico_infectados_acumudado != ''">
+												<b>{{statistics_county.text.data_pico_infectados_acumudado}}</b>
+												{{statistics_county.result.data_pico_infectados_acumudado | date : 'dd/MM/yyyy' }}
+											</p>
 
-									<div *ngIf="dataProjSeries.timeseries.chartResult[0]?.show">
-										<p style="font-weight: bold; text-align: end;">
-											{{dataProjSeries.timeseries.last_updated}}  {{dataProjSeries.timeseries.chartResult[0]?.last_model_date}}</p>
-										<p-chart [ngStyle]="{'overflow-x': hidden}"
-											*ngIf="dataProjSeries.timeseries.chartResult[0]?.type"
-											[type]="dataProjSeries.timeseries.chartResult[0]?.type"
-											[data]="dataProjSeries.timeseries.chartResult[0]?.dataResult"
-											[options]="dataProjSeries.timeseries.chartResult[0]?.options">
-										</p-chart>
-									</div>
-									<div style="height: 30vh"></div>
-								</p-scrollPanel>
+											<br>
+
+
+										</div>
+
+										<div *ngIf="dataProjSeries.timeseries.chartResult[0]?.show">
+											<p style="font-weight: bold; text-align: end;">
+												{{dataProjSeries.timeseries.last_updated}}
+												{{dataProjSeries.timeseries.chartResult[0]?.last_model_date}}</p>
+											<p-chart [ngStyle]="{'overflow-x': hidden}"
+												*ngIf="dataProjSeries.timeseries.chartResult[0]?.type"
+												[type]="dataProjSeries.timeseries.chartResult[0]?.type"
+												[data]="dataProjSeries.timeseries.chartResult[0]?.dataResult"
+												[options]="dataProjSeries.timeseries.chartResult[0]?.options">
+											</p-chart>
+										</div>
+										<div style="height: 30vh"></div>
+									</p-scrollPanel>
 								</p-tabPanel>
 							</p-tabView>
 						</mat-tab>
@@ -669,7 +744,7 @@
 									<div class="team-section" *ngFor="let section of team.data">
 										<h4>{{section.title}}</h4>
 										<div class="team-member" *ngFor="let member of section.members">
-											<a target="_blank" [href]="member.link" >{{member.nome}}</a> <br>
+											<a target="_blank" [href]="member.link">{{member.nome}}</a> <br>
 											<span>{{member.description}}</span>
 										</div>
 									</div>
@@ -684,7 +759,7 @@
 
 			</div>
 			<!-- [ngStyle]="{'visibility': (infodata || clickable) || infobairro ? 'visible' : 'hidden'}"> -->
-<!--			 [ngStyle]="{'visibility': infodata  ? 'visible' : (infobairro ? 'visible' : (clickable ? 'visible' : 'hidden'))}">-->
+			<!--			 [ngStyle]="{'visibility': infodata  ? 'visible' : (infobairro ? 'visible' : (clickable ? 'visible' : 'hidden'))}">-->
 
 			<div id="map-info" class="card" [ngStyle]="showDialogUTFGrid()">
 				<div *ngIf="infodata && !clickable" class="card-body">
@@ -713,7 +788,8 @@
 							</tr>
 						</tbody>
 					</table>
-					<div style="text-align:center;color:darkred"> <br> <strong>{{minireportText.click_more_municipio}} </strong></div>
+					<div style="text-align:center;color:darkred"> <br> <strong>{{minireportText.click_more_municipio}}
+						</strong></div>
 				</div>
 				<div *ngIf="infobairro && !clickable" class="card-body">
 					<p class="card-text">{{infobairro.nome}}</p>
@@ -746,22 +822,22 @@
 					<p class="card-text deaths">{{infobairroObitos.nome}}</p>
 					<table>
 						<tbody>
-						<tr>
-							<th>{{minireportText.label_area_bairro}}</th>
-							<td>{{infobairroObitos.area_km2 | number:'1.2-2'  }} km²</td>
-						</tr>
-						<tr>
-							<th>{{minireportText.deaths}} </th>
-							<td>{{infobairroObitos.numpoints}} </td>
-						</tr>
-						<tr>
-							<th>{{minireportText.label_fonte}} </th>
-							<td>{{infobairroObitos.fonte}}</td>
-						</tr>
-						<tr>
-							<th>{{minireportText.label_last_update}} </th>
-							<td>{{infobairroObitos.data_ultima_atualizacao | date : 'dd/MM/yyyy'}}</td>
-						</tr>
+							<tr>
+								<th>{{minireportText.label_area_bairro}}</th>
+								<td>{{infobairroObitos.area_km2 | number:'1.2-2'  }} km²</td>
+							</tr>
+							<tr>
+								<th>{{minireportText.deaths}} </th>
+								<td>{{infobairroObitos.numpoints}} </td>
+							</tr>
+							<tr>
+								<th>{{minireportText.label_fonte}} </th>
+								<td>{{infobairroObitos.fonte}}</td>
+							</tr>
+							<tr>
+								<th>{{minireportText.label_last_update}} </th>
+								<td>{{infobairroObitos.data_ultima_atualizacao | date : 'dd/MM/yyyy'}}</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -838,26 +914,32 @@
 					<p class="card-text">{{infoTemperatures.nome}} - {{infoTemperatures.uf}}</p>
 					<table>
 						<tbody>
-						<tr>
-							<th>{{minireportText.qtd_population}} </th>
-							<td>{{infoTemperatures.pop_2019 | number:'1.0-0' }} </td>
-						</tr>
-						<tr>
-							<th>{{minireportText.data_previsao}}</th>
-							<td>{{infoTemperatures.data_previsao | date : 'dd/MM/yyyy HH:mm'}}</td>
-						</tr>
-						<tr>
-							<th >{{minireportText.iqa}}</th>
-							<td [ngClass]="getClassByIqa(infoTemperatures.iqa)">{{infoTemperatures.iqa.toUpperCase()}}</td>
-						</tr>
-						<tr>
-							<th>{{minireportText.temperatura}} </th>
-							<td>{{infoTemperatures.temperatura}}ºC</td>
-						</tr>
-						<tr>
-							<th>{{minireportText.data_modelo}}  </th>
-							<td>{{infoTemperatures.data_modelo | date : 'dd/MM/yyyy'}}</td>
-						</tr>
+							<tr>
+								<th>{{minireportText.qtd_population}} </th>
+								<td>{{infoTemperatures.pop_2019 | number:'1.0-0' }} </td>
+							</tr>
+							<tr>
+								<th>{{minireportText.data_previsao}}</th>
+								<td>{{infoTemperatures.data_previsao | date : 'dd/MM/yyyy HH:mm'}}</td>
+							</tr>
+							<tr>
+								<th>{{minireportText.iqa}}</th>
+								<td [ngClass]="getClassByIqa(infoTemperatures.iqa_categoria)">
+									{{infoTemperatures.iqa_categoria.toUpperCase()}} ({{minireportText.indice}}
+									{{infoTemperatures.iqa}})</td>
+							</tr>
+							<tr>
+								<th>{{minireportText.temperatura}} </th>
+								<td>{{infoTemperatures.temperatura}}ºC</td>
+							</tr>
+							<tr>
+								<th>{{minireportText.umidade}} </th>
+								<td>{{infoTemperatures.ur}}%</td>
+							</tr>
+							<tr>
+								<th>{{minireportText.data_modelo}} </th>
+								<td>{{infoTemperatures.data_modelo | date : 'dd/MM/yyyy'}}</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
