@@ -72,6 +72,7 @@ import { BedsComponent } from './views/beds/beds.component';
 import { NoteComponent } from './views/note/note.component';
 import { ProjectionsComponent } from './views/projections/projections.component';
 import { DialogChartsComponent } from './views/dialog-charts/dialog-charts.component';
+import { DocsComponent } from './views/docs/docs.component';
 
 registerLocaleData(localePt);
 
@@ -87,7 +88,8 @@ const ENTRY_COMPONENTS = [
   BedsComponent,
   NoteComponent,
   ProjectionsComponent,
-  DialogChartsComponent
+  DialogChartsComponent,
+  DocsComponent
 ];
 
 @NgModule({
@@ -106,6 +108,7 @@ const ENTRY_COMPONENTS = [
     NoteComponent,
     ProjectionsComponent,
     DialogChartsComponent,
+    DocsComponent,
   ],
   imports: [
     TabViewModule,

@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, HostListener, Injectable, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
+
 import * as OlExtent from 'ol/extent.js';
 import GeoJSON from 'ol/format/GeoJSON';
 import { defaults as defaultInteractions } from 'ol/interaction';
@@ -37,7 +37,7 @@ import { defaults as defaultControls, Control, Attribution } from 'ol/control';
 import { Router } from '@angular/router';
 import { google } from "google-maps";
 import { DataSource } from '@angular/cdk/table';
-
+import { DomSanitizer } from '@angular/platform-browser';
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
 import { HelpComponent } from "./help/help.component";
 import { RestrictedAreaAccessComponent } from "./restricted-area-access/restricted-area-access.component";
@@ -58,6 +58,7 @@ import { ProjectionsComponent } from "./projections/projections.component";
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { DialogChartsComponent } from "./dialog-charts/dialog-charts.component";
+import {DocsComponent} from "./docs/docs.component";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -2560,11 +2561,11 @@ export class MapComponent implements OnInit {
   }
 
   openInfoTemperatures() {
-    // let dialogRef = this.dialog.open(ProjectionsComponent, {
-    //   id:'covidBioBr',
-    //   width: '70%',
-    //   data: {}
-    // });
+    let dialogRef = this.dialog.open(DocsComponent, {
+      id:'infoNoteTemperature',
+      width: '70%',
+      data: {src: this.domSanitizer.bypassSecurityTrustResourceUrl('../../../assets/documentos/NotaTecnica_IQA_COVID-19_UFG.pdf')}
+    });
   }
 
   downloadCSV(layer) {
