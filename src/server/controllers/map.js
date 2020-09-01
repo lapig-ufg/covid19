@@ -78,21 +78,21 @@ module.exports = function (app) {
                 timeHandler: "msfilter",
                 times: [
                   {
-                  value: "cd_geocmu='52'",
-                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["default_placeholder"][language]
-                },
-                {
-                  value: "cd_geocmu='5201405' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5201405')",
-                  Viewvalue: "Aparecida de Goiânia"
-                },
-                {
-                  value: "cd_geocmu='5300108' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5300108')",
-                  Viewvalue: "Brasília"
-                },
-                {
-                  value: "cd_geocmu='5208707' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5208707')",
-                  Viewvalue: "Goiânia"
-                }
+                    value: "cd_geocmu='52'",
+                    Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["default_placeholder"][language]
+                  },
+                  {
+                    value: "cd_geocmu='5201405' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5201405')",
+                    Viewvalue: "Aparecida de Goiânia"
+                  },
+                  {
+                    value: "cd_geocmu='5300108' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5300108')",
+                    Viewvalue: "Brasília"
+                  },
+                  {
+                    value: "cd_geocmu='5208707' AND data_ultima_atualizacao = (select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '5208707')",
+                    Viewvalue: "Goiânia"
+                  }
                 ]
               }]
             },
@@ -144,54 +144,63 @@ module.exports = function (app) {
                 regionFilter: true,
                 opacity: 0.8,
                 order: 3
-              }]
+              },
+              {
+                value: "covid_medias_moveis_obitos",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["tendencias"]["types"]["covid_medias_moveis_obitos"]["view_value"][language],
+                source: 'ows',
+                regionFilter: true,
+                opacity: 0.8,
+                order: 3
+              }
+              ]
             },
             {
-            id: "projecoes_luisa",
-            label: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["label"][language],
-            visible: false,
-            showLayer: false,
-            selectedType: "projecao_luisa_confirmados",
-            showTypes: true,
-            types: [
-              {
-                value: "projecao_luisa_confirmados",
-                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["view_value"][language],
-                layerfilter: "data = (select max(data) from v_projecao_luisa)",
-                regionFilter: false,
-                source: 'ows',
-                opacity: 0.8,
-                order: 3,
-              },
-              {
-                value: "projecao_luisa_recuperados",
-                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["view_value"][language],
-                layerfilter: "data = (select max(data) from v_projecao_luisa)",
-                regionFilter: false,
-                source: 'ows',
-                opacity: 0.8,
-                order: 3,
-              },
-              {
-                value: "projecao_luisa_infectados",
-                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["view_value"][language],
-                layerfilter: "data = (select max(data) from v_projecao_luisa)",
-                regionFilter: false,
-                source: 'ows',
-                opacity: 0.8,
-                order: 3,
-              },
-              {
-                value: "projecao_luisa_hospitalizados",
-                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["view_value"][language],
-                layerfilter: "data = (select max(data) from v_projecao_luisa)",
-                regionFilter: false,
-                source: 'ows',
-                opacity: 0.8,
-                order: 3,
-              }
-            ]
-          },
+              id: "projecoes_luisa",
+              label: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["label"][language],
+              visible: false,
+              showLayer: false,
+              selectedType: "projecao_luisa_confirmados",
+              showTypes: true,
+              types: [
+                {
+                  value: "projecao_luisa_confirmados",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["view_value"][language],
+                  layerfilter: "data = (select max(data) from v_projecao_luisa)",
+                  regionFilter: false,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3,
+                },
+                {
+                  value: "projecao_luisa_recuperados",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["view_value"][language],
+                  layerfilter: "data = (select max(data) from v_projecao_luisa)",
+                  regionFilter: false,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3,
+                },
+                {
+                  value: "projecao_luisa_infectados",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["view_value"][language],
+                  layerfilter: "data = (select max(data) from v_projecao_luisa)",
+                  regionFilter: false,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3,
+                },
+                {
+                  value: "projecao_luisa_hospitalizados",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_bairro"]["types"]["casos_por_bairro_covid"]["view_value"][language],
+                  layerfilter: "data = (select max(data) from v_projecao_luisa)",
+                  regionFilter: false,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3,
+                }
+              ]
+            },
             {
               id: "clima_temperatura",
               label: languageJson["descriptor"]["informacoes"]["layers"]["clima_temperatura"]["label"][language],
@@ -212,253 +221,253 @@ module.exports = function (app) {
               ]
             },
             {
-            id: "urban_traffic",
-            label: languageJson["descriptor"]["informacoes"]["layers"]["urban_traffic"]["label"][language],
-            visible: false,
-            selectedType: "urban_traffic_real_time",
-            types: [{
-              value: "urban_traffic_real_time",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["urban_traffic"]["types"]["urban_traffic_real_time"]["view_value"][language],
-              source: 'external',
-              // url: 'https://mt1.google.com/vt?lyrs=h@159000000,traffic|seconds_into_week:-1&style=3&x={x}&y={y}&z={z}',
-              url: 'https://mt0.google.com/vt/lyrs=m@221097413,traffic&x={x}&y={y}&z={z}',
-              legendUrl: 'assets/legends/legend-trafficgoogle-br.png',
-              opacity: 0.8,
-              order: 3
-            }]
-          },
-            {
-            id: "indice_vulnerabilidade",
-            label: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["label"][language],
-            visible: false,
-            showTypes: true,
-            selectedType: "indice_vunerabilidade_ao_covid",
-            types: [{
-              value: "indice_vunerabilidade_ao_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
+              id: "urban_traffic",
+              label: languageJson["descriptor"]["informacoes"]["layers"]["urban_traffic"]["label"][language],
+              visible: false,
+              selectedType: "urban_traffic_real_time",
+              types: [{
+                value: "urban_traffic_real_time",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["urban_traffic"]["types"]["urban_traffic_real_time"]["view_value"][language],
+                source: 'external',
+                // url: 'https://mt1.google.com/vt?lyrs=h@159000000,traffic|seconds_into_week:-1&style=3&x={x}&y={y}&z={z}',
+                url: 'https://mt0.google.com/vt/lyrs=m@221097413,traffic&x={x}&y={y}&z={z}',
+                legendUrl: 'assets/legends/legend-trafficgoogle-br.png',
+                opacity: 0.8,
+                order: 3
+              }]
             },
             {
-              value: "indice_vunerabilidade_ao_covid_responsave",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid_responsave"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-            {
-              value: "indice_vunerabilidade_ao_covid_moradia",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid_moradia"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-            {
-              value: "indice_vunerabilidade_ao_covid_idosos",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid_idosos"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-            {
-              value: "indice_vunerabilidade_ao_covid_infraestrutura",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid_infraestrutura"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-            {
-              value: "indice_vunerabilidade_ao_covid_educacao",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid_educacao"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-            {
-              value: "indice_vunerabilidade_ao_covid_demografia",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid_demografia"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            }
-          ]
-          },
-            {
-            id: "doencas_respiratorias",
-            label: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["label"][language],
-            visible: false,
-            selectedType: "doencas_respiratorias_2015_2019_abril_covid",
-            types: [
-              {
-                value: "doencas_respiratorias_2015_2019_ano_total_covid_",
-                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_ano_total_covid_"]["view_value"][language],
+              id: "indice_vulnerabilidade",
+              label: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["label"][language],
+              visible: false,
+              showTypes: true,
+              selectedType: "indice_vunerabilidade_ao_covid",
+              types: [{
+                value: "indice_vunerabilidade_ao_covid",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid"]["view_value"][language],
                 regionFilter: true,
                 source: 'ows',
                 opacity: 0.8,
                 order: 3
               },
               {
-              value: "doencas_respiratorias_2015_2019_janeiro_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_janeiro_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-            {
-              value: "doencas_respiratorias_2015_2019_fevereiro_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_fevereiro_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-            {
-              value: "doencas_respiratorias_2015_2019_marco_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_marco_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-            {
-              value: "doencas_respiratorias_2015_2019_abril_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_abril_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-            {
-              value: "doencas_respiratorias_2015_2019_maio_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_maio_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-            {
-              value: "doencas_respiratorias_2015_2019_junho_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_junho_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-            {
-              value: "doencas_respiratorias_2015_2019_julho_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_julho_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-            {
-              value: "doencas_respiratorias_2015_2019_agosto_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_agosto_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-            {
-              value: "doencas_respiratorias_2015_2019_setembro_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_setembro_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-            {
-              value: "doencas_respiratorias_2015_2019_outubro_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_outubro_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-            {
-              value: "doencas_respiratorias_2015_2019_novembro_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_novembro_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-            {
-              value: "doencas_respiratorias_2015_2019_dezembro_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_dezembro_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-          ]
-          },
-            {
-            id: "casos_tuberculose",
-            label: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["label"][language],
-            visible: false,
-            selectedType: "casos_tuberculose_2019_covid",
-            types: [
-              {
-                value: "casos_tuberculose_2015_covid",
-                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["types"]["casos_tuberculose_2015_covid"]["view_value"][language],
+                value: "indice_vunerabilidade_ao_covid_responsave",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid_responsave"]["view_value"][language],
                 regionFilter: true,
                 source: 'ows',
                 opacity: 0.8,
                 order: 3
               },
               {
-              value: "casos_tuberculose_2016_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["types"]["casos_tuberculose_2016_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
+                value: "indice_vunerabilidade_ao_covid_moradia",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid_moradia"]["view_value"][language],
+                regionFilter: true,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              },
+              {
+                value: "indice_vunerabilidade_ao_covid_idosos",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid_idosos"]["view_value"][language],
+                regionFilter: true,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              },
+              {
+                value: "indice_vunerabilidade_ao_covid_infraestrutura",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid_infraestrutura"]["view_value"][language],
+                regionFilter: true,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              },
+              {
+                value: "indice_vunerabilidade_ao_covid_educacao",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid_educacao"]["view_value"][language],
+                regionFilter: true,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              },
+              {
+                value: "indice_vunerabilidade_ao_covid_demografia",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["indice_vulnerabilidade"]["types"]["indice_vunerabilidade_ao_covid_demografia"]["view_value"][language],
+                regionFilter: true,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3
+              }
+              ]
             },
             {
-              value: "casos_tuberculose_2017_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["types"]["casos_tuberculose_2017_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
+              id: "doencas_respiratorias",
+              label: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["label"][language],
+              visible: false,
+              selectedType: "doencas_respiratorias_2015_2019_abril_covid",
+              types: [
+                {
+                  value: "doencas_respiratorias_2015_2019_ano_total_covid_",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_ano_total_covid_"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "doencas_respiratorias_2015_2019_janeiro_covid",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_janeiro_covid"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "doencas_respiratorias_2015_2019_fevereiro_covid",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_fevereiro_covid"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "doencas_respiratorias_2015_2019_marco_covid",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_marco_covid"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "doencas_respiratorias_2015_2019_abril_covid",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_abril_covid"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "doencas_respiratorias_2015_2019_maio_covid",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_maio_covid"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "doencas_respiratorias_2015_2019_junho_covid",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_junho_covid"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "doencas_respiratorias_2015_2019_julho_covid",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_julho_covid"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "doencas_respiratorias_2015_2019_agosto_covid",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_agosto_covid"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "doencas_respiratorias_2015_2019_setembro_covid",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_setembro_covid"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "doencas_respiratorias_2015_2019_outubro_covid",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_outubro_covid"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "doencas_respiratorias_2015_2019_novembro_covid",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_novembro_covid"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "doencas_respiratorias_2015_2019_dezembro_covid",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["doencas_respiratorias"]["types"]["doencas_respiratorias_2015_2019_dezembro_covid"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                },
+              ]
             },
             {
-              value: "casos_tuberculose_2018_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["types"]["casos_tuberculose_2018_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-            {
-              value: "casos_tuberculose_2019_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["types"]["casos_tuberculose_2019_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
-            },
-            {
-              value: "casos_tuberculose_mediana_covid",
-              Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["types"]["casos_tuberculose_mediana_covid"]["view_value"][language],
-              regionFilter: true,
-              source: 'ows',
-              opacity: 0.8,
-              order: 3
+              id: "casos_tuberculose",
+              label: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["label"][language],
+              visible: false,
+              selectedType: "casos_tuberculose_2019_covid",
+              types: [
+                {
+                  value: "casos_tuberculose_2015_covid",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["types"]["casos_tuberculose_2015_covid"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "casos_tuberculose_2016_covid",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["types"]["casos_tuberculose_2016_covid"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "casos_tuberculose_2017_covid",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["types"]["casos_tuberculose_2017_covid"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "casos_tuberculose_2018_covid",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["types"]["casos_tuberculose_2018_covid"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "casos_tuberculose_2019_covid",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["types"]["casos_tuberculose_2019_covid"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "casos_tuberculose_mediana_covid",
+                  Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["casos_tuberculose"]["types"]["casos_tuberculose_mediana_covid"]["view_value"][language],
+                  regionFilter: true,
+                  source: 'ows',
+                  opacity: 0.8,
+                  order: 3
+                }
+              ]
             }
-          ]
-          }
           ]
         },
         {

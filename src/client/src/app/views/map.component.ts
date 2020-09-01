@@ -1684,8 +1684,8 @@ export class MapComponent implements OnInit {
 
               this.infoTemperatures = data;
 
-              this.infoTemperatures.ur = this.infoTemperatures.ur.replace(".", ",")
-              this.infoTemperatures.temperatura = this.infoTemperatures.temperatura.replace(".", ",")
+              this.infoTemperatures.ur = parseFloat(this.infoTemperatures.ur).toFixed(1).replace(".", ",")
+              this.infoTemperatures.temperatura = parseFloat(this.infoTemperatures.temperatura).toFixed(1).replace(".", ",")
 
 
               if (this.infoTemperatures.nome == "") {

@@ -71,16 +71,28 @@
 			},
 			"timeseries_tendencias_go": {
 				"title": {
-					"pt-br": "Média móvel de 7 dias",
+					"pt-br": "Média Móvel de Casos em 7 dias",
 					"en-us": "7-day moving average"
 				},
+				"title_obitos": {
+					"pt-br": "Média Móvel de Óbitos em 7 dias",
+					"en-us": "7-day moving average of deaths"
+				},
 				"title_tab": {
-					"pt-br": "Média móvel de [region]",
-					"en-us": "Moving average of [region]"
+					"pt-br": "Média móvel de Casos em [region]",
+					"en-us": "Moving average of Confirmed Cases of [region]"
+				},
+				"title_tab_obitos": {
+					"pt-br": "Média móvel de Óbitos em [region]",
+					"en-us": "Moving average of Deaths of [region]"
 				},
 				"new_cases": {
 					"pt-br": "Novos casos",
 					"en-us": "New cases"
+				},
+				"new_cases_obitos": {
+					"pt-br": "Novos Óbitos",
+					"en-us": "New Deaths"
 				},
 				"mm7": {
 					"pt-br": "Média móvel",
@@ -481,8 +493,8 @@
 			"en-us": "Moving average variation:"
 		},
 		"trend": {
-			"pt-br": "Tendência de novos casos:",
-			"en-us": "Trend of new cases:"
+			"pt-br": "Tendência de Novos Casos baseado na Média Móvel:",
+			"en-us": "Trend of new cases based on the Moving Average:"
 		},
 		"last_update": {
 			"pt-br": "Última atualização em:",
@@ -720,14 +732,20 @@
 				},
 				"tendencias": {
 					"label": {
-						"pt-br": "Tendência de novos casos",
-						"en-us": "\nTrend of new cases"
+						"pt-br": "Tendência para novos casos",
+						"en-us": "Trend of new cases"
 					},
 					"types": {
 						"covid_medias_moveis": {
 							"view_value": {
-								"pt-br": "Tendências des casos",
-								"en-us": "Tendências des casos"
+								"pt-br": "Casos Confirmados",
+								"en-us": "Confirmed Cases"
+							}
+						},
+						"covid_medias_moveis_obitos": {
+							"view_value": {
+								"pt-br": "Óbitos",
+								"en-us": "Death trends"
 							}
 						}
 					}

@@ -225,31 +225,62 @@ module.exports = function (app) {
 
   function createDataSetTendenciasGO(labels, graphic, language) {
 
-    let data = {
-      labels: graphic.map(element => formatDate(element.data, language)),
-      datasets: [
-        {
-          label: labels.label_mm7,
-          data: graphic.map(element => parseFloat(element.media)),
-          fill: false,
-          backgroundColor: '#e5d42c',
-          borderColor: '#e69b26',
-          spanGaps: true,
-          type: 'line',
-          order: 1
-        },
-        {
-          label: labels.label_new_cases,
-          data: graphic.map(element => parseFloat(element.casos)),
-          fill: false,
-          backgroundColor: '#be1b24',
-          borderColor: '#be1b24',
-          spanGaps: true,
-          type: 'bar',
-          order: 2
-        }
-      ]
-    };
+    let data = {}
+
+    if (labels.id == 'timeseries_tendencias_go') {
+      data = {
+        labels: graphic.map(element => formatDate(element.data, language)),
+        datasets: [
+          {
+            label: labels.label_mm7,
+            data: graphic.map(element => parseFloat(element.media)),
+            fill: false,
+            backgroundColor: '#e5d42c',
+            borderColor: '#e69b26',
+            spanGaps: true,
+            type: 'line',
+            order: 1
+          },
+          {
+            label: labels.label_new_cases,
+            data: graphic.map(element => parseFloat(element.casos)),
+            fill: false,
+            backgroundColor: '#be1b24',
+            borderColor: '#be1b24',
+            spanGaps: true,
+            type: 'bar',
+            order: 2
+          }
+        ]
+      };
+    }
+    else if (labels.id == 'timeseries_tendencias_obitos_go') {
+      data = {
+        labels: graphic.map(element => formatDate(element.data, language)),
+        datasets: [
+          {
+            label: labels.label_mm7,
+            data: graphic.map(element => parseFloat(element.media)),
+            fill: false,
+            backgroundColor: '#e5d42c',
+            borderColor: '#e69b26',
+            spanGaps: true,
+            type: 'line',
+            order: 1
+          },
+          {
+            label: labels.label_new_cases,
+            data: graphic.map(element => parseFloat(element.casos)),
+            fill: false,
+            backgroundColor: '#1c1919',
+            borderColor: '#1c1919',
+            spanGaps: true,
+            type: 'bar',
+            order: 2
+          }
+        ]
+      };
+    }
 
     return data;
   }
@@ -270,18 +301,53 @@ module.exports = function (app) {
         label_mm7: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["mm7"][language],
         borderDashRef: [5, 5],
         getText: function (chart) {
-          // var label = chart['indicators'][0]["label"]
-          // var value = chart['indicators'][0]["value"]
-          // var areaMun = chart['indicators'][0]["area_mun"]
-
-          // var percentual_area_ha = ((value * 100) / areaMun);
-
-          // var text = "De acordo com o projeto Terra Class Cerrado(referente ao ano de 2013), " + region
-          // + " possui uma área total de " + numberFormat(parseFloat(areaMun)) + " de hectares, "
-          // +"sendo a classe " + label + " a de maior predominância, com " + numberFormat(parseFloat(value))
-          // + " de hectares (" + Math.round(percentual_area_ha) + "% da área total). "
 
           var text = languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["title"][language];
+
+          return text;
+        },
+        type: "bar",
+        pointStyle: "rect",
+        disabled: false,
+        options: {
+          title: {
+            display: false,
+            text: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_go"]["text"][language],
+            fontSize: 10,
+            position: "bottom"
+          },
+          legend: {
+            labels: {
+              usePointStyle: true,
+              fontColor: "#85560c"
+            },
+            position: "bottom"
+          },
+          tooltips: {},
+          scales: {
+            pointLabels: {
+              fontSize: 20,
+            },
+            yAxes: [],
+            xAxes: []
+          }
+        }
+      },
+      {
+        id: "timeseries_tendencias_obitos_go",
+        title: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["title_obitos"][language],
+        title_tab: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["title_tab_obitos"][language],
+        note: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["note"][language],
+        label_last_update: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["last_update"][language],
+        label_media: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["media"][language],
+        label_variation: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["variation"][language],
+        label_trend: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["trend"][language],
+        label_new_cases: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["new_cases_obitos"][language],
+        label_mm7: languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["mm7"][language],
+        borderDashRef: [5, 5],
+        getText: function (chart) {
+
+          var text = languageJson["charts_box"]["charts_box_dados_oficiais"]["timeseries_tendencias_go"]["title_obitos"][language];
 
           return text;
         },
@@ -319,7 +385,7 @@ module.exports = function (app) {
       chart['show'] = false
       var qr = request.queryResult[chart.id]
 
-      if (chart.id == 'timeseries_tendencias_go') {
+      if (chart.id == 'timeseries_tendencias_go' || chart.id == 'timeseries_tendencias_obitos_go') {
         chart["dataResult"] = createDataSetTendenciasGO(chart, qr, language);
       }
       else {
