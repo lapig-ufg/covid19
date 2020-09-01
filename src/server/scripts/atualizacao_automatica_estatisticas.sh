@@ -145,6 +145,17 @@ else
         echo "Arquivos covid_medias_moveis-tiles nao existem!"
 fi
 
+if [ -d $BASESTORAGE/covid_medias_moveis_obitos-tiles];then
+
+        echo "Arquivos existem apagando!"
+        cd $BASESTORAGE
+        cd covid_medias_moveis_obitos-tiles
+        rm -rfv *
+else
+        echo "Arquivos covid_medias_moveis-tiles nao existem!"
+fi
+
+
 clear
 echo -n -e "Rotina Concluida!"
 
