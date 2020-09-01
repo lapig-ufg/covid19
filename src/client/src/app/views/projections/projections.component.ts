@@ -47,6 +47,7 @@ export class ProjectionsComponent implements OnInit {
     page = page.replace('href="CovidGON', 'target="_blank" href="http://covid.bio.br/CovidGON')
     page = page.replace('href="CovidGON', 'target="_blank" href="http://covid.bio.br/CovidGON')
     page = page.replace('href="CovidGON', 'target="_blank" href="http://covid.bio.br/CovidGON')
+    page = page.replace('href="CovidGON', 'target="_blank" href="http://covid.bio.br/CovidGON')
     page = page.replace('href="favicon.png"', 'href="http://covid.bio.br/favicon.png"')
     page = page.replace('src="LogoSmall.png"', 'src="http://covid.bio.br/LogoSmall.png"')
     page = page.replace('src="zoom.png"', 'onerror="this.onerror=this.src=\'http://covid.bio.br/IconTW.png\';" src="http://covid.bio.br/zoom.png"')
