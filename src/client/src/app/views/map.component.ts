@@ -58,7 +58,7 @@ import { ProjectionsComponent } from "./projections/projections.component";
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { DialogChartsComponent } from "./dialog-charts/dialog-charts.component";
-import {DocsComponent} from "./docs/docs.component";
+import { DocsComponent } from "./docs/docs.component";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -2562,9 +2562,9 @@ export class MapComponent implements OnInit {
 
   openInfoTemperatures() {
     let dialogRef = this.dialog.open(DocsComponent, {
-      id:'infoNoteTemperature',
+      id: 'infoNoteTemperature',
       width: '70%',
-      data: {src: this.domSanitizer.bypassSecurityTrustResourceUrl('../../../assets/documentos/NotaTecnica_IQA_COVID-19_UFG.pdf')}
+      data: { src: this.domSanitizer.bypassSecurityTrustResourceUrl('../../../assets/documentos/NotaTecnica_IQA_COVID-19_UFG.pdf') }
     });
   }
 
