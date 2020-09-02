@@ -204,6 +204,8 @@ function getPM25() {
         // var data_final = moment(name_split[2], "YYYYMMDD").format('YYYY-MM-DD')
         var data_atualizacao = moment().format('YYYY-MM-DD')
 
+        console.log(data_atualizacao)
+
         for (let i in csvRows) {
             var row = csvRows[i]
 
