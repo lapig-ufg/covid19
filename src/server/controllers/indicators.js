@@ -691,7 +691,7 @@ module.exports = function (app) {
               scaleLabel: {
                 display: true,
                 labelString: languageJson["charts_box"]["charts_box_projecoes"]["projections_go"]["ytitle"][language],
-              }
+              },
             }],
             xAxes: []
           }
@@ -739,8 +739,6 @@ module.exports = function (app) {
         chartResult: chartResult
       }
     };
-
-
     response.send(finalResult);
     response.end();
   };

@@ -268,12 +268,6 @@
 					(click)="showStatistics = !showStatistics">
 					<img width="30" height="30" src="../../assets/img/charts.svg" [alt]="controls.label_statistics">
 				</div>
-				<!--				<div [matTooltip]="controls.label_zoomin" [class]="'btn-layers'"  (click)="zoomIn()">-->
-				<!--					<img width="30" height="30" src="../../assets/img/mais.svg"  [alt]="controls.label_zoomin">-->
-				<!--				</div>-->
-				<!--				<div [matTooltip]="controls.label_zoomout" [class]="'btn-layers'"  (click)="zoomOut()">-->
-				<!--					<img width="30" height="30" src="../../assets/img/menos.svg"  [alt]="controls.label_zoomout" >-->
-				<!--				</div>-->
 				<div [matTooltip]="controls.label_tips_legend" [class]="'btn-layers'" (click)="openDialogAjuda()">
 					<img width="30" height="30" src="../../assets/img/tips.svg" [alt]="controls.label_tips">
 				</div>
@@ -290,7 +284,7 @@
 				<div [matTooltip]="controls.label_humidities"
 					[class]="showTemperatures ? 'btn-layers btn-layers-active' : 'btn-layers'"
 					(click)="handleTemperatures()">
-					<img width="30" height="30" src="../../assets/img/umidade.svg" [alt]="controls.label_humidities">
+					<img width="30" height="30" src="../../assets/img/qualidade_do_ar.svg" [alt]="controls.label_humidities">
 				</div>
 			</div>
 
@@ -353,6 +347,7 @@
 			</div>
 
 			<div *ngIf="showStatistics" id="positionCharts">
+
 				<div class="titleWindows">
 					<div>{{dataSeries.title}}</div>
 
@@ -363,9 +358,9 @@
 						<mat-icon> {{collapseCharts ? 'expand_less' : 'expand_more'}}</mat-icon>
 					</button>
 				</div>
+
 				<div [ngbCollapse]="collapseCharts" id="matgroup">
-					<mat-tab-group class="charts" [selectedIndex]="selectedIndex" #matgroup
-						(selectedTabChange)="changeTab($event)">
+					<mat-tab-group class="charts" [selectedIndex]="selectedIndex" #matgroup (selectedTabChange)="changeTab($event)">
 
 						<mat-tab label="{{dataSeries.timeseries.label}}">
 							<p-tabView>
@@ -400,46 +395,89 @@
 									</p-scrollPanel>
 								</p-tabPanel>
 
-								<p-tabPanel
-									[header]=" tendeciaSeries.timeseries.chartResult[0]?.title_tab.replace('[region]',selectRegion.nome)">
-									<p-scrollPanel [style]="{width: '100%', height: '40vh'}">
-										<div *ngIf="tendeciaSeries.timeseries.chartResult[0]?.show">
-											<p
-												style="font-weight: bold; text-align: center; font-size: 15px; margin-top: 5px; margin-bottom: 5px">
-												{{ tendeciaSeries.timeseries.chartResult[0]?.text }}</p>
-											<button style="position: absolute;"
-												(click)="openDialogCharts('tendeciaSeries')" classs="btn-info"
-												mat-icon-button>
-												<mat-icon>open_with</mat-icon>
-											</button>
-											<div
-												style="font-weight: normal; font-size: 12px; text-align: center; display: flex; justify-content: center;">
-												<div class="tendenciaMedia">
-													{{tendeciaSeries.timeseries.chartResult[0]?.label_media}}
-													{{tendeciaSeries.timeseries.chartResult[0]?.last_ob.media | number:'1.2-3'}}
-												</div>
-												<div class="tendenciaVariacao">
-													{{tendeciaSeries.timeseries.chartResult[0]?.label_variation}}
-													{{tendeciaSeries.timeseries.chartResult[0]?.last_ob.variacao | number:'1.2-3'}}%
-												</div>
-												<div class="tendenciaTendencia"
-													[innerHTML]=" tendeciaSeries.timeseries.chartResult[0]?.label_trend + tend[tendeciaSeries.timeseries.chartResult[0]?.last_ob.tendencia][language] ">
-												</div>
-											</div>
-											<p style="font-weight: 200; text-align: center;">
-												{{tendeciaSeries.timeseries.chartResult[0]?.label_last_update + tendeciaSeries.timeseries.chartResult[0]?.last_ob.data}}
-											</p>
+								<p-tabPanel [header]=" tendeciaSeries.timeseries.chartResult[0]?.title_tab.replace('[region]',selectRegion.nome)">
 
-											<p-chart [ngStyle]="{'overflow-x': hidden}"
-												[type]="tendeciaSeries.timeseries.chartResult[0]?.type"
-												[data]="tendeciaSeries.timeseries.chartResult[0]?.dataResult"
-												[options]="tendeciaSeries.timeseries.chartResult[0]?.options">
-											</p-chart>
-											<p style="font-weight: 300; text-align: center">
-												{{tendeciaSeries.timeseries.chartResult[0]?.note}}
-											</p>
-										</div>
-									</p-scrollPanel>
+									<mat-tab-group>
+										<mat-tab label="{{neighborhoodsCharts.label_tab}}">
+											<p-scrollPanel [style]="{width: '100%', height: '40vh'}">
+												<div *ngIf="tendeciaSeries.timeseries.chartResult[0]?.show">
+													<p style="font-weight: bold; text-align: center; font-size: 15px; margin-top: 5px; margin-bottom: 5px">
+														{{ tendeciaSeries.timeseries.chartResult[0]?.text }}</p>
+													<button style="position: absolute;"
+															(click)="openDialogCharts('tendeciaSeries')" classs="btn-info"
+															mat-icon-button>
+														<mat-icon>open_with</mat-icon>
+													</button>
+													<div
+															style="font-weight: normal; font-size: 12px; text-align: center; display: flex; justify-content: center;">
+														<div class="tendenciaMedia">
+															{{tendeciaSeries.timeseries.chartResult[0]?.label_media}}
+															{{tendeciaSeries.timeseries.chartResult[0]?.last_ob.media | number:'1.2-3'}}
+														</div>
+														<div class="tendenciaVariacao">
+															{{tendeciaSeries.timeseries.chartResult[0]?.label_variation}}
+															{{tendeciaSeries.timeseries.chartResult[0]?.last_ob.variacao | number:'1.2-3'}}%
+														</div>
+														<div class="tendenciaTendencia"
+															 [innerHTML]=" tendeciaSeries.timeseries.chartResult[0]?.label_trend + tend[tendeciaSeries.timeseries.chartResult[0]?.last_ob.tendencia][language] ">
+														</div>
+													</div>
+													<p style="font-weight: 200; text-align: center;">
+														{{tendeciaSeries.timeseries.chartResult[0]?.label_last_update + tendeciaSeries.timeseries.chartResult[0]?.last_ob.data}}
+													</p>
+
+													<p-chart [ngStyle]="{'overflow-x': hidden}"
+															 [type]="tendeciaSeries.timeseries.chartResult[0]?.type"
+															 [data]="tendeciaSeries.timeseries.chartResult[0]?.dataResult"
+															 [options]="tendeciaSeries.timeseries.chartResult[0]?.options">
+													</p-chart>
+													<p style="font-weight: 300; text-align: center">
+														{{tendeciaSeries.timeseries.chartResult[0]?.note}}
+													</p>
+												</div>
+											</p-scrollPanel>
+										</mat-tab>
+										<mat-tab label="{{deathsCharts.label_tab}}">
+											<p-scrollPanel [style]="{width: '100%', height: '40vh'}">
+												<div *ngIf="tendeciaSeries.timeseries.chartResult[1]?.show">
+													<p style="font-weight: bold; text-align: center; font-size: 15px; margin-top: 5px; margin-bottom: 5px">
+														{{ tendeciaSeries.timeseries.chartResult[1]?.text }}</p>
+													<button style="position: absolute;"
+															(click)="openDialogCharts('tendeciaSeries', 1)" classs="btn-info"
+															mat-icon-button>
+														<mat-icon>open_with</mat-icon>
+													</button>
+													<div
+															style="font-weight: normal; font-size: 12px; text-align: center; display: flex; justify-content: center;">
+														<div class="tendenciaMedia">
+															{{tendeciaSeries.timeseries.chartResult[1]?.label_media}}
+															{{tendeciaSeries.timeseries.chartResult[1]?.last_ob.media | number:'1.2-3'}}
+														</div>
+														<div class="tendenciaVariacao">
+															{{tendeciaSeries.timeseries.chartResult[1]?.label_variation}}
+															{{tendeciaSeries.timeseries.chartResult[1]?.last_ob.variacao | number:'1.2-3'}}%
+														</div>
+														<div class="tendenciaObtios"
+															 [innerHTML]=" tendeciaSeries.timeseries.chartResult[1]?.label_trend + tend[tendeciaSeries.timeseries.chartResult[1]?.last_ob.tendencia][language] ">
+														</div>
+													</div>
+													<p style="font-weight: 200; text-align: center;">
+														{{tendeciaSeries.timeseries.chartResult[1]?.label_last_update + tendeciaSeries.timeseries.chartResult[1]?.last_ob.data}}
+													</p>
+
+													<p-chart [ngStyle]="{'overflow-x': hidden}"
+															 [type]="tendeciaSeries.timeseries.chartResult[1]?.type"
+															 [data]="tendeciaSeries.timeseries.chartResult[1]?.dataResult"
+															 [options]="tendeciaSeries.timeseries.chartResult[1]?.options">
+													</p-chart>
+													<p style="font-weight: 300; text-align: center">
+														{{tendeciaSeries.timeseries.chartResult[1]?.note}}
+													</p>
+												</div>
+											</p-scrollPanel>
+										</mat-tab>
+									</mat-tab-group>
+
 								</p-tabPanel>
 
 								<p-tabPanel *ngIf="neighborhoodsCharts.show" [header]="neighborhoodsCharts.label">
@@ -627,7 +665,6 @@
 									</p-scrollPanel>
 								</p-tabPanel>
 
-
 								<p-tabPanel [header]="dataStates.label" id="tabGraficoLinhas">
 									<h6 style="text-align: center;">
 										<b>{{dataStates.description}}</b>
@@ -758,9 +795,6 @@
 				</div>
 
 			</div>
-			<!-- [ngStyle]="{'visibility': (infodata || clickable) || infobairro ? 'visible' : 'hidden'}"> -->
-			<!--			 [ngStyle]="{'visibility': infodata  ? 'visible' : (infobairro ? 'visible' : (clickable ? 'visible' : 'hidden'))}">-->
-
 			<div id="map-info" class="card" [ngStyle]="showDialogUTFGrid()">
 				<div *ngIf="infodata && !clickable" class="card-body">
 					<p class="card-text">{{infodata.nome}} - {{infodata.uf}}</p>

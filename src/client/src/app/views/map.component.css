@@ -1521,6 +1521,20 @@ mat-slider {
 	box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 }
 
+.tendenciaObtios{
+	margin: 10px;
+	padding-bottom: 4px;
+	padding-top: 4px;
+	padding-left: 6px;
+	padding-right: 6px;
+	font-weight: bold;
+	color: white;
+	border-radius: 4px;
+	background-color:black;
+	box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+
 .msg{
 	width: 100%;
 	margin-bottom: 20px;

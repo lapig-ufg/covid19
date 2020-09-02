@@ -2829,12 +2829,12 @@ export class MapComponent implements OnInit {
     });
   }
 
-  openDialogCharts(charts) {
+  openDialogCharts(charts, index = 0) {
 
     let dialogRef = this.dialog.open(DialogChartsComponent, {
       width: '90%',
       height: '90%',
-      data: this[charts]
+      data: {index:index, dados:this[charts]}
     });
 
     dialogRef.afterClosed().subscribe(result => {

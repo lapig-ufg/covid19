@@ -1369,8 +1369,8 @@
 			"en-us": "Print map"
 		},
 		"label_humidities": {
-			"pt-br": "Temperatura",
-			"en-us": "Temperature"
+			"pt-br": "Qualidade do Ar",
+			"en-us": "Air quality"
 		}
 	},
 	"team": {

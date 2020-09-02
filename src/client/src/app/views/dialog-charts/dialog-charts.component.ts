@@ -13,17 +13,22 @@ export class DialogChartsComponent implements OnInit {
   dataChart:any;
   options:any;
   innerHeigth:number;
+  index:number;
 
   constructor(
       public dialogRef: MatDialogRef<DialogChartsComponent>,
       @Optional() @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    console.log("Dialog: ", this.data)
+
+    this.index = 0;
+    if(data.hasOwnProperty('index')){
+      this.index = data.index
+    }
     this.innerHeigth = window.innerHeight - 180;
-    this.type        =  this.data.timeseries.chartResult[0].type;
-    this.title       = this.data.timeseries.chartResult[0].text;
-    this.dataChart   = this.data.timeseries.chartResult[0].dataResult;
-    this.options     = this.data.timeseries.chartResult[0].options
+    this.type        = this.data.dados.timeseries.chartResult[this.index].type;
+    this.title       = this.data.dados.timeseries.chartResult[this.index].text;
+    this.dataChart   = this.data.dados.timeseries.chartResult[this.index].dataResult;
+    this.options     = this.data.dados.timeseries.chartResult[this.index].options
   }
 
   ngOnInit() {
