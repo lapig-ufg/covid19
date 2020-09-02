@@ -3121,7 +3121,7 @@ export class MapComponent implements OnInit {
     let p = this.layersNames.find(element => element.id === 'clima_temperatura');
 
     let layer = p.types.find(element => element.value === 'clima_temperatura_em_goias')
-    layer.layerfilter = "data_previsao_utc = '" + this.datesTemperatures[event.value].data_previsao + "'"
+    layer.layerfilter = "data_previsao_utc = '" + this.datesTemperatures[event.value].data_previsao_utc + "'"
     this.urlLegendTemperatures = layer.urlLegend;
 
     // console.log(layer)
