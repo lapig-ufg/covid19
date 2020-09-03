@@ -1372,6 +1372,10 @@ img[usemap], map area{
 	background-color: #f9f6f69e;
 }
 
+.temperatures h6{
+	text-align: center;
+}
+
 
 .projections-header{
 	display: flex;

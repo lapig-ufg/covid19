@@ -284,7 +284,7 @@
 				<div [matTooltip]="controls.label_humidities"
 					[class]="showTemperatures ? 'btn-layers btn-layers-active' : 'btn-layers'"
 					(click)="handleTemperatures()">
-					<img width="30" height="30" src="../../assets/img/qualidade_do_ar.svg" [alt]="controls.label_humidities">
+					<img width="30" height="30" src="../../assets/img/queimada.svg" [alt]="controls.label_humidities">
 				</div>
 			</div>
 
@@ -303,7 +303,7 @@
 
 			<div class="projections" *ngIf="showProjections">
 
-				<div class="row ju">
+				<div class="row">
 					<div class="col-9">
 						<h6>{{this.labelProjections}}</h6>
 						<mat-slider #projections thumbLabel (input)="onProjectionsChange($event)"
@@ -327,22 +327,23 @@
 			</div>
 
 			<div class="temperatures" *ngIf="showTemperatures">
-				<div class="row ju">
-					<div class="col-9">
+				<div class="row">
+					<div class="col-7">
 						<h6>{{this.labelTemperatures}}</h6>
 						<mat-slider #temperatures thumbLabel (input)="onTemperaturesChange($event)"
 							[displayWith]="formatRateLabelTemperatures(temperatures.value)" color="warn" value="{{0}}"
 							tickInterval="1" min="{{'0'}}" max="{{datesTemperatures.length -1}}">
 						</mat-slider>
-					<button (click)="openInfoTemperatures()" style="position: absolute; right: 7%; top: 12%;" classs="btn-info" mat-icon-button>
-						<mat-icon>info</mat-icon>
-					</button>
+
 					</div>
-					<div class="col-3 vertical-center mt-4">
+					<div class="col-5 vertical-center mt-4">
 						<div class="legend-projections">
 							<img [src]="urlLegendTemperatures" alt="legend">
 						</div>
 					</div>
+					<button (click)="openInfoTemperatures()" style="position: absolute; right: 2%; top: 7%;" classs="btn-info" mat-icon-button>
+						<mat-icon>info</mat-icon>
+					</button>
 				</div>
 			</div>
 
