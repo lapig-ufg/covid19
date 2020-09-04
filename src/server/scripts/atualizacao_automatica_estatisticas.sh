@@ -57,6 +57,8 @@ mv tabela_estatisticas_mod_logistico_luisa_adaptado.csv estatisticas_luisa.csv
 
 mv dados_MM7_novos_casos.csv medias_moveis.csv
 
+mv dados_MM7_novos_obitos.csv medias_moveis_obitos.csv
+
 clear
 echo -n -e "Planilha baixada com sucesso!"
 sleep 2
@@ -84,6 +86,9 @@ node atualiza_estatisticas_luisa.js | tee  /data/containers/APP_COVID19/APP/covi
 sleep 2
 clear
 node atualiza_medias_moveis.js | tee  /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_medias_moveis.log
+sleep 2
+clear
+node atualiza_medias_moveis_obitos.js | tee /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_medias_moveis_obitos.log
 sleep 2
 clear
 
