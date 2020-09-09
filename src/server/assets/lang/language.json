@@ -1560,6 +1560,102 @@
 							"pt-br": "Superintendente da Vigilância em Saúde de Goiânia e professor IPTSP/UFG",
 							"en-us": "Superintendent of Health Surveillance in Goiânia and professor IPTSP / UFG"
 						}
+					},
+					{
+						"nome": "Ana Júlia Secatto",
+						"link": "http://lattes.cnpq.br/5458639978081025",
+						"description": {
+							"pt-br": "Estágiaria e Graduanda da UFG",
+							"en-us": "Intern and Undergraduate Student at UFG"
+						}
+					},
+					{
+						"nome": "Bruno Araujo Galvão",
+						"link": "http://lattes.cnpq.br/1184815274941212",
+						"description": {
+							"pt-br": "Estágiario e Graduando da FacUnicamps",
+							"en-us": "Intern and Undergraduate Student at FacUnicamps"
+						}
+					},
+					{
+						"nome": "Eduarda Gabriella Raiam Oliveira ",
+						"link": "http://lattes.cnpq.br/3603046714985341",
+						"description": {
+							"pt-br": "Estágiaria e Graduanda da UFG",
+							"en-us": "Intern and Undergraduate Student at UFG"
+						}
+					},
+					{
+						"nome": "Emanuela Matos Pimenta",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K2133776Y7",
+						"description": {
+							"pt-br": "Estágiaria e Graduanda da UFG",
+							"en-us": "Intern and Undergraduate Student at UFG"
+						}
+					},
+					{
+						"nome": "Francisco Railson da Silva Pinto",
+						"link": "",
+						"description": {
+							"pt-br": "Estágiario e Graduando da FacUnicamps",
+							"en-us": "Intern and Undergraduate Student at FacUnicamps"
+						}
+					},
+					{
+						"nome": "Giovanna Dias Oliveira",
+						"link": "",
+						"description": {
+							"pt-br": "Estágiaria e Graduanda da UFG",
+							"en-us": "Intern and Undergraduate Student at UFG"
+						}
+					},
+					{
+						"nome": "Marília Lourenço A. da Silva ",
+						"link": "",
+						"description": {
+							"pt-br": "Estágiaria e Graduanda da UFG",
+							"en-us": "Intern and Undergraduate Student at UFG"
+						}
+					},
+					{
+						"nome": "Murilo Henrique Azevedo ",
+						"link": "",
+						"description": {
+							"pt-br": "Estágiario e Graduando da UFG",
+							"en-us": "Intern and Undergraduate Student at UFG"
+						}
+					},
+					{
+						"nome": "Renato Tomikawa",
+						"link": "",
+						"description": {
+							"pt-br": "Estágiario e Graduando da FacUnicamps",
+							"en-us": "Intern and Undergraduate Student at FacUnicamps"
+						}
+					},
+					{
+						"nome": "Manilla Mariana Alves e Silva",
+						"link": "http://lattes.cnpq.br/6208593219959006",
+						"description": {
+							"pt-br": "Estágiaria e Graduanda da UFG",
+							"en-us": "Intern and Undergraduate Student at UFG"
+						}
+					},
+					{
+						"nome": "Ila Santos Araújo",
+						"link": "http://lattes.cnpq.br/2663526680417817",
+						"description": {
+							"pt-br": "Estágiaria e Graduanda da UFG",
+							"en-us": "Intern and Undergraduate Student at UFG"
+						}
+					},
+					{
+						"nome": "Igor Boson Schetine",
+						"link": "http://lattes.cnpq.br/4419261283211787",
+						"description": {
+							"pt-br": "Estágiario e Graduando da UFG",
+							"en-us": "Intern and Undergraduate Student at UFG"
+						}
 					}
 				]
 			},
@@ -1570,19 +1666,35 @@
 				},
 				"members": [
 					{
-						"nome": "Claudinei Oliveira dos Santos",
-						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4270895Y2",
-						"description": {
-							"pt-br": "Doutorando (Ciamb) e pesquisador do Lapig/UFG",
-							"en-us": "PhD student (Ciamb) and researcher at Lapig / UFG"
-						}
-					},
-					{
 						"nome": "Luís Rodrigo Fernandes Baumann",
 						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4137321Y7",
 						"description": {
 							"pt-br": "Professor do IME/UFG e pesquisador do Lapig/UFG",
 							"en-us": "Professor at IME / UFG and researcher at Lapig / UFG"
+						}
+					},
+					{
+						"nome": "Jose Alexandre Felizola Diniz Filho",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4727587J2",
+						"description": {
+							"pt-br": "Professor do ICB/UFG",
+							"en-us": "Professor at ICB/UFG"
+						}
+					},
+					{
+						"nome": "Thiago F. L. V. De Britto Rangel",
+						"link": "http://lattes.cnpq.br/1613666671361533",
+						"description": {
+							"pt-br": "Professor do ICB/UFG",
+							"en-us": "Professor at ICB/UFG"
+						}
+					},
+					{
+						"nome": "Claudinei Oliveira dos Santos",
+						"link": "http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4270895Y2",
+						"description": {
+							"pt-br": "Doutorando (Ciamb) e pesquisador do Lapig/UFG",
+							"en-us": "PhD student (Ciamb) and researcher at Lapig / UFG"
 						}
 					},
 					{

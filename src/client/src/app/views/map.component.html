@@ -786,7 +786,8 @@
 									<div class="team-section" *ngFor="let section of team.data">
 										<h4>{{section.title}}</h4>
 										<div class="team-member" *ngFor="let member of section.members">
-											<a target="_blank" [href]="member.link">{{member.nome}}</a> <br>
+											<a *ngIf="member.link == ''">{{member.nome}}</a>
+											<a *ngIf="member.link != ''" target="_blank" [href]="member.link">{{member.nome}}</a> <br>
 											<span>{{member.description}}</span>
 										</div>
 									</div>
