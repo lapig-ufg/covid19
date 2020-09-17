@@ -1080,6 +1080,15 @@ module.exports = function (app) {
 
   Controller.datesClima = function (request, response) {
     let dates = request.queryResult['dates-clima-temperatura'];
+
+    // dates.sort((d1, d2) => new Date(d1.data_previsao).getTime() - new Date(d2.data_previsao).getTime());
+
+    // dates.forEach(function (d) {
+    //   d.f_data_previsao = moment(new Date(d.data_previsao)).format("DD/MM HH:mm")
+    //   d.data_previsao = moment(new Date(d.data_previsao)).subtract(3, 'hours')
+    //   d.data_previsao_utc = moment(new Date(d.data_previsao_utc)).subtract(3, 'hours')
+    // });
+
     response.send(dates);
     response.end();
   };

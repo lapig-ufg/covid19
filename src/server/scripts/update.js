@@ -40,8 +40,8 @@ class Update {
 
         request('http://datasets.saude.go.gov.br/coronavirus/obitos_confirmados.csv', async function (error, response, body) {
             // console.log('body:', body); // Print the HTML for the Google homepage.
-            fs.writeFile('obitos.csv', body.replace(/;/g , ','), async function(err) {
-                if(err) {
+            fs.writeFile('obitos.csv', body.replace(/;/g, ','), async function (err) {
+                if (err) {
                     return console.log(err);
                 }
             });
@@ -60,7 +60,7 @@ class Update {
 
             let bd = JSON.parse(response);
             suspeitos = bd.resultset[0][0];
-        }catch (e) {
+        } catch (e) {
             console.log(e)
         }
         return suspeitos
@@ -75,7 +75,7 @@ class Update {
             let response = await rp({ url: url, qs: propertiesObject });
             let bd = JSON.parse(response);
             recuperados = bd.resultset[0][0];
-        }catch (e) {
+        } catch (e) {
             console.log(e)
         }
         return recuperados
@@ -100,7 +100,7 @@ class Update {
             let ob = this.findElement(bd, '_id', 'DF');
             df.confirmados = ob.casosAcumulado;
             df.obitos = ob.obitosAcumulado;
-        }catch (e) {
+        } catch (e) {
             console.log(e)
         }
         return df;
@@ -241,7 +241,7 @@ class Update {
             statement = conn.prepareStatement(queryMaior80);
             faixaEtaria.maior80 = await statement.query();
 
-            return {confirmados, genero, faixaEtaria};
+            return { confirmados, genero, faixaEtaria };
 
         } catch (reason) {
             console.log(reason);
@@ -388,7 +388,7 @@ class Update {
             statement = conn.prepareStatement(queryMaior80);
             faixaEtaria.maior80 = await statement.query();
 
-            return {confirmados, genero, faixaEtaria};
+            return { confirmados, genero, faixaEtaria };
         } catch (reason) {
             console.log(reason);
         } finally {
@@ -419,8 +419,10 @@ class Update {
         let self = this;
 
         setTimeout(async function () {
-            let casos     = await self.getCasos();
+            let casos = await self.getCasos();
             let varObitos = await self.getObitos();
+
+            let updateTime = moment().format('YYYY-MM-DD HH:mm')
 
             casos.confirmados.forEach(function (item, indice) {
 
@@ -454,7 +456,7 @@ class Update {
 
                 tabela.push({
                     cd_geocmu: item.cd_geocmu,
-                    data: moment().format('YYYY-MM-DD HH:mm'),
+                    data: updateTime,
                     confirmados: item.confirmados,
                     suspeitos: 0,
                     recuperados: 0,
@@ -494,8 +496,8 @@ class Update {
 
             tabela.push({
                 cd_geocmu: 111,
-                data: moment().format('YYYY-MM-DD HH:mm'),
-                confirmados:0,
+                data: updateTime,
+                confirmados: 0,
                 suspeitos: suspeitos,
                 recuperados: 0,
                 obitos: 0,
@@ -517,19 +519,19 @@ class Update {
                 de10a14_obitos: 0,
                 de15a19_obitos: 0,
                 de20a29_obitos: 0,
-                de30a39_obitos:0,
+                de30a39_obitos: 0,
                 de40a49_obitos: 0,
                 de50a59_obitos: 0,
                 de60a69_obitos: 0,
                 de70a79_obitos: 0,
-                maior80_obitos:0,
+                maior80_obitos: 0,
                 municipio: 'SUSPEITOS'
             });
 
             tabela.push({
                 cd_geocmu: 222,
-                data: moment().format('YYYY-MM-DD HH:mm'),
-                confirmados:0,
+                data: updateTime,
+                confirmados: 0,
                 recuperados: recuperados,
                 suspeitos: 0,
                 obitos: 0,
@@ -551,18 +553,18 @@ class Update {
                 de10a14_obitos: 0,
                 de15a19_obitos: 0,
                 de20a29_obitos: 0,
-                de30a39_obitos:0,
+                de30a39_obitos: 0,
                 de40a49_obitos: 0,
                 de50a59_obitos: 0,
                 de60a69_obitos: 0,
                 de70a79_obitos: 0,
-                maior80_obitos:0,
+                maior80_obitos: 0,
                 municipio: 'RECUPERADOS'
             });
 
             tabela.push({
                 cd_geocmu: 5300108,
-                data: moment().format('YYYY-MM-DD HH:mm'),
+                data: updateTime,
                 confirmados: df.confirmados,
                 suspeitos: 0,
                 recuperados: 0,
@@ -585,12 +587,12 @@ class Update {
                 de10a14_obitos: 0,
                 de15a19_obitos: 0,
                 de20a29_obitos: 0,
-                de30a39_obitos:0,
+                de30a39_obitos: 0,
                 de40a49_obitos: 0,
                 de50a59_obitos: 0,
                 de60a69_obitos: 0,
                 de70a79_obitos: 0,
-                maior80_obitos:0,
+                maior80_obitos: 0,
                 municipio: 'BRASÍLIA'
             });
 
