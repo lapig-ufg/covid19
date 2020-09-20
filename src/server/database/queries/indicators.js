@@ -231,7 +231,7 @@ module.exports = function (app) {
       {
         id: 'dates-clima-temperatura',
         // sql: "SELECT data_previsao, data_atualizacao,data_modelo from dados_clima where data_atualizacao = (select max(data_atualizacao) from dados_clima) group by 1,2,3 order by 1 ASC"
-        sql: "SELECT data_previsao, data_previsao_utc, to_char(data_atualizacao, 'DD/MM/YYYY') as f_data_atualizacao, to_char(data_modelo, 'DD/MM/YYYY') as f_data_modelo from v_clima_temperatura where data_atualizacao = (select max(data_atualizacao) from v_clima_temperatura) group by 1,2,3,4 order by 2 ASC"
+        sql: "SELECT data_previsao, to_char(data_previsao, 'DD/MM HH:mm') as f_data_previsao, data_previsao_utc, to_char(data_atualizacao, 'DD/MM/YYYY') as f_data_atualizacao, to_char(data_modelo, 'DD/MM/YYYY') as f_data_modelo from v_clima_temperatura where data_atualizacao = (select max(data_atualizacao) from v_clima_temperatura) group by 1,2,3,4,5 order by 2 ASC"
       },
       {
         id: 'next',
