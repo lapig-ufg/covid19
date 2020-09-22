@@ -51,10 +51,11 @@
 															[checked]=layer.visible>
 															{{layer.label}}
 														</mat-checkbox>
-														<!-- <div class="space"></div>
-															<button *ngIf="layer.visible"  (click)="openDialogMetadata(layer)" classs="btn-info" mat-icon-button>
-																<mat-icon>info</mat-icon>
-															</button> -->
+														<div class="space" *ngIf="layer.showInfo"></div>
+														<button *ngIf="layer.showInfo" (click)="openInfoR(layer)"
+															classs="btn-info" mat-icon-button>
+															<mat-icon>info</mat-icon>
+														</button>
 													</div>
 													<div *ngIf="layer.visible"
 														style="padding-left: 8%; padding-right: 8%">
@@ -341,7 +342,8 @@
 							<img [src]="urlLegendTemperatures" alt="legend">
 						</div>
 					</div>
-					<button (click)="openInfoTemperatures()" style="position: absolute; right: 2%; top: 7%;" classs="btn-info" mat-icon-button>
+					<button (click)="openInfoTemperatures()" style="position: absolute; right: 2%; top: 7%;"
+						classs="btn-info" mat-icon-button>
 						<mat-icon>info</mat-icon>
 					</button>
 				</div>
@@ -787,7 +789,8 @@
 										<h4>{{section.title}}</h4>
 										<div class="team-member" *ngFor="let member of section.members">
 											<a *ngIf="member.link == ''">{{member.nome}}</a>
-											<a *ngIf="member.link != ''" target="_blank" [href]="member.link">{{member.nome}}</a> <br>
+											<a *ngIf="member.link != ''" target="_blank"
+												[href]="member.link">{{member.nome}}</a> <br>
 											<span>{{member.description}}</span>
 										</div>
 									</div>

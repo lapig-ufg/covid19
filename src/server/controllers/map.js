@@ -133,6 +133,35 @@ module.exports = function (app) {
               }]
             },
             {
+              id: "r_por_bairro",
+              label: languageJson["descriptor"]["informacoes"]["layers"]["r_por_bairro"]["label"][language],
+              visible: false,
+              selectedType: "r_por_bairro_covid",
+              showTypes: true,
+              showInfo: true,
+              types: [{
+                value: "r_por_bairro_covid",
+                Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["r_por_bairro"]["types"]["r_por_bairro_covid"]["view_value"][language],
+                regionFilter: true,
+                source: 'ows',
+                opacity: 0.8,
+                order: 3,
+                timeLabel: languageJson["descriptor"]["informacoes"]["layers"]["r_por_bairro"]["types"]["r_por_bairro_covid"]["timelabel"][language],
+                timeSelected: "cd_geocmu='52'",
+                timeHandler: "msfilter",
+                times: [
+                  {
+                    value: "cd_geocmu='52'",
+                    Viewvalue: languageJson["descriptor"]["informacoes"]["layers"]["r_por_bairro"]["types"]["r_por_bairro_covid"]["default_placeholder"][language]
+                  },
+                  {
+                    value: "cd_geocmu='5208707' AND data_atualizacao = (select max(data_atualizacao) from r_bairros where cd_geocmu = '5208707')",
+                    Viewvalue: "Goiânia"
+                  }
+                ]
+              }]
+            },
+            {
               id: "tendencia",
               label: languageJson["descriptor"]["informacoes"]["layers"]["tendencias"]["label"][language],
               visible: false,

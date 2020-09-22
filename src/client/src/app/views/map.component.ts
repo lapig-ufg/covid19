@@ -1303,6 +1303,10 @@ export class MapComponent implements OnInit {
       this.changeVisibility(bairroObitos, { checked: false });
       bairroObitos.types[0].timeSelected = "cd_geocmu = '52'"
 
+      let r_bairro = this.layersNames.find(element => element.id === 'r_por_bairro');
+      this.changeVisibility(r_bairro, { checked: false });
+      r_bairro.types[0].timeSelected = "cd_geocmu = '52'"
+
       this.isFilteredByCity = false;
     }
     else {
@@ -1393,12 +1397,35 @@ export class MapComponent implements OnInit {
           let ob = result[0];
           this.updateRegion(ob);
 
-          // this.selectedBairroTime = "(select max(data_ultima_atualizacao) from v_casos_bairros where cd_geocmu = '" + this.selectRegion.cd_geocmu +"')"
+          this.handleInteraction();
+          let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
+          this.changeVisibility(p, { checked: false });
+          this.infodata = null
 
+        });
+      }
+    }
+
+    if (layer.value == "r_por_bairro_covid") {
+      if (layer.timeSelected == "cd_geocmu = '52'") {
+        this.selectedBairroObitosTime = "(select max(data_atualizacao) from r_bairros)"
+      }
+      else {
+
+        let tmp
+
+        if (layer['times']) {
+          tmp = layer['times'].find(
+            element => element.value === layer.timeSelected
+          );
+        }
+
+        this.http.get(SEARCH_URL, { params: PARAMS.set('key', tmp.Viewvalue) }).subscribe(result => {
+
+          let ob = result[0];
+          this.updateRegion(ob);
 
           this.handleInteraction();
-          // let l = this.layersNames.find(element => element.id === 'urban_traffic');
-          // this.changeVisibility(l, { checked: true });
           let p = this.layersNames.find(element => element.id === 'casos_covid_confirmados');
           this.changeVisibility(p, { checked: false });
           this.infodata = null
@@ -1591,7 +1618,8 @@ export class MapComponent implements OnInit {
       }
 
       let bairro = this.layersNames.find(element => element.id === 'casos_bairro');
-      if (bairro.visible) {
+      let r_bairro = this.layersNames.find(element => element.id === 'r_por_bairro');
+      if (bairro.visible || r_bairro.visible) {
 
         let zoom = this.map.getView().getZoom();
 
@@ -2232,7 +2260,7 @@ export class MapComponent implements OnInit {
     let bairrosObitos = this.layersNames.find(element => element.id === 'obitos_bairro');
     let projecao = this.layersNames.find(element => element.id === 'projecoes_luisa');
     let clima_temperatura = this.layersNames.find(element => element.id === 'clima_temperatura');
-
+    let r_bairros = this.layersNames.find(element => element.id === 'r_por_bairro');
 
     if (covid.visible || bairros.visible || bairrosObitos.visible || projecao.visible || clima_temperatura.visible) {
       if (covid.selectedType == 'covid19_municipios_casos') {
@@ -2248,7 +2276,7 @@ export class MapComponent implements OnInit {
         }
       }
 
-      if (bairros.selectedType == 'casos_por_bairro_covid') {
+      if (bairros.selectedType == 'casos_por_bairro_covid' || r_bairros.selectedType == 'r_por_bairro_covid') {
         if (this.utfgridBairro) {
           let tileJSONBairro = this.getTileJSONBairros();
 
@@ -2307,63 +2335,6 @@ export class MapComponent implements OnInit {
       this.utfgridlayerTendencias.setVisible(false);
       this.utfgridlayerTemperatures.setVisible(false);
     }
-
-
-
-    // if (covid.visible ) {
-
-    //   if (covid.selectedType == 'covid19_municipios_casos') {
-
-    //     if (this.utfgridsource) {
-    //       let tileJSON = this.getTileJSON();
-
-    //       this.utfgridsource.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridsource.tileGrid);
-    //       this.utfgridsource.tileJSON = tileJSON;
-    //       this.utfgridsource.refresh();
-
-    //       this.utfgridlayer.setVisible(true);
-    //     }
-    //   }
-    // }
-    // else if (this.utfgridsource){
-    //   this.utfgridlayer.setVisible(false);
-    // }
-
-    // if(bairros.visible){
-
-    //   if (bairros.selectedType == 'casos_por_bairro_covid') {
-    //     if (this.utfgridBairro) {
-    //       let tileJSONBairro = this.getTileJSONBairros();
-
-    //       this.utfgridBairro.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONBairro.grids, this.utfgridBairro.tileGrid);
-    //       this.utfgridBairro.tileJSON = tileJSONBairro;
-    //       this.utfgridBairro.refresh();
-
-    //       this.utfgridlayerBairro.setVisible(true);
-    //     }
-    //   }
-    // }
-    // else if (this.utfgridBairro) {
-
-    //   this.utfgridlayerBairro.setVisible(false);
-    // }
-
-    // if(projecao.visible){
-
-    //     if (this.utfgridProjecao) {
-    //       let tileJSONProjecao = this.getTileJSONProjecao();
-
-    //       this.utfgridProjecao.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONProjecao.grids, this.utfgridProjecao.tileGrid);
-    //       this.utfgridProjecao.tileJSON = tileJSONProjecao;
-    //       this.utfgridProjecao.refresh();
-
-    //       this.utfgridlayerProjecao.setVisible(true);
-    //     }
-    // }
-    // else if (this.utfgridProjecao) {
-    //   this.utfgridlayerProjecao.setVisible(false);
-    // }
-
 
 
     this.googleAnalyticsService.eventEmitter("handleInteraction", "geojson", 'casos-covid');
@@ -2565,6 +2536,13 @@ export class MapComponent implements OnInit {
       id: 'infoNoteTemperature',
       width: '70%',
       data: { src: this.domSanitizer.bypassSecurityTrustResourceUrl('../../../assets/documentos/NotaTecnica_IQA_COVID-19_UFG.pdf') }
+    });
+  }
+  openInfoR() {
+    let dialogRef = this.dialog.open(DocsComponent, {
+      id: 'infoNoteR',
+      width: '70%',
+      data: { src: this.domSanitizer.bypassSecurityTrustResourceUrl('../../../assets/documentos/R_bairros_modelos.pdf') }
     });
   }
 

@@ -822,6 +822,28 @@
 						}
 					}
 				},
+				"r_por_bairro": {
+					"label": {
+						"pt-br": "Número médio de Transmissões (R-efetivo)",
+						"en-us": "Average number of transmissions (R-value)"
+					},
+					"types": {
+						"r_por_bairro_covid": {
+							"view_value": {
+								"pt-br": "Bairros",
+								"en-us": "District"
+							},
+							"timelabel": {
+								"pt-br": "Município",
+								"en-us": "Municipality"
+							},
+							"default_placeholder": {
+								"pt-br": "Selecione aqui...",
+								"en-us": "Select here..."
+							}
+						}
+					}
+				},
 				"clima_temperatura": {
 					"label": {
 						"pt-br": "Previsão de Qualidade do Ar e Temperatura",
