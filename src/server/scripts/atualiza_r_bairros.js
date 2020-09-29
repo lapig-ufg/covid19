@@ -28,7 +28,7 @@ fs.createReadStream(csvFilepathStat)
             try {
                 await client.query('BEGIN')
                 // await client.query('SET datestyle = dmy')
-                await client.query('TRUNCATE TABLE r_bairros RESTART IDENTITY')
+                // await client.query('TRUNCATE TABLE r_bairros RESTART IDENTITY')
 
                 for (i in csvRowsStat) {
                     var row = csvRowsStat[i]
