@@ -62,6 +62,9 @@
 								<div [class]="showProjections ? 'btn-zoom btn-zoom-active' : 'btn-zoom'" (click)="handleProjections()">
 									<img width="27" height="27" src="../../assets/img/projections.svg" [alt]="controls.label_projections">
 								</div>
+								<div [class]="showTemperatures ? 'btn-zoom btn-zoom-active' : 'btn-zoom'" (click)="handleTemperatures()">
+									<img width="30" height="30" src="../../assets/img/queimada.svg" [alt]="controls.label_humidities">
+								</div>
 							</div>
 					</div>
 					<div *ngIf="infobairro && !clickable" class="card-body">
@@ -154,6 +157,65 @@
 									<tr>
 										<th>{{minireportText.label_last_update}} </th>
 										<td>{{infoprojecao.data_atualizacao | date : 'dd/MM/yyyy'}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="slider temperatures" *ngIf="showTemperatures">
+						<div class="row">
+							<div class="col-12">
+								<h6>{{this.labelTemperatures}}</h6>
+								<mat-slider #temperatures thumbLabel (input)="onTemperaturesChange($event)"
+									[displayWith]="formatRateLabelTemperatures(temperatures.value)" color="warn" value="{{0}}"
+									tickInterval="1" min="{{'0'}}" max="{{datesTemperatures.length -1}}">
+								</mat-slider>
+		
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-8 vertical-center mt-4">
+								<div class="legend-projections">
+									<img [src]="urlLegendTemperatures" alt="legend">
+								</div>
+							</div>
+							<div class="col-4 mt-4">
+								<button (click)="openInfoTemperatures()" style="width: 100%; height: 50%;"
+									class="btn-info" mat-icon-button>
+									<mat-icon>info</mat-icon>
+								</button>
+							</div>
+						</div>
+						<p style="padding: 5px 10px; text-align: justify; font-size: 10px; line-height: 1.6">*Acesse a plataforma no computador para uma melhor experiência de visualização, acesso a outros dados e funcionalidades.</p>
+						<div *ngIf="infoTemperatures && !clickable" class="card-body">
+							<p class="card-text">{{infoTemperatures.nome}} - {{infoTemperatures.uf}}</p>
+							<table>
+								<tbody>
+									<tr>
+										<th>{{minireportText.qtd_population}} </th>
+										<td>{{infoTemperatures.pop_2019 | number:'1.0-0' }} </td>
+									</tr>
+									<tr>
+										<th>{{minireportText.data_previsao}}</th>
+										<td>{{infoTemperatures.data_previsao | date : 'dd/MM/yyyy HH:mm'}}</td>
+									</tr>
+									<tr>
+										<th>{{minireportText.iqa}}</th>
+										<td [ngClass]="getClassByIqa(infoTemperatures.iqa_categoria)">
+											{{infoTemperatures.iqa_categoria.toUpperCase()}} ({{minireportText.indice}}
+											{{infoTemperatures.iqa}})</td>
+									</tr>
+									<tr>
+										<th>{{minireportText.temperatura}} </th>
+										<td>{{infoTemperatures.temperatura}}ºC</td>
+									</tr>
+									<tr>
+										<th>{{minireportText.umidade}} </th>
+										<td>{{infoTemperatures.ur}}%</td>
+									</tr>
+									<tr>
+										<th>{{minireportText.data_modelo}} </th>
+										<td>{{infoTemperatures.data_modelo | date : 'dd/MM/yyyy'}}</td>
 									</tr>
 								</tbody>
 							</table>
