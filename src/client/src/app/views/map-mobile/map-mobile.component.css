@@ -496,6 +496,62 @@ mat-slider {
 	margin: 8px;
 }
 
+#temperatures mat-slider {
+	width: 100%;
+	margin: 8px;
+}
+
+.temperatures{
+	/* position: absolute; */
+	bottom: 3%;
+	left: 9%;
+	/* padding-top: 5px;
+	padding-left: 45px;
+	padding-right: 45px;
+	padding-bottom: 29px; */
+	/* width: 47vw; */
+	z-index: 1000000;
+	border-radius: 10px;
+	background-color: #f9f6f69e;
+}
+
+.temperatures h6{
+	text-align: center;
+}
+
+.iqa{
+	padding: 2px;
+	margin: 2px;
+	border-radius: 2px;
+	text-align: center;
+	font-weight: bolder;
+
+}
+
+.iqa-boa{
+	background-color: #73f22b;
+}
+
+.iqa-moderada{
+	background-color: #ffff00;
+}
+
+.iqa-ruim-grupo-risco{
+	background-color: #ff952b;
+}
+
+.iqa-ruim{
+	background-color: #ff0000;
+}
+
+.iqa-pessimo{
+	background-color: #7030a0;
+}
+
+.iqa-critico{
+	background-color: #520000;
+}
+
 .nav-title-laudo {
 	border-bottom: 5px solid #bb6666;
 	position: sticky
@@ -1015,7 +1071,8 @@ mat-select {
 
 .controls {
 	position: absolute;
-	left: 10px;
+	right: 8%;
+	/* bottom: 21%; */
 	/* top: 18%; */
 	z-index: 100000;
 	padding: 5px 14px;

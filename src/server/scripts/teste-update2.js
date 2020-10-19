@@ -4,6 +4,7 @@ const update = new Update();
 update.up(foo);
 
 function foo(dados) {
-    let df = dados.find(element => element.cd_geocmu === 222);
-    console.log(df);
+    let recuperados = dados.find(element => element.cd_geocmu === 222);
+    let suspeitos = dados.find(element => element.cd_geocmu === 111);
+    console.log(recuperados.recuperados, suspeitos.suspeitos );
 }
