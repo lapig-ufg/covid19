@@ -42,7 +42,7 @@ var today = moment()
 // var today = moment("2020-08-05", 'YYYY-MM-DD')  //descomente e atualize para a data desejada, lembrando de comentar a linha de cima.
 
 let month = ''
-if (parseInt(today.month()) < 10) {
+if (parseInt(today.month()) + 1 < 10) {
     month = '0' + (parseInt(today.month()) + 1)
 }
 else {
