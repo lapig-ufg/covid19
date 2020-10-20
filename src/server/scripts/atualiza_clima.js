@@ -39,7 +39,8 @@ var insertSQLPM = 'INSERT INTO dados_clima(cd_geocmu,nome_municipio,latitude,lon
 var baseFolder = env.CLIMA_FOLDER;
 
 var today = moment()
-// var today = moment("2020-08-05", 'YYYY-MM-DD')  //descomente e atualize para a data desejada, lembrando de comentar a linha de cima.
+// var today = moment("2020-10-18", 'YYYY-MM-DD')  
+//descomente e atualize para a data desejada, lembrando de comentar a linha de cima.
 
 let month = ''
 if (parseInt(today.month()) + 1 < 10) {
@@ -120,13 +121,16 @@ function insertDB(csvRows) {
             await client.query('BEGIN')
 
             console.log("Executando insertion.. ")
-
+            let i = 0;
             for (ob of csvRows) {
 
                 /* for initial population*/
                 var rowValues = [ob.cd_geocmu, ob.nome_municipio, ob.latitude, ob.longitude, ob.aod, ob.pm25, ob.iqa_categoria, ob.temperatura, ob.ur, new Date(ob.data_modelo),
-                new Date(ob.data_previsao), new Date(ob.data_atualizacao), ob.iqa]
-                // console.log(rowValues)
+                new Date(ob.data_previsao), ob.data_atualizacao, ob.iqa]
+                if (i % 10000 == 0) {
+                    console.log(rowValues)
+                }
+                i++;
                 const res = await client.query(insertSQLPM, rowValues)
 
             }
@@ -201,8 +205,10 @@ function getPM25() {
         var str_dataFim = name_split[2] + " " + name_split[4]
         var data_final = moment(str_dataFim, "YYYYMMDD HHmm").format('YYYY-MM-DD HH:mm')
 
+
         // var data_final = moment(name_split[2], "YYYYMMDD").format('YYYY-MM-DD')
         var data_atualizacao = moment().format('YYYY-MM-DD')
+        // var data_atualizacao = moment("2020-10-18", 'YYYY-MM-DD')
 
         console.log(data_atualizacao)
 
