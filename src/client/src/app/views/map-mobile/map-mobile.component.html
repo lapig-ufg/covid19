@@ -324,26 +324,72 @@
 										</div>
 									</p-tabPanel>
 									<p-tabPanel [header]=" tendeciaSeries.timeseries.chartResult[0]?.title_tab.replace('[region]',selectRegion.nome)">
-										<p-scrollPanel [style]="{width: '100%', height: '60vh'}">
-											<div *ngIf="tendeciaSeries.timeseries.chartResult[0]?.show">
-												<p style="font-weight: bold; text-align: center; font-size: 15px; margin-top: 5px; margin-bottom: 5px">
-													{{ tendeciaSeries.timeseries.chartResult[0]?.text }}</p>
-												<div style="font-weight: normal; font-size: 12px; text-align: center; display: flex; justify-content: center;" >
-													<div class="tendenciaMedia" >{{tendeciaSeries.timeseries.chartResult[0]?.label_media}} {{tendeciaSeries.timeseries.chartResult[0]?.last_ob.media | number:'1.2-3'}}</div>
-													<div class="tendenciaVariacao">{{tendeciaSeries.timeseries.chartResult[0]?.label_variation}} {{tendeciaSeries.timeseries.chartResult[0]?.last_ob.variacao | number:'1.2-3'}}%</div>
-													<div class="tendenciaTendencia" [innerHTML]=" tendeciaSeries.timeseries.chartResult[0]?.label_trend + tend[tendeciaSeries.timeseries.chartResult[0]?.last_ob.tendencia][language] "></div>
-												</div>
-												<p style="font-weight: 200; text-align: center;">{{tendeciaSeries.timeseries.chartResult[0]?.label_last_update + tendeciaSeries.timeseries.chartResult[0]?.last_ob.data}}</p>
-												<p-chart [ngStyle]="{'overflow-x': hidden}"
-														 [type]="tendeciaSeries.timeseries.chartResult[0]?.type"
-														 [data]="tendeciaSeries.timeseries.chartResult[0]?.dataResult"
-														 [options]="tendeciaSeries.timeseries.chartResult[0]?.options">
-												</p-chart>
-												<p style="font-weight: 300; text-align: center">
-													{{tendeciaSeries.timeseries.chartResult[0]?.note}}
-												</p>
-											</div>
-										</p-scrollPanel>
+										<!-- <p-scrollPanel [style]="{width: '100%', height: '60vh'}"> -->
+											<mat-tab-group>
+												<mat-tab label="{{neighborhoodsCharts.label_tab}}">
+													<p-scrollPanel [style]="{width: '98%', height: '40vh'}">
+														<div *ngIf="tendeciaSeries.timeseries.chartResult[0]?.show">
+															<p style="font-weight: bold; text-align: center; font-size: 15px; margin-top: 5px; margin-bottom: 5px">
+																{{ tendeciaSeries.timeseries.chartResult[0]?.text }}</p>
+															<div style="font-weight: normal; font-size: 12px; text-align: center; display: flex; justify-content: center;" >
+																<div class="tendenciaMedia" >{{tendeciaSeries.timeseries.chartResult[0]?.label_media}} {{tendeciaSeries.timeseries.chartResult[0]?.last_ob.media | number:'1.2-3'}}</div>
+																<div class="tendenciaVariacao">{{tendeciaSeries.timeseries.chartResult[0]?.label_variation}} {{tendeciaSeries.timeseries.chartResult[0]?.last_ob.variacao | number:'1.2-3'}}%</div>
+																<div class="tendenciaTendencia" [innerHTML]=" tendeciaSeries.timeseries.chartResult[0]?.label_trend + tend[tendeciaSeries.timeseries.chartResult[0]?.last_ob.tendencia][language] "></div>
+															</div>
+															<p style="font-weight: 200; text-align: center;">{{tendeciaSeries.timeseries.chartResult[0]?.label_last_update + tendeciaSeries.timeseries.chartResult[0]?.last_ob.data}}</p>
+															<p-chart [ngStyle]="{'overflow-x': hidden}"
+																	[type]="tendeciaSeries.timeseries.chartResult[0]?.type"
+																	[data]="tendeciaSeries.timeseries.chartResult[0]?.dataResult"
+																	[options]="tendeciaSeries.timeseries.chartResult[0]?.options">
+															</p-chart>
+															<p style="font-weight: 300; text-align: center; padding: 10px;">
+																{{tendeciaSeries.timeseries.chartResult[0]?.note}}
+															</p>
+														</div>
+													</p-scrollPanel>
+												</mat-tab>
+												<mat-tab label="{{deathsCharts.label_tab}}">
+													<p-scrollPanel [style]="{width: '98%', height: '40vh'}">
+														<div *ngIf="tendeciaSeries.timeseries.chartResult[1]?.show">
+															<p
+																style="font-weight: bold; text-align: center; font-size: 15px; margin-top: 5px; margin-bottom: 5px">
+																{{ tendeciaSeries.timeseries.chartResult[1]?.text }}</p>
+															<!-- <button style="position: absolute;"
+																(click)="openDialogCharts('tendeciaSeries', 1)"
+																classs="btn-info" mat-icon-button>
+																<mat-icon>open_with</mat-icon>
+															</button> -->
+															<div
+																style="font-weight: normal; font-size: 12px; text-align: center; display: flex; justify-content: center;">
+																<div class="tendenciaMedia">
+																	{{tendeciaSeries.timeseries.chartResult[1]?.label_media}}
+																	{{tendeciaSeries.timeseries.chartResult[1]?.last_ob.media | number:'1.2-3'}}
+																</div>
+																<div class="tendenciaVariacao">
+																	{{tendeciaSeries.timeseries.chartResult[1]?.label_variation}}
+																	{{tendeciaSeries.timeseries.chartResult[1]?.last_ob.variacao | number:'1.2-3'}}%
+																</div>
+																<div class="tendenciaObtios"
+																	[innerHTML]=" tendeciaSeries.timeseries.chartResult[1]?.label_trend + tend[tendeciaSeries.timeseries.chartResult[1]?.last_ob.tendencia][language] ">
+																</div>
+															</div>
+															<p style="font-weight: 200; text-align: center;">
+																{{tendeciaSeries.timeseries.chartResult[1]?.label_last_update + tendeciaSeries.timeseries.chartResult[1]?.last_ob.data}}
+															</p>
+		
+															<p-chart [ngStyle]="{'overflow-x': hidden}"
+																[type]="tendeciaSeries.timeseries.chartResult[1]?.type"
+																[data]="tendeciaSeries.timeseries.chartResult[1]?.dataResult"
+																[options]="tendeciaSeries.timeseries.chartResult[1]?.options">
+															</p-chart>
+															<p style="font-weight: 300; text-align: center; padding: 10px;">
+																{{tendeciaSeries.timeseries.chartResult[1]?.note}}
+															</p>
+														</div>
+													</p-scrollPanel>
+												</mat-tab>
+											</mat-tab-group>
+										<!-- </p-scrollPanel> -->
 									</p-tabPanel>
 									<p-tabPanel header="Projeções">
 											<div style="text-align: justify; padding-bottom: 10px;">
@@ -444,9 +490,9 @@
 <!--				</table>-->
 
 <!--			</p-scrollPanel>-->
-			<mat-tab-group id="group_table">
+			<mat-tab-group id="group_table" style="height: 98%">
 				<mat-tab  label="{{neighborhoodsCharts.label_tab}}">
-					<p-scrollPanel  [style]="{width: '100%', height: '88%'}">
+					<p-scrollPanel  [style]="{width: '100%', height: '100%'}">
 						<div class="resumo-neigh">{{neighborhoodsCharts.label_sms}}.</div>
 
 						<div class="resumo-totais">
@@ -492,7 +538,7 @@
 					</p-scrollPanel>
 				</mat-tab>
 				<mat-tab *ngIf="deathsCharts.show" label="{{deathsCharts.label_tab}}">
-					<p-scrollPanel  [style]="{width: '100%', height: '98%'}">
+					<p-scrollPanel  [style]="{width: '100%', height: '100%'}">
 						<div class="resumo-neigh">{{deathsCharts.label_sms}}.</div>
 
 						<div class="resumo-totais">
