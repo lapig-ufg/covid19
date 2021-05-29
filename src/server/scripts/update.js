@@ -52,7 +52,7 @@ class Update {
 
     async getSuspeitos() {
         var propertiesObject = { dataAccessId: 'DSBigNumberSuspeitos', paramtipoMapa: 'municipio', paramlocal_selecionado_mapa:'' };
-        let url = 'https://extranet.saude.go.gov.br/pentaho/plugin/cda/api/doQuery?path=/coronavirus/paineis/painel.cda';
+        let url = 'https://indicadores.saude.go.gov.br/pentaho/plugin/cda/api/doQuery?path=/coronavirus/paineis/painel.cda';
         let suspeitos = null;
 
         try {
@@ -68,7 +68,7 @@ class Update {
 
     async getRecuperados() {
         var propertiesObject = { dataAccessId: 'DSBigNumberRecuperados', paramtipoMapa: 'municipio', paramlocal_selecionado_mapa:'' };
-        let url = 'https://extranet.saude.go.gov.br/pentaho/plugin/cda/api/doQuery?path=/coronavirus/paineis/painel.cda';
+        let url = 'https://indicadores.saude.go.gov.br/pentaho/plugin/cda/api/doQuery?path=/coronavirus/paineis/painel.cda';
         let recuperados = null;
 
         try {
