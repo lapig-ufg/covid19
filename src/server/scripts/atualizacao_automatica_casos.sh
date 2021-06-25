@@ -64,7 +64,7 @@ echo -n -e "Populando banco de dados!"
 sleep 2
 
 clear
-node atualiza_casos_municipios.js | tee /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_casos_municipios.log
+node --max-old-space-size=32000 atualiza_casos_municipios.js | tee /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_casos_municipios.log
 sleep 2
 clear
 
