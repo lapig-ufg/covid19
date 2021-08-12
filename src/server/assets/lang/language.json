@@ -1616,14 +1616,6 @@
 						}
 					},
 					{
-						"nome": "Francisco Railson da Silva Pinto",
-						"link": "",
-						"description": {
-							"pt-br": "Bolsista de pesquisa e Graduando da FacUnicamps",
-							"en-us": "Research fellow and Undergraduate Student at FacUnicamps"
-						}
-					},
-					{
 						"nome": "Giovanna Dias Oliveira",
 						"link": "",
 						"description": {
@@ -1674,6 +1666,30 @@
 					{
 						"nome": "Igor Boson Schetine",
 						"link": "http://lattes.cnpq.br/4419261283211787",
+						"description": {
+							"pt-br": "Bolsista de pesquisa e Graduando da UFG",
+							"en-us": "Research fellow and Undergraduate Student at UFG"
+						}
+					},
+					{
+						"nome": "Cleidson Gabriel Ferreira Gomes",
+						"link": "",
+						"description": {
+							"pt-br": "Bolsista de pesquisa e Graduando da UFG",
+							"en-us": "Research fellow and Undergraduate Student at UFG"
+						}
+					},
+					{
+						"nome": "Poliana Viera dos Praz. Soares",
+						"link": "",
+						"description": {
+							"pt-br": "Bolsista de pesquisa e Graduanda da UFG",
+							"en-us": "Research fellow and Undergraduate Student at UFG"
+						}
+					},
+					{
+						"nome": "Victor Soares Nogueira",
+						"link": "",
 						"description": {
 							"pt-br": "Bolsista de pesquisa e Graduando da UFG",
 							"en-us": "Research fellow and Undergraduate Student at UFG"
