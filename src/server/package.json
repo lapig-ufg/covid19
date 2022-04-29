@@ -6,7 +6,7 @@
   "dependencies": {
     "always": "^2.2.0",
     "app-root-path": "^1.0.0",
-    "async": "~0.2.10",
+    "async": "~2.6.4",
     "body-parser": "^1.12.4",
     "compression": "^1.4.3",
     "connect-timeout": "^1.9.0",
