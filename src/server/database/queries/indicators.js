@@ -12,18 +12,18 @@ module.exports = function (app) {
     var cd_geocmu = params['cd_geocmu']
     var f = "0"
     if (cd_geocmu == 52) {
-      filter = "cd_geocmu <> '52' AND cd_geocmu <> '5300108' "
+      filter = "cd_geocmu <> '52' AND cd_geocmu <> '5300108' AND data not in ('2022-02-07','2022-02-24','2022-03-27','2022-03-30','2022-04-04','2022-04-23','2022-05-26','2022-06-22','2022-06-29') "
       f = "'222'"
     }
     else {
-      filter = "cd_geocmu = '" + cd_geocmu + "' "
+      filter = "cd_geocmu = '" + cd_geocmu + "' AND data not in ('2022-02-07','2022-02-24','2022-03-27','2022-03-30','2022-04-04','2022-04-23','2022-05-26','2022-06-22','2022-06-29') "
       f = "'" + cd_geocmu + "'"
     }
 
     return [
       {
         id: 'timeseries_go',
-        sql: "select (select nome from municipios where cd_geocmu = '" + cd_geocmu + "'), (select cd_geocmu from municipios where cd_geocmu = '" + cd_geocmu + "'), data, sum(confirmados) as confirmados, sum(suspeitos) as suspeitos, sum(obitos) as obitos , sum(descartados) as descartados, sum(recuperados) as recuperados from casos where " + filter + "  data not in ('2022-02-07','2022-02-24','2022-03-27','2022-03-30','2022-04-04','2022-04-23','2022-05-26','2022-06-22','2022-06-29') group by data order by data;"
+        sql: "select (select nome from municipios where cd_geocmu = '" + cd_geocmu + "'), (select cd_geocmu from municipios where cd_geocmu = '" + cd_geocmu + "'), data, sum(confirmados) as confirmados, sum(suspeitos) as suspeitos, sum(obitos) as obitos , sum(descartados) as descartados, sum(recuperados) as recuperados from casos where " + filter + "group by data order by data;"
       },
       {
         id: 'timeseries_cities',
