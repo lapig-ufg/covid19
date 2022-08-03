@@ -10,6 +10,28 @@ from update_covid19.db import engine
 from update_covid19.models.covid19 import Casos, Obitos, constructor
 
 
+
+
+
+
+def get_recuperados():
+    url = 'https://indicadores.saude.go.gov.br/pentaho/plugin/cda/api/doQuery'
+    try:
+        response = post(
+            url,
+            data={
+                'path': '/coronavirus/paineis/painel.cda',
+                'dataAccessId': 'DSBigNumberRecuperados',
+                'paramtipoMapa': 'municipio',
+                'paramlocal_selecionado_mapa':''
+            },
+        )
+        return response.json()['resultset'][0][0]
+    except:
+        ...
+
+
+
 def get_suspeitos():
     url = 'https://indicadores.saude.go.gov.br/pentaho/plugin/cda/api/doQuery'
     try:
@@ -18,6 +40,8 @@ def get_suspeitos():
             data={
                 'path': '/coronavirus/paineis/painel.cda',
                 'dataAccessId': 'DSBigNumberSuspeitos',
+                'paramtipoMapa': 'municipio',
+                'paramlocal_selecionado_mapa':''
             },
         )
         return response.json()['resultset'][0][0]
@@ -105,10 +129,19 @@ def update():
         Casos(
             **{
                 'cd_geocmu': 111,
-                'confirmados': get_suspeitos(),
+                'suspeitos': get_suspeitos(),
                 'obitos': 0,
                 'data': date,
                 'municipio': utf82ascii('SUSPEITOS'),
+            }
+        ),
+        Casos(
+            **{
+                'cd_geocmu': 222,
+                'recuperados': get_recuperados(),
+                'obitos': 0,
+                'data': date,
+                'municipio': utf82ascii('RECUPERADOS'),
             }
         ),
         Casos(**DF, **DF_data),

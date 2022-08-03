@@ -17,6 +17,8 @@ python-dotenv = "^0.20.0"
 pytest = "^6.2"
 blue = "^0.9.0"
 isort = "^5.10.1"
+jupyter = "^1.0.0"
+matplotlib = "^3.5.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
