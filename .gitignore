@@ -5,6 +5,9 @@
 ### Angular ###
 ## Angular ##
 # compiled output
+*.ipynb*
+.venv
+app.out
 dist/
 tmp/
 app/**/*.js
