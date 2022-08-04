@@ -1,4 +1,4 @@
-from sqlalchemy import Column, DateTime, Integer, Unicode
+from sqlalchemy import Column, DateTime, Integer, Text
 from sqlalchemy.ext.declarative import declarative_base
 
 from update_covid19.db import engine
@@ -9,7 +9,7 @@ Base = declarative_base()
 class Casos(Base):
     __tablename__ = 'casos'
     id = Column(Integer, primary_key=True)
-    cd_geocmu = Column(Unicode(7))
+    cd_geocmu = Column(Text(7))
     data = Column(DateTime)
     confirmados = Column(Integer, default=0)
     suspeitos = Column(Integer, default=0)
@@ -27,14 +27,24 @@ class Casos(Base):
     de60a69 = Column(Integer, default=0)
     de70a79 = Column(Integer, default=0)
     maior80 = Column(Integer, default=0)
-    municipio = Column(Unicode(60))
+    municipio = Column(Text(60))
     recuperados = Column(Integer, default=0)
+
+    def __str__(self) -> str:
+        return f"""Casos(
+    id={self.id},
+    cd_geocmu={self.cd_geocmu}, 
+    confirmados={self.confirmados}
+    suspeitos={self.suspeitos},
+    recuperado={self.recuperado},
+    municipio={self.municipio} )"""
+
 
 
 class Obitos(Base):
     __tablename__ = 'obitos_stats'
     gid = Column(Integer, primary_key=True)
-    cd_geocmu = Column(Unicode(7))
+    cd_geocmu = Column(Text(7))
     data = Column(DateTime)
     obitos = Column(Integer, default=0)
     masculino = Column(Integer, default=0)
@@ -50,7 +60,7 @@ class Obitos(Base):
     de70a79 = Column(Integer, default=0)
     maior80 = Column(Integer, default=0)
     data_notificacao = Column(DateTime, default=None)
-    municipio = Column(Unicode(60))
+    municipio = Column(Text(60))
 
 
 Base.metadata.create_all(engine)
