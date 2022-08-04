@@ -6,6 +6,7 @@
 ## Angular ##
 # compiled output
 *.ipynb*
+*.ipynb
 .venv
 app.out
 dist/
