@@ -39,7 +39,7 @@
     "jquery.mb.ytplayer": "^3.2.10",
     "jspdf": "^1.5.3",
     "jspdf-autotable": "^3.4.3",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "ngx-image-video-gallery": "^5.22.0",
     "ngx-lightbox": "^2.1.0",
     "ngx-mask": "^8.2.0",
