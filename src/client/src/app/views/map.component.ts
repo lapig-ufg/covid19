@@ -350,10 +350,10 @@ export class MapComponent implements OnInit {
     this.changeTabSelected = "";
 
     this.urls = [
-      'https://o1.lapig.iesa.ufg.br/ows',
-      'https://o2.lapig.iesa.ufg.br/ows',
-      'https://o3.lapig.iesa.ufg.br/ows',
-      'https://o4.lapig.iesa.ufg.br/ows'
+      'https://o5.lapig.iesa.ufg.br/ows',
+      'https://o6.lapig.iesa.ufg.br/ows',
+      'https://o7.lapig.iesa.ufg.br/ows',
+      'https://o8.lapig.iesa.ufg.br/ows'
       // "http://localhost:5501/ows"
     ];
 
