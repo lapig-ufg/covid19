@@ -7,6 +7,7 @@ from requests import get, post
 from sqlalchemy.orm import sessionmaker
 
 from update_covid19.db import engine
+from update_covid19.config import logger
 from update_covid19.models.covid19 import Casos, Obitos, constructor
 
 
@@ -15,6 +16,7 @@ from update_covid19.models.covid19 import Casos, Obitos, constructor
 
 
 def get_recuperados():
+    logger.info(f'chamado get_recuperados')
     url = 'https://indicadores.saude.go.gov.br/pentaho/plugin/cda/api/doQuery'
     try:
         response = post(
@@ -28,11 +30,12 @@ def get_recuperados():
         )
         return response.json()['resultset'][0][0]
     except:
-        ...
+        logger.exception('erro no get_recuperados')
 
 
 
 def get_suspeitos():
+    logger.info(f'chamado get_suspeitos')
     url = 'https://indicadores.saude.go.gov.br/pentaho/plugin/cda/api/doQuery'
     try:
         response = post(
@@ -46,10 +49,11 @@ def get_suspeitos():
         )
         return response.json()['resultset'][0][0]
     except:
-        ...
+        logger.exception('erro no get_suspeitos')
 
 
 def get_dados_DF():
+    logger.info(f'chamado get_dados_DF')
     url = 'https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalEstado'
     try:
         response = get(url).json()
@@ -59,18 +63,21 @@ def get_dados_DF():
             'obitos': ob['obitosAcumulado'],
         }
     except:
-        ...
+        logger.exception('erro no get_dados_DF')
 
 
 def CSV_to_df(url):
+
     response = get(url)
     try:
         with tempfile.NamedTemporaryFile() as tmp:
-            print(tmp.name)
+            logger.info(tmp.name)
+            logger.info(f'foi baixado com sucesso para url:{url}')
             tmp.write(response.content)
             df = pd.read_csv(tmp.name, sep=';')
         return df
     except:
+        logger.exception(f'erro para url:{url}')
         return None
 
 
