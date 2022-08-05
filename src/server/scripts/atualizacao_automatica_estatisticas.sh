@@ -6,12 +6,15 @@ START_DATE=`date +%d-%m-%Y-%H.%M.%S`
 
 echo -e "\n\nRotina atualizacao_automatica_estatisticas.sh iniciada em: $START_DATE" | tee -a /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
 
-#Include telegram chat id and bot token ID here
-chat_id="-427575689"
-TOKEN="1370924692:AAFd-MW3vei_24_HkQxcwHPYtKJmKnFT2so"
 
 function UPDATE-COVID19-ALERT
 {
+#Include telegram chat id and bot token ID here and URL variable
+source ../.env
+chat_id="$chat_id"
+TOKEN="$token"
+URL="https://api.telegram.org/bot$TOKEN/sendMessage"
+
 curl --silent --output /dev/null  "https://api.telegram.org/bot$TOKEN/sendMessage?chat_id=$chat_id&text=$SUBJECT" > /dev/null 
 }
 
