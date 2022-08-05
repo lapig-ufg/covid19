@@ -9,6 +9,7 @@ from sqlalchemy.orm import sessionmaker
 from update_covid19.db import engine
 from update_covid19.config import logger
 from update_covid19.models.covid19 import Casos, Obitos, constructor
+from update_covid19.utils.ibge import corrige_codigo_ibe
 
 
 
@@ -105,7 +106,7 @@ def get_by_coll(df, coll, where):
 
 def normalasi(df):
     df = df.reset_index(level=['cd_geocmu', 'municipio'])
-    df['cd_geocmu'] = df['cd_geocmu'].astype(int)
+    df['cd_geocmu'] = corrige_codigo_ibe(df['cd_geocmu'].astype(int))
     return df
 
 def utf82ascii(string):

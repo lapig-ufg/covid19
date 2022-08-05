@@ -38,7 +38,7 @@ def del_error_by_columns(df, col):
             if old is None:
                 old = valor
                 old_datetime = dt_tmp
-            if int(str(old_datetime - dt_tmp).split(' ')[0]) > -7:
+            if int(str(old_datetime - dt_tmp).split(' ')[0]) > -60:
                 if valor+110_000  < old:
                     result = session.query(Casos.id).filter(Casos.data == dt_tmp)
                     for r in result:
