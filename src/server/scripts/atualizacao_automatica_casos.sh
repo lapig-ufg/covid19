@@ -6,13 +6,14 @@ START_DATE=`date +%d-%m-%Y-%H.%M.%S`
 
 echo -e "\n\nRotina atualizacao_automatica_casos.sh iniciada em: $START_DATE" | tee -a /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualizacao_de_dados.log
 
-#Include telegram chat id and bot token ID here and URL variable
-chat_id="-427575689"
-TOKEN="1370924692:AAFd-MW3vei_24_HkQxcwHPYtKJmKnFT2so"
-URL="https://api.telegram.org/bot$TOKEN/sendMessage"
-
 function UPDATE-COVID19-ALERT
 {
+
+#Include telegram chat id and bot token ID here and URL variable
+source ../.env
+chat_id="$chat_id"
+TOKEN="$token"
+URL="https://api.telegram.org/bot$TOKEN/sendMessage"
 
 curl -s -X POST $URL -d chat_id="$chat_id" -d text="$SUBJECT" > /dev/null 2>&1
 
@@ -43,28 +44,12 @@ python3 upload_googledrive.py
 #Step 2
 cd $BASELOCAL
 
-rm -rfv casos_confirmados.csv
-
-rm -rfv obitos_confirmados.csv
-
-cd /data/containers/APP_COVID19/APP/covid19/src/server/scripts
-
-wget http://datasets.saude.go.gov.br/coronavirus/casos_confirmados.csv
-
-cat casos_confirmados.csv | tr ';' ',' > confirmados.csv
-
-cd /data/containers/APP_COVID19/APP/covid19/src/server/scripts
-
-wget http://datasets.saude.go.gov.br/coronavirus/obitos_confirmados.csv
-
-cat obitos_confirmados.csv | tr ';' ',' > obitos.csv
-
 clear
 echo -n -e "Populando banco de dados!"
 sleep 2
 
 clear
-node --max-old-space-size=32000 atualiza_casos_municipios.js | tee /data/containers/APP_COVID19/APP/covid19/src/server/scripts/logs/atualiza_casos_municipios.log
+python3 start_upload.py
 sleep 2
 clear
 
